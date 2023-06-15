@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": ".",
+    "esModuleInterop": true,
+    "module": "es2020"
+  },
+  "include": ["../src/**/*"],
+  "exclude": ["../src/test/*"]
+}
