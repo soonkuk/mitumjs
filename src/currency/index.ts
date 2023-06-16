@@ -1,11 +1,25 @@
 import { isIPAddress } from "../utils/validation";
+import { TimeStamp } from "../utils/time";
 
 import { Operation } from "../types/operation";
+import { Amount } from "../types/property";
 import { Fact } from "../types/fact";
 
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 
+import { CurrencyPolicyUpdaterFact } from "./updatePolicy";
+import { TransfersFact, TransfersItem } from "./transfer";
+import { CurrencyRegisterFact } from "./register";
 import currencyInfo from "./information";
+import {
+  inputData,
+  NilFeeer,
+  FixedFeeer,
+  RatioFeeer,
+  CurrencyPolicy,
+  CurrencyDesign,
+} from "./design";
+import { SuffrageInflationFact, SuffrageInflationItem } from "./inflate";
 
 export class Currency {
   private _node: string = "";
@@ -24,22 +38,104 @@ export class Currency {
     return currencyInfo.getAllCurrencyInfo(this._node);
   }
 
-  get(currencyID: string): any {
+  get(currencyID: string): Promise<AxiosResponse> {
     return currencyInfo.getCurrencyInfo(this._node, currencyID);
   }
 
-  // 여기부터 작업
-  create(obj: any): Operation<Fact> {
-    // 새로운 currency 등록
-    // 반환값은 오퍼레이션
+  /** structure
+   * inputData = {
+   *    currencyID: string;
+   *    genesisAddress: string;
+   *    totalSupply: number;
+   *    minBalance: number;
+   *    feeType: feeType; // "none" or "fixed" or "ratio"
+   *    feeReceiver?: string; // receiver address
+   *    fee?: number; // case of "fixed" fee or ratio
+   *    minFee?: number;
+   *    maxFee?: number;
+   * }
+   */
+  create(data: inputData): Operation<Fact> {
+    const feePolicy = this.setFeePolicy(
+      data.feeType,
+      data.feeReceiver,
+      data.fee,
+      data.minFee,
+      data.maxFee
+    );
+    const policy = new CurrencyPolicy(data.minBalance, feePolicy);
+    if (data.totalSupply === undefined || data.genesisAddress === undefined) {
+      throw new Error(
+        "The values for the 'totalSupply' or 'genesisAddress' fields were not entered."
+      );
+    }
+    const amount = new Amount(data.currencyID, data.totalSupply);
+    const design = new CurrencyDesign(amount, data.genesisAddress, policy);
+
+    const token = new TimeStamp().UTC();
+    const fact = new CurrencyRegisterFact(token, design);
 
     return new Operation(fact);
   }
 
-  setPolicy(obj: any): Operation<Fact> {
-    // currency 정책 변경
-    // 반환값은 오퍼레이션
+  /** structure
+   * inputData = {
+   *    currencyID: string;
+   *    minBalance: number;
+   *    feeType: feeType; // "none" or "fixed" or "ratio"
+   *    feeReceiver?: string; // receiver address
+   *    fee?: number; // case of "fixed" fee or ratio
+   *    minFee?: number;
+   *    maxFee?: number;
+   * }
+   */
+  setPolicy(data: inputData): Operation<Fact> {
+    const feePolicy = this.setFeePolicy(
+      data.feeType,
+      data.feeReceiver,
+      data.fee,
+      data.minFee,
+      data.maxFee
+    );
+    const policy = new CurrencyPolicy(data.minBalance, feePolicy);
+    const token = new TimeStamp().UTC();
+    const fact = new CurrencyPolicyUpdaterFact(token, data.currencyID, policy);
+
     return new Operation(fact);
+  }
+
+  private setFeePolicy(
+    feeType: string,
+    feeReceiver?: string,
+    fee?: number,
+    minFee?: number,
+    maxFee?: number
+  ): NilFeeer | FixedFeeer | RatioFeeer {
+    let feePolicy: NilFeeer | FixedFeeer | RatioFeeer;
+
+    if (feeType === "none") {
+      feePolicy = new NilFeeer();
+    } else if (
+      feeType === "fixed" &&
+      feeReceiver !== undefined &&
+      fee !== undefined
+    ) {
+      feePolicy = new FixedFeeer(feeReceiver, fee);
+    } else if (
+      feeType === "ratio" &&
+      feeReceiver !== undefined &&
+      fee !== undefined &&
+      minFee !== undefined &&
+      maxFee !== undefined
+    ) {
+      feePolicy = new RatioFeeer(feeReceiver, fee, minFee, maxFee);
+    } else {
+      throw new Error(
+        "The fee-type and its fields-value were not entered correctly."
+      );
+    }
+
+    return feePolicy;
   }
 
   transfer(
@@ -47,14 +143,23 @@ export class Currency {
     receiver: string,
     currencyID: string,
     amount: number
-  ): any {
-    // currency 전송
-    // 반환값은 실제 반환하는 객체를 우선 확인.
+  ): Operation<Fact> {
+    const tokenAmount = new Amount(currencyID, amount);
+    const token = new TimeStamp().UTC();
+
+    const item = new TransfersItem(receiver, [tokenAmount]);
+    const fact = new TransfersFact(token, sender, [item]);
+
+    return new Operation(fact);
   }
 
-  mint(obj: any): Operation<Fact> {
-    // currency 추가 발행
-    // 반환값은 오퍼레이션
+  mint(receiver: string, currencyID: string, amount: number): Operation<Fact> {
+    const tokenAmount = new Amount(currencyID, amount);
+
+    const token = new TimeStamp().UTC();
+    const item = new SuffrageInflationItem(receiver, tokenAmount);
+    const fact = new SuffrageInflationFact(token, [item]);
+
     return new Operation(fact);
   }
 }

@@ -3,7 +3,7 @@ import { Account } from "./account";
 import { Currency } from "./currency";
 import { Block } from "./block";
 import { Contract } from "./contract";
-// import { Operation } from "./operation";
+import { Operation } from "./operation";
 import { AxiosResponse } from "axios";
 
 export class Mitum {
@@ -15,7 +15,7 @@ export class Mitum {
   public currency: Currency;
   public block: Block;
   public contract: Contract;
-  // public operation: Operation;
+  public operation: Operation;
 
   public constructor(provider?: string) {
     this._version = new Version();
@@ -26,7 +26,7 @@ export class Mitum {
     this.currency = new Currency(provider);
     this.block = new Block();
     this.contract = new Contract();
-    // this.operation = new Operation(provider);
+    this.operation = new Operation(provider);
   }
 
   version(): string {
@@ -41,7 +41,7 @@ export class Mitum {
     this._node.setNode(provider);
 
     this.currency = new Currency(provider);
-    // this.operation = new Operation(provider);
+    this.operation = new Operation(provider);
   }
 
   getNode(): string {
