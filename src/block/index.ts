@@ -1,4 +1,5 @@
 import { isIPAddress } from "../utils/validation";
+import blockInfo from "./information";
 
 export class Block {
   private _node: string = "";
@@ -13,18 +14,24 @@ export class Block {
     }
   }
 
-  // 먼저 정확하게
-  // rpc/block/height 와 rpc/block/manifests 의 차이를 알아야 한다.
-
+  // get information of all-blocks
+  // It's possible to obtain 10 pieces of information,
+  // along with a link for retrieving consecutive blocks-information.
   getAll(): any {
-    // 전체 block 정보 return
+    return blockInfo.getAllBlockInfo(this._node);
   }
 
-  get(heightOrHash: number | string): any {
-    // 특정 block의 번호나 해시로 정보 return
+  // get block information by block number or hash
+  get(block: number | string): any {
+    if (typeof block === "number") {
+      return blockInfo.getBlockByHeight(this._node, block);
+    }
+
+    return blockInfo.getBlockByHash(this._node, block);
   }
 
-  operations(height: number): any {
-    // 특정 block 내의 operations 조회
+  // get the operations contained in a specific block.
+  getOperations(block: number): any {
+    return blockInfo.getOperations(this._node, block);
   }
 }
