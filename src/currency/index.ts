@@ -1,7 +1,7 @@
 import { isIPAddress } from "../utils/validation";
 import { TimeStamp } from "../utils/time";
 
-import { Operation } from "../types/operation";
+import { OperationType } from "../types/operation";
 import { Amount } from "../types/property";
 import { Fact } from "../types/fact";
 
@@ -55,7 +55,7 @@ export class Currency {
    *    maxFee?: number;
    * }
    */
-  create(data: inputData): Operation<Fact> {
+  create(data: inputData): OperationType<Fact> {
     const feePolicy = this.setFeePolicy(
       data.feeType,
       data.feeReceiver,
@@ -75,7 +75,7 @@ export class Currency {
     const token = new TimeStamp().UTC();
     const fact = new CurrencyRegisterFact(token, design);
 
-    return new Operation(fact);
+    return new OperationType(fact);
   }
 
   /** structure
@@ -89,7 +89,7 @@ export class Currency {
    *    maxFee?: number;
    * }
    */
-  setPolicy(data: inputData): Operation<Fact> {
+  setPolicy(data: inputData): OperationType<Fact> {
     const feePolicy = this.setFeePolicy(
       data.feeType,
       data.feeReceiver,
@@ -101,7 +101,7 @@ export class Currency {
     const token = new TimeStamp().UTC();
     const fact = new CurrencyPolicyUpdaterFact(token, data.currencyID, policy);
 
-    return new Operation(fact);
+    return new OperationType(fact);
   }
 
   private setFeePolicy(
@@ -143,23 +143,27 @@ export class Currency {
     receiver: string,
     currencyID: string,
     amount: number
-  ): Operation<Fact> {
+  ): OperationType<Fact> {
     const tokenAmount = new Amount(currencyID, amount);
     const token = new TimeStamp().UTC();
 
     const item = new TransfersItem(receiver, [tokenAmount]);
     const fact = new TransfersFact(token, sender, [item]);
 
-    return new Operation(fact);
+    return new OperationType(fact);
   }
 
-  mint(receiver: string, currencyID: string, amount: number): Operation<Fact> {
+  mint(
+    receiver: string,
+    currencyID: string,
+    amount: number
+  ): OperationType<Fact> {
     const tokenAmount = new Amount(currencyID, amount);
 
     const token = new TimeStamp().UTC();
     const item = new SuffrageInflationItem(receiver, tokenAmount);
     const fact = new SuffrageInflationFact(token, [item]);
 
-    return new Operation(fact);
+    return new OperationType(fact);
   }
 }

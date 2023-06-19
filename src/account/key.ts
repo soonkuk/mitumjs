@@ -86,10 +86,10 @@ export class M2KeyPair extends KeyPair {
     );
   }
 
-  //   sign(msg: string | Buffer): Buffer {
-  //     if (this.privateKey.type === "btc") {
-  //       return this.btcSign(msg);
-  //     }
-  //     return this.ethSign(msg);
-  //   }
+  sign(msg: string | Buffer): Buffer {
+    if (this.privateKey.type === "btc") {
+      return this.btcSign(msg);
+    }
+    return this.ethSign(msg);
+  }
 }

@@ -8,7 +8,7 @@ import { Key, Keys, PubKey } from "./publicKey";
 import { KeyPair } from "./iPair";
 import { M2KeyPair } from "./key";
 
-import { Operation } from "../types/operation";
+import { OperationType } from "../types/operation";
 import { KeyUpdaterFact } from "./keyUpdate";
 import { Fact } from "../types/fact";
 
@@ -78,7 +78,7 @@ export class Account {
     recieverPub: string,
     currentID: string,
     amount: number
-  ): Operation<Fact> {
+  ): OperationType<Fact> {
     const keys = this.pubToKeys([{ key: recieverPub, weight: 100 }], 100);
     const amountArr = new Amount(currentID, amount);
 
@@ -87,7 +87,7 @@ export class Account {
     const item = new CreateAccountsItem(keys, [amountArr], BTC);
     const fact = new CreateAccountsFact(token, senderAddr, [item]);
 
-    return new Operation(fact);
+    return new OperationType(fact);
   }
 
   createEtherAccount(
@@ -95,7 +95,7 @@ export class Account {
     recieverPub: string,
     currentID: string,
     amount: number
-  ): Operation<Fact> {
+  ): OperationType<Fact> {
     const keys = this.pubToKeys([{ key: recieverPub, weight: 100 }], 100);
     const amountArr = new Amount(currentID, amount);
 
@@ -104,7 +104,7 @@ export class Account {
     const item = new CreateAccountsItem(keys, [amountArr], ETH);
     const fact = new CreateAccountsFact(token, senderAddr, [item]);
 
-    return new Operation(fact);
+    return new OperationType(fact);
   }
 
   createMultiSig(
@@ -113,7 +113,7 @@ export class Account {
     currentID: string,
     amount: number,
     threshold: number
-  ): Operation<Fact> {
+  ): OperationType<Fact> {
     const keys = this.pubToKeys(recieverPubArr, threshold);
     const amountArr = new Amount(currentID, amount);
 
@@ -122,7 +122,7 @@ export class Account {
     const item = new CreateAccountsItem(keys, [amountArr], BTC);
     const fact = new CreateAccountsFact(token, senderAddr, [item]);
 
-    return new Operation(fact);
+    return new OperationType(fact);
   }
 
   createEtherMultiSig(
@@ -131,7 +131,7 @@ export class Account {
     currentID: string,
     amount: number,
     threshold: number
-  ): Operation<Fact> {
+  ): OperationType<Fact> {
     const keys = this.pubToKeys(recieverPubArr, threshold);
     const amountArr = new Amount(currentID, amount);
 
@@ -140,7 +140,7 @@ export class Account {
     const item = new CreateAccountsItem(keys, [amountArr], ETH);
     const fact = new CreateAccountsFact(token, senderAddr, [item]);
 
-    return new Operation(fact);
+    return new OperationType(fact);
   }
 
   updateKey(
@@ -148,14 +148,14 @@ export class Account {
     newPubArr: Array<{ weight: number; key: string }>,
     currentID: string,
     threshold: number
-  ): Operation<Fact> {
+  ): OperationType<Fact> {
     const keys = this.pubToKeys(newPubArr, threshold);
 
     const token = new TimeStamp().UTC();
 
     const fact = new KeyUpdaterFact(token, targetAddr, keys, currentID);
 
-    return new Operation(fact);
+    return new OperationType(fact);
   }
 
   private pubToKeys(

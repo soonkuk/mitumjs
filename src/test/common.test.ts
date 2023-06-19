@@ -33,7 +33,7 @@ describe("common test", () => {
     expect(axios.get).not.toHaveBeenCalled();
 
     // should set the node URI if a valid IP address is provided
-    let provider = "http://127.0.0.1";
+    let provider = "http://127.0.0.1:54321";
     node.setNode(provider);
     expect(node.getNodeUri()).toBe(provider);
 
@@ -42,7 +42,7 @@ describe("common test", () => {
     const mockWarn = jest.spyOn(console, "warn");
     node.setNode(provider);
     expect(mockWarn).toHaveBeenCalledTimes(1);
-    expect(node.getNodeUri()).toBe("http://127.0.0.1");
+    expect(node.getNodeUri()).toBe("http://127.0.0.1:54321");
 
     // should return node information when a valid RPC-URL is provided
     const expectedResponse = mockResponse;

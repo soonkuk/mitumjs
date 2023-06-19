@@ -1,6 +1,12 @@
+import { OperationType } from "../types/operation";
+import { Fact } from "../types/fact";
+
 import { isIPAddress } from "../utils/validation";
-// import { Sign } from "./sign";
-// import { Send } from "./send";
+
+import operationInfo from "./information";
+import { signOperation } from "./sign";
+import { sendOperation } from "./send";
+import { AxiosResponse } from "axios";
 
 export class Operation {
   private _node: string = "";
@@ -15,13 +21,27 @@ export class Operation {
     }
   }
 
-  //   // sign: privatekey와 operation을 인자로 받아 signedOperation을 반환한다.
-  //   sign(privatekey: , operation: ): signedOperation {
-  //     // operation에 서명을 추가하는 함수. Sign 에서 실행
-  //     return signedOperation;
-  //   }
-  //   // send: signedOperation을 노드에 request 하고, 처리 결과(json?)를 반환한다.
-  //   send(signedOperation: ): result {
-  //     return result;
-  //   }
+  getAll(): Promise<AxiosResponse> {
+    return operationInfo.getAllOperationsInfo(this._node);
+  }
+
+  get(facthash: string): Promise<AxiosResponse> {
+    return operationInfo.getOperationInfo(this._node, facthash);
+  }
+
+  // Optional: The option is node's address
+  sign(
+    privatekey: string,
+    operation: OperationType<Fact>,
+    option?: string
+  ): OperationType<Fact> {
+    return signOperation(privatekey, operation, option);
+  }
+
+  send(
+    signedOperation: OperationType<Fact>,
+    headers?: { [i: string]: any }
+  ): Promise<AxiosResponse> {
+    return sendOperation(signedOperation, this._node, headers);
+  }
 }

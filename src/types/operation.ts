@@ -3,22 +3,25 @@ import base58 from "bs58";
 import { HintedObject, IBuffer, IHintedObject } from "../types/interface";
 import { Assert, ECODE, MitumError } from "../utils/error";
 import { SortFunc, sha3 } from "../utils/math";
+import { TimeStamp } from "../utils/time";
 
-import { CreateContractAccountsFact } from "../contract/create";
-import { M2FactSign, M2NodeFactSign } from "./factSign";
-import { CurrencyItem } from "../currency/currencyItem";
-import { CreateAccountsFact } from "../account/create";
 import { MITUM_NETWORK_ID } from "../intro";
 import { Hint } from "./property";
 import { Fact } from "./fact";
 
-type FactSignType = M2FactSign | M2NodeFactSign;
-type SigType = "M2FactSign" | "M2NodeFactSign" | null;
-// type SignOption = {
-//   node: string;
-// };
+import { CreateContractAccountsFact } from "../contract/create";
+import { M2FactSign, M2NodeFactSign } from "./factSign";
+import { CurrencyItem } from "../currency/currencyItem";
 
-export class Operation<T extends Fact> implements IBuffer, IHintedObject {
+import { Address, NodeAddress } from "../account/address";
+import { CreateAccountsFact } from "../account/create";
+import { M2KeyPair } from "../account/key";
+import { Key } from "../account/publicKey";
+
+export type FactSignType = M2FactSign | M2NodeFactSign;
+export type SigType = "M2FactSign" | "M2NodeFactSign" | null;
+
+export class OperationType<T extends Fact> implements IBuffer, IHintedObject {
   readonly id: string;
   readonly hint: Hint;
   readonly memo: string;
@@ -63,7 +66,6 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
               (this.fact.items[0] as CurrencyItem).addressType !== "",
             MitumError.detail(ECODE.INVALID_FACTSIGN, "m2 factsign for m1 fact")
           );
-          break;
         default:
           throw MitumError.detail(
             "EC_INVALID_SIG_TYPE",
@@ -125,6 +127,134 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
     }
 
     return b;
+  }
+
+  // The option is node's address
+  sign(privateKey: string | Key, option?: string) {
+    privateKey = Key.from(privateKey);
+    const keypair = M2KeyPair.fromPrivate<M2KeyPair>(privateKey);
+    const sigType = this.factSignType;
+
+    if (sigType === "M2NodeFactSign") {
+      Assert.check(
+        option !== undefined,
+        MitumError.detail(ECODE.FAIL_SIGN, "no node address in sign option")
+      );
+    }
+
+    if (
+      !sigType &&
+      (this.fact instanceof CreateAccountsFact ||
+        this.fact instanceof CreateContractAccountsFact)
+    ) {
+      Assert.check(
+        this.fact.items !== undefined &&
+          (this.fact.items[0] as CurrencyItem).addressType !== "",
+        MitumError.detail(
+          ECODE.FAIL_SIGN,
+          "trying to sign m1 fact with m2 keypair"
+        )
+      );
+    }
+
+    const factSign = this.signWithSigType(
+      sigType,
+      keypair,
+      option ? new NodeAddress(option) : undefined
+    );
+
+    const idx = this._factSigns
+      .map((fs) => fs.signer.toString())
+      .indexOf(keypair.publicKey.toString());
+
+    if (idx < 0) {
+      this._factSigns.push(factSign);
+    } else {
+      this._factSigns[idx] = factSign;
+    }
+
+    this._hash = this.hashing();
+  }
+
+  private signWithSigType(
+    sigType: SigType,
+    keypair: M2KeyPair,
+    node: Address | undefined
+  ) {
+    const getM2FactSign = (keypair: M2KeyPair, hash: Buffer) => {
+      const now = new TimeStamp();
+
+      return new M2FactSign(
+        keypair.publicKey,
+        keypair.sign(
+          Buffer.concat([Buffer.from(this.id), hash, now.toBuffer()])
+        ),
+        now.toString()
+      );
+    };
+    const getM2NodeFactSign = (
+      node: Address,
+      keypair: M2KeyPair,
+      hash: Buffer
+    ) => {
+      const now = new TimeStamp();
+
+      return new M2NodeFactSign(
+        node.toString(),
+        keypair.publicKey,
+        keypair.sign(
+          Buffer.concat([
+            Buffer.from(this.id),
+            node.toBuffer(),
+            hash,
+            now.toBuffer(),
+          ])
+        ),
+        now.toString()
+      );
+    };
+
+    const hash = this._hash ? this._hash : Buffer.from([]);
+
+    if (sigType) {
+      switch (sigType) {
+        case "M2FactSign":
+          Assert.check(
+            keypair.privateKey.version === "m2",
+            MitumError.detail(
+              ECODE.FAIL_SIGN,
+              "not m2 keypair factsign type != keypair type"
+            )
+          );
+          return getM2FactSign(keypair as M2KeyPair, hash);
+        case "M2NodeFactSign":
+          Assert.check(
+            keypair.privateKey.version === "m2",
+            MitumError.detail(
+              ECODE.FAIL_SIGN,
+              "not m2 keypair factsign type != keypair type"
+            )
+          );
+          Assert.check(
+            node !== undefined,
+            MitumError.detail(ECODE.FAIL_SIGN, "no node address")
+          );
+          return getM2NodeFactSign(node as Address, keypair as M2KeyPair, hash);
+        default:
+          throw MitumError.detail(ECODE.FAIL_SIGN, "invalid factsign type");
+      }
+    } else {
+      switch (keypair.privateKey.version) {
+        case "m2":
+          if (node) {
+            return getM2NodeFactSign(node, keypair as M2KeyPair, hash);
+          } else {
+            return getM2FactSign(keypair as M2KeyPair, hash);
+          }
+        default:
+          throw MitumError.detail(ECODE.FAIL_SIGN, "invalid private key");
+      }
+    }
   }
 
   toBuffer(): Buffer {

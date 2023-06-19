@@ -1,6 +1,27 @@
-// request(url: string, headers?: { [i: string]: any }) {
-//     if (headers) {
-//       return axios.post(url, this.toHintedObject(), { headers });
-//     }
-//     return axios.post(url, this.toHintedObject());
-//   }
+import { OperationType } from "../types/operation";
+import { Fact } from "../types/fact";
+
+import axios, { AxiosResponse } from "axios";
+
+export async function sendOperation(
+  signedOperation: OperationType<Fact>,
+  provider: string,
+  headers?: { [i: string]: any }
+): Promise<AxiosResponse> {
+  if (provider === "") {
+    return Promise.reject(new Error("RPC-URL is not provided."));
+  }
+
+  try {
+    if (headers) {
+      return await axios.post(`${provider}/builder/send`, signedOperation, {
+        headers,
+      });
+    }
+    return await axios.post(`${provider}/builder/send`, signedOperation);
+  } catch (error: any) {
+    return Promise.reject(
+      new Error(`Error getting node information: ${error.message}`)
+    );
+  }
+}
