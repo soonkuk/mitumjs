@@ -3,17 +3,17 @@ import { Account } from "./account";
 import { Currency } from "./currency";
 import { Block } from "./block";
 import { Contract } from "./contract";
+import { Operation } from "./operation";
 export class Mitum {
-    // public operation: Operation;
     constructor(provider) {
         this._version = new Version();
         this._node = new Node(provider);
         this._chain = new Chain();
         this.account = new Account();
-        this.currency = new Currency();
+        this.currency = new Currency(provider);
         this.block = new Block();
         this.contract = new Contract();
-        // this.operation = new Operation(provider);
+        this.operation = new Operation(provider);
     }
     version() {
         return this._version.getVersion();
@@ -23,7 +23,8 @@ export class Mitum {
     }
     setNode(provider) {
         this._node.setNode(provider);
-        // this.operation.setNode(provider);
+        this.currency = new Currency(provider);
+        this.operation = new Operation(provider);
     }
     getNode() {
         return this._node.getNodeUri();

@@ -1,7 +1,7 @@
 import { Key, Keys } from "./publicKey";
 import { KeyPair } from "./iPair";
 import { M2KeyPair } from "./key";
-import { Operation } from "../types/operation";
+import { OperationType } from "../types/operation";
 import { Fact } from "../types/fact";
 export declare class Account {
     key(seed?: string): M2KeyPair;
@@ -25,19 +25,19 @@ export declare class Account {
         weight: number;
         key: string;
     }>, threshold: number): string;
-    create(senderAddr: string, recieverPub: string, currentID: string, amount: number): Operation<Fact>;
-    createEtherAccount(senderAddr: string, recieverPub: string, currentID: string, amount: number): Operation<Fact>;
+    create(senderAddr: string, recieverPub: string, currentID: string, amount: number): OperationType<Fact>;
+    createEtherAccount(senderAddr: string, recieverPub: string, currentID: string, amount: number): OperationType<Fact>;
     createMultiSig(senderAddr: string, recieverPubArr: Array<{
         weight: number;
         key: string;
-    }>, currentID: string, amount: number, threshold: number): Operation<Fact>;
+    }>, currentID: string, amount: number, threshold: number): OperationType<Fact>;
     createEtherMultiSig(senderAddr: string, recieverPubArr: Array<{
         weight: number;
         key: string;
-    }>, currentID: string, amount: number, threshold: number): Operation<Fact>;
+    }>, currentID: string, amount: number, threshold: number): OperationType<Fact>;
     updateKey(targetAddr: string, newPubArr: Array<{
         weight: number;
         key: string;
-    }>, currentID: string, threshold: number): Operation<Fact>;
+    }>, currentID: string, threshold: number): OperationType<Fact>;
     private pubToKeys;
 }

@@ -6,17 +6,17 @@ const account_1 = require("./account");
 const currency_1 = require("./currency");
 const block_1 = require("./block");
 const contract_1 = require("./contract");
+const operation_1 = require("./operation");
 class Mitum {
-    // public operation: Operation;
     constructor(provider) {
         this._version = new common_1.Version();
         this._node = new common_1.Node(provider);
         this._chain = new common_1.Chain();
         this.account = new account_1.Account();
-        this.currency = new currency_1.Currency();
+        this.currency = new currency_1.Currency(provider);
         this.block = new block_1.Block();
         this.contract = new contract_1.Contract();
-        // this.operation = new Operation(provider);
+        this.operation = new operation_1.Operation(provider);
     }
     version() {
         return this._version.getVersion();
@@ -26,7 +26,8 @@ class Mitum {
     }
     setNode(provider) {
         this._node.setNode(provider);
-        // this.operation.setNode(provider);
+        this.currency = new currency_1.Currency(provider);
+        this.operation = new operation_1.Operation(provider);
     }
     getNode() {
         return this._node.getNodeUri();

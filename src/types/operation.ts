@@ -66,6 +66,7 @@ export class OperationType<T extends Fact> implements IBuffer, IHintedObject {
               (this.fact.items[0] as CurrencyItem).addressType !== "",
             MitumError.detail(ECODE.INVALID_FACTSIGN, "m2 factsign for m1 fact")
           );
+          break;
         default:
           throw MitumError.detail(
             "EC_INVALID_SIG_TYPE",

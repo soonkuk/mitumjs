@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import ethWallet from "ethereumjs-wallet";
 import { KeyPair } from "./iPair";
 import { Key } from "./publicKey";
@@ -11,4 +12,5 @@ export declare class M2KeyPair extends KeyPair {
     private constructor();
     protected getSigner(): Uint8Array | ethWallet;
     protected getPub(): Key;
+    sign(msg: string | Buffer): Buffer;
 }

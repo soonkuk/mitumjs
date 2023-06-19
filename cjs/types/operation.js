@@ -3,18 +3,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Operation = void 0;
+exports.OperationType = void 0;
 const bs58_1 = __importDefault(require("bs58"));
 const error_1 = require("../utils/error");
 const math_1 = require("../utils/math");
-const create_1 = require("../contract/create");
-const create_2 = require("../account/create");
+const time_1 = require("../utils/time");
 const intro_1 = require("../intro");
 const property_1 = require("./property");
-// type SignOption = {
-//   node: string;
-// };
-class Operation {
+const create_1 = require("../contract/create");
+const factSign_1 = require("./factSign");
+const address_1 = require("../account/address");
+const create_2 = require("../account/create");
+const key_1 = require("../account/key");
+const publicKey_1 = require("../account/publicKey");
+class OperationType {
     constructor(fact, memo) {
         this.id = intro_1.MITUM_NETWORK_ID;
         this.memo = memo !== null && memo !== void 0 ? memo : "";
@@ -78,6 +80,74 @@ class Operation {
         }
         return b;
     }
+    // The option is node's address
+    sign(privateKey, option) {
+        privateKey = publicKey_1.Key.from(privateKey);
+        const keypair = key_1.M2KeyPair.fromPrivate(privateKey);
+        const sigType = this.factSignType;
+        if (sigType === "M2NodeFactSign") {
+            error_1.Assert.check(option !== undefined, error_1.MitumError.detail(error_1.ECODE.FAIL_SIGN, "no node address in sign option"));
+        }
+        if (!sigType &&
+            (this.fact instanceof create_2.CreateAccountsFact ||
+                this.fact instanceof create_1.CreateContractAccountsFact)) {
+            error_1.Assert.check(this.fact.items !== undefined &&
+                this.fact.items[0].addressType !== "", error_1.MitumError.detail(error_1.ECODE.FAIL_SIGN, "trying to sign m1 fact with m2 keypair"));
+        }
+        const factSign = this.signWithSigType(sigType, keypair, option ? new address_1.NodeAddress(option) : undefined);
+        const idx = this._factSigns
+            .map((fs) => fs.signer.toString())
+            .indexOf(keypair.publicKey.toString());
+        if (idx < 0) {
+            this._factSigns.push(factSign);
+        }
+        else {
+            this._factSigns[idx] = factSign;
+        }
+        this._hash = this.hashing();
+    }
+    signWithSigType(sigType, keypair, node) {
+        const getM2FactSign = (keypair, hash) => {
+            const now = new time_1.TimeStamp();
+            return new factSign_1.M2FactSign(keypair.publicKey, keypair.sign(Buffer.concat([Buffer.from(this.id), hash, now.toBuffer()])), now.toString());
+        };
+        const getM2NodeFactSign = (node, keypair, hash) => {
+            const now = new time_1.TimeStamp();
+            return new factSign_1.M2NodeFactSign(node.toString(), keypair.publicKey, keypair.sign(Buffer.concat([
+                Buffer.from(this.id),
+                node.toBuffer(),
+                hash,
+                now.toBuffer(),
+            ])), now.toString());
+        };
+        const hash = this._hash ? this._hash : Buffer.from([]);
+        if (sigType) {
+            switch (sigType) {
+                case "M2FactSign":
+                    error_1.Assert.check(keypair.privateKey.version === "m2", error_1.MitumError.detail(error_1.ECODE.FAIL_SIGN, "not m2 keypair factsign type != keypair type"));
+                    return getM2FactSign(keypair, hash);
+                case "M2NodeFactSign":
+                    error_1.Assert.check(keypair.privateKey.version === "m2", error_1.MitumError.detail(error_1.ECODE.FAIL_SIGN, "not m2 keypair factsign type != keypair type"));
+                    error_1.Assert.check(node !== undefined, error_1.MitumError.detail(error_1.ECODE.FAIL_SIGN, "no node address"));
+                    return getM2NodeFactSign(node, keypair, hash);
+                default:
+                    throw error_1.MitumError.detail(error_1.ECODE.FAIL_SIGN, "invalid factsign type");
+            }
+        }
+        else {
+            switch (keypair.privateKey.version) {
+                case "m2":
+                    if (node) {
+                        return getM2NodeFactSign(node, keypair, hash);
+                    }
+                    else {
+                        return getM2FactSign(keypair, hash);
+                    }
+                default:
+                    throw error_1.MitumError.detail(error_1.ECODE.FAIL_SIGN, "invalid private key");
+            }
+        }
+    }
     toBuffer() {
         if (!this._factSigns) {
             return this.fact.hash;
@@ -105,5 +175,5 @@ class Operation {
         }
     }
 }
-exports.Operation = Operation;
+exports.OperationType = OperationType;
 //# sourceMappingURL=operation.js.map

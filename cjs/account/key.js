@@ -55,6 +55,12 @@ class M2KeyPair extends iPair_1.KeyPair {
             this.signer.getPublicKeyString().substring(2) +
             hint_1.SUFFIX.KEY_ETHER_PUBLIC);
     }
+    sign(msg) {
+        if (this.privateKey.type === "btc") {
+            return this.btcSign(msg);
+        }
+        return this.ethSign(msg);
+    }
 }
 exports.M2KeyPair = M2KeyPair;
 M2KeyPair.generator = {

@@ -1,11 +1,12 @@
 /// <reference types="node" />
 import { HintedObject, IBuffer, IHintedObject } from "../types/interface";
-import { M2FactSign, M2NodeFactSign } from "./factSign";
 import { Hint } from "./property";
 import { Fact } from "./fact";
-type FactSignType = M2FactSign | M2NodeFactSign;
-type SigType = "M2FactSign" | "M2NodeFactSign" | null;
-export declare class Operation<T extends Fact> implements IBuffer, IHintedObject {
+import { M2FactSign, M2NodeFactSign } from "./factSign";
+import { Key } from "../account/publicKey";
+export type FactSignType = M2FactSign | M2NodeFactSign;
+export type SigType = "M2FactSign" | "M2NodeFactSign" | null;
+export declare class OperationType<T extends Fact> implements IBuffer, IHintedObject {
     readonly id: string;
     readonly hint: Hint;
     readonly memo: string;
@@ -19,7 +20,8 @@ export declare class Operation<T extends Fact> implements IBuffer, IHintedObject
     get factSignType(): SigType;
     private getSigType;
     hashing(force?: "force"): Buffer;
+    sign(privateKey: string | Key, option?: string): void;
+    private signWithSigType;
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;
 }
-export {};

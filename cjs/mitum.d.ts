@@ -2,6 +2,7 @@ import { Account } from "./account";
 import { Currency } from "./currency";
 import { Block } from "./block";
 import { Contract } from "./contract";
+import { Operation } from "./operation";
 import { AxiosResponse } from "axios";
 export declare class Mitum {
     private _version;
@@ -11,6 +12,7 @@ export declare class Mitum {
     currency: Currency;
     block: Block;
     contract: Contract;
+    operation: Operation;
     constructor(provider?: string);
     version(): string;
     node(): Promise<AxiosResponse<any, any>>;

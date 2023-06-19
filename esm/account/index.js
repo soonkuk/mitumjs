@@ -4,7 +4,7 @@ import { CreateAccountsItem, CreateAccountsFact } from "./create";
 import { M2RandomN, M2EtherRandomN } from "./random";
 import { Keys, PubKey } from "./publicKey";
 import { M2KeyPair } from "./key";
-import { Operation } from "../types/operation";
+import { OperationType } from "../types/operation";
 import { KeyUpdaterFact } from "./keyUpdate";
 const BTC = "btc";
 const ETH = "ether";
@@ -52,7 +52,7 @@ export class Account {
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], BTC);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
-        return new Operation(fact);
+        return new OperationType(fact);
     }
     createEtherAccount(senderAddr, recieverPub, currentID, amount) {
         const keys = this.pubToKeys([{ key: recieverPub, weight: 100 }], 100);
@@ -60,7 +60,7 @@ export class Account {
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], ETH);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
-        return new Operation(fact);
+        return new OperationType(fact);
     }
     createMultiSig(senderAddr, recieverPubArr, currentID, amount, threshold) {
         const keys = this.pubToKeys(recieverPubArr, threshold);
@@ -68,7 +68,7 @@ export class Account {
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], BTC);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
-        return new Operation(fact);
+        return new OperationType(fact);
     }
     createEtherMultiSig(senderAddr, recieverPubArr, currentID, amount, threshold) {
         const keys = this.pubToKeys(recieverPubArr, threshold);
@@ -76,13 +76,13 @@ export class Account {
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], ETH);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
-        return new Operation(fact);
+        return new OperationType(fact);
     }
     updateKey(targetAddr, newPubArr, currentID, threshold) {
         const keys = this.pubToKeys(newPubArr, threshold);
         const token = new TimeStamp().UTC();
         const fact = new KeyUpdaterFact(token, targetAddr, keys, currentID);
-        return new Operation(fact);
+        return new OperationType(fact);
     }
     pubToKeys(pubKeys, threshold) {
         const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
