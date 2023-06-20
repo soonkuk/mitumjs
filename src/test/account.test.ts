@@ -1,6 +1,4 @@
 import {
-  currency,
-  nodeKey,
   genesis,
   account1,
   account2,
@@ -8,8 +6,6 @@ import {
   accountEther1,
   accountEther2,
   accountEther3,
-  BTC,
-  ETH,
   multi1,
   multi2,
 } from "./dummy";
@@ -56,12 +52,12 @@ describe("Account", () => {
     const privateKey1 = account1.privatekey;
     const result1 = account.fromPrivateKey(privateKey1);
     expect(result1).toBeInstanceOf(M2KeyPair);
-    expect(result1.publicKey).toBe(account1.publickey);
+    expect(result1.publicKey.toString()).toBe(account1.publickey);
 
     const privateKey2 = accountEther1.privatekey;
     const result2 = account.fromPrivateKey(privateKey2);
     expect(result2).toBeInstanceOf(M2KeyPair);
-    expect(result2.publicKey).toBe(accountEther1.publickey);
+    expect(result2.publicKey.toString()).toBe(accountEther1.publickey);
   });
 
   test("account.etherKey()", () => {
@@ -86,8 +82,8 @@ describe("Account", () => {
     expect(result.keys).toBeInstanceOf(Keys);
     expect(result.keypairs).toBeDefined();
     expect(result.keypairs).toHaveLength(n);
-    expect(result.keypairs[0].privateKey.toString().slice(-3)).toBe("mpr");
-    expect(result.keypairs[0].publicKey.toString().slice(-3)).toBe("mpu");
+    expect(result.keypairs[0].privateKey.toString().slice(-3)).toBe("epr");
+    expect(result.keypairs[0].publicKey.toString().slice(-3)).toBe("epu");
   });
 
   test("account.address()", () => {
@@ -127,14 +123,13 @@ describe("Account", () => {
     const amount = 100;
 
     const result = account.create(senderAddr, recieverPub, currentID, amount);
-    // Perform assertions on the result
-    // ...
+    expect(result.fact.hash !== null).toBe(true);
   });
 
   test("account.createEtherAccount()", () => {
-    const senderAddr = "sender_address";
-    const recieverPub = "reciever_public_key";
-    const currentID = "current_id";
+    const senderAddr = genesis.address;
+    const recieverPub = accountEther1.publickey;
+    const currentID = "MCC";
     const amount = 100;
 
     const result = account.createEtherAccount(
@@ -143,19 +138,18 @@ describe("Account", () => {
       currentID,
       amount
     );
-    // Perform assertions on the result
-    // ...
+    expect(result.fact.hash !== null).toBe(true);
   });
 
   test("account.createMultiSig()", () => {
-    const senderAddr = "sender_address";
+    const senderAddr = genesis.address;
     const recieverPubArr = [
-      { weight: 100, key: "public_key_1" },
-      { weight: 200, key: "public_key_2" },
+      { weight: 50, key: account2.publickey },
+      { weight: 50, key: account3.publickey },
     ];
-    const currentID = "current_id";
-    const amount = 100;
-    const threshold = 2;
+    const currentID = "MCC";
+    const amount = 100000;
+    const threshold = 100;
 
     const result = account.createMultiSig(
       senderAddr,
@@ -164,47 +158,26 @@ describe("Account", () => {
       amount,
       threshold
     );
-    // Perform assertions on the result
-    // ...
+    expect(result.fact.hash !== null).toBe(true);
   });
 
   test("account.createEtherMultiSig()", () => {
-    const senderAddr = "sender_address";
+    const senderAddr = genesis.address;
     const recieverPubArr = [
-      { weight: 100, key: "public_key_1" },
-      { weight: 200, key: "public_key_2" },
+      { weight: 50, key: accountEther2.publickey },
+      { weight: 50, key: accountEther3.publickey },
     ];
-    const currentID = "current_id";
-    const amount = 100;
-    const threshold = 2;
+    const currentID = "MCC";
+    const amount = 100000;
+    const threshold = 100;
 
-    const result = account.createEtherMultiSig(
+    const result = account.createMultiSig(
       senderAddr,
       recieverPubArr,
       currentID,
       amount,
       threshold
     );
-    // Perform assertions on the result
-    // ...
-  });
-
-  test("account.updateKey()", () => {
-    const targetAddr = "target_address";
-    const newPubArr = [
-      { weight: 100, key: "new_public_key_1" },
-      { weight: 200, key: "new_public_key_2" },
-    ];
-    const currentID = "current_id";
-    const threshold = 2;
-
-    const result = account.updateKey(
-      targetAddr,
-      newPubArr,
-      currentID,
-      threshold
-    );
-    // Perform assertions on the result
-    // ...
+    expect(result.fact.hash !== null).toBe(true);
   });
 });

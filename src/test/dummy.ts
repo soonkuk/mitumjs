@@ -12,6 +12,8 @@ const currency = {
   },
 };
 
+const node = "http://127.0.0.1:54320";
+
 const nodeKey = {
   privatekey: "BPtp8HQ7MaJ4eabMG6XUHK9sGcf9EZuDnnyt4v9Hpjuampr",
   publickey: "rhshczFyuvJa8Uf5tbowx7KkXfhLy3dv2djRin5ttt22mpu",
@@ -102,4 +104,5 @@ export {
   ETH,
   multi1,
   multi2,
+  node,
 };

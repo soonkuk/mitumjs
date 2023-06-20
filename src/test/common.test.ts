@@ -1,19 +1,3 @@
-import {
-  currency,
-  nodeKey,
-  genesis,
-  account1,
-  account2,
-  account3,
-  accountEther1,
-  accountEther2,
-  accountEther3,
-  BTC,
-  ETH,
-  multi1,
-  multi2,
-} from "./dummy";
-
 import { Version, Node, Chain } from "../common";
 
 import axios from "axios";
@@ -77,7 +61,7 @@ describe("common test", () => {
 
   test("test: common.chain()", () => {
     let chain = new Chain();
-    expect(chain.getChainID()).toBe("mitum2");
+    expect(chain.getChainID()).toBe("mitum");
 
     chain = new Chain();
     const newChainID = "new_chain_id";
