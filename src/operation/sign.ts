@@ -8,7 +8,7 @@ export function signOperation(
   privateKey: string | Key,
   operation: OperationType<Fact>,
   option?: string
-): OperationType<Fact> {
+): any {
   operation.sign(privateKey, option);
-  return operation;
+  return JSON.stringify(operation.toHintedObject());
 }

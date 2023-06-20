@@ -1,3 +1,19 @@
+import {
+  currency,
+  nodeKey,
+  genesis,
+  account1,
+  account2,
+  account3,
+  accountEther1,
+  accountEther2,
+  accountEther3,
+  BTC,
+  ETH,
+  multi1,
+  multi2,
+} from "./dummy";
+
 import { Version, Node, Chain } from "../common";
 
 import axios from "axios";

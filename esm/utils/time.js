@@ -70,7 +70,7 @@ export class FullTimeStamp extends TimeStamp {
             this.r = "";
         }
         else {
-            this.r = s.substring(dot, s.length - 1);
+            this.r = s.substring(dot, s.length);
         }
     }
     static from(t) {

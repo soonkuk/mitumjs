@@ -64,7 +64,7 @@ export class OperationType<T extends Fact> implements IBuffer, IHintedObject {
           Assert.check(
             this.fact.items !== undefined &&
               (this.fact.items[0] as CurrencyItem).addressType !== "",
-            MitumError.detail(ECODE.INVALID_FACTSIGN, "m2 factsign for m1 fact")
+            MitumError.detail(ECODE.INVALID_FACTSIGN, "m2 factsign")
           );
           break;
         default:
@@ -115,13 +115,7 @@ export class OperationType<T extends Fact> implements IBuffer, IHintedObject {
   }
 
   hashing(force?: "force") {
-    let b: Buffer;
-    switch (this.getSigType(this._factSigns)) {
-      case "M2FactSign":
-      case "M2NodeFactSign":
-      default:
-        b = sha3(this.toBuffer());
-    }
+    let b: Buffer = sha3(this.toBuffer());
 
     if (force && force === "force") {
       this._hash = b;
@@ -151,10 +145,7 @@ export class OperationType<T extends Fact> implements IBuffer, IHintedObject {
       Assert.check(
         this.fact.items !== undefined &&
           (this.fact.items[0] as CurrencyItem).addressType !== "",
-        MitumError.detail(
-          ECODE.FAIL_SIGN,
-          "trying to sign m1 fact with m2 keypair"
-        )
+        MitumError.detail(ECODE.FAIL_SIGN, "m2 keypair")
       );
     }
 
@@ -215,7 +206,8 @@ export class OperationType<T extends Fact> implements IBuffer, IHintedObject {
       );
     };
 
-    const hash = this._hash ? this._hash : Buffer.from([]);
+    const hash = this.fact.hash;
+    //  const hash = this._hash ? this._hash : Buffer.from([]);
 
     if (sigType) {
       switch (sigType) {

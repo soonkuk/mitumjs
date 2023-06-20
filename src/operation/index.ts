@@ -34,12 +34,13 @@ export class Operation {
     privatekey: string,
     operation: OperationType<Fact>,
     option?: string
-  ): OperationType<Fact> {
+  ): any {
     return signOperation(privatekey, operation, option);
   }
 
+  // NOTE: The send function is an asynchronous function. (return value: Promise Obj)
   send(
-    signedOperation: OperationType<Fact>,
+    signedOperation: any,
     headers?: { [i: string]: any }
   ): Promise<AxiosResponse> {
     return sendOperation(signedOperation, this._node, headers);

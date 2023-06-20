@@ -23,7 +23,7 @@
 const MITUM_VERSION = "v0.0.1";
 
 /** @dev The network name of mitum-blockchain */
-const MITUM_NETWORK_ID = "mitum2";
+const MITUM_NETWORK_ID = "mitum";
 
 /** @dev The sdk version of mitum.js */
 const MITUM_JS_VERSION = "v1.0.0 Prehistoric";

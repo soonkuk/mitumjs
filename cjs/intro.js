@@ -25,7 +25,7 @@ exports.MITUM_JS_VERSION = exports.MITUM_NETWORK_ID = exports.MITUM_VERSION = vo
 const MITUM_VERSION = "v0.0.1";
 exports.MITUM_VERSION = MITUM_VERSION;
 /** @dev The network name of mitum-blockchain */
-const MITUM_NETWORK_ID = "mitum2";
+const MITUM_NETWORK_ID = "mitum";
 exports.MITUM_NETWORK_ID = MITUM_NETWORK_ID;
 /** @dev The sdk version of mitum.js */
 const MITUM_JS_VERSION = "v1.0.0 Prehistoric";

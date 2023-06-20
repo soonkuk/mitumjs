@@ -13,6 +13,7 @@ export declare abstract class KeyPair {
     protected signer: Uint8Array | ethWallet;
     protected static generator: IKeyGenerator;
     constructor(privateKey: Key);
+    abstract sign(msg: string | Buffer): Buffer;
     protected abstract getSigner(): Uint8Array | ethWallet;
     protected abstract getPub(): Key;
     static random<T extends KeyPair>(option: KeyPairType): T;

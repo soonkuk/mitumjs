@@ -32,7 +32,7 @@ export class OperationType {
                 case "M2FactSign":
                 case "M2NodeFactSign":
                     Assert.check(this.fact.items !== undefined &&
-                        this.fact.items[0].addressType !== "", MitumError.detail(ECODE.INVALID_FACTSIGN, "m2 factsign for m1 fact"));
+                        this.fact.items[0].addressType !== "", MitumError.detail(ECODE.INVALID_FACTSIGN, "m2 factsign"));
                     break;
                 default:
                     throw MitumError.detail("EC_INVALID_SIG_TYPE", "invalid factsign type in factsigns");
@@ -62,13 +62,7 @@ export class OperationType {
         return Array.from(set)[0];
     }
     hashing(force) {
-        let b;
-        switch (this.getSigType(this._factSigns)) {
-            case "M2FactSign":
-            case "M2NodeFactSign":
-            default:
-                b = sha3(this.toBuffer());
-        }
+        let b = sha3(this.toBuffer());
         if (force && force === "force") {
             this._hash = b;
         }
@@ -86,7 +80,7 @@ export class OperationType {
             (this.fact instanceof CreateAccountsFact ||
                 this.fact instanceof CreateContractAccountsFact)) {
             Assert.check(this.fact.items !== undefined &&
-                this.fact.items[0].addressType !== "", MitumError.detail(ECODE.FAIL_SIGN, "trying to sign m1 fact with m2 keypair"));
+                this.fact.items[0].addressType !== "", MitumError.detail(ECODE.FAIL_SIGN, "m2 keypair"));
         }
         const factSign = this.signWithSigType(sigType, keypair, option ? new NodeAddress(option) : undefined);
         const idx = this._factSigns
@@ -114,7 +108,8 @@ export class OperationType {
                 now.toBuffer(),
             ])), now.toString());
         };
-        const hash = this._hash ? this._hash : Buffer.from([]);
+        const hash = this.fact.hash;
+        //  const hash = this._hash ? this._hash : Buffer.from([]);
         if (sigType) {
             switch (sigType) {
                 case "M2FactSign":

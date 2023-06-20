@@ -38,7 +38,7 @@ class OperationType {
                 case "M2FactSign":
                 case "M2NodeFactSign":
                     error_1.Assert.check(this.fact.items !== undefined &&
-                        this.fact.items[0].addressType !== "", error_1.MitumError.detail(error_1.ECODE.INVALID_FACTSIGN, "m2 factsign for m1 fact"));
+                        this.fact.items[0].addressType !== "", error_1.MitumError.detail(error_1.ECODE.INVALID_FACTSIGN, "m2 factsign"));
                     break;
                 default:
                     throw error_1.MitumError.detail("EC_INVALID_SIG_TYPE", "invalid factsign type in factsigns");
@@ -68,13 +68,7 @@ class OperationType {
         return Array.from(set)[0];
     }
     hashing(force) {
-        let b;
-        switch (this.getSigType(this._factSigns)) {
-            case "M2FactSign":
-            case "M2NodeFactSign":
-            default:
-                b = (0, math_1.sha3)(this.toBuffer());
-        }
+        let b = (0, math_1.sha3)(this.toBuffer());
         if (force && force === "force") {
             this._hash = b;
         }
@@ -92,7 +86,7 @@ class OperationType {
             (this.fact instanceof create_2.CreateAccountsFact ||
                 this.fact instanceof create_1.CreateContractAccountsFact)) {
             error_1.Assert.check(this.fact.items !== undefined &&
-                this.fact.items[0].addressType !== "", error_1.MitumError.detail(error_1.ECODE.FAIL_SIGN, "trying to sign m1 fact with m2 keypair"));
+                this.fact.items[0].addressType !== "", error_1.MitumError.detail(error_1.ECODE.FAIL_SIGN, "m2 keypair"));
         }
         const factSign = this.signWithSigType(sigType, keypair, option ? new address_1.NodeAddress(option) : undefined);
         const idx = this._factSigns
@@ -120,7 +114,8 @@ class OperationType {
                 now.toBuffer(),
             ])), now.toString());
         };
-        const hash = this._hash ? this._hash : Buffer.from([]);
+        const hash = this.fact.hash;
+        //  const hash = this._hash ? this._hash : Buffer.from([]);
         if (sigType) {
             switch (sigType) {
                 case "M2FactSign":

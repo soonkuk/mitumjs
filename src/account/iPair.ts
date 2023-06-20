@@ -35,7 +35,7 @@ export abstract class KeyPair {
       nobleSha256(secp256k1.utils.concatBytes(...msgs));
   }
 
-  // abstract sign(msg: string | Buffer): Buffer;
+  abstract sign(msg: string | Buffer): Buffer;
 
   protected abstract getSigner(): Uint8Array | ethWallet;
   protected abstract getPub(): Key;

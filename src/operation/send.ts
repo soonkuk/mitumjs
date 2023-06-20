@@ -1,10 +1,7 @@
-import { OperationType } from "../types/operation";
-import { Fact } from "../types/fact";
-
 import axios, { AxiosResponse } from "axios";
 
 export async function sendOperation(
-  signedOperation: OperationType<Fact>,
+  signedOperation: any,
   provider: string,
   headers?: { [i: string]: any }
 ): Promise<AxiosResponse> {

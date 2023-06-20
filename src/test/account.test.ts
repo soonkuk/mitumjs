@@ -1,4 +1,18 @@
-import { account1, account2, accountEther } from "./dummy";
+import {
+  currency,
+  nodeKey,
+  genesis,
+  account1,
+  account2,
+  account3,
+  accountEther1,
+  accountEther2,
+  accountEther3,
+  BTC,
+  ETH,
+  multi1,
+  multi2,
+} from "./dummy";
 
 import { Account } from "../account";
 import { M2KeyPair } from "../account/key";
@@ -44,10 +58,10 @@ describe("Account", () => {
     expect(result1).toBeInstanceOf(M2KeyPair);
     expect(result1.publicKey).toBe(account1.publickey);
 
-    const privateKey2 = account2.privatekey;
+    const privateKey2 = accountEther1.privatekey;
     const result2 = account.fromPrivateKey(privateKey2);
     expect(result2).toBeInstanceOf(M2KeyPair);
-    expect(result2.publicKey).toBe(account2.publickey);
+    expect(result2.publicKey).toBe(accountEther1.publickey);
   });
 
   test("account.etherKey()", () => {
@@ -87,35 +101,29 @@ describe("Account", () => {
   });
 
   test("account.etherAddress()", () => {
-    const pubKey = accountEther.public;
+    const pubKey = accountEther1.publickey;
     const result = account.etherAddress(pubKey);
-    expect(result).toBe(accountEther.address);
+    expect(result).toBe(accountEther1.address);
   });
 
   test("account.addressForMultiSig()", () => {
-    // const pubKeys = [
-    //   { key: "abcdef1234567890", weight: 100 },
-    //   { key: "1234567890abcdef", weight: 200 },
-    // ];
-    // const threshold = 2;
-    // const result = account.addressForMultiSig(pubKeys, threshold);
-    // expect(result).toBe("expected_multisig_address");
+    const pubKeys = multi1;
+    const threshold = 100;
+    const result = account.addressForMultiSig(pubKeys, threshold);
+    expect(result).toBe("6oCL7apRgGuH78PAvahZdRQW5LsyKxz8YbJsVWw3Pasvmca");
   });
 
   test("account.etherAddressForMultiSig()", () => {
-    // const pubKeys = [
-    //   { weight: 100, key: "abcdef1234567890" },
-    //   { weight: 200, key: "1234567890abcdef" },
-    // ];
-    // const threshold = 2;
-    // const result = account.etherAddressForMultiSig(pubKeys, threshold);
-    // expect(result).toBe("expected_multisig_ether_address");
+    const pubKeys = multi2;
+    const threshold = 100;
+    const result = account.etherAddressForMultiSig(pubKeys, threshold);
+    expect(result).toBe("1b9c04fc629cac2525847c87be3e9ea7201f154eeca");
   });
 
   test("account.create()", () => {
-    const senderAddr = "sender_address";
-    const recieverPub = "reciever_public_key";
-    const currentID = "current_id";
+    const senderAddr = genesis.address;
+    const recieverPub = account1.publickey;
+    const currentID = "MCC";
     const amount = 100;
 
     const result = account.create(senderAddr, recieverPub, currentID, amount);
