@@ -11,7 +11,7 @@ export class Mitum {
         this._chain = new Chain();
         this.account = new Account(provider);
         this.currency = new Currency(provider);
-        this.block = new Block();
+        this.block = new Block(provider);
         this.contract = new Contract();
         this.operation = new Operation(provider);
     }
@@ -25,6 +25,7 @@ export class Mitum {
         this._node.setNode(provider);
         this.account = new Account(provider);
         this.currency = new Currency(provider);
+        this.block = new Block(provider);
         this.operation = new Operation(provider);
     }
     getNode() {

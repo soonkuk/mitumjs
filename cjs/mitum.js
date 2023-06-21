@@ -14,7 +14,7 @@ class Mitum {
         this._chain = new common_1.Chain();
         this.account = new account_1.Account(provider);
         this.currency = new currency_1.Currency(provider);
-        this.block = new block_1.Block();
+        this.block = new block_1.Block(provider);
         this.contract = new contract_1.Contract();
         this.operation = new operation_1.Operation(provider);
     }
@@ -28,6 +28,7 @@ class Mitum {
         this._node.setNode(provider);
         this.account = new account_1.Account(provider);
         this.currency = new currency_1.Currency(provider);
+        this.block = new block_1.Block(provider);
         this.operation = new operation_1.Operation(provider);
     }
     getNode() {

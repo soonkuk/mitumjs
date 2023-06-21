@@ -9,4 +9,20 @@ const cCurrency = mitum.currency.transfer(
   1000
 );
 
-console.log(JSON.stringify(cCurrency.toHintedObject()));
+// const key1 = mitum.account.key(
+//   "adsfkjkasjfakdsjfkasjfkasjdfklasjfklasjfdlksajfaklsf"
+// );
+// const key2 = mitum.account.keys(10);
+// const address = mitum.account.address(
+//   "diLUcZugeDFW6ftQdcjdz8Ks1KBGiACo9GAcKQUgwFdfmpu"
+// );
+// // console.log(JSON.stringify(cCurrency.toHintedObject()));
+// console.log(address);
+
+const getAAA = async () => {
+  const info = await mitum.account.get(
+    "7aHM8e7DcN5moToy9JyHijG7iM4sY33VVNewfvtTZPhemca"
+  );
+  console.log(info.data._embedded.balance);
+};
+getAAA();
