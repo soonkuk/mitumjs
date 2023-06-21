@@ -1,9 +1,13 @@
+import { OperationType } from "../types/operation";
+import { Fact } from "../types/fact";
 import { Key, Keys } from "./publicKey";
 import { KeyPair } from "./iPair";
 import { M2KeyPair } from "./key";
-import { OperationType } from "../types/operation";
-import { Fact } from "../types/fact";
+import { AxiosResponse } from "axios";
 export declare class Account {
+    private _node;
+    constructor(provider?: string);
+    private _setNode;
     key(seed?: string): M2KeyPair;
     keys(n: number): {
         keys: Keys;
@@ -40,4 +44,7 @@ export declare class Account {
         key: string;
     }>, currentID: string, threshold: number): OperationType<Fact>;
     private pubToKeys;
+    get(address: string): Promise<AxiosResponse>;
+    getOperation(address: string): Promise<AxiosResponse>;
+    getByPublickey(publickey: string): Promise<AxiosResponse>;
 }

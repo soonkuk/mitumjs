@@ -1,17 +1,40 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Account = void 0;
+const operation_1 = require("../types/operation");
 const property_1 = require("../types/property");
+const validation_1 = require("../utils/validation");
 const time_1 = require("../utils/time");
 const create_1 = require("./create");
 const random_1 = require("./random");
 const publicKey_1 = require("./publicKey");
-const key_1 = require("./key");
-const operation_1 = require("../types/operation");
 const keyUpdate_1 = require("./keyUpdate");
+const information_1 = __importDefault(require("./information"));
+const key_1 = require("./key");
 const BTC = "btc";
 const ETH = "ether";
 class Account {
+    constructor(provider) {
+        this._node = "";
+        this._setNode(provider);
+    }
+    _setNode(provider) {
+        if ((0, validation_1.isIPAddress)(provider)) {
+            this._node = provider;
+        }
+    }
     key(seed) {
         if (seed === undefined) {
             return key_1.M2KeyPair.random(BTC);
@@ -90,6 +113,21 @@ class Account {
     pubToKeys(pubKeys, threshold) {
         const pubs = pubKeys.map((pub) => new publicKey_1.PubKey(pub.key, pub.weight));
         return new publicKey_1.Keys(pubs, threshold);
+    }
+    get(address) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield information_1.default.getAddressInfo(this._node, address);
+        });
+    }
+    getOperation(address) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield information_1.default.getOperationsByAddress(this._node, address);
+        });
+    }
+    getByPublickey(publickey) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield information_1.default.getAccountInfoByPublickey(this._node, publickey);
+        });
     }
 }
 exports.Account = Account;

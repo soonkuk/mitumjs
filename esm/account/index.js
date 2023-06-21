@@ -1,14 +1,34 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import { OperationType } from "../types/operation";
 import { Amount } from "../types/property";
+import { isIPAddress } from "../utils/validation";
 import { TimeStamp } from "../utils/time";
 import { CreateAccountsItem, CreateAccountsFact } from "./create";
 import { M2RandomN, M2EtherRandomN } from "./random";
 import { Keys, PubKey } from "./publicKey";
-import { M2KeyPair } from "./key";
-import { OperationType } from "../types/operation";
 import { KeyUpdaterFact } from "./keyUpdate";
+import accountInfo from "./information";
+import { M2KeyPair } from "./key";
 const BTC = "btc";
 const ETH = "ether";
 export class Account {
+    constructor(provider) {
+        this._node = "";
+        this._setNode(provider);
+    }
+    _setNode(provider) {
+        if (isIPAddress(provider)) {
+            this._node = provider;
+        }
+    }
     key(seed) {
         if (seed === undefined) {
             return M2KeyPair.random(BTC);
@@ -87,6 +107,21 @@ export class Account {
     pubToKeys(pubKeys, threshold) {
         const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
         return new Keys(pubs, threshold);
+    }
+    get(address) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield accountInfo.getAddressInfo(this._node, address);
+        });
+    }
+    getOperation(address) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield accountInfo.getOperationsByAddress(this._node, address);
+        });
+    }
+    getByPublickey(publickey) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield accountInfo.getAccountInfoByPublickey(this._node, publickey);
+        });
     }
 }
 //# sourceMappingURL=index.js.map

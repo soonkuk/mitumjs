@@ -14,7 +14,7 @@ export class Block {
     // It's possible to obtain 10 pieces of information,
     // along with a link for retrieving consecutive blocks-information.
     getAll() {
-        return blockInfo.getAllBlockInfo(this._node);
+        return blockInfo.getAllBlocksInfo(this._node);
     }
     // get block information by block number or hash
     get(block) {
@@ -24,7 +24,7 @@ export class Block {
         return blockInfo.getBlockByHash(this._node, block);
     }
     // get the operations contained in a specific block.
-    getOperations(block) {
+    getOperation(block) {
         return blockInfo.getOperations(this._node, block);
     }
 }

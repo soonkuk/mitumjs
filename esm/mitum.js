@@ -9,7 +9,7 @@ export class Mitum {
         this._version = new Version();
         this._node = new Node(provider);
         this._chain = new Chain();
-        this.account = new Account();
+        this.account = new Account(provider);
         this.currency = new Currency(provider);
         this.block = new Block();
         this.contract = new Contract();
@@ -23,6 +23,7 @@ export class Mitum {
     }
     setNode(provider) {
         this._node.setNode(provider);
+        this.account = new Account(provider);
         this.currency = new Currency(provider);
         this.operation = new Operation(provider);
     }

@@ -28,6 +28,7 @@ class Operation {
     sign(privatekey, operation, option) {
         return (0, sign_1.signOperation)(privatekey, operation, option);
     }
+    // NOTE: The send function is an asynchronous function. (return value: Promise Obj)
     send(signedOperation, headers) {
         return (0, send_1.sendOperation)(signedOperation, this._node, headers);
     }

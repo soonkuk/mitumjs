@@ -4,5 +4,5 @@ export declare class Block {
     private _setNode;
     getAll(): any;
     get(block: number | string): any;
-    getOperations(block: number): any;
+    getOperation(block: number): any;
 }

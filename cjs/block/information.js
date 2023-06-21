@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 exports.default = {
-    getAllBlockInfo(provider) {
+    getAllBlocksInfo(provider) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
                 return Promise.reject(new Error("RPC-URL is not provided."));

@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import axios from "axios";
 export default {
-    getAllBlocksInfo(provider) {
+    getAddressInfo(provider, address) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
                 return Promise.reject(new Error("RPC-URL is not provided."));
             }
             try {
-                const res = yield axios.get(`${provider}/block/manifests`);
+                const res = yield axios.get(`${provider}/account/${address}`);
                 return res;
             }
             catch (error) {
@@ -23,13 +23,13 @@ export default {
             }
         });
     },
-    getBlockByHeight(provider, height) {
+    getOperationsByAddress(provider, address) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
                 return Promise.reject(new Error("RPC-URL is not provided."));
             }
             try {
-                const res = yield axios.get(`${provider}/block/${height}/manifest`);
+                const res = yield axios.get(`${provider}/account/${address}/operations`);
                 return res;
             }
             catch (error) {
@@ -37,27 +37,13 @@ export default {
             }
         });
     },
-    getBlockByHash(provider, blockhash) {
+    getAccountInfoByPublickey(provider, publickey) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
                 return Promise.reject(new Error("RPC-URL is not provided."));
             }
             try {
-                const res = yield axios.get(`${provider}/block/${blockhash}/manifest`);
-                return res;
-            }
-            catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
-            }
-        });
-    },
-    getOperations(provider, block) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (provider === "") {
-                return Promise.reject(new Error("RPC-URL is not provided."));
-            }
-            try {
-                const res = yield axios.get(`${provider}/block/${block}/operations`);
+                const res = yield axios.get(`${provider}/accounts?publickey=${publickey}`);
                 return res;
             }
             catch (error) {

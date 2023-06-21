@@ -20,7 +20,7 @@ class Block {
     // It's possible to obtain 10 pieces of information,
     // along with a link for retrieving consecutive blocks-information.
     getAll() {
-        return information_1.default.getAllBlockInfo(this._node);
+        return information_1.default.getAllBlocksInfo(this._node);
     }
     // get block information by block number or hash
     get(block) {
@@ -30,7 +30,7 @@ class Block {
         return information_1.default.getBlockByHash(this._node, block);
     }
     // get the operations contained in a specific block.
-    getOperations(block) {
+    getOperation(block) {
         return information_1.default.getOperations(this._node, block);
     }
 }
