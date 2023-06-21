@@ -19,6 +19,6 @@ export declare class Mitum {
     setNode(provider?: string): void;
     getNode(): string;
     chain(): string;
-    setChain(url: string): void;
+    setChain(cID: string): void;
 }
 export default Mitum;

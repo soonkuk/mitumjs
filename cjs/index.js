@@ -37,8 +37,8 @@ class Mitum {
     chain() {
         return this._chain.getChainID();
     }
-    setChain(url) {
-        this._chain.setChainID(url);
+    setChain(cID) {
+        this._chain.setChainID(cID);
     }
 }
 exports.Mitum = Mitum;
