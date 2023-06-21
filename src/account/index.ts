@@ -1,21 +1,36 @@
+import { OperationType } from "../types/operation";
 import { KeyPairType } from "../types/address";
 import { Amount } from "../types/property";
+import { isIPAddress } from "../utils/validation";
 import { TimeStamp } from "../utils/time";
+import { Fact } from "../types/fact";
 
 import { CreateAccountsItem, CreateAccountsFact } from "./create";
 import { M2RandomN, M2EtherRandomN } from "./random";
 import { Key, Keys, PubKey } from "./publicKey";
+import { KeyUpdaterFact } from "./keyUpdate";
+import accountInfo from "./information";
 import { KeyPair } from "./iPair";
 import { M2KeyPair } from "./key";
 
-import { OperationType } from "../types/operation";
-import { KeyUpdaterFact } from "./keyUpdate";
-import { Fact } from "../types/fact";
+import { AxiosResponse } from "axios";
 
 const BTC: KeyPairType = "btc";
 const ETH: KeyPairType = "ether";
 
 export class Account {
+  private _node: string = "";
+
+  constructor(provider?: string) {
+    this._setNode(provider);
+  }
+
+  private _setNode(provider?: string) {
+    if (isIPAddress(provider)) {
+      this._node = provider as string;
+    }
+  }
+
   key(seed?: string): M2KeyPair {
     if (seed === undefined) {
       return M2KeyPair.random(BTC);
@@ -164,5 +179,17 @@ export class Account {
   ): Keys {
     const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
     return new Keys(pubs, threshold);
+  }
+
+  async get(address: string): Promise<AxiosResponse> {
+    return await accountInfo.getAddressInfo(this._node, address);
+  }
+
+  async getOperation(address: string): Promise<AxiosResponse> {
+    return await accountInfo.getOperationsByAddress(this._node, address);
+  }
+
+  async getByPublickey(publickey: string): Promise<AxiosResponse> {
+    return await accountInfo.getAccountInfoByPublickey(this._node, publickey);
   }
 }

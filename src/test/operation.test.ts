@@ -7,7 +7,13 @@ import { node, genesis, account1, account2 } from "./dummy";
 import { OperationType } from "../types/operation";
 import { AxiosResponse } from "axios";
 
-const provider = node;
+jest.mock("../operation/send", () => ({
+  sendOperation: jest.fn().mockResolvedValue({ data: "mocked" }),
+}));
+jest.mock("../operation/information", () => ({
+  getAllOperationsInfo: jest.fn().mockResolvedValue({ data: "mocked" }),
+  getOperationInfo: jest.fn().mockResolvedValue({ data: "mocked" }),
+}));
 
 describe("Currency", () => {
   let operation: Operation;
@@ -20,10 +26,6 @@ describe("Currency", () => {
     jest.clearAllMocks();
   });
 
-  jest.mock("../operation/send", () => ({
-    sendOperation: jest.fn().mockResolvedValue({ data: "mocked" }),
-  }));
-
   test("create-account operation", () => {
     const sender = genesis.address;
     const receiver = account1.publickey;
@@ -32,7 +34,6 @@ describe("Currency", () => {
 
     const privateKey = genesis.privatekey;
 
-    // oper 생성 => sign => send 까지 모두 한 번에
     const rawOperation = new Account(node).create(
       sender,
       receiver,
@@ -42,16 +43,34 @@ describe("Currency", () => {
     expect(rawOperation).toBeInstanceOf(OperationType);
 
     const signedOperation = operation.sign(privateKey, rawOperation);
-    expect(signedOperation).toBeInstanceOf(OperationType);
+    expect(signedOperation.signs !== null).toBe(true);
+  });
 
-    expect(signedOperation.toHintedObject().signs !== undefined).toBe(true);
+  it("sendOperation() by create-account", async () => {
+    const sender = genesis.address;
+    const receiver = account1.publickey;
+    const currencyID = "MCC";
+    const amount = 1000;
 
-    it("sendOperation() by create-account", async () => {
-      const response: AxiosResponse = await operation.send(signedOperation);
-      expect(sendOperation).toHaveBeenCalledTimes(1);
-      expect(sendOperation).toHaveBeenCalledWith(privateKey, signedOperation);
-      expect(response.data).toEqual("mocked");
-    });
+    const privateKey = genesis.privatekey;
+
+    const rawOperation = new Account(node).create(
+      sender,
+      receiver,
+      currencyID,
+      amount
+    );
+
+    const signedOperation = operation.sign(privateKey, rawOperation);
+
+    const response: AxiosResponse = await operation.send(signedOperation);
+    expect(sendOperation).toHaveBeenCalledTimes(1);
+    expect(sendOperation).toHaveBeenCalledWith(
+      signedOperation,
+      node,
+      undefined
+    );
+    expect(response.data).toEqual("mocked");
   });
 
   test("currency-transfer operation", () => {
@@ -62,7 +81,6 @@ describe("Currency", () => {
 
     const privateKey = account1.privatekey;
 
-    // oper 생성 => sign => send 까지 모두 한 번에
     const rawOperation = new Currency(node).transfer(
       sender,
       receiver,
@@ -72,24 +90,37 @@ describe("Currency", () => {
     expect(rawOperation).toBeInstanceOf(OperationType);
 
     const signedOperation = operation.sign(privateKey, rawOperation);
-    expect(signedOperation).toBeInstanceOf(OperationType);
-
-    expect(signedOperation.toHintedObject().signs !== undefined).toBe(true);
-
-    it("sendOperation() by currency-transfer", async () => {
-      const response: AxiosResponse = await operation.send(signedOperation);
-      expect(sendOperation).toHaveBeenCalledTimes(1);
-      expect(sendOperation).toHaveBeenCalledWith(privateKey, signedOperation);
-      expect(response.data).toEqual("mocked");
-    });
+    expect(signedOperation.signs !== null).toBe(true);
   });
 
-  jest.mock("../operation/information", () => ({
-    getAllOperationsInfo: jest.fn().mockResolvedValue({ data: "mocked" }),
-    getOperationInfo: jest.fn().mockResolvedValue({ data: "mocked" }),
-  }));
+  it("sendOperation() by currency-transfer", async () => {
+    const sender = account1.address;
+    const receiver = account2.address;
+    const currencyID = "MCC";
+    const amount = 1000;
 
-  // operation 조회. it 함수
+    const privateKey = account1.privatekey;
+
+    const rawOperation = new Currency(node).transfer(
+      sender,
+      receiver,
+      currencyID,
+      amount
+    );
+    expect(rawOperation).toBeInstanceOf(OperationType);
+
+    const signedOperation = operation.sign(privateKey, rawOperation);
+
+    const response: AxiosResponse = await operation.send(signedOperation);
+    expect(sendOperation).toHaveBeenCalledTimes(1);
+    expect(sendOperation).toHaveBeenCalledWith(
+      signedOperation,
+      node,
+      undefined
+    );
+    expect(response.data).toEqual("mocked");
+  });
+
   it("block.getAll()", async () => {
     await operation.getAll();
 
