@@ -36,9 +36,15 @@ export class CreateContractAccountsItem extends CurrencyItem {
         ]);
     }
     toHintedObject() {
-        const item = Object.assign(Object.assign({}, super.toHintedObject()), { keys: this.keys.toHintedObject() });
+        const item = {
+            ...super.toHintedObject(),
+            keys: this.keys.toHintedObject(),
+        };
         if (this.addressSuffix) {
-            return Object.assign(Object.assign({}, item), { addrtype: this.addressSuffix });
+            return {
+                ...item,
+                addrtype: this.addressSuffix,
+            };
         }
         return item;
     }

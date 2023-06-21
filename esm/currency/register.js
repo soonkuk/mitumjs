@@ -10,7 +10,10 @@ export class CurrencyRegisterFact extends NodeFact {
         return Buffer.concat([this.token.toBuffer(), this.design.toBuffer()]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { currency: this.design.toHintedObject() });
+        return {
+            ...super.toHintedObject(),
+            currency: this.design.toHintedObject(),
+        };
     }
     get operationHint() {
         return HINT.CURRENCY_REGISTER_OPERATION;

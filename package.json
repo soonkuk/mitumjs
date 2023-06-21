@@ -1,7 +1,7 @@
 {
   "name": "mitum",
   "version": "1.0.0",
-  "description": "framework for mitum2 network",
+  "description": "framework for mitum network",
   "main": "index.js",
   "module": "esm/index.js",
   "engines": {
@@ -24,6 +24,9 @@
     "build:esm": "tsc --p ./esm/tsconfig.json"
   },
   "devDependencies": {
+    "@babel/cli": "^7.22.5",
+    "@babel/core": "^7.22.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.22.5",
     "@babel/preset-env": "^7.22.4",
     "@babel/preset-typescript": "^7.21.5",
     "@jest/globals": "^29.5.0",

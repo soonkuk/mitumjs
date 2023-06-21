@@ -9,10 +9,13 @@ export class CurrencyItem extends Item {
         Assert.check(new Set(amounts.map((am) => am.currency.toString())).size ===
             amounts.length, MitumError.detail(ECODE.INVALID_AMOUNTS, "duplicate amounts found in amounts"));
         this.amounts = amounts;
-        this.addressType = addressType !== null && addressType !== void 0 ? addressType : "";
+        this.addressType = addressType ?? "";
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { amounts: this.amounts.sort(SortFunc).map((am) => am.toHintedObject()) });
+        return {
+            ...super.toHintedObject(),
+            amounts: this.amounts.sort(SortFunc).map((am) => am.toHintedObject()),
+        };
     }
 }
 //# sourceMappingURL=currencyItem.js.map

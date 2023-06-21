@@ -44,7 +44,11 @@ export class OperationFact extends Fact {
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { sender: this.sender.toString(), items: this.items.sort(SortFunc).map((i) => i.toHintedObject()) });
+        return {
+            ...super.toHintedObject(),
+            sender: this.sender.toString(),
+            items: this.items.sort(SortFunc).map((i) => i.toHintedObject()),
+        };
     }
 }
 export class NodeFact extends Fact {

@@ -15,7 +15,11 @@ export class SuffrageInflationItem extends Item {
         return Buffer.concat([this.receiver.toBuffer(), this.amount.toBuffer()]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { receiver: this.receiver.toString(), amount: this.amount.toHintedObject() });
+        return {
+            ...super.toHintedObject(),
+            receiver: this.receiver.toString(),
+            amount: this.amount.toHintedObject(),
+        };
     }
     toString() {
         return `${this.receiver.toString()}-${this.amount.currency.toString()}`;
@@ -36,7 +40,10 @@ export class SuffrageInflationFact extends NodeFact {
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { items: this.items.sort(SortFunc).map((it) => it.toHintedObject()) });
+        return {
+            ...super.toHintedObject(),
+            items: this.items.sort(SortFunc).map((it) => it.toHintedObject()),
+        };
     }
     get operationHint() {
         return HINT.SUFFRAGE_INFLATION_OPERATION;

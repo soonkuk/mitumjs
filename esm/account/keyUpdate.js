@@ -19,7 +19,12 @@ export class KeyUpdaterFact extends Fact {
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { target: this.target.toString(), keys: this.keys.toHintedObject(), currency: this.currency.toString() });
+        return {
+            ...super.toHintedObject(),
+            target: this.target.toString(),
+            keys: this.keys.toHintedObject(),
+            currency: this.currency.toString(),
+        };
     }
     get operationHint() {
         return HINT.KEY_UPDATER_OPERATION;

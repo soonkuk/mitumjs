@@ -53,7 +53,7 @@ export class MitumError extends Error {
         return new MitumError(ECODE.UNKNOWN);
     }
     static detail(code, msg) {
-        return new MitumError(code !== null && code !== void 0 ? code : ECODE.UNKNOWN, msg);
+        return new MitumError(code ?? ECODE.UNKNOWN, msg);
     }
 }
 export class Assert {
@@ -62,7 +62,7 @@ export class Assert {
         this.error = error;
     }
     static get(condition, error) {
-        return new Assert(condition, error !== null && error !== void 0 ? error : MitumError.new());
+        return new Assert(condition, error ?? MitumError.new());
     }
     static check(condition, error) {
         Assert.get(condition, error).excute();
@@ -90,7 +90,7 @@ export class StringAssert {
         this.condition = undefined;
     }
     static with(s, error) {
-        return new StringAssert(s, error !== null && error !== void 0 ? error : MitumError.new());
+        return new StringAssert(s, error ?? MitumError.new());
     }
     union(condition) {
         if (this.condition !== undefined) {

@@ -1,6 +1,6 @@
-const { Mitum } = require("./cjs/mitum");
+const Mitum = require("./cjs");
 
-const mitum = new Mitum("http://127.0.0.1:54320");
+const mitum = new Mitum.Mitum("http://127.0.0.1:54320");
 
 const cCurrency = mitum.currency.transfer(
   "7aHM8e7DcN5moToy9JyHijG7iM4sY33VVNewfvtTZPhemca",

@@ -31,7 +31,10 @@ export class TransfersItem extends CurrencyItem {
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { receiver: this.receiver.toString() });
+        return {
+            ...super.toHintedObject(),
+            receiver: this.receiver.toString(),
+        };
     }
     toString() {
         return this.receiver.toString();

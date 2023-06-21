@@ -88,9 +88,16 @@ export class FixedFeeer extends Feeer {
         ]);
     }
     toHintedObject() {
-        const feeer = Object.assign(Object.assign({}, super.toHintedObject()), { receiver: this.receiver.toString(), amount: this.amount.toString() });
+        const feeer = {
+            ...super.toHintedObject(),
+            receiver: this.receiver.toString(),
+            amount: this.amount.toString(),
+        };
         if (this.exchangeMinAmount) {
-            return Object.assign(Object.assign({}, feeer), { exchange_min_amount: this.exchangeMinAmount.toString() });
+            return {
+                ...feeer,
+                exchange_min_amount: this.exchangeMinAmount.toString(),
+            };
         }
         return feeer;
     }
@@ -115,9 +122,18 @@ export class RatioFeeer extends Feeer {
         ]);
     }
     toHintedObject() {
-        const feeer = Object.assign(Object.assign({}, super.toHintedObject()), { receiver: this.receiver.toString(), ratio: this.ratio.n, min: this.min.toString(), max: this.max.toString() });
+        const feeer = {
+            ...super.toHintedObject(),
+            receiver: this.receiver.toString(),
+            ratio: this.ratio.n,
+            min: this.min.toString(),
+            max: this.max.toString(),
+        };
         if (this.exchangeMinAmount) {
-            return Object.assign(Object.assign({}, feeer), { exchange_min_amount: this.exchangeMinAmount.toString() });
+            return {
+                ...feeer,
+                exchange_min_amount: this.exchangeMinAmount.toString(),
+            };
         }
         return feeer;
     }

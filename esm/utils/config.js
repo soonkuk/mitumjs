@@ -4,10 +4,10 @@
 // };
 const getRangeConfig = (min, max) => {
     return {
-        value: min == (max !== null && max !== void 0 ? max : min) ? min : undefined,
+        value: min == (max ?? min) ? min : undefined,
         min,
-        max: max !== null && max !== void 0 ? max : min,
-        satisfy: (target) => min <= target && target <= (max !== null && max !== void 0 ? max : min),
+        max: max ?? min,
+        satisfy: (target) => min <= target && target <= (max ?? min),
     };
 };
 export const MitumConfig = {

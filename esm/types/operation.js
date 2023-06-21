@@ -13,7 +13,7 @@ import { Key } from "../account/publicKey";
 export class OperationType {
     constructor(fact, memo) {
         this.id = MITUM_NETWORK_ID;
-        this.memo = memo !== null && memo !== void 0 ? memo : "";
+        this.memo = memo ?? "";
         this.fact = fact;
         this.hint = new Hint(fact.operationHint);
         this._factSigns = [];
@@ -153,12 +153,15 @@ export class OperationType {
             fact: this.fact.toHintedObject(),
             hash: this._hash.length === 0 ? "" : base58.encode(this._hash),
         };
-        const operation = this.memo ? op : Object.assign(Object.assign({}, op), { memo: this.memo });
+        const operation = this.memo ? op : { ...op, memo: this.memo };
         const factSigns = this._factSigns.length === 0 ? [] : this._factSigns.sort(SortFunc);
         switch (this.factSignType) {
             case "M2FactSign":
             case "M2NodeFactSign":
-                return Object.assign(Object.assign({}, operation), { signs: factSigns.map((fs) => fs.toHintedObject()) });
+                return {
+                    ...operation,
+                    signs: factSigns.map((fs) => fs.toHintedObject()),
+                };
             default:
                 return operation;
         }

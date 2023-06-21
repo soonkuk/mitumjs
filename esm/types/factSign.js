@@ -44,7 +44,10 @@ export class M2NodeFactSign extends FactSign {
         return Buffer.concat([this.node.toBuffer(), super.toBuffer()]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { node: this.node.toString() });
+        return {
+            ...super.toHintedObject(),
+            node: this.node.toString(),
+        };
     }
 }
 //# sourceMappingURL=factSign.js.map

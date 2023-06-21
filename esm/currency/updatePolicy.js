@@ -16,7 +16,11 @@ export class CurrencyPolicyUpdaterFact extends NodeFact {
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { currency: this.currency.toString(), policy: this.policy.toHintedObject() });
+        return {
+            ...super.toHintedObject(),
+            currency: this.currency.toString(),
+            policy: this.policy.toHintedObject(),
+        };
     }
     get operationHint() {
         return HINT.CURRENCY_POLICY_UPDATER_OPERATION;
