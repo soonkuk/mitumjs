@@ -1,23 +1,30 @@
-const Mitum = require("./cjs");
+const { Mitum } = require("./cjs");
 
-const mitum = new Mitum.Mitum("http://127.0.0.1:54320");
+const mitum = new Mitum("http://127.0.0.1:54320");
 
-const cCurrency = mitum.currency.transfer(
-  "7aHM8e7DcN5moToy9JyHijG7iM4sY33VVNewfvtTZPhemca",
-  "cb271a20026ab44c931fd9436b5d7263a3e42c6beca",
-  "MCC",
-  1000
-);
+const exp = (str, value) => {
+  console.log("=========================================");
+  console.log(str);
+  console.log("=========================================");
+  console.log(value);
+  console.log("=========================================");
+};
 
-// const key1 = mitum.account.key(
-//   "adsfkjkasjfakdsjfkasjfkasjdfklasjfklasjfdlksajfaklsf"
-// );
-// const key2 = mitum.account.keys(10);
-// const address = mitum.account.address(
-//   "diLUcZugeDFW6ftQdcjdz8Ks1KBGiACo9GAcKQUgwFdfmpu"
-// );
-// // console.log(JSON.stringify(cCurrency.toHintedObject()));
-// console.log(address);
+const sending = async (obj) => {
+  return await mitum.operation.send(obj);
+};
+
+const keys = mitum.account.key();
+exp("keys", keys);
+// common
+
+// account
+
+// block
+
+// currency
+
+//
 
 const getAAA = async () => {
   const info = await mitum.account.get(

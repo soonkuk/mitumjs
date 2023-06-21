@@ -54,8 +54,8 @@ export class Mitum {
     return this._chain.getChainID();
   }
 
-  setChain(url: string) {
-    this._chain.setChainID(url);
+  setChain(cID: string) {
+    this._chain.setChainID(cID);
   }
 }
 
