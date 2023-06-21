@@ -3,7 +3,7 @@ import blockInfo from "../block/information";
 import { node } from "./dummy";
 
 jest.mock("../block/information", () => ({
-  getAllBlockInfo: jest
+  getAllBlocksInfo: jest
     .fn()
     .mockResolvedValue(Promise.resolve({ data: "mocked" })),
   getBlockByHeight: jest
@@ -24,11 +24,15 @@ describe("Currency", () => {
     block = new Block(node);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("block.getAll()", async () => {
     await block.getAll();
 
-    expect(blockInfo.getAllBlockInfo).toHaveBeenCalledTimes(1);
-    expect(blockInfo.getAllBlockInfo).toHaveBeenCalledWith(node);
+    expect(blockInfo.getAllBlocksInfo).toHaveBeenCalledTimes(1);
+    expect(blockInfo.getAllBlocksInfo).toHaveBeenCalledWith(node);
   });
 
   it("block.get()", async () => {
@@ -45,7 +49,7 @@ describe("Currency", () => {
   });
 
   it("block.operations()", async () => {
-    await block.getOperations(300);
+    await block.getOperation(300);
 
     expect(blockInfo.getOperations).toHaveBeenCalledTimes(1);
     expect(blockInfo.getOperations).toHaveBeenCalledWith(node, 300);

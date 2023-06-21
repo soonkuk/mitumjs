@@ -1,33 +1,64 @@
 import { Currency } from "../currency";
+import currencyInfo from "../currency/information";
+import { AxiosResponse } from "axios";
+import { account1, account2, account3, node } from "./dummy";
+
+jest.mock("../currency/information", () => ({
+  getAllCurrencyInfo: jest.fn().mockResolvedValue({ data: "mocked" }),
+  getCurrencyInfo: jest.fn().mockResolvedValue({ data: "mocked" }),
+}));
+
+const provider = node;
 
 describe("Currency", () => {
   let currency: Currency;
 
   beforeEach(() => {
-    currency = new Currency();
+    currency = new Currency(node);
   });
 
-  test("currency.getAll()", () => {
-    // currency.getAll() test
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  test("currency.get()", () => {
-    // currency.get() test
+  it("currency.getAll()", async () => {
+    const response: AxiosResponse = await currency.getAll();
+    expect(currencyInfo.getAllCurrencyInfo).toHaveBeenCalledTimes(1);
+    expect(currencyInfo.getAllCurrencyInfo).toHaveBeenCalledWith(provider);
+    expect(response.data).toEqual("mocked");
+  });
+
+  it("currency.get()", async () => {
+    const currencyID = "MCC";
+    const response: AxiosResponse = await currency.get(currencyID);
+    expect(currencyInfo.getCurrencyInfo).toHaveBeenCalledTimes(1);
+    expect(currencyInfo.getCurrencyInfo).toHaveBeenCalledWith(
+      provider,
+      currencyID
+    );
+    expect(response.data).toEqual("mocked");
   });
 
   test("currency.mint()", () => {
-    // currency.mint() test
-  });
+    const receiver = account1.address;
+    const currencyID = "MCC";
+    const amount = 50000;
 
-  test("currency.setPolicy()", () => {
-    // currency.setPolicy() test
+    const operation = currency.mint(receiver, currencyID, amount);
+    expect(operation.hint.toString()).toBe(
+      "mitum-currency-suffrage-inflation-operation-v0.0.1"
+    );
   });
 
   test("currency.transfer()", () => {
-    // currency.transfer() test
-  });
+    const sender = account2.address;
+    const receiver = account3.address;
+    const currencyID = "MCC";
+    const amount = 500;
 
-  test("currency.inflate()", () => {
-    // currency.inflate() test
+    const operation = currency.transfer(sender, receiver, currencyID, amount);
+    expect(operation.hint.toString()).toBe(
+      "mitum-currency-transfers-operation-v0.0.1"
+    );
   });
 });

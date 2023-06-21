@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 export default {
-  async getAllBlockInfo(provider: string): Promise<AxiosResponse> {
+  async getAllBlocksInfo(provider: string): Promise<AxiosResponse> {
     if (provider === "") {
       return Promise.reject(new Error("RPC-URL is not provided."));
     }
