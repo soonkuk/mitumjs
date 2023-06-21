@@ -29,7 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.verify = exports.isIPAddress = void 0;
 const secp256k1 = __importStar(require("@noble/secp256k1"));
 const bs58_1 = __importDefault(require("bs58"));
-const math_1 = require("../utils/math");
+const math_js_1 = require("../utils/math.js");
 const isIPAddress = (item) => {
     const ipPattern = /^(http|https):\/\/(\d{1,3}\.){3}\d{1,3}(?::\d+)?$/;
     return ipPattern.test(item);
@@ -47,18 +47,18 @@ const btcVerify = (signer, sig, msg) => {
     if (typeof sig === "string") {
         sig = Buffer.from(bs58_1.default.decode(sig));
     }
-    return secp256k1.verify(sig, (0, math_1.sha256)((0, math_1.sha256)(msg)), secp256k1.getPublicKey(signer));
+    return secp256k1.verify(sig, (0, math_js_1.sha256)((0, math_js_1.sha256)(msg)), secp256k1.getPublicKey(signer));
 };
 const ethVerify = (signer, sig, msg) => {
     if (typeof sig === "string") {
         sig = Buffer.from(bs58_1.default.decode(sig));
     }
-    const rlen = new math_1.Big(sig.subarray(0, 4).reverse());
+    const rlen = new math_js_1.Big(sig.subarray(0, 4).reverse());
     const r = Buffer.alloc(rlen.v);
-    const rb = new math_1.Big(sig.subarray(4, 4 + rlen.v));
+    const rb = new math_js_1.Big(sig.subarray(4, 4 + rlen.v));
     rb.toBuffer().copy(r, rlen.v - rb.byteLen());
     const s = sig.subarray(4 + rlen.v);
-    const slen = new math_1.Big(s.length);
+    const slen = new math_js_1.Big(s.length);
     const base = Buffer.from([48, sig.length, 2]);
     const buf = Buffer.alloc(sig.length + 2);
     base.copy(buf, 0, 0, 4);
@@ -67,6 +67,6 @@ const ethVerify = (signer, sig, msg) => {
     Buffer.from([2]).copy(buf, 4 + rlen.v);
     slen.toBuffer().copy(buf, 5 + rlen.v);
     s.copy(buf, 6 + rlen.v);
-    return secp256k1.verify(buf, (0, math_1.sha256)(msg), secp256k1.getPublicKey(signer.getPrivateKey()));
+    return secp256k1.verify(buf, (0, math_js_1.sha256)(msg), secp256k1.getPublicKey(signer.getPrivateKey()));
 };
 //# sourceMappingURL=validation.js.map

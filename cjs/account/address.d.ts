@@ -1,7 +1,7 @@
 /// <reference types="node" />
-import { IBuffer, IString } from "../types/interface";
-import { AddressType } from "../types/address";
-import { CurrencyID } from "../types/property";
+import { IBuffer, IString } from "../types/interface.js";
+import { AddressType } from "../types/address.js";
+import { CurrencyID } from "../types/property.js";
 declare abstract class BaseAddress implements IBuffer, IString {
     private s;
     readonly type: AddressType;

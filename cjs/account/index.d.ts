@@ -1,8 +1,8 @@
-import { OperationType } from "../types/operation";
-import { Fact } from "../types/fact";
-import { Key, Keys } from "./publicKey";
-import { KeyPair } from "./iPair";
-import { M2KeyPair } from "./key";
+import { OperationType } from "../types/operation.js";
+import { Fact } from "../types/fact.js";
+import { Key, Keys } from "./publicKey.js";
+import { KeyPair } from "./iPair.js";
+import { M2KeyPair } from "./key.js";
 import { AxiosResponse } from "axios";
 export declare class Account {
     private _node;

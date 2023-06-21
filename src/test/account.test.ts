@@ -10,9 +10,9 @@ import {
   multi2,
 } from "./dummy";
 
-import { Account } from "../account";
-import { M2KeyPair } from "../account/key";
-import { Keys } from "../account/publicKey";
+import { Account } from "../../cjs/account";
+import { M2KeyPair } from "../../cjs/account/key";
+import { Keys } from "../../cjs/account/publicKey";
 
 describe("Account", () => {
   let account: Account;

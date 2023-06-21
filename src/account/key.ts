@@ -5,14 +5,14 @@ import secureRandom from "secure-random";
 import ethWallet from "ethereumjs-wallet";
 import { getPublicCompressed } from "eccrypto-js";
 
-import { KeyPair } from "./iPair";
-import { Key } from "./publicKey";
+import { KeyPair } from "./iPair.js";
+import { Key } from "./publicKey.js";
 
-import { SUFFIX } from "../types/hint";
-import { KeyPairType } from "../types/address";
+import { SUFFIX } from "../types/hint.js";
+import { KeyPairType } from "../types/address.js";
 
-import { MitumConfig } from "../utils/config";
-import { ECODE, MitumError, StringAssert } from "../utils/error";
+import { MitumConfig } from "../utils/config.js";
+import { ECODE, MitumError, StringAssert } from "../utils/error.js";
 
 export class M2KeyPair extends KeyPair {
   static generator = {

@@ -1,8 +1,8 @@
-import { NodeFact } from "../types/fact";
-import { FactJson } from "../types/iFact";
-import { CurrencyDesign } from "./design";
+import { NodeFact } from "../types/fact.js";
+import { FactJson } from "../types/iFact.js";
+import { CurrencyDesign } from "./design.js";
 
-import { HINT } from "../types/hint";
+import { HINT } from "../types/hint.js";
 
 export class CurrencyRegisterFact extends NodeFact {
   readonly design: CurrencyDesign;

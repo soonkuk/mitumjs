@@ -1,17 +1,17 @@
-import { OperationType } from "../types/operation";
-import { KeyPairType } from "../types/address";
-import { Amount } from "../types/property";
-import { isIPAddress } from "../utils/validation";
-import { TimeStamp } from "../utils/time";
-import { Fact } from "../types/fact";
+import { OperationType } from "../types/operation.js";
+import { KeyPairType } from "../types/address.js";
+import { Amount } from "../types/property.js";
+import { isIPAddress } from "../utils/validation.js";
+import { TimeStamp } from "../utils/time.js";
+import { Fact } from "../types/fact.js";
 
-import { CreateAccountsItem, CreateAccountsFact } from "./create";
-import { M2RandomN, M2EtherRandomN } from "./random";
-import { Key, Keys, PubKey } from "./publicKey";
-import { KeyUpdaterFact } from "./keyUpdate";
-import accountInfo from "./information";
-import { KeyPair } from "./iPair";
-import { M2KeyPair } from "./key";
+import { CreateAccountsItem, CreateAccountsFact } from "./create.js";
+import { M2RandomN, M2EtherRandomN } from "./random.js";
+import { Key, Keys, PubKey } from "./publicKey.js";
+import { KeyUpdaterFact } from "./keyUpdate.js";
+import accountInfo from "./information.js";
+import { KeyPair } from "./iPair.js";
+import { M2KeyPair } from "./key.js";
 
 import { AxiosResponse } from "axios";
 

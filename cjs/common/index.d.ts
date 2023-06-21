@@ -1,4 +1,4 @@
-import { Version } from "./version";
-import { Node } from "./node";
-import { Chain } from "./chain";
+import { Version } from "./version.js";
+import { Node } from "./node.js";
+import { Chain } from "./chain.js";
 export { Version, Node, Chain };

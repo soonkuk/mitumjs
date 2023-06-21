@@ -1,16 +1,16 @@
-import { Currency } from "../currency";
-import { Operation } from "../operation";
-import { Account } from "../account";
-import operationInfo from "../operation/information";
-import { sendOperation } from "../operation/send";
+import { Currency } from "../../cjs/currency";
+import { Operation } from "../../cjs/operation";
+import { Account } from "../../cjs/account";
+import operationInfo from "../../cjs/operation/information";
+import { sendOperation } from "../../cjs/operation/send";
 import { node, genesis, account1, account2 } from "./dummy";
-import { OperationType } from "../types/operation";
+import { OperationType } from "../../cjs/types/operation";
 import { AxiosResponse } from "axios";
 
-jest.mock("../operation/send", () => ({
+jest.mock("../../cjs/operation/send", () => ({
   sendOperation: jest.fn().mockResolvedValue({ data: "mocked" }),
 }));
-jest.mock("../operation/information", () => ({
+jest.mock("../../cjs/operation/information", () => ({
   getAllOperationsInfo: jest.fn().mockResolvedValue({ data: "mocked" }),
   getOperationInfo: jest.fn().mockResolvedValue({ data: "mocked" }),
 }));

@@ -5,12 +5,12 @@ import { sha256 as nobleSha256 } from "@noble/hashes/sha256";
 import base58 from "bs58";
 import ethWallet from "ethereumjs-wallet";
 
-import { Key } from "./publicKey";
+import { Key } from "./publicKey.js";
 
-import { KeyPairType } from "../types/address";
+import { KeyPairType } from "../types/address.js";
 
-import { sha3, sha256, Big } from "../utils/math";
-import { Assert, ECODE, MitumError } from "../utils/error";
+import { sha3, sha256, Big } from "../utils/math.js";
+import { Assert, ECODE, MitumError } from "../utils/error.js";
 
 interface IKeyGenerator {
   random(option?: KeyPairType): KeyPair;

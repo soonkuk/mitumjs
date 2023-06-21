@@ -1,5 +1,5 @@
-import { isIPAddress } from "../utils/validation";
-import blockInfo from "./information";
+import { isIPAddress } from "../utils/validation.js";
+import blockInfo from "./information.js";
 export class Block {
     constructor(provider) {
         this._node = "";

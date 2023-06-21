@@ -3,11 +3,11 @@ import base58 from "bs58";
 import secureRandom from "secure-random";
 import ethWallet from "ethereumjs-wallet";
 import { getPublicCompressed } from "eccrypto-js";
-import { KeyPair } from "./iPair";
-import { Key } from "./publicKey";
-import { SUFFIX } from "../types/hint";
-import { MitumConfig } from "../utils/config";
-import { ECODE, MitumError, StringAssert } from "../utils/error";
+import { KeyPair } from "./iPair.js";
+import { Key } from "./publicKey.js";
+import { SUFFIX } from "../types/hint.js";
+import { MitumConfig } from "../utils/config.js";
+import { ECODE, MitumError, StringAssert } from "../utils/error.js";
 export class M2KeyPair extends KeyPair {
     constructor(privateKey) {
         super(Key.from(privateKey));

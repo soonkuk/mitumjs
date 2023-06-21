@@ -1,5 +1,5 @@
-import { Hint } from "./property";
-import { HintedObject, IBuffer, IHintedObject, IString } from "./interface";
+import { Hint } from "./property.js";
+import { HintedObject, IBuffer, IHintedObject, IString } from "./interface.js";
 
 export abstract class Item implements IBuffer, IString, IHintedObject {
   private hint: Hint;

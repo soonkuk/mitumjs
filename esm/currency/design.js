@@ -1,7 +1,7 @@
-import { Hint } from "../types/property";
-import { HINT } from "../types/hint";
-import { Big, Float } from "../utils/math";
-import { Address } from "../account/address";
+import { Hint } from "../types/property.js";
+import { HINT } from "../types/hint.js";
+import { Big, Float } from "../utils/math.js";
+import { Address } from "../account/address.js";
 export class CurrencyDesign {
     constructor(amount, genesisAccount, policy) {
         this.amount = amount;

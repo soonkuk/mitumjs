@@ -1,10 +1,10 @@
-import { IBuffer, IString } from "../types/interface";
-import { AddressType } from "../types/address";
-import { SUFFIX } from "../types/hint";
-import { CurrencyID } from "../types/property";
+import { IBuffer, IString } from "../types/interface.js";
+import { AddressType } from "../types/address.js";
+import { SUFFIX } from "../types/hint.js";
+import { CurrencyID } from "../types/property.js";
 
-import { MitumConfig } from "../utils/config";
-import { ECODE, MitumError, StringAssert } from "../utils/error";
+import { MitumConfig } from "../utils/config.js";
+import { ECODE, MitumError, StringAssert } from "../utils/error.js";
 
 abstract class BaseAddress implements IBuffer, IString {
   private s: string;

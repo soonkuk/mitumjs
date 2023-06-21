@@ -1,8 +1,8 @@
 /// <reference types="node" />
-import { HintedObject, IBuffer, IHintedObject } from "../types/interface";
-import { Amount } from "../types/property";
-import { Big, Float } from "../utils/math";
-import { Address } from "../account/address";
+import { HintedObject, IBuffer, IHintedObject } from "../types/interface.js";
+import { Amount } from "../types/property.js";
+import { Big, Float } from "../utils/math.js";
+import { Address } from "../account/address.js";
 type nilFee = "none";
 type fixedFee = "fixed";
 type ratioFee = "ratio";

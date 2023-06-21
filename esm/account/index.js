@@ -1,13 +1,13 @@
-import { OperationType } from "../types/operation";
-import { Amount } from "../types/property";
-import { isIPAddress } from "../utils/validation";
-import { TimeStamp } from "../utils/time";
-import { CreateAccountsItem, CreateAccountsFact } from "./create";
-import { M2RandomN, M2EtherRandomN } from "./random";
-import { Keys, PubKey } from "./publicKey";
-import { KeyUpdaterFact } from "./keyUpdate";
-import accountInfo from "./information";
-import { M2KeyPair } from "./key";
+import { OperationType } from "../types/operation.js";
+import { Amount } from "../types/property.js";
+import { isIPAddress } from "../utils/validation.js";
+import { TimeStamp } from "../utils/time.js";
+import { CreateAccountsItem, CreateAccountsFact } from "./create.js";
+import { M2RandomN, M2EtherRandomN } from "./random.js";
+import { Keys, PubKey } from "./publicKey.js";
+import { KeyUpdaterFact } from "./keyUpdate.js";
+import accountInfo from "./information.js";
+import { M2KeyPair } from "./key.js";
 const BTC = "btc";
 const ETH = "ether";
 export class Account {

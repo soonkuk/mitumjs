@@ -1,15 +1,15 @@
-import { Assert, ECODE, MitumError } from "../utils/error";
-import { MitumConfig } from "../utils/config";
-import { SortFunc } from "../utils/math";
+import { Assert, ECODE, MitumError } from "../utils/error.js";
+import { MitumConfig } from "../utils/config.js";
+import { SortFunc } from "../utils/math.js";
 
-import { HintedObject } from "../types/interface";
-import { Amount } from "../types/property";
-import { FactJson } from "../types/iFact";
-import { NodeFact } from "../types/fact";
-import { Item } from "../types/item";
-import { HINT } from "../types/hint";
+import { HintedObject } from "../types/interface.js";
+import { Amount } from "../types/property.js";
+import { FactJson } from "../types/iFact.js";
+import { NodeFact } from "../types/fact.js";
+import { Item } from "../types/item.js";
+import { HINT } from "../types/hint.js";
 
-import { Address } from "../account/address";
+import { Address } from "../account/address.js";
 
 export class SuffrageInflationItem extends Item {
   readonly amount: Amount;

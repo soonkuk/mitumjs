@@ -4,16 +4,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Float = exports.Big = exports.SortFunc = exports.keccak256 = exports.sha3 = exports.sha256 = void 0;
-const js_sha3_1 = require("js-sha3");
+const js_sha3_1 = __importDefault(require("js-sha3"));
+const { sha3_256, keccak256: keccak_256 } = js_sha3_1.default;
 const sha256_1 = require("@noble/hashes/sha256");
 const big_integer_1 = __importDefault(require("big-integer"));
 const int64_buffer_1 = __importDefault(require("int64-buffer"));
-const error_1 = require("./error");
+const error_js_1 = require("./error.js");
 const sha256 = (msg) => Buffer.from((0, sha256_1.sha256)(msg));
 exports.sha256 = sha256;
-const sha3 = (msg) => Buffer.from(js_sha3_1.sha3_256.create().update(msg).digest());
+const sha3 = (msg) => Buffer.from(sha3_256.create().update(msg).digest());
 exports.sha3 = sha3;
-const keccak256 = (msg) => Buffer.from(js_sha3_1.keccak256.create().update(msg).digest());
+const keccak256 = (msg) => Buffer.from(keccak_256.create().update(msg).digest());
 exports.keccak256 = keccak256;
 const SortFunc = (a, b) => Buffer.compare(a.toBuffer(), b.toBuffer());
 exports.SortFunc = SortFunc;
@@ -30,11 +31,11 @@ class Big {
                     this.big = this.bufferToBig(big);
                 }
                 else {
-                    throw error_1.MitumError.detail(error_1.ECODE.INVALID_BIG_INTEGER, "wrong big");
+                    throw error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_BIG_INTEGER, "wrong big");
                 }
                 break;
             default:
-                throw error_1.MitumError.detail(error_1.ECODE.INVALID_BIG_INTEGER, "wrong big");
+                throw error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_BIG_INTEGER, "wrong big");
         }
     }
     static from(big) {
@@ -51,7 +52,7 @@ class Big {
     toBuffer(option) {
         const size = this.byteLen();
         if (option === "fill") {
-            error_1.Assert.check(size <= 8, error_1.MitumError.detail(error_1.ECODE.INVALID_BIG_INTEGER, "big out of range"));
+            error_js_1.Assert.check(size <= 8, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_BIG_INTEGER, "big out of range"));
             return Buffer.from(new int64_buffer_1.default.Uint64LE(this.toString()).toBuffer());
         }
         const buf = new Uint8Array(size);

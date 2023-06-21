@@ -1,8 +1,8 @@
-import { Block } from "../block";
-import blockInfo from "../block/information";
+import { Block } from "../../cjs/block";
+import blockInfo from "../../cjs/block/information";
 import { node } from "./dummy";
 
-jest.mock("../block/information", () => ({
+jest.mock("../../cjs/block/information", () => ({
   getAllBlocksInfo: jest
     .fn()
     .mockResolvedValue(Promise.resolve({ data: "mocked" })),

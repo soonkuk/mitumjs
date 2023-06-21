@@ -1,10 +1,10 @@
-import { HintedObject, IBuffer, IHintedObject } from "../types/interface";
-import { Amount, Hint } from "../types/property";
-import { HINT } from "../types/hint";
+import { HintedObject, IBuffer, IHintedObject } from "../types/interface.js";
+import { Amount, Hint } from "../types/property.js";
+import { HINT } from "../types/hint.js";
 
-import { Big, Float } from "../utils/math";
+import { Big, Float } from "../utils/math.js";
 
-import { Address } from "../account/address";
+import { Address } from "../account/address.js";
 
 type nilFee = "none";
 type fixedFee = "fixed";

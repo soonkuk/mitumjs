@@ -1,11 +1,11 @@
-import { OperationType } from "../types/operation";
-import { Fact } from "../types/fact";
+import { OperationType } from "../types/operation.js";
+import { Fact } from "../types/fact.js";
 
-import { isIPAddress } from "../utils/validation";
+import { isIPAddress } from "../utils/validation.js";
 
-import operationInfo from "./information";
-import { signOperation } from "./sign";
-import { sendOperation } from "./send";
+import operationInfo from "./information.js";
+import { signOperation } from "./sign.js";
+import { sendOperation } from "./send.js";
 import { AxiosResponse } from "axios";
 
 export class Operation {

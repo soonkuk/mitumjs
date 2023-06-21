@@ -1,8 +1,8 @@
-import { Account } from "./account";
-import { Currency } from "./currency";
-import { Block } from "./block";
-import { Contract } from "./contract";
-import { Operation } from "./operation";
+import { Account } from "./account/index.js";
+import { Currency } from "./currency/index.js";
+import { Block } from "./block/index.js";
+import { Contract } from "./contract/index.js";
+import { Operation } from "./operation/index.js";
 import { AxiosResponse } from "axios";
 export declare class Mitum {
     private _version;

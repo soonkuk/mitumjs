@@ -1,7 +1,7 @@
-import { isIPAddress } from "../utils/validation";
-import operationInfo from "./information";
-import { signOperation } from "./sign";
-import { sendOperation } from "./send";
+import { isIPAddress } from "../utils/validation.js";
+import operationInfo from "./information.js";
+import { signOperation } from "./sign.js";
+import { sendOperation } from "./send.js";
 export class Operation {
     constructor(provider) {
         this._node = "";

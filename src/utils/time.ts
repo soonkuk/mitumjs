@@ -1,5 +1,5 @@
-import { IBuffer, IString } from "../types/interface";
-import { Assert, MitumError } from "./error";
+import { IBuffer, IString } from "../types/interface.js";
+import { Assert, MitumError } from "./error.js";
 
 export class TimeStamp implements IBuffer, IString {
   private t: Date;

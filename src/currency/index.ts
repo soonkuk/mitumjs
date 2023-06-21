@@ -1,16 +1,16 @@
-import { isIPAddress } from "../utils/validation";
-import { TimeStamp } from "../utils/time";
+import { isIPAddress } from "../utils/validation.js";
+import { TimeStamp } from "../utils/time.js";
 
-import { OperationType } from "../types/operation";
-import { Amount } from "../types/property";
-import { Fact } from "../types/fact";
+import { OperationType } from "../types/operation.js";
+import { Amount } from "../types/property.js";
+import { Fact } from "../types/fact.js";
 
 import { AxiosResponse } from "axios";
 
-import { CurrencyPolicyUpdaterFact } from "./updatePolicy";
-import { TransfersFact, TransfersItem } from "./transfer";
-import { CurrencyRegisterFact } from "./register";
-import currencyInfo from "./information";
+import { CurrencyPolicyUpdaterFact } from "./updatePolicy.js";
+import { TransfersFact, TransfersItem } from "./transfer.js";
+import { CurrencyRegisterFact } from "./register.js";
+import currencyInfo from "./information.js";
 import {
   inputData,
   NilFeeer,
@@ -18,8 +18,8 @@ import {
   RatioFeeer,
   CurrencyPolicy,
   CurrencyDesign,
-} from "./design";
-import { SuffrageInflationFact, SuffrageInflationItem } from "./inflate";
+} from "./design.js";
+import { SuffrageInflationFact, SuffrageInflationItem } from "./inflate.js";
 
 export class Currency {
   private _node: string = "";

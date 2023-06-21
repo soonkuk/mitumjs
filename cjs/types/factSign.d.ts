@@ -1,9 +1,9 @@
 /// <reference types="node" />
-import { FullTimeStamp } from "../utils/time";
-import { Address, NodeAddress } from "../account/address";
-import { FS, M2FS, NodeFS } from "./iFact";
-import { Key } from "../account/publicKey";
-import { IBuffer } from "./interface";
+import { FullTimeStamp } from "../utils/time.js";
+import { Address, NodeAddress } from "../account/address.js";
+import { FS, M2FS, NodeFS } from "./iFact.js";
+import { Key } from "../account/publicKey.js";
+import { IBuffer } from "./interface.js";
 export declare abstract class FactSign implements IBuffer {
     readonly signer: Key;
     readonly signature: Buffer;

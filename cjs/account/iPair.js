@@ -31,8 +31,8 @@ const hmac_1 = require("@noble/hashes/hmac");
 const secp256k1 = __importStar(require("@noble/secp256k1"));
 const sha256_1 = require("@noble/hashes/sha256");
 const bs58_1 = __importDefault(require("bs58"));
-const math_1 = require("../utils/math");
-const error_1 = require("../utils/error");
+const math_js_1 = require("../utils/math.js");
+const error_js_1 = require("../utils/error.js");
 class KeyPair {
     constructor(privateKey) {
         this.privateKey = privateKey;
@@ -51,7 +51,7 @@ class KeyPair {
         return this.generator.fromSeed(seed, option);
     }
     btcSign(msg) {
-        return Buffer.from(secp256k1.signSync((0, math_1.sha256)((0, math_1.sha256)(msg)), this.signer));
+        return Buffer.from(secp256k1.signSync((0, math_js_1.sha256)((0, math_js_1.sha256)(msg)), this.signer));
     }
     ethSign(msg) {
         const sig = secp256k1.signSync((0, sha256_1.sha256)(msg), this.signer.getPrivateKey());
@@ -59,7 +59,7 @@ class KeyPair {
         const r = sig.slice(4, 4 + rlen);
         const slen = sig[5 + rlen];
         const s = sig.slice(6 + rlen);
-        const brlen = new math_1.Big(rlen).toBuffer("fill");
+        const brlen = new math_js_1.Big(rlen).toBuffer("fill");
         const buf = Buffer.alloc(rlen + slen + 4);
         brlen.copy(buf, 0, 0, 4);
         Buffer.from(r).copy(buf, 4, 0, rlen);
@@ -68,11 +68,11 @@ class KeyPair {
     }
     // with seed
     static from(seed) {
-        seed = Buffer.from(bs58_1.default.encode((0, math_1.sha3)(Buffer.from(seed))));
-        error_1.Assert.check(40 <= seed.length, error_1.MitumError.detail(error_1.ECODE.INVALID_SEED, "seed length out of range"));
+        seed = Buffer.from(bs58_1.default.encode((0, math_js_1.sha3)(Buffer.from(seed))));
+        error_js_1.Assert.check(40 <= seed.length, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_SEED, "seed length out of range"));
         seed = seed.subarray(0, 40);
         const N = secp256k1.CURVE.n - BigInt(1);
-        let k = new math_1.Big(seed).big;
+        let k = new math_js_1.Big(seed).big;
         k %= N;
         k += BigInt(1);
         return k;

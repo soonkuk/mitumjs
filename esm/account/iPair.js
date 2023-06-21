@@ -2,8 +2,8 @@ import { hmac } from "@noble/hashes/hmac";
 import * as secp256k1 from "@noble/secp256k1";
 import { sha256 as nobleSha256 } from "@noble/hashes/sha256";
 import base58 from "bs58";
-import { sha3, sha256, Big } from "../utils/math";
-import { Assert, ECODE, MitumError } from "../utils/error";
+import { sha3, sha256, Big } from "../utils/math.js";
+import { Assert, ECODE, MitumError } from "../utils/error.js";
 export class KeyPair {
     constructor(privateKey) {
         this.privateKey = privateKey;

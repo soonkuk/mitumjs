@@ -1,9 +1,9 @@
 /// <reference types="node" />
-import { HintedObject } from "../types/interface";
-import { OperationFact } from "../types/fact";
-import { Amount } from "../types/property";
-import { Address, ZeroAddress } from "../account/address";
-import { CurrencyItem } from "./currencyItem";
+import { HintedObject } from "../types/interface.js";
+import { OperationFact } from "../types/fact.js";
+import { Amount } from "../types/property.js";
+import { Address, ZeroAddress } from "../account/address.js";
+import { CurrencyItem } from "./currencyItem.js";
 export declare class TransfersItem extends CurrencyItem {
     readonly receiver: Address | ZeroAddress;
     constructor(receiver: string | Address | ZeroAddress, amounts: Amount[]);

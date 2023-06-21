@@ -5,31 +5,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateContractAccountsItem = exports.CreateContractAccountsFact = void 0;
 const bs58_1 = __importDefault(require("bs58"));
-const error_1 = require("../utils/error");
-const math_1 = require("../utils/math");
-const fact_1 = require("../types/fact");
-const hint_1 = require("../types/hint");
-const currencyItem_1 = require("../currency/currencyItem");
-class CreateContractAccountsFact extends fact_1.OperationFact {
+const error_js_1 = require("../utils/error.js");
+const math_js_1 = require("../utils/math.js");
+const fact_js_1 = require("../types/fact.js");
+const hint_js_1 = require("../types/hint.js");
+const currencyItem_js_1 = require("../currency/currencyItem.js");
+class CreateContractAccountsFact extends fact_js_1.OperationFact {
     constructor(token, sender, items) {
-        super(hint_1.HINT.CREATE_CONTRACT_ACCOUNTS_OPERATION_FACT, token, sender, items);
-        error_1.Assert.check(new Set(items.map((it) => it.addressType !== "")).size === 1, error_1.MitumError.detail(error_1.ECODE.INVALID_ITEMS, "not unified mitum versions of items"));
-        error_1.Assert.check(new Set(items.map((it) => it.toString())).size === items.length, error_1.MitumError.detail(error_1.ECODE.INVALID_ITEMS, "duplicate key hash found in items"));
+        super(hint_js_1.HINT.CREATE_CONTRACT_ACCOUNTS_OPERATION_FACT, token, sender, items);
+        error_js_1.Assert.check(new Set(items.map((it) => it.addressType !== "")).size === 1, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_ITEMS, "not unified mitum versions of items"));
+        error_js_1.Assert.check(new Set(items.map((it) => it.toString())).size === items.length, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_ITEMS, "duplicate key hash found in items"));
     }
     get operationHint() {
-        return hint_1.HINT.CREATE_CONTRACT_ACCOUNTS_OPERATION;
+        return hint_js_1.HINT.CREATE_CONTRACT_ACCOUNTS_OPERATION;
     }
 }
 exports.CreateContractAccountsFact = CreateContractAccountsFact;
-class CreateContractAccountsItem extends currencyItem_1.CurrencyItem {
+class CreateContractAccountsItem extends currencyItem_js_1.CurrencyItem {
     constructor(keys, amounts, addressType) {
-        super(hint_1.HINT.CREATE_CONTRACT_ACCOUNTS_ITEM, amounts, addressType);
+        super(hint_js_1.HINT.CREATE_CONTRACT_ACCOUNTS_ITEM, amounts, addressType);
         this.keys = keys;
         if (addressType === "btc") {
-            this.addressSuffix = hint_1.SUFFIX.ACCOUNT_ADDRESS;
+            this.addressSuffix = hint_js_1.SUFFIX.ACCOUNT_ADDRESS;
         }
         else if (addressType === "ether") {
-            this.addressSuffix = hint_1.SUFFIX.ETHER_ACCOUNT_ADDRESS;
+            this.addressSuffix = hint_js_1.SUFFIX.ETHER_ACCOUNT_ADDRESS;
         }
         else {
             this.addressSuffix = "";
@@ -39,7 +39,7 @@ class CreateContractAccountsItem extends currencyItem_1.CurrencyItem {
         return Buffer.concat([
             this.keys.toBuffer(),
             Buffer.from(this.addressSuffix),
-            Buffer.concat(this.amounts.sort(math_1.SortFunc).map((am) => am.toBuffer())),
+            Buffer.concat(this.amounts.sort(math_js_1.SortFunc).map((am) => am.toBuffer())),
         ]);
     }
     toHintedObject() {

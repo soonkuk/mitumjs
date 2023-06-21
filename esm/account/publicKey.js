@@ -1,10 +1,10 @@
 import base58 from "bs58";
-import { Address } from "./address";
-import { Big, keccak256, sha3 } from "../utils/math";
-import { MitumConfig } from "../utils/config";
-import { Hint } from "../types/property";
-import { HINT, SUFFIX } from "../types/hint";
-import { Assert, ECODE, MitumError, StringAssert } from "../utils/error";
+import { Address } from "./address.js";
+import { Big, keccak256, sha3 } from "../utils/math.js";
+import { MitumConfig } from "../utils/config.js";
+import { Hint } from "../types/property.js";
+import { HINT, SUFFIX } from "../types/hint.js";
+import { Assert, ECODE, MitumError, StringAssert } from "../utils/error.js";
 export class Key {
     constructor(s) {
         StringAssert.with(s, MitumError.detail(ECODE.INVALID_KEY, "invalid key"))

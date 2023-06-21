@@ -1,4 +1,4 @@
-import { Version, Node, Chain } from "../common";
+import { Version, Node, Chain } from "../../cjs/common";
 
 import axios from "axios";
 // Mock axios.get() to return a fake response

@@ -1,12 +1,12 @@
 import base58 from "bs58";
 
-import { Assert, ECODE, MitumError } from "../utils/error";
-import { FullTimeStamp } from "../utils/time";
+import { Assert, ECODE, MitumError } from "../utils/error.js";
+import { FullTimeStamp } from "../utils/time.js";
 
-import { Address, NodeAddress } from "../account/address";
-import { FS, M2FS, NodeFS } from "./iFact";
-import { Key } from "../account/publicKey";
-import { IBuffer } from "./interface";
+import { Address, NodeAddress } from "../account/address.js";
+import { FS, M2FS, NodeFS } from "./iFact.js";
+import { Key } from "../account/publicKey.js";
+import { IBuffer } from "./interface.js";
 
 export abstract class FactSign implements IBuffer {
   readonly signer: Key;

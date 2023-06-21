@@ -1,4 +1,4 @@
-import { MITUM_JS_VERSION } from "../intro";
+import { MITUM_JS_VERSION } from "../intro.js";
 export class Version {
     constructor() {
         this._version = "";

@@ -1,9 +1,9 @@
-import { Assert, ECODE, MitumError } from "../utils/error";
-import { SortFunc } from "../utils/math";
-import { OperationFact } from "../types/fact";
-import { HINT, SUFFIX } from "../types/hint";
-import { Address, ZeroAddress } from "../account/address";
-import { CurrencyItem } from "./currencyItem";
+import { Assert, ECODE, MitumError } from "../utils/error.js";
+import { SortFunc } from "../utils/math.js";
+import { OperationFact } from "../types/fact.js";
+import { HINT, SUFFIX } from "../types/hint.js";
+import { Address, ZeroAddress } from "../account/address.js";
+import { CurrencyItem } from "./currencyItem.js";
 export class TransfersItem extends CurrencyItem {
     constructor(receiver, amounts) {
         super(HINT.TRANSFERS_ITEM, amounts);

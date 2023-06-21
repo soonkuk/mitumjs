@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RatioFeeer = exports.FixedFeeer = exports.NilFeeer = exports.CurrencyPolicy = exports.CurrencyDesign = void 0;
-const property_1 = require("../types/property");
-const hint_1 = require("../types/hint");
-const math_1 = require("../utils/math");
-const address_1 = require("../account/address");
+const property_js_1 = require("../types/property.js");
+const hint_js_1 = require("../types/hint.js");
+const math_js_1 = require("../utils/math.js");
+const address_js_1 = require("../account/address.js");
 class CurrencyDesign {
     constructor(amount, genesisAccount, policy) {
         this.amount = amount;
-        this.genesisAccount = address_1.Address.from(genesisAccount);
+        this.genesisAccount = address_js_1.Address.from(genesisAccount);
         this.policy = policy;
         this.aggregate = amount.big;
     }
@@ -31,10 +31,10 @@ class CurrencyDesign {
     }
 }
 exports.CurrencyDesign = CurrencyDesign;
-CurrencyDesign.hint = new property_1.Hint(hint_1.HINT.CURRENCY_DESIGN);
+CurrencyDesign.hint = new property_js_1.Hint(hint_js_1.HINT.CURRENCY_DESIGN);
 class CurrencyPolicy {
     constructor(newAccountMinBalance, feeer) {
-        this.newAccountMinBalance = math_1.Big.from(newAccountMinBalance);
+        this.newAccountMinBalance = math_js_1.Big.from(newAccountMinBalance);
         this.feeer = feeer;
     }
     toBuffer() {
@@ -52,15 +52,15 @@ class CurrencyPolicy {
     }
 }
 exports.CurrencyPolicy = CurrencyPolicy;
-CurrencyPolicy.hint = new property_1.Hint(hint_1.HINT.CURRENCY_POLICY);
+CurrencyPolicy.hint = new property_js_1.Hint(hint_js_1.HINT.CURRENCY_POLICY);
 class Feeer {
     constructor(hint, exchangeMinAmount) {
-        this.hint = new property_1.Hint(hint);
+        this.hint = new property_js_1.Hint(hint);
         if (exchangeMinAmount) {
             this.exchangeMinAmount =
-                exchangeMinAmount instanceof math_1.Big
+                exchangeMinAmount instanceof math_js_1.Big
                     ? exchangeMinAmount
-                    : new math_1.Big(exchangeMinAmount);
+                    : new math_js_1.Big(exchangeMinAmount);
         }
     }
     toHintedObject() {
@@ -71,7 +71,7 @@ class Feeer {
 }
 class NilFeeer extends Feeer {
     constructor() {
-        super(hint_1.HINT.CURRENCY_FEEER_NIL);
+        super(hint_js_1.HINT.CURRENCY_FEEER_NIL);
     }
     toBuffer() {
         return Buffer.from([]);
@@ -80,9 +80,9 @@ class NilFeeer extends Feeer {
 exports.NilFeeer = NilFeeer;
 class FixedFeeer extends Feeer {
     constructor(receiver, amount) {
-        super(hint_1.HINT.CURRENCY_FEEER_FIXED);
-        this.receiver = address_1.Address.from(receiver);
-        this.amount = math_1.Big.from(amount);
+        super(hint_js_1.HINT.CURRENCY_FEEER_FIXED);
+        this.receiver = address_js_1.Address.from(receiver);
+        this.amount = math_js_1.Big.from(amount);
     }
     toBuffer() {
         return Buffer.concat([
@@ -104,11 +104,11 @@ class FixedFeeer extends Feeer {
 exports.FixedFeeer = FixedFeeer;
 class RatioFeeer extends Feeer {
     constructor(receiver, ratio, min, max) {
-        super(hint_1.HINT.CURRENCY_FEEER_RATIO);
-        this.receiver = address_1.Address.from(receiver);
-        this.ratio = new math_1.Float(ratio);
-        this.min = min instanceof math_1.Big ? min : new math_1.Big(min);
-        this.max = max instanceof math_1.Big ? max : new math_1.Big(max);
+        super(hint_js_1.HINT.CURRENCY_FEEER_RATIO);
+        this.receiver = address_js_1.Address.from(receiver);
+        this.ratio = new math_js_1.Float(ratio);
+        this.min = min instanceof math_js_1.Big ? min : new math_js_1.Big(min);
+        this.max = max instanceof math_js_1.Big ? max : new math_js_1.Big(max);
     }
     toBuffer() {
         return Buffer.concat([

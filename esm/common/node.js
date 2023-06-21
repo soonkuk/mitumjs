@@ -1,5 +1,5 @@
 import axios from "axios";
-import { isIPAddress } from "../utils/validation";
+import { isIPAddress } from "../utils/validation.js";
 export class Node {
     constructor(provider) {
         this._node = "";

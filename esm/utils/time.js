@@ -1,4 +1,4 @@
-import { Assert, MitumError } from "./error";
+import { Assert, MitumError } from "./error.js";
 export class TimeStamp {
     constructor(t) {
         if (t === undefined) {

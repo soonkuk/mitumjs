@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import { HintedObject, IBuffer, IHintedObject, IString } from "./interface";
-import { Big } from "../utils/math";
+import { HintedObject, IBuffer, IHintedObject, IString } from "./interface.js";
+import { Big } from "../utils/math.js";
 declare class Hint implements IString {
     private s;
     constructor(s: string);

@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { IBuffer, IString } from "../types/interface";
+import { IBuffer, IString } from "../types/interface.js";
 type HashFunction = (msg: string | Buffer) => Buffer;
 export declare const sha256: HashFunction;
 export declare const sha3: HashFunction;

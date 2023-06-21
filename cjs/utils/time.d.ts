@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { IBuffer, IString } from "../types/interface";
+import { IBuffer, IString } from "../types/interface.js";
 export declare class TimeStamp implements IBuffer, IString {
     private t;
     constructor(t?: string | number | Date);

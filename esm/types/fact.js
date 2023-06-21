@@ -1,9 +1,9 @@
 import base58 from "bs58";
-import { Address } from "../account/address";
-import { Hint, Token } from "./property";
-import { MitumConfig } from "../utils/config";
-import { SortFunc, sha3 } from "../utils/math";
-import { Assert, ECODE, MitumError } from "../utils/error";
+import { Address } from "../account/address.js";
+import { Hint, Token } from "./property.js";
+import { MitumConfig } from "../utils/config.js";
+import { SortFunc, sha3 } from "../utils/math.js";
+import { Assert, ECODE, MitumError } from "../utils/error.js";
 export class Fact {
     constructor(hint, token) {
         this.hint = new Hint(hint);

@@ -14,14 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Node = void 0;
 const axios_1 = __importDefault(require("axios"));
-const validation_1 = require("../utils/validation");
+const validation_js_1 = require("../utils/validation.js");
 class Node {
     constructor(provider) {
         this._node = "";
         this.setNode(provider);
     }
     setNode(provider) {
-        if ((0, validation_1.isIPAddress)(provider)) {
+        if ((0, validation_js_1.isIPAddress)(provider)) {
             this._node = provider;
             console.log("NOTE: mitum.js is running with RPC-URL: ", provider);
         }

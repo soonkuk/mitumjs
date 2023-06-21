@@ -1,7 +1,7 @@
-import { OperationType } from "../types/operation";
-import { Fact } from "../types/fact";
+import { OperationType } from "../types/operation.js";
+import { Fact } from "../types/fact.js";
 
-import { Key } from "../account/publicKey";
+import { Key } from "../account/publicKey.js";
 
 // Optional: The option is node's address
 export function signOperation(

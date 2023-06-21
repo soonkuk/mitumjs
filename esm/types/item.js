@@ -1,4 +1,4 @@
-import { Hint } from "./property";
+import { Hint } from "./property.js";
 export class Item {
     constructor(hint) {
         this.hint = new Hint(hint);

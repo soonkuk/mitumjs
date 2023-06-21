@@ -1,11 +1,11 @@
 /// <reference types="node" />
-import { CurrencyItem } from "../currency/currencyItem";
-import { HintedObject } from "../types/interface";
-import { KeyPairType } from "../types/address";
-import { OperationFact } from "../types/fact";
-import { Amount } from "../types/property";
-import { Address } from "./address";
-import { Keys } from "./publicKey";
+import { CurrencyItem } from "../currency/currencyItem.js";
+import { HintedObject } from "../types/interface.js";
+import { KeyPairType } from "../types/address.js";
+import { OperationFact } from "../types/fact.js";
+import { Amount } from "../types/property.js";
+import { Address } from "./address.js";
+import { Keys } from "./publicKey.js";
 export declare class CreateAccountsFact extends OperationFact<CreateAccountsItem> {
     constructor(token: string, sender: string | Address, items: CreateAccountsItem[]);
     get operationHint(): string;

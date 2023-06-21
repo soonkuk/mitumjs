@@ -1,4 +1,4 @@
-import { RangeConfig } from "./config";
+import { RangeConfig } from "./config.js";
 export type ErrorCode = (typeof ECODE)[keyof typeof ECODE] | (typeof ECODE.CURRENCY)[keyof typeof ECODE.CURRENCY];
 export declare const ECODE: {
     readonly UNKNOWN: "EC_UNKNOWN";

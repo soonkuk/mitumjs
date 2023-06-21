@@ -1,10 +1,10 @@
 /// <reference types="node" />
-import { HintedObject } from "../types/interface";
-import { Amount } from "../types/property";
-import { FactJson } from "../types/iFact";
-import { NodeFact } from "../types/fact";
-import { Item } from "../types/item";
-import { Address } from "../account/address";
+import { HintedObject } from "../types/interface.js";
+import { Amount } from "../types/property.js";
+import { FactJson } from "../types/iFact.js";
+import { NodeFact } from "../types/fact.js";
+import { Item } from "../types/item.js";
+import { Address } from "../account/address.js";
 export declare class SuffrageInflationItem extends Item {
     readonly amount: Amount;
     readonly receiver: Address;

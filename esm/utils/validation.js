@@ -1,6 +1,6 @@
 import * as secp256k1 from "@noble/secp256k1";
 import base58 from "bs58";
-import { sha256, Big } from "../utils/math";
+import { sha256, Big } from "../utils/math.js";
 export const isIPAddress = (item) => {
     const ipPattern = /^(http|https):\/\/(\d{1,3}\.){3}\d{1,3}(?::\d+)?$/;
     return ipPattern.test(item);

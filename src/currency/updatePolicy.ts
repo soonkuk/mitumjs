@@ -1,9 +1,9 @@
-import { CurrencyID } from "../types/property";
-import { FactJson } from "../types/iFact";
-import { NodeFact } from "../types/fact";
-import { HINT } from "../types/hint";
+import { CurrencyID } from "../types/property.js";
+import { FactJson } from "../types/iFact.js";
+import { NodeFact } from "../types/fact.js";
+import { HINT } from "../types/hint.js";
 
-import { CurrencyPolicy } from "./design";
+import { CurrencyPolicy } from "./design.js";
 
 export class CurrencyPolicyUpdaterFact extends NodeFact {
   readonly currency: CurrencyID;

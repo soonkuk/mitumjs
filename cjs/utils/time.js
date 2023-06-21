@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FullTimeStamp = exports.TimeStamp = void 0;
-const error_1 = require("./error");
+const error_js_1 = require("./error.js");
 class TimeStamp {
     constructor(t) {
         if (t === undefined) {
@@ -31,7 +31,7 @@ class TimeStamp {
         if (z < 0) {
             z = iso.indexOf("+");
         }
-        error_1.Assert.check(0 <= z, error_1.MitumError.detail(undefined, "no 'Z' in iso"));
+        error_js_1.Assert.check(0 <= z, error_js_1.MitumError.detail(undefined, "no 'Z' in iso"));
         let _time = iso.substring(t + 1, z);
         const dotIdx = _time.indexOf(".");
         if (dotIdx < 0) {

@@ -1,8 +1,8 @@
 /// <reference types="node" />
-import { Address } from "./address";
-import { Big } from "../utils/math";
-import { KeyPairType } from "../types/address";
-import { HintedObject, IBuffer, IHintedObject, IString } from "../types/interface";
+import { Address } from "./address.js";
+import { Big } from "../utils/math.js";
+import { KeyPairType } from "../types/address.js";
+import { HintedObject, IBuffer, IHintedObject, IString } from "../types/interface.js";
 type BigArg = string | number | Big;
 type Pub = [string | Key, BigArg] | PubKey;
 export declare class Key implements IBuffer, IString {

@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import ethWallet from "ethereumjs-wallet";
-import { Key } from "./publicKey";
-import { KeyPairType } from "../types/address";
+import { Key } from "./publicKey.js";
+import { KeyPairType } from "../types/address.js";
 interface IKeyGenerator {
     random(option?: KeyPairType): KeyPair;
     fromPrivate(key: string | Key): KeyPair;

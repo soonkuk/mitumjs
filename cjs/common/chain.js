@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Chain = void 0;
-const intro_1 = require("../intro");
+const intro_js_1 = require("../intro.js");
 class Chain {
     constructor() {
         this._chainID = "";
-        const chID = intro_1.MITUM_NETWORK_ID;
+        const chID = intro_js_1.MITUM_NETWORK_ID;
         this.setChainID(chID);
     }
     setChainID(chID) {

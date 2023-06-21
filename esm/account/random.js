@@ -1,7 +1,7 @@
-import { M2KeyPair } from "./key";
-import { Keys, PubKey } from "./publicKey";
-import { Assert } from "../utils/error";
-import { MitumConfig } from "../utils/config";
+import { M2KeyPair } from "./key.js";
+import { Keys, PubKey } from "./publicKey.js";
+import { Assert } from "../utils/error.js";
+import { MitumConfig } from "../utils/config.js";
 function getRandomKeys(n, f) {
     Assert.get(MitumConfig.KEYS_IN_ACCOUNT.satisfy(n)).excute();
     n = Math.floor(n);

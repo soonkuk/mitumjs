@@ -1,11 +1,11 @@
-import { HintedObject } from "../types/interface";
-import { KeyPairType } from "../types/address";
-import { Amount } from "../types/property";
-import { Item } from "../types/item";
+import { HintedObject } from "../types/interface.js";
+import { KeyPairType } from "../types/address.js";
+import { Amount } from "../types/property.js";
+import { Item } from "../types/item.js";
 
-import { Assert, ECODE, MitumError } from "../utils/error";
-import { MitumConfig } from "../utils/config";
-import { SortFunc } from "../utils/math";
+import { Assert, ECODE, MitumError } from "../utils/error.js";
+import { MitumConfig } from "../utils/config.js";
+import { SortFunc } from "../utils/math.js";
 
 export abstract class CurrencyItem extends Item {
   readonly amounts: Amount[];

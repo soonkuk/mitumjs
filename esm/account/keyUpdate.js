@@ -1,7 +1,7 @@
-import { CurrencyID } from "../types/property";
-import { Fact } from "../types/fact";
-import { HINT } from "../types/hint";
-import { Address } from "./address";
+import { CurrencyID } from "../types/property.js";
+import { Fact } from "../types/fact.js";
+import { HINT } from "../types/hint.js";
+import { Address } from "./address.js";
 export class KeyUpdaterFact extends Fact {
     constructor(token, target, keys, currency) {
         super(HINT.KEY_UPDATER_OPERATION_FACT, token);

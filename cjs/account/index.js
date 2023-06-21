@@ -13,16 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Account = void 0;
-const operation_1 = require("../types/operation");
-const property_1 = require("../types/property");
-const validation_1 = require("../utils/validation");
-const time_1 = require("../utils/time");
-const create_1 = require("./create");
-const random_1 = require("./random");
-const publicKey_1 = require("./publicKey");
-const keyUpdate_1 = require("./keyUpdate");
-const information_1 = __importDefault(require("./information"));
-const key_1 = require("./key");
+const operation_js_1 = require("../types/operation.js");
+const property_js_1 = require("../types/property.js");
+const validation_js_1 = require("../utils/validation.js");
+const time_js_1 = require("../utils/time.js");
+const create_js_1 = require("./create.js");
+const random_js_1 = require("./random.js");
+const publicKey_js_1 = require("./publicKey.js");
+const keyUpdate_js_1 = require("./keyUpdate.js");
+const information_js_1 = __importDefault(require("./information.js"));
+const key_js_1 = require("./key.js");
 const BTC = "btc";
 const ETH = "ether";
 class Account {
@@ -31,30 +31,30 @@ class Account {
         this._setNode(provider);
     }
     _setNode(provider) {
-        if ((0, validation_1.isIPAddress)(provider)) {
+        if ((0, validation_js_1.isIPAddress)(provider)) {
             this._node = provider;
         }
     }
     key(seed) {
         if (seed === undefined) {
-            return key_1.M2KeyPair.random(BTC);
+            return key_js_1.M2KeyPair.random(BTC);
         }
-        return key_1.M2KeyPair.fromSeed(seed, BTC);
+        return key_js_1.M2KeyPair.fromSeed(seed, BTC);
     }
     keys(n) {
-        return (0, random_1.M2RandomN)(n, BTC);
+        return (0, random_js_1.M2RandomN)(n, BTC);
     }
     fromPrivateKey(key) {
-        return key_1.M2KeyPair.fromPrivate(key);
+        return key_js_1.M2KeyPair.fromPrivate(key);
     }
     etherKey(seed) {
         if (seed === undefined || seed.length === 0) {
-            return key_1.M2KeyPair.random(ETH);
+            return key_js_1.M2KeyPair.random(ETH);
         }
-        return key_1.M2KeyPair.fromSeed(seed, ETH);
+        return key_js_1.M2KeyPair.fromSeed(seed, ETH);
     }
     etherKeys(n) {
-        return (0, random_1.M2EtherRandomN)(n, ETH);
+        return (0, random_js_1.M2EtherRandomN)(n, ETH);
     }
     address(pubKey) {
         const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100).address;
@@ -74,59 +74,59 @@ class Account {
     }
     create(senderAddr, recieverPub, currentID, amount) {
         const keys = this.pubToKeys([{ key: recieverPub, weight: 100 }], 100);
-        const amountArr = new property_1.Amount(currentID, amount);
-        const token = new time_1.TimeStamp().UTC();
-        const item = new create_1.CreateAccountsItem(keys, [amountArr], BTC);
-        const fact = new create_1.CreateAccountsFact(token, senderAddr, [item]);
-        return new operation_1.OperationType(fact);
+        const amountArr = new property_js_1.Amount(currentID, amount);
+        const token = new time_js_1.TimeStamp().UTC();
+        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], BTC);
+        const fact = new create_js_1.CreateAccountsFact(token, senderAddr, [item]);
+        return new operation_js_1.OperationType(fact);
     }
     createEtherAccount(senderAddr, recieverPub, currentID, amount) {
         const keys = this.pubToKeys([{ key: recieverPub, weight: 100 }], 100);
-        const amountArr = new property_1.Amount(currentID, amount);
-        const token = new time_1.TimeStamp().UTC();
-        const item = new create_1.CreateAccountsItem(keys, [amountArr], ETH);
-        const fact = new create_1.CreateAccountsFact(token, senderAddr, [item]);
-        return new operation_1.OperationType(fact);
+        const amountArr = new property_js_1.Amount(currentID, amount);
+        const token = new time_js_1.TimeStamp().UTC();
+        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], ETH);
+        const fact = new create_js_1.CreateAccountsFact(token, senderAddr, [item]);
+        return new operation_js_1.OperationType(fact);
     }
     createMultiSig(senderAddr, recieverPubArr, currentID, amount, threshold) {
         const keys = this.pubToKeys(recieverPubArr, threshold);
-        const amountArr = new property_1.Amount(currentID, amount);
-        const token = new time_1.TimeStamp().UTC();
-        const item = new create_1.CreateAccountsItem(keys, [amountArr], BTC);
-        const fact = new create_1.CreateAccountsFact(token, senderAddr, [item]);
-        return new operation_1.OperationType(fact);
+        const amountArr = new property_js_1.Amount(currentID, amount);
+        const token = new time_js_1.TimeStamp().UTC();
+        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], BTC);
+        const fact = new create_js_1.CreateAccountsFact(token, senderAddr, [item]);
+        return new operation_js_1.OperationType(fact);
     }
     createEtherMultiSig(senderAddr, recieverPubArr, currentID, amount, threshold) {
         const keys = this.pubToKeys(recieverPubArr, threshold);
-        const amountArr = new property_1.Amount(currentID, amount);
-        const token = new time_1.TimeStamp().UTC();
-        const item = new create_1.CreateAccountsItem(keys, [amountArr], ETH);
-        const fact = new create_1.CreateAccountsFact(token, senderAddr, [item]);
-        return new operation_1.OperationType(fact);
+        const amountArr = new property_js_1.Amount(currentID, amount);
+        const token = new time_js_1.TimeStamp().UTC();
+        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], ETH);
+        const fact = new create_js_1.CreateAccountsFact(token, senderAddr, [item]);
+        return new operation_js_1.OperationType(fact);
     }
     updateKey(targetAddr, newPubArr, currentID, threshold) {
         const keys = this.pubToKeys(newPubArr, threshold);
-        const token = new time_1.TimeStamp().UTC();
-        const fact = new keyUpdate_1.KeyUpdaterFact(token, targetAddr, keys, currentID);
-        return new operation_1.OperationType(fact);
+        const token = new time_js_1.TimeStamp().UTC();
+        const fact = new keyUpdate_js_1.KeyUpdaterFact(token, targetAddr, keys, currentID);
+        return new operation_js_1.OperationType(fact);
     }
     pubToKeys(pubKeys, threshold) {
-        const pubs = pubKeys.map((pub) => new publicKey_1.PubKey(pub.key, pub.weight));
-        return new publicKey_1.Keys(pubs, threshold);
+        const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
+        return new publicKey_js_1.Keys(pubs, threshold);
     }
     get(address) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield information_1.default.getAddressInfo(this._node, address);
+            return yield information_js_1.default.getAddressInfo(this._node, address);
         });
     }
     getOperation(address) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield information_1.default.getOperationsByAddress(this._node, address);
+            return yield information_js_1.default.getOperationsByAddress(this._node, address);
         });
     }
     getByPublickey(publickey) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield information_1.default.getAccountInfoByPublickey(this._node, publickey);
+            return yield information_js_1.default.getAccountInfoByPublickey(this._node, publickey);
         });
     }
 }

@@ -1,7 +1,7 @@
-import { SUFFIX } from "../types/hint";
-import { CurrencyID } from "../types/property";
-import { MitumConfig } from "../utils/config";
-import { ECODE, MitumError, StringAssert } from "../utils/error";
+import { SUFFIX } from "../types/hint.js";
+import { CurrencyID } from "../types/property.js";
+import { MitumConfig } from "../utils/config.js";
+import { ECODE, MitumError, StringAssert } from "../utils/error.js";
 class BaseAddress {
     constructor(s, type) {
         this.s = s;

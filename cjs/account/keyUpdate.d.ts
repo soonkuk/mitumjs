@@ -1,9 +1,9 @@
 /// <reference types="node" />
-import { CurrencyID } from "../types/property";
-import { FactJson } from "../types/iFact";
-import { Fact } from "../types/fact";
-import { Address } from "./address";
-import { Keys } from "./publicKey";
+import { CurrencyID } from "../types/property.js";
+import { FactJson } from "../types/iFact.js";
+import { Fact } from "../types/fact.js";
+import { Address } from "./address.js";
+import { Keys } from "./publicKey.js";
 export declare class KeyUpdaterFact extends Fact {
     readonly target: Address;
     readonly keys: Keys;

@@ -1,4 +1,4 @@
-import { RangeConfig } from "./config";
+import { RangeConfig } from "./config.js";
 
 export type ErrorCode =
   | (typeof ECODE)[keyof typeof ECODE]

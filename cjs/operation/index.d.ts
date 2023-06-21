@@ -1,5 +1,5 @@
-import { OperationType } from "../types/operation";
-import { Fact } from "../types/fact";
+import { OperationType } from "../types/operation.js";
+import { Fact } from "../types/fact.js";
 import { AxiosResponse } from "axios";
 export declare class Operation {
     private _node;

@@ -1,13 +1,13 @@
-import { isIPAddress } from "../utils/validation";
-import { TimeStamp } from "../utils/time";
-import { OperationType } from "../types/operation";
-import { Amount } from "../types/property";
-import { CurrencyPolicyUpdaterFact } from "./updatePolicy";
-import { TransfersFact, TransfersItem } from "./transfer";
-import { CurrencyRegisterFact } from "./register";
-import currencyInfo from "./information";
-import { NilFeeer, FixedFeeer, RatioFeeer, CurrencyPolicy, CurrencyDesign, } from "./design";
-import { SuffrageInflationFact, SuffrageInflationItem } from "./inflate";
+import { isIPAddress } from "../utils/validation.js";
+import { TimeStamp } from "../utils/time.js";
+import { OperationType } from "../types/operation.js";
+import { Amount } from "../types/property.js";
+import { CurrencyPolicyUpdaterFact } from "./updatePolicy.js";
+import { TransfersFact, TransfersItem } from "./transfer.js";
+import { CurrencyRegisterFact } from "./register.js";
+import currencyInfo from "./information.js";
+import { NilFeeer, FixedFeeer, RatioFeeer, CurrencyPolicy, CurrencyDesign, } from "./design.js";
+import { SuffrageInflationFact, SuffrageInflationItem } from "./inflate.js";
 export class Currency {
     constructor(provider) {
         this._node = "";

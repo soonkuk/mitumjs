@@ -1,11 +1,13 @@
-import { sha3_256, keccak256 as keccak_256 } from "js-sha3";
+import sha3js from "js-sha3";
+const { sha3_256, keccak256: keccak_256 } = sha3js;
+
 import { sha256 as nobleSha256 } from "@noble/hashes/sha256";
 
 import bigInt from "big-integer";
 import Int64 from "int64-buffer";
 
-import { IBuffer, IString } from "../types/interface";
-import { Assert, ECODE, MitumError } from "./error";
+import { IBuffer, IString } from "../types/interface.js";
+import { Assert, ECODE, MitumError } from "./error.js";
 
 type HashFunction = (msg: string | Buffer) => Buffer;
 

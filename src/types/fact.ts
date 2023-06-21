@@ -1,14 +1,14 @@
 import base58 from "bs58";
 
-import { Item } from "./item";
-import { FactJson } from "./iFact";
+import { Item } from "./item.js";
+import { FactJson } from "./iFact.js";
 
-import { Address } from "../account/address";
-import { Hint, Token } from "./property";
-import { MitumConfig } from "../utils/config";
-import { SortFunc, sha3 } from "../utils/math";
-import { Assert, ECODE, MitumError } from "../utils/error";
-import { IBuffer, IHintedObject } from "./interface";
+import { Address } from "../account/address.js";
+import { Hint, Token } from "./property.js";
+import { MitumConfig } from "../utils/config.js";
+import { SortFunc, sha3 } from "../utils/math.js";
+import { Assert, ECODE, MitumError } from "../utils/error.js";
+import { IBuffer, IHintedObject } from "./interface.js";
 
 export abstract class Fact implements IBuffer, IHintedObject {
   private hint: Hint;

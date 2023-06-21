@@ -1,7 +1,7 @@
-import { HintedObject } from "../types/interface";
-import { KeyPairType } from "../types/address";
-import { Amount } from "../types/property";
-import { Item } from "../types/item";
+import { HintedObject } from "../types/interface.js";
+import { KeyPairType } from "../types/address.js";
+import { Amount } from "../types/property.js";
+import { Item } from "../types/item.js";
 export declare abstract class CurrencyItem extends Item {
     readonly amounts: Amount[];
     readonly addressType: KeyPairType | "";

@@ -1,9 +1,9 @@
-import { Currency } from "../currency";
-import currencyInfo from "../currency/information";
+import { Currency } from "../../cjs/currency";
+import currencyInfo from "../../cjs/currency/information";
 import { AxiosResponse } from "axios";
 import { account1, account2, account3, node } from "./dummy";
 
-jest.mock("../currency/information", () => ({
+jest.mock("../../cjs/currency/information", () => ({
   getAllCurrencyInfo: jest.fn().mockResolvedValue({ data: "mocked" }),
   getCurrencyInfo: jest.fn().mockResolvedValue({ data: "mocked" }),
 }));

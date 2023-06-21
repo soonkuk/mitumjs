@@ -1,9 +1,9 @@
 /// <reference types="node" />
-import { Item } from "./item";
-import { FactJson } from "./iFact";
-import { Address } from "../account/address";
-import { Token } from "./property";
-import { IBuffer, IHintedObject } from "./interface";
+import { Item } from "./item.js";
+import { FactJson } from "./iFact.js";
+import { Address } from "../account/address.js";
+import { Token } from "./property.js";
+import { IBuffer, IHintedObject } from "./interface.js";
 export declare abstract class Fact implements IBuffer, IHintedObject {
     private hint;
     readonly token: Token;

@@ -1,9 +1,9 @@
 /// <reference types="node" />
-import { HintedObject, IBuffer, IHintedObject } from "../types/interface";
-import { Hint } from "./property";
-import { Fact } from "./fact";
-import { M2FactSign, M2NodeFactSign } from "./factSign";
-import { Key } from "../account/publicKey";
+import { HintedObject, IBuffer, IHintedObject } from "../types/interface.js";
+import { Hint } from "./property.js";
+import { Fact } from "./fact.js";
+import { M2FactSign, M2NodeFactSign } from "./factSign.js";
+import { Key } from "../account/publicKey.js";
 export type FactSignType = M2FactSign | M2NodeFactSign;
 export type SigType = "M2FactSign" | "M2NodeFactSign" | null;
 export declare class OperationType<T extends Fact> implements IBuffer, IHintedObject {

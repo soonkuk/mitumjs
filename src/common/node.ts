@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { isIPAddress } from "../utils/validation";
+import { isIPAddress } from "../utils/validation.js";
 
 export class Node {
   private _node: string = "";

@@ -1,10 +1,10 @@
-import { CurrencyID } from "../types/property";
-import { FactJson } from "../types/iFact";
-import { Fact } from "../types/fact";
-import { HINT } from "../types/hint";
+import { CurrencyID } from "../types/property.js";
+import { FactJson } from "../types/iFact.js";
+import { Fact } from "../types/fact.js";
+import { HINT } from "../types/hint.js";
 
-import { Address } from "./address";
-import { Keys } from "./publicKey";
+import { Address } from "./address.js";
+import { Keys } from "./publicKey.js";
 
 export class KeyUpdaterFact extends Fact {
   readonly target: Address;

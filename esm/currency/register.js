@@ -1,5 +1,5 @@
-import { NodeFact } from "../types/fact";
-import { HINT } from "../types/hint";
+import { NodeFact } from "../types/fact.js";
+import { HINT } from "../types/hint.js";
 export class CurrencyRegisterFact extends NodeFact {
     constructor(token, design) {
         super(HINT.CURRENCY_REGISTER_OPERATION_FACT, token);

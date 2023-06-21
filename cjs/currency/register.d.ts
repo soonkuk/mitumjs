@@ -1,7 +1,7 @@
 /// <reference types="node" />
-import { NodeFact } from "../types/fact";
-import { FactJson } from "../types/iFact";
-import { CurrencyDesign } from "./design";
+import { NodeFact } from "../types/fact.js";
+import { FactJson } from "../types/iFact.js";
+import { CurrencyDesign } from "./design.js";
 export declare class CurrencyRegisterFact extends NodeFact {
     readonly design: CurrencyDesign;
     constructor(token: string, design: CurrencyDesign);

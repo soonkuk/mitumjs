@@ -1,8 +1,8 @@
 import base58 from "bs58";
-import { Assert, ECODE, MitumError } from "../utils/error";
-import { FullTimeStamp } from "../utils/time";
-import { NodeAddress } from "../account/address";
-import { Key } from "../account/publicKey";
+import { Assert, ECODE, MitumError } from "../utils/error.js";
+import { FullTimeStamp } from "../utils/time.js";
+import { NodeAddress } from "../account/address.js";
+import { Key } from "../account/publicKey.js";
 export class FactSign {
     constructor(signer, signature, signedAt) {
         this.signature = signature;

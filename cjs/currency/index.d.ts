@@ -1,7 +1,7 @@
-import { OperationType } from "../types/operation";
-import { Fact } from "../types/fact";
+import { OperationType } from "../types/operation.js";
+import { Fact } from "../types/fact.js";
 import { AxiosResponse } from "axios";
-import { inputData } from "./design";
+import { inputData } from "./design.js";
 export declare class Currency {
     private _node;
     constructor(provider?: string);

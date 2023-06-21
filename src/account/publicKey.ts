@@ -1,20 +1,20 @@
 import base58 from "bs58";
 
-import { Address } from "./address";
+import { Address } from "./address.js";
 
-import { Big, keccak256, sha3 } from "../utils/math";
-import { MitumConfig } from "../utils/config";
+import { Big, keccak256, sha3 } from "../utils/math.js";
+import { MitumConfig } from "../utils/config.js";
 
-import { KeyPairType } from "../types/address";
-import { Hint } from "../types/property";
-import { HINT, SUFFIX } from "../types/hint";
-import { Assert, ECODE, MitumError, StringAssert } from "../utils/error";
+import { KeyPairType } from "../types/address.js";
+import { Hint } from "../types/property.js";
+import { HINT, SUFFIX } from "../types/hint.js";
+import { Assert, ECODE, MitumError, StringAssert } from "../utils/error.js";
 import {
   HintedObject,
   IBuffer,
   IHintedObject,
   IString,
-} from "../types/interface";
+} from "../types/interface.js";
 
 type BigArg = string | number | Big;
 type Pub = [string | Key, BigArg] | PubKey;

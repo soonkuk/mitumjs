@@ -32,14 +32,14 @@ const bs58_1 = __importDefault(require("bs58"));
 const secure_random_1 = __importDefault(require("secure-random"));
 const ethereumjs_wallet_1 = __importDefault(require("ethereumjs-wallet"));
 const eccrypto_js_1 = require("eccrypto-js");
-const iPair_1 = require("./iPair");
-const publicKey_1 = require("./publicKey");
-const hint_1 = require("../types/hint");
-const config_1 = require("../utils/config");
-const error_1 = require("../utils/error");
-class M2KeyPair extends iPair_1.KeyPair {
+const iPair_js_1 = require("./iPair.js");
+const publicKey_js_1 = require("./publicKey.js");
+const hint_js_1 = require("../types/hint.js");
+const config_js_1 = require("../utils/config.js");
+const error_js_1 = require("../utils/error.js");
+class M2KeyPair extends iPair_js_1.KeyPair {
     constructor(privateKey) {
-        super(publicKey_1.Key.from(privateKey));
+        super(publicKey_js_1.Key.from(privateKey));
     }
     getSigner() {
         if (this.privateKey.type === "btc") {
@@ -49,11 +49,11 @@ class M2KeyPair extends iPair_1.KeyPair {
     }
     getPub() {
         if (this.privateKey.type === "btc") {
-            return new publicKey_1.Key(bs58_1.default.encode((0, eccrypto_js_1.getPublicCompressed)(Buffer.from(this.signer))) + hint_1.SUFFIX.KEY_PUBLIC);
+            return new publicKey_js_1.Key(bs58_1.default.encode((0, eccrypto_js_1.getPublicCompressed)(Buffer.from(this.signer))) + hint_js_1.SUFFIX.KEY_PUBLIC);
         }
-        return new publicKey_1.Key("04" +
+        return new publicKey_js_1.Key("04" +
             this.signer.getPublicKeyString().substring(2) +
-            hint_1.SUFFIX.KEY_ETHER_PUBLIC);
+            hint_js_1.SUFFIX.KEY_ETHER_PUBLIC);
     }
     sign(msg) {
         if (this.privateKey.type === "btc") {
@@ -67,22 +67,22 @@ M2KeyPair.generator = {
     random(option) {
         if (option === "btc") {
             return new M2KeyPair(bs58_1.default.encode(Buffer.from((0, secure_random_1.default)(32, { type: "Uint8Array" }))) +
-                hint_1.SUFFIX.KEY_PRIVATE);
+                hint_js_1.SUFFIX.KEY_PRIVATE);
         }
         return new M2KeyPair(ethereumjs_wallet_1.default.generate().getPrivateKeyString().substring(2) +
-            hint_1.SUFFIX.KEY_ETHER_PRIVATE);
+            hint_js_1.SUFFIX.KEY_ETHER_PRIVATE);
     },
     fromPrivate(key) {
         return new M2KeyPair(key);
     },
     fromSeed(seed, option) {
-        error_1.StringAssert.with(seed, error_1.MitumError.detail(error_1.ECODE.INVALID_SEED, "seed length out of range"))
-            .satisfyConfig(config_1.MitumConfig.SEED)
+        error_js_1.StringAssert.with(seed, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_SEED, "seed length out of range"))
+            .satisfyConfig(config_js_1.MitumConfig.SEED)
             .excute();
         if (option === "btc") {
-            return new M2KeyPair(bs58_1.default.encode(secp256k1.utils.hexToBytes(iPair_1.KeyPair.from(seed).toString(16))) + hint_1.SUFFIX.KEY_PRIVATE);
+            return new M2KeyPair(bs58_1.default.encode(secp256k1.utils.hexToBytes(iPair_js_1.KeyPair.from(seed).toString(16))) + hint_js_1.SUFFIX.KEY_PRIVATE);
         }
-        return new M2KeyPair(iPair_1.KeyPair.from(seed).toString(16) + hint_1.SUFFIX.KEY_ETHER_PRIVATE);
+        return new M2KeyPair(iPair_js_1.KeyPair.from(seed).toString(16) + hint_js_1.SUFFIX.KEY_ETHER_PRIVATE);
     },
 };
 //# sourceMappingURL=key.js.map

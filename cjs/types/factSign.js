@@ -5,16 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.M2NodeFactSign = exports.M2FactSign = exports.FactSign = void 0;
 const bs58_1 = __importDefault(require("bs58"));
-const error_1 = require("../utils/error");
-const time_1 = require("../utils/time");
-const address_1 = require("../account/address");
-const publicKey_1 = require("../account/publicKey");
+const error_js_1 = require("../utils/error.js");
+const time_js_1 = require("../utils/time.js");
+const address_js_1 = require("../account/address.js");
+const publicKey_js_1 = require("../account/publicKey.js");
 class FactSign {
     constructor(signer, signature, signedAt) {
         this.signature = signature;
-        this.signedAt = new time_1.FullTimeStamp(signedAt);
-        this.signer = publicKey_1.Key.from(signer);
-        error_1.Assert.get(this.signer.isPriv, error_1.MitumError.detail(error_1.ECODE.INVALID_PUBLIC_KEY, "not public key"))
+        this.signedAt = new time_js_1.FullTimeStamp(signedAt);
+        this.signer = publicKey_js_1.Key.from(signer);
+        error_js_1.Assert.get(this.signer.isPriv, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PUBLIC_KEY, "not public key"))
             .not()
             .excute();
     }
@@ -46,7 +46,7 @@ exports.M2FactSign = M2FactSign;
 class M2NodeFactSign extends FactSign {
     constructor(node, signer, signature, signedAt) {
         super(signer, signature, signedAt);
-        this.node = address_1.NodeAddress.from(node);
+        this.node = address_js_1.NodeAddress.from(node);
     }
     toBuffer() {
         return Buffer.concat([this.node.toBuffer(), super.toBuffer()]);

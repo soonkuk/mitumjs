@@ -1,11 +1,11 @@
-import { M2KeyPair } from "./key";
-import { KeyPair } from "./iPair";
-import { Keys, PubKey } from "./publicKey";
+import { M2KeyPair } from "./key.js";
+import { KeyPair } from "./iPair.js";
+import { Keys, PubKey } from "./publicKey.js";
 
-import { Assert } from "../utils/error";
-import { MitumConfig } from "../utils/config";
+import { Assert } from "../utils/error.js";
+import { MitumConfig } from "../utils/config.js";
 
-import { KeyPairType } from "../types/address";
+import { KeyPairType } from "../types/address.js";
 
 function getRandomKeys(
   n: number,

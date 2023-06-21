@@ -1,8 +1,8 @@
-import { MITUM_VERSION } from "../intro";
-import { HINT } from "./hint";
-import { Big } from "../utils/math";
-import { MitumConfig } from "../utils/config";
-import { Assert, ECODE, MitumError } from "../utils/error";
+import { MITUM_VERSION } from "../intro.js";
+import { HINT } from "./hint.js";
+import { Big } from "../utils/math.js";
+import { MitumConfig } from "../utils/config.js";
+import { Assert, ECODE, MitumError } from "../utils/error.js";
 class Hint {
     constructor(s) {
         this.s = s;
