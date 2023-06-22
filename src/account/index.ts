@@ -90,11 +90,11 @@ export class Account {
 
   create(
     senderAddr: string,
-    recieverPub: string,
+    receiverPub: string,
     currentID: string,
     amount: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys([{ key: recieverPub, weight: 100 }], 100);
+    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();

@@ -51,22 +51,7 @@ const test = async () => {
   sub("Currency 기능 테스트");
 };
 
-// test();
-
-const key = mitum.account.etherAddressForMultiSig(
-  [
-    {
-      key: "04569fc4e3c36321ca0f9da4474a7c048d9aa43cfed9e5ff2814b5012514a599c8176b67a30609948a525d4ba75ff8d23507f126dec4fd4b72dc56d273da3ed03eepu",
-      weight: 50,
-    },
-    {
-      key: "048bbbc4796a0a310762f08611df35c3799ce2dcb46f77985b05473e332cad1ce38a60403e1742334d0391a64936b1d0a64517730e73ab14493c0c8b725e4b1130epu",
-      weight: 50,
-    },
-  ],
-  100
-);
-exp("big endian address", key);
+test();
 
 //
 
