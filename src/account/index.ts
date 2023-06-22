@@ -107,11 +107,11 @@ export class Account {
 
   createEtherAccount(
     senderAddr: string,
-    recieverPub: string,
+    receiverPub: string,
     currentID: string,
     amount: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys([{ key: recieverPub, weight: 100 }], 100);
+    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -124,12 +124,12 @@ export class Account {
 
   createMultiSig(
     senderAddr: string,
-    recieverPubArr: Array<{ weight: number; key: string }>,
+    receiverPubArr: Array<{ weight: number; key: string }>,
     currentID: string,
     amount: number,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(recieverPubArr, threshold);
+    const keys = this.pubToKeys(receiverPubArr, threshold);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -142,12 +142,12 @@ export class Account {
 
   createEtherMultiSig(
     senderAddr: string,
-    recieverPubArr: Array<{ weight: number; key: string }>,
+    receiverPubArr: Array<{ weight: number; key: string }>,
     currentID: string,
     amount: number,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(recieverPubArr, threshold);
+    const keys = this.pubToKeys(receiverPubArr, threshold);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
