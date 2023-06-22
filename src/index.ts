@@ -33,8 +33,8 @@ export class Mitum {
     return this._version.getVersion();
   }
 
-  node(): Promise<AxiosResponse<any, any>> {
-    return this._node.getNodeInfo();
+  async node(): Promise<AxiosResponse<any, any>> {
+    return await this._node.getNodeInfo();
   }
 
   setNode(provider?: string) {

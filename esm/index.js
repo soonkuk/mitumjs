@@ -18,8 +18,8 @@ export class Mitum {
     version() {
         return this._version.getVersion();
     }
-    node() {
-        return this._node.getNodeInfo();
+    async node() {
+        return await this._node.getNodeInfo();
     }
     setNode(provider) {
         this._node.setNode(provider);

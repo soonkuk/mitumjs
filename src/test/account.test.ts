@@ -106,14 +106,14 @@ describe("Account", () => {
     const pubKeys = multi1;
     const threshold = 100;
     const result = account.addressForMultiSig(pubKeys, threshold);
-    expect(result).toBe("6oCL7apRgGuH78PAvahZdRQW5LsyKxz8YbJsVWw3Pasvmca");
+    expect(result).toBe("HWSPS3UyBByUg8eWTm3xM6Z2JXFq4Lqsj1fiVcsj15YVmca");
   });
 
   test("account.etherAddressForMultiSig()", () => {
     const pubKeys = multi2;
     const threshold = 100;
     const result = account.etherAddressForMultiSig(pubKeys, threshold);
-    expect(result).toBe("1b9c04fc629cac2525847c87be3e9ea7201f154eeca");
+    expect(result).toBe("75caf01896527a1bd3b35de6aaded5090cd18b94eca");
   });
 
   test("account.create()", () => {

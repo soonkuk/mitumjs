@@ -53,7 +53,7 @@ class Big {
         const size = this.byteLen();
         if (option === "fill") {
             error_js_1.Assert.check(size <= 8, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_BIG_INTEGER, "big out of range"));
-            return Buffer.from(new int64_buffer_1.default.Uint64LE(this.toString()).toBuffer());
+            return Buffer.from(new int64_buffer_1.default.Uint64BE(this.toString()).toBuffer());
         }
         const buf = new Uint8Array(size);
         let n = (0, big_integer_1.default)(this.big);
