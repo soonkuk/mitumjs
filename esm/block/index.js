@@ -13,19 +13,19 @@ export class Block {
     // get information of all-blocks
     // It's possible to obtain 10 pieces of information,
     // along with a link for retrieving consecutive blocks-information.
-    getAll() {
-        return blockInfo.getAllBlocksInfo(this._node);
+    async getAll() {
+        return await blockInfo.getAllBlocksInfo(this._node);
     }
     // get block information by block number or hash
-    get(block) {
+    async get(block) {
         if (typeof block === "number") {
-            return blockInfo.getBlockByHeight(this._node, block);
+            return await blockInfo.getBlockByHeight(this._node, block);
         }
-        return blockInfo.getBlockByHash(this._node, block);
+        return await blockInfo.getBlockByHash(this._node, block);
     }
     // get the operations contained in a specific block.
-    getOperation(block) {
-        return blockInfo.getOperations(this._node, block);
+    async getOperation(block) {
+        return await blockInfo.getOperations(this._node, block);
     }
 }
 //# sourceMappingURL=index.js.map

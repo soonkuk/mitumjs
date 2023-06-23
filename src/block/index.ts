@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { isIPAddress } from "../utils/validation.js";
 import blockInfo from "./information.js";
 
@@ -17,21 +18,21 @@ export class Block {
   // get information of all-blocks
   // It's possible to obtain 10 pieces of information,
   // along with a link for retrieving consecutive blocks-information.
-  getAll(): any {
-    return blockInfo.getAllBlocksInfo(this._node);
+  async getAll(): Promise<AxiosResponse> {
+    return await blockInfo.getAllBlocksInfo(this._node);
   }
 
   // get block information by block number or hash
-  get(block: number | string): any {
+  async get(block: number | string): Promise<AxiosResponse> {
     if (typeof block === "number") {
-      return blockInfo.getBlockByHeight(this._node, block);
+      return await blockInfo.getBlockByHeight(this._node, block);
     }
 
-    return blockInfo.getBlockByHash(this._node, block);
+    return await blockInfo.getBlockByHash(this._node, block);
   }
 
   // get the operations contained in a specific block.
-  getOperation(block: number): any {
-    return blockInfo.getOperations(this._node, block);
+  async getOperation(block: number): Promise<AxiosResponse> {
+    return await blockInfo.getOperations(this._node, block);
   }
 }

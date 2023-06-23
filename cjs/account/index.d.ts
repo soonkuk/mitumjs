@@ -29,17 +29,18 @@ export declare class Account {
         weight: number;
         key: string;
     }>, threshold: number): string;
-    create(senderAddr: string, recieverPub: string, currentID: string, amount: number): OperationType<Fact>;
-    createEtherAccount(senderAddr: string, recieverPub: string, currentID: string, amount: number): OperationType<Fact>;
-    createMultiSig(senderAddr: string, recieverPubArr: Array<{
+    create(senderAddr: string, receiverPub: string, currentID: string, amount: number): OperationType<Fact>;
+    createEtherAccount(senderAddr: string, receiverPub: string, currentID: string, amount: number): OperationType<Fact>;
+    createMultiSig(senderAddr: string, receiverPubArr: Array<{
         weight: number;
         key: string;
     }>, currentID: string, amount: number, threshold: number): OperationType<Fact>;
-    createEtherMultiSig(senderAddr: string, recieverPubArr: Array<{
+    createEtherMultiSig(senderAddr: string, receiverPubArr: Array<{
         weight: number;
         key: string;
     }>, currentID: string, amount: number, threshold: number): OperationType<Fact>;
-    updateKey(targetAddr: string, newPubArr: Array<{
+    update(targetAddr: string, newPubArr: string, currentID: string): OperationType<Fact>;
+    updateMultiSig(targetAddr: string, newPubArr: Array<{
         weight: number;
         key: string;
     }>, currentID: string, threshold: number): OperationType<Fact>;

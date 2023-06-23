@@ -57,39 +57,45 @@ export class Account {
         const address = this.pubToKeys(pubKeys, threshold).etherAddress;
         return address.toString();
     }
-    create(senderAddr, recieverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: recieverPub, weight: 100 }], 100);
+    create(senderAddr, receiverPub, currentID, amount) {
+        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], BTC);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
         return new OperationType(fact);
     }
-    createEtherAccount(senderAddr, recieverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: recieverPub, weight: 100 }], 100);
+    createEtherAccount(senderAddr, receiverPub, currentID, amount) {
+        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], ETH);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
         return new OperationType(fact);
     }
-    createMultiSig(senderAddr, recieverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(recieverPubArr, threshold);
+    createMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
+        const keys = this.pubToKeys(receiverPubArr, threshold);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], BTC);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
         return new OperationType(fact);
     }
-    createEtherMultiSig(senderAddr, recieverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(recieverPubArr, threshold);
+    createEtherMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
+        const keys = this.pubToKeys(receiverPubArr, threshold);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], ETH);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
         return new OperationType(fact);
     }
-    updateKey(targetAddr, newPubArr, currentID, threshold) {
+    update(targetAddr, newPubArr, currentID) {
+        const key = this.pubToKeys([{ key: newPubArr, weight: 100 }], 100);
+        const token = new TimeStamp().UTC();
+        const fact = new KeyUpdaterFact(token, targetAddr, key, currentID);
+        return new OperationType(fact);
+    }
+    updateMultiSig(targetAddr, newPubArr, currentID, threshold) {
         const keys = this.pubToKeys(newPubArr, threshold);
         const token = new TimeStamp().UTC();
         const fact = new KeyUpdaterFact(token, targetAddr, keys, currentID);

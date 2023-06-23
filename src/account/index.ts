@@ -158,7 +158,21 @@ export class Account {
     return new OperationType(fact);
   }
 
-  updateKey(
+  update(
+    targetAddr: string,
+    newPubArr: string,
+    currentID: string
+  ): OperationType<Fact> {
+    const key = this.pubToKeys([{ key: newPubArr, weight: 100 }], 100);
+
+    const token = new TimeStamp().UTC();
+
+    const fact = new KeyUpdaterFact(token, targetAddr, key, currentID);
+
+    return new OperationType(fact);
+  }
+
+  updateMultiSig(
     targetAddr: string,
     newPubArr: Array<{ weight: number; key: string }>,
     currentID: string,

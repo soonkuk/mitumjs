@@ -7,7 +7,7 @@ export default {
     }
 
     try {
-      const res = await axios.get(`${provider}/Currency`);
+      const res = await axios.get(`${provider}/currency`);
       return res;
     } catch (error: any) {
       return Promise.reject(
@@ -25,7 +25,7 @@ export default {
     }
 
     try {
-      const res = await axios.get(`${provider}/Currency/${currencyID}`);
+      const res = await axios.get(`${provider}/currency/${currencyID}`);
       return res;
     } catch (error: any) {
       return Promise.reject(

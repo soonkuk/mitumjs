@@ -5,7 +5,7 @@ export default {
             return Promise.reject(new Error("RPC-URL is not provided."));
         }
         try {
-            const res = await axios.get(`${provider}/Currency`);
+            const res = await axios.get(`${provider}/currency`);
             return res;
         }
         catch (error) {
@@ -17,7 +17,7 @@ export default {
             return Promise.reject(new Error("RPC-URL is not provided."));
         }
         try {
-            const res = await axios.get(`${provider}/Currency/${currencyID}`);
+            const res = await axios.get(`${provider}/currency/${currencyID}`);
             return res;
         }
         catch (error) {
