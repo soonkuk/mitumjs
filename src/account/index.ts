@@ -8,6 +8,7 @@ import { Fact } from "../types/fact.js";
 import { CreateAccountsItem, CreateAccountsFact } from "./create.js";
 import { M2RandomN, M2EtherRandomN } from "./random.js";
 import { Key, Keys, PubKey } from "./publicKey.js";
+import { WalletType } from "../types/wallet.js";
 import { KeyUpdaterFact } from "./keyUpdate.js";
 import accountInfo from "./information.js";
 import { KeyPair } from "./iPair.js";
@@ -86,6 +87,43 @@ export class Account {
   ): string {
     const address = this.pubToKeys(pubKeys, threshold).etherAddress;
     return address.toString();
+  }
+
+  createWallet(
+    sender: string,
+    currencyID: string,
+    amount: number,
+    seed?: string,
+    weight: number = 100
+  ): { wallet: WalletType; operation: OperationType<Fact> } {
+    let keypair: M2KeyPair;
+
+    if (seed === undefined) {
+      keypair = M2KeyPair.random(BTC);
+    } else {
+      keypair = M2KeyPair.fromSeed(seed, BTC);
+    }
+
+    const wt = weight;
+    const privatekey = keypair.privateKey.toString();
+    const publickey = keypair.publicKey.toString();
+    const address = this.pubToKeys(
+      [{ key: publickey, weight: wt }],
+      wt
+    ).address.toString();
+
+    const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
+    const amountArr = new Amount(currencyID, amount);
+
+    const token = new TimeStamp().UTC();
+
+    const item = new CreateAccountsItem(keys, [amountArr], BTC);
+    const fact = new CreateAccountsFact(token, sender, [item]);
+
+    return {
+      wallet: { privatekey, publickey, address },
+      operation: new OperationType(fact),
+    };
   }
 
   create(

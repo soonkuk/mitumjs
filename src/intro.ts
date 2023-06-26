@@ -28,7 +28,4 @@ const MITUM_NETWORK_ID = "mitum";
 /** @dev The sdk version of mitum.js */
 const MITUM_JS_VERSION = "v1.0.0 Prehistoric";
 
-/** @dev The default coin's name */
-const DEFAULT_TOKEN = "PEN";
-
-export { MITUM_VERSION, MITUM_NETWORK_ID, MITUM_JS_VERSION, DEFAULT_TOKEN };
+export { MITUM_VERSION, MITUM_NETWORK_ID, MITUM_JS_VERSION };
