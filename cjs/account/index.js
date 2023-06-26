@@ -72,6 +72,28 @@ class Account {
         const address = this.pubToKeys(pubKeys, threshold).etherAddress;
         return address.toString();
     }
+    createWallet(sender, currencyID, amount, seed, weight = 100) {
+        let keypair;
+        if (seed === undefined) {
+            keypair = key_js_1.M2KeyPair.random(BTC);
+        }
+        else {
+            keypair = key_js_1.M2KeyPair.fromSeed(seed, BTC);
+        }
+        const wt = weight;
+        const privatekey = keypair.privateKey.toString();
+        const publickey = keypair.publicKey.toString();
+        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt).address.toString();
+        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
+        const amountArr = new property_js_1.Amount(currencyID, amount);
+        const token = new time_js_1.TimeStamp().UTC();
+        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], BTC);
+        const fact = new create_js_1.CreateAccountsFact(token, sender, [item]);
+        return {
+            wallet: { privatekey, publickey, address },
+            operation: new operation_js_1.OperationType(fact),
+        };
+    }
     create(senderAddr, receiverPub, currentID, amount) {
         const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new property_js_1.Amount(currentID, amount);
@@ -120,7 +142,7 @@ class Account {
         const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
         return new publicKey_js_1.Keys(pubs, threshold);
     }
-    get(address) {
+    getAccountInfo(address) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield information_js_1.default.getAddressInfo(this._node, address);
         });

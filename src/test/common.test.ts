@@ -1,4 +1,4 @@
-import { Version, Node, Chain, DefaultToken } from "../../cjs/common";
+import { Version, Node, Chain } from "../../cjs/common";
 
 import axios from "axios";
 // Mock axios.get() to return a fake response
@@ -67,13 +67,5 @@ describe("common test", () => {
     const newChainID = "new_chain_id";
     chain.setChainID(newChainID);
     expect(chain.getChainID()).toBe(newChainID);
-  });
-
-  test("test: common.defaultToken()", () => {
-    let defaultToken = new DefaultToken();
-    expect(defaultToken.getDefaultCurrency()).toBe("PEN");
-
-    defaultToken.setDefaultCurrency("MCC");
-    expect(defaultToken.getDefaultCurrency()).toBe("MCC");
   });
 });

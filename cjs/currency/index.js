@@ -33,12 +33,12 @@ class Currency {
             this._node = provider;
         }
     }
-    getAll() {
+    getAllCurrencies() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield information_js_1.default.getAllCurrencyInfo(this._node);
         });
     }
-    get(currencyID) {
+    getCurrency(currencyID) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield information_js_1.default.getCurrencyInfo(this._node, currencyID);
         });

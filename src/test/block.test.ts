@@ -28,16 +28,16 @@ describe("Currency", () => {
     jest.clearAllMocks();
   });
 
-  it("block.getAll()", async () => {
-    await block.getAll();
+  it("block.getBlocks()", async () => {
+    await block.getAllBlocks();
 
     expect(blockInfo.getAllBlocksInfo).toHaveBeenCalledTimes(1);
     expect(blockInfo.getAllBlocksInfo).toHaveBeenCalledWith(node);
   });
 
-  it("block.get()", async () => {
-    await block.get(500);
-    await block.get("AGyN3uVJ5wHn4xx7XX4wwGqnjMn31okcwgDKwCAguer6");
+  it("block.getBlock()", async () => {
+    await block.getBlock(500);
+    await block.getBlock("AGyN3uVJ5wHn4xx7XX4wwGqnjMn31okcwgDKwCAguer6");
 
     expect(blockInfo.getBlockByHeight).toHaveBeenCalledTimes(1);
     expect(blockInfo.getBlockByHeight).toHaveBeenCalledWith(node, 500);

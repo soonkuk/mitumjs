@@ -121,16 +121,16 @@ describe("Currency", () => {
     expect(response.data).toEqual("mocked");
   });
 
-  it("block.getAll()", async () => {
-    await operation.getAll();
+  it("block.getAllOperations()", async () => {
+    await operation.getAllOperations();
 
     expect(operationInfo.getAllOperationsInfo).toHaveBeenCalledTimes(1);
     expect(operationInfo.getAllOperationsInfo).toHaveBeenCalledWith(node);
   });
 
-  it("block.get()", async () => {
+  it("block.getOperation()", async () => {
     const factHash = "2rmEZi4YYdN4G6HSnyWHHMi63BrkyYuFPbuajiuEuU3V";
-    await operation.get(factHash);
+    await operation.getOperation(factHash);
 
     expect(operationInfo.getOperationInfo).toHaveBeenCalledTimes(1);
     expect(operationInfo.getOperationInfo).toHaveBeenCalledWith(node, factHash);

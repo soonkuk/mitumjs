@@ -57,6 +57,28 @@ export class Account {
         const address = this.pubToKeys(pubKeys, threshold).etherAddress;
         return address.toString();
     }
+    createWallet(sender, currencyID, amount, seed, weight = 100) {
+        let keypair;
+        if (seed === undefined) {
+            keypair = M2KeyPair.random(BTC);
+        }
+        else {
+            keypair = M2KeyPair.fromSeed(seed, BTC);
+        }
+        const wt = weight;
+        const privatekey = keypair.privateKey.toString();
+        const publickey = keypair.publicKey.toString();
+        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt).address.toString();
+        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
+        const amountArr = new Amount(currencyID, amount);
+        const token = new TimeStamp().UTC();
+        const item = new CreateAccountsItem(keys, [amountArr], BTC);
+        const fact = new CreateAccountsFact(token, sender, [item]);
+        return {
+            wallet: { privatekey, publickey, address },
+            operation: new OperationType(fact),
+        };
+    }
     create(senderAddr, receiverPub, currentID, amount) {
         const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new Amount(currentID, amount);
@@ -105,7 +127,7 @@ export class Account {
         const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
         return new Keys(pubs, threshold);
     }
-    async get(address) {
+    async getAccountInfo(address) {
         return await accountInfo.getAddressInfo(this._node, address);
     }
     async getOperation(address) {

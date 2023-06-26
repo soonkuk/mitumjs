@@ -18,10 +18,10 @@ export class Currency {
             this._node = provider;
         }
     }
-    async getAll() {
+    async getAllCurrencies() {
         return await currencyInfo.getAllCurrencyInfo(this._node);
     }
-    async get(currencyID) {
+    async getCurrency(currencyID) {
         return await currencyInfo.getCurrencyInfo(this._node, currencyID);
     }
     /** structure

@@ -117,7 +117,24 @@ const test = async () => {
   const receiverEtherPublickey =
     "0413814cd14d791c59092b3498d8ba7bf24762c555b38371fc5ebcef9ca324074eb1496e25f11a9a5d08d449843a26a8053f4fe481e8929a6a7dc706d8c058e726epu";
   const currencyID = "MCC";
-  const amount = 10000;
+  const amount = 10;
+  const seed2 = "The MITUM blockchain is evolving every day.";
+  const weight2 = 80;
+  const { wallet, operation } = mitum.account.createWallet(
+    senderAddress,
+    currencyID,
+    amount,
+    seed2,
+    weight2
+  );
+  exp(
+    "mitum.account.createWallet() : 랜덤 또는 seed로부터 privatekey/publickey/address 즉시 생성",
+    wallet
+  );
+  exp(
+    "mitum.account.createWallet() : createWallet의 operation 부분 출력",
+    operation
+  );
 
   const createOperation = mitum.account.create(
     senderAddress,
@@ -179,34 +196,27 @@ const test = async () => {
     "mitum.account.updateMultiSig() : single 또는 multi sig account 를 새로운 multi sig account 로 변경",
     updateOperation2
   );
-  const info2 = await mitum.account.get(
+  const info2 = await mitum.account.getAccountInfo(
     "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca"
   );
-  exp("mitum.account.get() : 특정 주소의 정보 확인", info2.data);
-  // const info3 = await mitum.account.getOperation(
-  //   "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca"
-  // );
+  exp("mitum.account.getAccountInfo() : 특정 주소의 정보 확인", info2.data);
   const signedOperation = mitum.operation.sign(
     "DNQF7ruLFUD8ZXXrZimjFZdHAJSwc754dz1JdGADwTEDmpr",
     createOperation
   );
-  console.log(signedOperation);
-  // const res = await mitum.operation.send(signedOperation);
-  // console.log(res.data);
-  // exp("mitum.account.get() : 특정 주소의 정보 확인", info3.data);
 
   // block
   sub("Block 기능 테스트");
-  const res1 = await mitum.block.get(0);
+  const res1 = await mitum.block.getBlock(1536);
   exp("mitum.block.get() : 특정 블럭의 정보 확인", res1.data);
-  const res2 = await mitum.block.getOperation(0);
+  const res2 = await mitum.block.getOperation(1536);
   exp("mitum.block.getOperation() : 특정 블럭의 operation 확인", res2.data);
 
   // currency
   sub("Currency 기능 테스트");
-  const res9 = await mitum.currency.getAll();
+  const res9 = await mitum.currency.getAllCurrencies();
   exp("mitum.currency.getAll() : 모든 currency 정보 확인", res9.data);
-  const res10 = await mitum.currency.get("MCC");
+  const res10 = await mitum.currency.getCurrency("MCC");
   exp("mitum.currency.getAll() : 모든 currency 정보 확인", res10.data);
   const inputData = {
     currencyID: "SIT",
@@ -247,10 +257,10 @@ const test = async () => {
 
   // operation
   sub("Operation 기능 테스트");
-  const res100 = await mitum.operation.getAll();
+  const res100 = await mitum.operation.getAllOperations();
   exp("mitum.operation.getAll() : 모든 operation 정보 확인", res100.data);
   const facthash = "EhvvH6AAYEQus8gKk2m43cLTogiULe9PMvsfczacUZoT";
-  const info22 = await mitum.operation.get(facthash);
+  const info22 = await mitum.operation.getOperation(facthash);
   exp(
     "mitum.operation.get() : fact hash로 특정 operation 정보 확인",
     info22.data

@@ -21,16 +21,16 @@ describe("Currency", () => {
     jest.clearAllMocks();
   });
 
-  it("currency.getAll()", async () => {
-    const response: AxiosResponse = await currency.getAll();
+  it("currency.getAllCurrencies()", async () => {
+    const response: AxiosResponse = await currency.getAllCurrencies();
     expect(currencyInfo.getAllCurrencyInfo).toHaveBeenCalledTimes(1);
     expect(currencyInfo.getAllCurrencyInfo).toHaveBeenCalledWith(provider);
     expect(response.data).toEqual("mocked");
   });
 
-  it("currency.get()", async () => {
+  it("currency.getCurrency()", async () => {
     const currencyID = "MCC";
-    const response: AxiosResponse = await currency.get(currencyID);
+    const response: AxiosResponse = await currency.getCurrency(currencyID);
     expect(currencyInfo.getCurrencyInfo).toHaveBeenCalledTimes(1);
     expect(currencyInfo.getCurrencyInfo).toHaveBeenCalledWith(
       provider,

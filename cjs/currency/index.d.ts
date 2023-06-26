@@ -6,8 +6,8 @@ export declare class Currency {
     private _node;
     constructor(provider?: string);
     private _setNode;
-    getAll(): Promise<AxiosResponse>;
-    get(currencyID: string): Promise<AxiosResponse>;
+    getAllCurrencies(): Promise<AxiosResponse>;
+    getCurrency(currencyID: string): Promise<AxiosResponse>;
     /** structure
      * inputData = {
      *    currencyID: string;

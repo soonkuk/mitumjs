@@ -1,6 +1,7 @@
 import { OperationType } from "../types/operation.js";
 import { Fact } from "../types/fact.js";
 import { Key, Keys } from "./publicKey.js";
+import { WalletType } from "../types/wallet.js";
 import { KeyPair } from "./iPair.js";
 import { M2KeyPair } from "./key.js";
 import { AxiosResponse } from "axios";
@@ -29,6 +30,10 @@ export declare class Account {
         weight: number;
         key: string;
     }>, threshold: number): string;
+    createWallet(sender: string, currencyID: string, amount: number, seed?: string, weight?: number): {
+        wallet: WalletType;
+        operation: OperationType<Fact>;
+    };
     create(senderAddr: string, receiverPub: string, currentID: string, amount: number): OperationType<Fact>;
     createEtherAccount(senderAddr: string, receiverPub: string, currentID: string, amount: number): OperationType<Fact>;
     createMultiSig(senderAddr: string, receiverPubArr: Array<{
@@ -45,7 +50,7 @@ export declare class Account {
         key: string;
     }>, currentID: string, threshold: number): OperationType<Fact>;
     private pubToKeys;
-    get(address: string): Promise<AxiosResponse>;
+    getAccountInfo(address: string): Promise<AxiosResponse>;
     getOperation(address: string): Promise<AxiosResponse>;
     getByPublickey(publickey: string): Promise<AxiosResponse>;
 }

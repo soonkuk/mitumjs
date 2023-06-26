@@ -13,11 +13,11 @@ export class Block {
     // get information of all-blocks
     // It's possible to obtain 10 pieces of information,
     // along with a link for retrieving consecutive blocks-information.
-    async getAll() {
+    async getAllBlocks() {
         return await blockInfo.getAllBlocksInfo(this._node);
     }
     // get block information by block number or hash
-    async get(block) {
+    async getBlock(block) {
         if (typeof block === "number") {
             return await blockInfo.getBlockByHeight(this._node, block);
         }

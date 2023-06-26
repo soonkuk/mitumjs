@@ -28,13 +28,13 @@ class Block {
     // get information of all-blocks
     // It's possible to obtain 10 pieces of information,
     // along with a link for retrieving consecutive blocks-information.
-    getAll() {
+    getAllBlocks() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield information_js_1.default.getAllBlocksInfo(this._node);
         });
     }
     // get block information by block number or hash
-    get(block) {
+    getBlock(block) {
         return __awaiter(this, void 0, void 0, function* () {
             if (typeof block === "number") {
                 return yield information_js_1.default.getBlockByHeight(this._node, block);

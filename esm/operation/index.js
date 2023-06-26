@@ -12,10 +12,10 @@ export class Operation {
             this._node = provider;
         }
     }
-    getAll() {
+    getAllOperations() {
         return operationInfo.getAllOperationsInfo(this._node);
     }
-    get(facthash) {
+    getOperation(facthash) {
         return operationInfo.getOperationInfo(this._node, facthash);
     }
     // Optional: The option is node's address
