@@ -21,11 +21,11 @@ export class Operation {
     }
   }
 
-  getAll(): Promise<AxiosResponse> {
+  getAllOperations(): Promise<AxiosResponse> {
     return operationInfo.getAllOperationsInfo(this._node);
   }
 
-  get(facthash: string): Promise<AxiosResponse> {
+  getOperation(facthash: string): Promise<AxiosResponse> {
     return operationInfo.getOperationInfo(this._node, facthash);
   }
 

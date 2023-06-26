@@ -18,12 +18,12 @@ export class Block {
   // get information of all-blocks
   // It's possible to obtain 10 pieces of information,
   // along with a link for retrieving consecutive blocks-information.
-  async getAll(): Promise<AxiosResponse> {
+  async getAllBlocks(): Promise<AxiosResponse> {
     return await blockInfo.getAllBlocksInfo(this._node);
   }
 
   // get block information by block number or hash
-  async get(block: number | string): Promise<AxiosResponse> {
+  async getBlock(block: number | string): Promise<AxiosResponse> {
     if (typeof block === "number") {
       return await blockInfo.getBlockByHeight(this._node, block);
     }

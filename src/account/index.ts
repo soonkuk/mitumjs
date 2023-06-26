@@ -195,7 +195,7 @@ export class Account {
     return new Keys(pubs, threshold);
   }
 
-  async get(address: string): Promise<AxiosResponse> {
+  async getAccount(address: string): Promise<AxiosResponse> {
     return await accountInfo.getAddressInfo(this._node, address);
   }
 

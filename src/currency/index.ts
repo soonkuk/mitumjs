@@ -34,11 +34,11 @@ export class Currency {
     }
   }
 
-  async getAll(): Promise<AxiosResponse> {
+  async getAllCurrencies(): Promise<AxiosResponse> {
     return await currencyInfo.getAllCurrencyInfo(this._node);
   }
 
-  async get(currencyID: string): Promise<AxiosResponse> {
+  async getCurrency(currencyID: string): Promise<AxiosResponse> {
     return await currencyInfo.getCurrencyInfo(this._node, currencyID);
   }
 
