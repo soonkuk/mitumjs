@@ -1,5 +1,4 @@
-## mitumjs
-framework for mitum2 network
+## Contents table
 
 ## Abstraction
 
@@ -186,6 +185,42 @@ example
 
 ```jsx
 mitum.setChain("<new Mitum network id>");
+```
+
+### setDefaultCurrency(currencyID)
+
+| Feature | Set the default currency ID.
+Note: The default currency can be navite coin, or it can be a background currency that simply exists for account creation. |
+| --- | --- |
+| Parameters | string currency ID |
+| Return Value | null |
+
+example
+
+```jsx
+mitum.setDefaultCurrency("MCC");
+console.log(mitum.getDefaultCurrency);
+
+// output
+MCC
+```
+
+### getDefaultCurrency()
+
+| Feature | Get the value of the default currency ID.
+Note: The default currency can be navite coin, or it can be a background currency that simply exists for account creation. |
+| --- | --- |
+| Parameters | null |
+| Return Value | string currency ID |
+
+example
+
+```jsx
+const defaultCurrency = mitum.getDefaultCurrency();
+console.log(defaultCurrency);
+
+// output
+PEN
 ```
 
 ## Account Functions
@@ -530,6 +565,85 @@ console.log(multisigAddress);
 75caf01896527a1bd3b35de6aaded5090cd18b94eca
 ```
 
+### createWallet(sender, currencyID, amount, ?:seed, ?:weight)
+
+| Feature | Create an operation to create a new account.
+Notes: While the Mithumb network requires a native token transaction to create an account, this function easily abstracts the account creation by sending 1 token internally. seed, weight are optional, and for the weight value, threshold will also have the same value internally. |
+| --- | --- |
+| Parameters | string sender,
+string currencyID,
+int amount,
+string seed (optional),
+number weight (default = 100) |
+| Return Value | object { wallet, rawOperation } |
+
+example
+
+```jsx
+const sender = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
+const currencyID = "FEN";
+const amount = 10;
+const seed = "The MITUM blockchain is evolving every day.";
+const weight = 80;
+
+const { wallet, operation } = mitum.account.createWallet(sender, currencyID, amount, seed, weight);
+console.log(wallet);
+console.log(operation);
+
+// output
+{
+  privatekey: '6Ck2iySxuzLh3BZzte1BYpgzKDomiELKsQUFn4DsvVHompr',
+  publickey: 'mFiiJi9BEBg1TUA17G2VvbRSFcWRpWqgRUER6Fa14Cc6mpu',
+  address: '5nqwreAMCMdXXoAfJqHu8NPNQQ9AAdWsJrFKEB9e5DxDmca'
+}
+{
+  id: 'mitum',
+  memo: '',
+  fact: CreateAccountsFact {
+    hint: Hint { s: 'mitum-currency-create-accounts-operation-fact' },
+    token: Token { s: '2023-06-26 05:55:59.339 +0000 UTC' },
+    _hash: <Buffer 30 29 a7 d6 25 3d ba 84 7b 2e 61 76 4b d4 ce ad 64 aa 10 b0 17 19 e2 de b5 f3 46 c2 d6 1c 76 ae>,
+    sender: Address {
+      s: '8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca',
+      type: 'btc'
+    },
+    items: [ [CreateAccountsItem] ]
+  },
+  hint: Hint { s: 'mitum-currency-create-accounts-operation' },
+  _factSigns: [],
+  _hash: <Buffer >
+}
+```
+
+### touch(privatekey, operation)
+
+| Feature | Create a new account from Ethereum’s publickey.
+Note: In mitum network, a native-token transaction is required to create an account. Therefore, the sender's address, currency ID, and amount must be entered. |
+| --- | --- |
+| Parameters | string privatekey,
+object wallet (return value of ‘function createWallet’) |
+| Return Value | object httpResponse |
+
+example
+
+```jsx
+const sender = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
+const currencyID = "FEN";
+const amount = 10;
+const seed = "The MITUM blockchain is evolving every day.";
+const weight = 80;
+
+const wallet = mitum.account.createWallet(sender, currencyID, amount, seed, weight);
+
+const privatekey = "DNQF7ruLFUD8ZXXrZimjFZdHAJSwc754dz1JdGADwTEDmpr";
+
+const res = await mitum.account.touch(privatekey, wallet);
+console.log(res.data);
+
+// output
+...
+```
+
 ### create(sender, receiverPubkey, currencyID, amount)
 
 | Feature | Create a new account.
@@ -839,7 +953,7 @@ console.log(updateOperation);
 }
 ```
 
-### get(address)
+### getAccount(address)
 
 | Feature | Get specific address information. |
 | --- | --- |
@@ -942,7 +1056,7 @@ addressInfoByPub();
 
 ## Block Functions
 
-### getAll()
+### getAllBlocks()
 
 | Feature | Get the information for all blocks.
 Note: The return value only shows information for some blocks, and you can get a link to get the next block's information from the returned object. |
@@ -960,11 +1074,9 @@ const blocksInfo = async () => {
   console.log(info.data);
 };
 blocksInfo();
-
-// output
 ```
 
-### get(blockNumber | blockHash)
+### getBlock(blockNumber | blockHash)
 
 | Feature | Get information about a block from a specific block number or block hash. |
 | --- | --- |
@@ -1069,7 +1181,7 @@ operationInfo();
 
 ## Currency Functions
 
-### getAll()
+### getAllCurrencies()
 
 | Feature | Get information about all currencies in the network.
 Note: currency is a concept similar to a common native token. It can be more than one currency in the mitum network. |
@@ -1099,7 +1211,7 @@ currencyInfo();
 }
 ```
 
-### get(currencyID)
+### getCurrency(currencyID)
 
 | Feature | Get information about a specific currency. |
 | --- | --- |
@@ -1346,7 +1458,7 @@ console.log(rawOperation);
 
 ## Operation Functions
 
-### getAll()
+### getAllOperations()
 
 | Feature | Get all operations information. |
 | --- | --- |
@@ -1393,7 +1505,7 @@ operationsInfo();
 }
 ```
 
-### get(factHash)
+### getOperation(factHash)
 
 | Feature | Get specific operation information from facthash. |
 | --- | --- |
