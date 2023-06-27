@@ -1,5 +1,3 @@
-## Contents table
-
 ## Abstraction
 
 - <mitum.js> is the framework of the mitum blockchain written in the typescript language.
