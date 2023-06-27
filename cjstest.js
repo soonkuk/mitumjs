@@ -26,10 +26,6 @@ const exp = (str, value) => {
   console.log("");
 };
 
-const sending = async (obj) => {
-  return await mitum.operation.send(obj);
-};
-
 const test = async () => {
   // common
   sub("common 기능 테스트");
@@ -196,7 +192,7 @@ const test = async () => {
     "mitum.account.updateMultiSig() : single 또는 multi sig account 를 새로운 multi sig account 로 변경",
     updateOperation2
   );
-  const info2 = await mitum.account.getAccountInfo(
+  const info2 = await mitum.account.getAccount(
     "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca"
   );
   exp("mitum.account.getAccountInfo() : 특정 주소의 정보 확인", info2.data);

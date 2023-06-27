@@ -8,6 +8,7 @@ import { Fact } from "../types/fact.js";
 import { CreateAccountsItem, CreateAccountsFact } from "./create.js";
 import { M2RandomN, M2EtherRandomN } from "./random.js";
 import { Key, Keys, PubKey } from "./publicKey.js";
+import { Operation } from "../operation/index.js";
 import { WalletType } from "../types/wallet.js";
 import { KeyUpdaterFact } from "./keyUpdate.js";
 import accountInfo from "./information.js";
@@ -124,6 +125,16 @@ export class Account {
       wallet: { privatekey, publickey, address },
       operation: new OperationType(fact),
     };
+  }
+
+  async touch(
+    privatekey: string,
+    operation: OperationType<Fact>
+  ): Promise<AxiosResponse> {
+    const oper = new Operation(this._node);
+    const signedOperation = oper.sign(privatekey, operation);
+    const res = await oper.send(signedOperation);
+    return res.data;
   }
 
   create(

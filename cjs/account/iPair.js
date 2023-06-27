@@ -66,7 +66,7 @@ class KeyPair {
         Buffer.from(s).copy(buf, rlen + 4, 0, slen);
         return buf;
     }
-    // with seed
+    // from seed
     static from(seed) {
         seed = Buffer.from(bs58_1.default.encode((0, math_js_1.sha3)(Buffer.from(seed))));
         error_js_1.Assert.check(40 <= seed.length, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_SEED, "seed length out of range"));

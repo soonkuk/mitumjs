@@ -3,7 +3,7 @@ import * as secp256k1 from "@noble/secp256k1";
 import { sha256 as nobleSha256 } from "@noble/hashes/sha256";
 
 import base58 from "bs58";
-import ethWallet from "ethereumjs-wallet";
+import EthWallet from "ethereumjs-wallet";
 
 import { Key } from "./publicKey.js";
 
@@ -21,7 +21,7 @@ interface IKeyGenerator {
 export abstract class KeyPair {
   readonly privateKey: Key;
   readonly publicKey: Key;
-  protected signer: Uint8Array | ethWallet;
+  protected signer: Uint8Array | EthWallet;
   protected static generator: IKeyGenerator;
 
   constructor(privateKey: Key) {
@@ -37,7 +37,7 @@ export abstract class KeyPair {
 
   abstract sign(msg: string | Buffer): Buffer;
 
-  protected abstract getSigner(): Uint8Array | ethWallet;
+  protected abstract getSigner(): Uint8Array | EthWallet;
   protected abstract getPub(): Key;
 
   static random<T extends KeyPair>(option: KeyPairType): T {
@@ -64,7 +64,7 @@ export abstract class KeyPair {
   protected ethSign(msg: string | Buffer): Buffer {
     const sig = secp256k1.signSync(
       nobleSha256(msg),
-      (this.signer as ethWallet).getPrivateKey()
+      (this.signer as EthWallet).getPrivateKey()
     );
 
     const rlen = sig[3];
@@ -83,7 +83,7 @@ export abstract class KeyPair {
     return buf;
   }
 
-  // with seed
+  // from seed
   protected static from(seed: string | Buffer | Uint8Array): bigint {
     seed = Buffer.from(base58.encode(sha3(Buffer.from(seed))));
 

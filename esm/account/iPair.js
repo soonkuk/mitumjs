@@ -37,7 +37,7 @@ export class KeyPair {
         Buffer.from(s).copy(buf, rlen + 4, 0, slen);
         return buf;
     }
-    // with seed
+    // from seed
     static from(seed) {
         seed = Buffer.from(base58.encode(sha3(Buffer.from(seed))));
         Assert.check(40 <= seed.length, MitumError.detail(ECODE.INVALID_SEED, "seed length out of range"));

@@ -20,6 +20,7 @@ const time_js_1 = require("../utils/time.js");
 const create_js_1 = require("./create.js");
 const random_js_1 = require("./random.js");
 const publicKey_js_1 = require("./publicKey.js");
+const index_js_1 = require("../operation/index.js");
 const keyUpdate_js_1 = require("./keyUpdate.js");
 const information_js_1 = __importDefault(require("./information.js"));
 const key_js_1 = require("./key.js");
@@ -94,6 +95,14 @@ class Account {
             operation: new operation_js_1.OperationType(fact),
         };
     }
+    touch(privatekey, operation) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const oper = new index_js_1.Operation(this._node);
+            const signedOperation = oper.sign(privatekey, operation);
+            const res = yield oper.send(signedOperation);
+            return res.data;
+        });
+    }
     create(senderAddr, receiverPub, currentID, amount) {
         const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new property_js_1.Amount(currentID, amount);
@@ -142,7 +151,7 @@ class Account {
         const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
         return new publicKey_js_1.Keys(pubs, threshold);
     }
-    getAccountInfo(address) {
+    getAccount(address) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield information_js_1.default.getAddressInfo(this._node, address);
         });

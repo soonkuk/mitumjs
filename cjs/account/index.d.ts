@@ -34,6 +34,7 @@ export declare class Account {
         wallet: WalletType;
         operation: OperationType<Fact>;
     };
+    touch(privatekey: string, operation: OperationType<Fact>): Promise<AxiosResponse>;
     create(senderAddr: string, receiverPub: string, currentID: string, amount: number): OperationType<Fact>;
     createEtherAccount(senderAddr: string, receiverPub: string, currentID: string, amount: number): OperationType<Fact>;
     createMultiSig(senderAddr: string, receiverPubArr: Array<{
@@ -50,7 +51,7 @@ export declare class Account {
         key: string;
     }>, currentID: string, threshold: number): OperationType<Fact>;
     private pubToKeys;
-    getAccountInfo(address: string): Promise<AxiosResponse>;
+    getAccount(address: string): Promise<AxiosResponse>;
     getOperation(address: string): Promise<AxiosResponse>;
     getByPublickey(publickey: string): Promise<AxiosResponse>;
 }

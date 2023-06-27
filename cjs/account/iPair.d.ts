@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import ethWallet from "ethereumjs-wallet";
+import EthWallet from "ethereumjs-wallet";
 import { Key } from "./publicKey.js";
 import { KeyPairType } from "../types/address.js";
 interface IKeyGenerator {
@@ -10,11 +10,11 @@ interface IKeyGenerator {
 export declare abstract class KeyPair {
     readonly privateKey: Key;
     readonly publicKey: Key;
-    protected signer: Uint8Array | ethWallet;
+    protected signer: Uint8Array | EthWallet;
     protected static generator: IKeyGenerator;
     constructor(privateKey: Key);
     abstract sign(msg: string | Buffer): Buffer;
-    protected abstract getSigner(): Uint8Array | ethWallet;
+    protected abstract getSigner(): Uint8Array | EthWallet;
     protected abstract getPub(): Key;
     static random<T extends KeyPair>(option: KeyPairType): T;
     static fromPrivate<T extends KeyPair>(key: string | Key): T;

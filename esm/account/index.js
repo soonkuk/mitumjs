@@ -5,6 +5,7 @@ import { TimeStamp } from "../utils/time.js";
 import { CreateAccountsItem, CreateAccountsFact } from "./create.js";
 import { M2RandomN, M2EtherRandomN } from "./random.js";
 import { Keys, PubKey } from "./publicKey.js";
+import { Operation } from "../operation/index.js";
 import { KeyUpdaterFact } from "./keyUpdate.js";
 import accountInfo from "./information.js";
 import { M2KeyPair } from "./key.js";
@@ -79,6 +80,12 @@ export class Account {
             operation: new OperationType(fact),
         };
     }
+    async touch(privatekey, operation) {
+        const oper = new Operation(this._node);
+        const signedOperation = oper.sign(privatekey, operation);
+        const res = await oper.send(signedOperation);
+        return res.data;
+    }
     create(senderAddr, receiverPub, currentID, amount) {
         const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new Amount(currentID, amount);
@@ -127,7 +134,7 @@ export class Account {
         const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
         return new Keys(pubs, threshold);
     }
-    async getAccountInfo(address) {
+    async getAccount(address) {
         return await accountInfo.getAddressInfo(this._node, address);
     }
     async getOperation(address) {

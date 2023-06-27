@@ -1,7 +1,7 @@
 import * as secp256k1 from "@noble/secp256k1";
 import base58 from "bs58";
 import secureRandom from "secure-random";
-import ethWallet from "ethereumjs-wallet";
+import EthWallet from "ethereumjs-wallet";
 import { getPublicCompressed } from "eccrypto-js";
 import { KeyPair } from "./iPair.js";
 import { Key } from "./publicKey.js";
@@ -16,7 +16,7 @@ export class M2KeyPair extends KeyPair {
         if (this.privateKey.type === "btc") {
             return Buffer.from(base58.decode(this.privateKey.noSuffix));
         }
-        return ethWallet.fromPrivateKey(Buffer.from(this.privateKey.noSuffix, "hex"));
+        return EthWallet.fromPrivateKey(Buffer.from(this.privateKey.noSuffix, "hex"));
     }
     getPub() {
         if (this.privateKey.type === "btc") {
@@ -39,7 +39,7 @@ M2KeyPair.generator = {
             return new M2KeyPair(base58.encode(Buffer.from(secureRandom(32, { type: "Uint8Array" }))) +
                 SUFFIX.KEY_PRIVATE);
         }
-        return new M2KeyPair(ethWallet.generate().getPrivateKeyString().substring(2) +
+        return new M2KeyPair(EthWallet.generate().getPrivateKeyString().substring(2) +
             SUFFIX.KEY_ETHER_PRIVATE);
     },
     fromPrivate(key) {
