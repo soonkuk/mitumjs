@@ -34,7 +34,10 @@ export declare class Account {
         wallet: WalletType;
         operation: OperationType<Fact>;
     };
-    touch(privatekey: string, operation: OperationType<Fact>): Promise<AxiosResponse>;
+    touch(privatekey: string, wallet: {
+        wallet: WalletType;
+        operation: OperationType<Fact>;
+    }): Promise<AxiosResponse>;
     create(senderAddr: string, receiverPub: string, currentID: string, amount: number): OperationType<Fact>;
     createEtherAccount(senderAddr: string, receiverPub: string, currentID: string, amount: number): OperationType<Fact>;
     createMultiSig(senderAddr: string, receiverPubArr: Array<{

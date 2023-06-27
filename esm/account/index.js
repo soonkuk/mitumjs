@@ -80,9 +80,9 @@ export class Account {
             operation: new OperationType(fact),
         };
     }
-    async touch(privatekey, operation) {
+    async touch(privatekey, wallet) {
         const oper = new Operation(this._node);
-        const signedOperation = oper.sign(privatekey, operation);
+        const signedOperation = oper.sign(privatekey, wallet.operation);
         const res = await oper.send(signedOperation);
         return res.data;
     }

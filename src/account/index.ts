@@ -122,12 +122,15 @@ export class Account {
     const fact = new CreateAccountsFact(token, sender, [item]);
 
     return {
-      wallet: { privatekey, publickey, address },
+      wallet: <WalletType>{ privatekey, publickey, address },
       operation: new OperationType(fact),
     };
   }
 
-  async touch(privatekey: string, wallet: any): Promise<AxiosResponse> {
+  async touch(
+    privatekey: string,
+    wallet: { wallet: WalletType; operation: OperationType<Fact> }
+  ): Promise<AxiosResponse> {
     const oper = new Operation(this._node);
     const signedOperation = oper.sign(privatekey, wallet.operation);
     const res = await oper.send(signedOperation);

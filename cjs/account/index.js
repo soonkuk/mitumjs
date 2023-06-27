@@ -95,10 +95,10 @@ class Account {
             operation: new operation_js_1.OperationType(fact),
         };
     }
-    touch(privatekey, operation) {
+    touch(privatekey, wallet) {
         return __awaiter(this, void 0, void 0, function* () {
             const oper = new index_js_1.Operation(this._node);
-            const signedOperation = oper.sign(privatekey, operation);
+            const signedOperation = oper.sign(privatekey, wallet.operation);
             const res = yield oper.send(signedOperation);
             return res.data;
         });

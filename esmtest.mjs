@@ -56,26 +56,26 @@ const test = async () => {
       "62LMhQdA2BabwWTyA5Y4gipeby8uUtz39MWJt8vSXxGvmpr"
     )
   );
-  // exp(
-  //   "mitum.account.fromPrivateKey(privatekey) : ETH private key 로부터 key-pair 생성",
-  //   mitum.account.fromPrivateKey(
-  //     "010c2b32a9b4363026d899aaabf8fd824097c9ba7058eeaf278a1adb61ae85b0epr"
-  //   )
-  // );
-  // exp(
-  //   "mitum.account.etherKey() : 랜덤 ETH key-pair 생성",
-  //   mitum.account.etherKey()
-  // );
-  // exp(
-  //   "mitum.account.etherKey(seed) : seed 값에 따른 ETH key-pair 생성",
-  //   mitum.account.etherKey(
-  //     "The socialinfratech is the future of blockchain industry!"
-  //   )
-  // );
-  // exp(
-  //   "mitum.account.etherKeys(n) : n개의 랜덤 ETH key-pairs 생성",
-  //   mitum.account.etherKeys(2)
-  // );
+  exp(
+    "mitum.account.fromPrivateKey(privatekey) : ETH private key 로부터 key-pair 생성",
+    mitum.account.fromPrivateKey(
+      "010c2b32a9b4363026d899aaabf8fd824097c9ba7058eeaf278a1adb61ae85b0epr"
+    )
+  );
+  exp(
+    "mitum.account.etherKey() : 랜덤 ETH key-pair 생성",
+    mitum.account.etherKey()
+  );
+  exp(
+    "mitum.account.etherKey(seed) : seed 값에 따른 ETH key-pair 생성",
+    mitum.account.etherKey(
+      "The socialinfratech is the future of blockchain industry!"
+    )
+  );
+  exp(
+    "mitum.account.etherKeys(n) : n개의 랜덤 ETH key-pairs 생성",
+    mitum.account.etherKeys(2)
+  );
   exp(
     "mitum.account.address(pubkey) : public key 로부터 address 계산",
     mitum.account.address("diLUcZugeDFW6ftQdcjdz8Ks1KBGiACo9GAcKQUgwFdfmpu")

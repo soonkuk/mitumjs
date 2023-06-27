@@ -267,6 +267,22 @@ const test = async () => {
     "mitum.operation.sign() : raw operation 메시지에 개인키로 서명",
     signedOperation2
   );
+
+  // new function
+  const newWallet = mitum.account.createWallet(
+    "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca",
+    currencyID,
+    10
+  );
+  exp("mitum.account.createWallet() : 새로운 wallet", newWallet.wallet);
+  exp(
+    "mitum.account.createWallet() : 새로 생성된 operation",
+    newWallet.operation
+  );
+  const data = await mitum.account.touch(
+    "DNQF7ruLFUD8ZXXrZimjFZdHAJSwc754dz1JdGADwTEDmpr",
+    newWallet
+  );
 };
 
 test();
