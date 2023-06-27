@@ -127,12 +127,9 @@ export class Account {
     };
   }
 
-  async touch(
-    privatekey: string,
-    operation: OperationType<Fact>
-  ): Promise<AxiosResponse> {
+  async touch(privatekey: string, wallet: any): Promise<AxiosResponse> {
     const oper = new Operation(this._node);
-    const signedOperation = oper.sign(privatekey, operation);
+    const signedOperation = oper.sign(privatekey, wallet.operation);
     const res = await oper.send(signedOperation);
     return res.data;
   }
