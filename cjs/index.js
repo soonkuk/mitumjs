@@ -14,8 +14,8 @@ const index_js_1 = require("./common/index.js");
 const index_js_2 = require("./account/index.js");
 const index_js_3 = require("./currency/index.js");
 const index_js_4 = require("./block/index.js");
-const index_js_5 = require("./contract/index.js");
-const index_js_6 = require("./operation/index.js");
+const index_js_5 = require("./operation/index.js");
+const index_js_6 = require("./contract/nft/index.js");
 class Mitum {
     constructor(provider) {
         this._version = new index_js_1.Version();
@@ -24,8 +24,8 @@ class Mitum {
         this.account = new index_js_2.Account(provider);
         this.currency = new index_js_3.Currency(provider);
         this.block = new index_js_4.Block(provider);
-        this.contract = new index_js_5.Contract();
-        this.operation = new index_js_6.Operation(provider);
+        this.operation = new index_js_5.Operation(provider);
+        this.nft = new index_js_6.Nft(provider);
     }
     version() {
         return this._version.getVersion();
@@ -40,7 +40,8 @@ class Mitum {
         this.account = new index_js_2.Account(provider);
         this.currency = new index_js_3.Currency(provider);
         this.block = new index_js_4.Block(provider);
-        this.operation = new index_js_6.Operation(provider);
+        this.operation = new index_js_5.Operation(provider);
+        this.nft = new index_js_6.Nft(provider);
     }
     getNode() {
         return this._node.getNodeUri();

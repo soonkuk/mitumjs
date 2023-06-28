@@ -10,10 +10,10 @@ const math_js_1 = require("../utils/math.js");
 const time_js_1 = require("../utils/time.js");
 const intro_js_1 = require("../intro.js");
 const property_js_1 = require("./property.js");
-const create_js_1 = require("../contract/create.js");
+const account_js_1 = require("../contract/account.js");
 const factSign_js_1 = require("./factSign.js");
 const address_js_1 = require("../account/address.js");
-const create_js_2 = require("../account/create.js");
+const create_js_1 = require("../account/create.js");
 const key_js_1 = require("../account/key.js");
 const publicKey_js_1 = require("../account/publicKey.js");
 class OperationType {
@@ -32,8 +32,8 @@ class OperationType {
         error_js_1.Assert.check(new Set(factSigns.map((fs) => fs.signer.toString())).size ===
             factSigns.length, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_FACTSIGNS, "duplicate signers found in factsigns"));
         const sigType = this.getSigType(factSigns);
-        if (this.fact instanceof create_js_2.CreateAccountsFact ||
-            this.fact instanceof create_js_1.CreateContractAccountsFact) {
+        if (this.fact instanceof create_js_1.CreateAccountsFact ||
+            this.fact instanceof account_js_1.CreateContractAccountsFact) {
             switch (sigType) {
                 case "M2FactSign":
                 case "M2NodeFactSign":
@@ -83,8 +83,8 @@ class OperationType {
             error_js_1.Assert.check(option !== undefined, error_js_1.MitumError.detail(error_js_1.ECODE.FAIL_SIGN, "no node address in sign option"));
         }
         if (!sigType &&
-            (this.fact instanceof create_js_2.CreateAccountsFact ||
-                this.fact instanceof create_js_1.CreateContractAccountsFact)) {
+            (this.fact instanceof create_js_1.CreateAccountsFact ||
+                this.fact instanceof account_js_1.CreateContractAccountsFact)) {
             error_js_1.Assert.check(this.fact.items !== undefined &&
                 this.fact.items[0].addressType !== "", error_js_1.MitumError.detail(error_js_1.ECODE.FAIL_SIGN, "m2 keypair"));
         }

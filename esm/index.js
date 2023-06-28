@@ -2,8 +2,8 @@ import { Version, Node, Chain } from "./common/index.js";
 import { Account } from "./account/index.js";
 import { Currency } from "./currency/index.js";
 import { Block } from "./block/index.js";
-import { Contract } from "./contract/index.js";
 import { Operation } from "./operation/index.js";
+import { Nft } from "./contract/nft/index.js";
 export class Mitum {
     constructor(provider) {
         this._version = new Version();
@@ -12,8 +12,8 @@ export class Mitum {
         this.account = new Account(provider);
         this.currency = new Currency(provider);
         this.block = new Block(provider);
-        this.contract = new Contract();
         this.operation = new Operation(provider);
+        this.nft = new Nft(provider);
     }
     version() {
         return this._version.getVersion();
@@ -27,6 +27,7 @@ export class Mitum {
         this.currency = new Currency(provider);
         this.block = new Block(provider);
         this.operation = new Operation(provider);
+        this.nft = new Nft(provider);
     }
     getNode() {
         return this._node.getNodeUri();

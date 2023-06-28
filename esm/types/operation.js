@@ -4,7 +4,7 @@ import { SortFunc, sha3 } from "../utils/math.js";
 import { TimeStamp } from "../utils/time.js";
 import { MITUM_NETWORK_ID } from "../intro.js";
 import { Hint } from "./property.js";
-import { CreateContractAccountsFact } from "../contract/create.js";
+import { CreateContractAccountsFact } from "../contract/account.js";
 import { M2FactSign, M2NodeFactSign } from "./factSign.js";
 import { NodeAddress } from "../account/address.js";
 import { CreateAccountsFact } from "../account/create.js";

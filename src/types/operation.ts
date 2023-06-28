@@ -9,7 +9,7 @@ import { MITUM_NETWORK_ID } from "../intro.js";
 import { Hint } from "./property.js";
 import { Fact } from "./fact.js";
 
-import { CreateContractAccountsFact } from "../contract/create.js";
+import { CreateContractAccountsFact } from "../contract/account.js";
 import { M2FactSign, M2NodeFactSign } from "./factSign.js";
 import { CurrencyItem } from "../currency/currencyItem.js";
 

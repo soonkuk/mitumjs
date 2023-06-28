@@ -285,4 +285,8 @@ const test = async () => {
   );
 };
 
-test();
+// test();
+
+const s1 = "2gWeBMRnZ8kmwU7dvJgv3rHpui7ksHMRKLjJiPUsbBAAmca";
+const s2 = "3053a018f11efb96750d49273cc8137dc11140dceca";
+console.log(s1.length, s2.length);

@@ -22,7 +22,6 @@ export declare const MitumConfig: {
     KEYS_IN_ACCOUNT: RangeConfig;
     AMOUNTS_IN_ITEM: RangeConfig;
     ITEMS_IN_FACT: RangeConfig;
-    OPERATIONS_IN_SEAL: RangeConfig;
     KEY: {
         M2: {
             PRIVATE: RangeConfig;
@@ -33,4 +32,12 @@ export declare const MitumConfig: {
             PUBLIC: RangeConfig;
         };
     };
+    MAX_URI_LENGTH: RangeConfig;
+    MAX_NFT_HASH_LENGTH: RangeConfig;
+    MAX_COLLECTION_INDEX: RangeConfig;
+    COLLECTION_NAME_LENGTH: RangeConfig;
+    MAX_WHITELIST_IN_COLLECTION: RangeConfig;
+    PAYMENT_PARAM: RangeConfig;
+    MAX_NFT_SIGNER_SHARE: RangeConfig;
+    MAX_NFT_SIGNERS_TOTAL: RangeConfig;
 };

@@ -10,6 +10,18 @@ export const isIPAddress = (item: unknown): boolean => {
   return ipPattern.test(item as string);
 };
 
+// don't check hex of char
+export const isAddress = (item: string): boolean => {
+  const suffix = item.slice(-3);
+  if (
+    (suffix === "mca" && item.length === 47) ||
+    (suffix === "eca" && item.length === 43)
+  ) {
+    return true;
+  }
+  return false;
+};
+
 // It hasn't been use, but maintains here.
 export const verify = (
   addressType: string,

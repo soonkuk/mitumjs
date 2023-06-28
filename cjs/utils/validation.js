@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verify = exports.isIPAddress = void 0;
+exports.verify = exports.isAddress = exports.isIPAddress = void 0;
 const secp256k1 = __importStar(require("@noble/secp256k1"));
 const bs58_1 = __importDefault(require("bs58"));
 const math_js_1 = require("../utils/math.js");
@@ -35,6 +35,16 @@ const isIPAddress = (item) => {
     return ipPattern.test(item);
 };
 exports.isIPAddress = isIPAddress;
+// don't check hex of char
+const isAddress = (item) => {
+    const suffix = item.slice(-3);
+    if ((suffix === "mca" && item.length === 47) ||
+        (suffix === "eca" && item.length === 43)) {
+        return true;
+    }
+    return false;
+};
+exports.isAddress = isAddress;
 // It hasn't been use, but maintains here.
 const verify = (addressType, signer, sig, msg) => {
     if (addressType === "btc") {

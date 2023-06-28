@@ -1,8 +1,4 @@
 "use strict";
-// export type Setting<T> = {
-//   get: () => T;
-//   set: (val: T) => T;
-// };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MitumConfig = void 0;
 const getRangeConfig = (min, max) => {
@@ -31,7 +27,6 @@ exports.MitumConfig = {
     KEYS_IN_ACCOUNT: getRangeConfig(1, 10),
     AMOUNTS_IN_ITEM: getRangeConfig(1, 10),
     ITEMS_IN_FACT: getRangeConfig(1, 10),
-    OPERATIONS_IN_SEAL: getRangeConfig(1, 10),
     KEY: {
         M2: {
             PRIVATE: getRangeConfig(46, 48),
@@ -42,5 +37,13 @@ exports.MitumConfig = {
             PUBLIC: getRangeConfig(133),
         },
     },
+    MAX_URI_LENGTH: getRangeConfig(1, 1000),
+    MAX_NFT_HASH_LENGTH: getRangeConfig(1, 1024),
+    MAX_COLLECTION_INDEX: getRangeConfig(0, 10000),
+    COLLECTION_NAME_LENGTH: getRangeConfig(3, 30),
+    MAX_WHITELIST_IN_COLLECTION: getRangeConfig(0, 10),
+    PAYMENT_PARAM: getRangeConfig(0, 99),
+    MAX_NFT_SIGNER_SHARE: getRangeConfig(0, 100),
+    MAX_NFT_SIGNERS_TOTAL: getRangeConfig(0, 100),
 };
 //# sourceMappingURL=config.js.map

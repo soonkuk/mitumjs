@@ -5,6 +5,15 @@ export const isIPAddress = (item) => {
     const ipPattern = /^(http|https):\/\/(\d{1,3}\.){3}\d{1,3}(?::\d+)?$/;
     return ipPattern.test(item);
 };
+// don't check hex of char
+export const isAddress = (item) => {
+    const suffix = item.slice(-3);
+    if ((suffix === "mca" && item.length === 47) ||
+        (suffix === "eca" && item.length === 43)) {
+        return true;
+    }
+    return false;
+};
 // It hasn't been use, but maintains here.
 export const verify = (addressType, signer, sig, msg) => {
     if (addressType === "btc") {
