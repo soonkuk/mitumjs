@@ -38,7 +38,6 @@ export class Operation {
     return signOperation(privatekey, operation, option);
   }
 
-  // NOTE: The send function is an asynchronous function. (return value: Promise Obj)
   send(
     signedOperation: any,
     headers?: { [i: string]: any }
