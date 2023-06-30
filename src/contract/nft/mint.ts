@@ -1,11 +1,9 @@
 import { HintedObject, IBuffer, IString } from "../../types/interface.js";
 import { Assert, MitumError, ECODE } from "../../utils/error.js";
-import { CurrencyID, ContractID } from "../../types/property.js";
 import { OperationFact } from "../../types/fact.js";
 import { MitumConfig } from "../../utils/config.js";
 import { HINT_NFT } from "../../types/hintNft.js";
 
-import { Address } from "../../account/address.js";
 import { NFTSigners } from "./sign.js";
 import { NFTURI } from "./policy.js";
 import { NFTItem } from "./item.js";
@@ -47,12 +45,12 @@ export class MintItem extends NFTItem {
   readonly creators: NFTSigners;
 
   constructor(
-    contract: Address,
-    collection: ContractID,
+    contract: string,
+    collection: string,
     hash: string,
     uri: string,
     creators: NFTSigners,
-    currency: CurrencyID
+    currency: string
   ) {
     super(HINT_NFT.HINT_MINT_ITEM, contract, collection, currency);
 

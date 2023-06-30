@@ -21,16 +21,22 @@ const BTC: KeyPairType = "btc";
 const ETH: KeyPairType = "ether";
 
 export class Account {
+  private _networkID: string = "";
   private _node: string = "";
 
-  constructor(provider?: string) {
+  constructor(networkID: string, provider?: string) {
     this._setNode(provider);
+    this._setChain(networkID);
   }
 
   private _setNode(provider?: string) {
     if (isIPAddress(provider)) {
       this._node = provider as string;
     }
+  }
+
+  private _setChain(networkID: string) {
+    this._networkID = networkID;
   }
 
   key(seed?: string): M2KeyPair {
@@ -123,7 +129,7 @@ export class Account {
 
     return {
       wallet: <WalletType>{ privatekey, publickey, address },
-      operation: new OperationType(fact),
+      operation: new OperationType(this._networkID, fact),
     };
   }
 
@@ -151,7 +157,7 @@ export class Account {
     const item = new CreateAccountsItem(keys, [amountArr], BTC);
     const fact = new CreateAccountsFact(token, senderAddr, [item]);
 
-    return new OperationType(fact);
+    return new OperationType(this._networkID, fact);
   }
 
   createEtherAccount(
@@ -168,7 +174,7 @@ export class Account {
     const item = new CreateAccountsItem(keys, [amountArr], ETH);
     const fact = new CreateAccountsFact(token, senderAddr, [item]);
 
-    return new OperationType(fact);
+    return new OperationType(this._networkID, fact);
   }
 
   createMultiSig(
@@ -186,7 +192,7 @@ export class Account {
     const item = new CreateAccountsItem(keys, [amountArr], BTC);
     const fact = new CreateAccountsFact(token, senderAddr, [item]);
 
-    return new OperationType(fact);
+    return new OperationType(this._networkID, fact);
   }
 
   createEtherMultiSig(
@@ -204,7 +210,7 @@ export class Account {
     const item = new CreateAccountsItem(keys, [amountArr], ETH);
     const fact = new CreateAccountsFact(token, senderAddr, [item]);
 
-    return new OperationType(fact);
+    return new OperationType(this._networkID, fact);
   }
 
   update(
@@ -218,7 +224,7 @@ export class Account {
 
     const fact = new KeyUpdaterFact(token, targetAddr, key, currentID);
 
-    return new OperationType(fact);
+    return new OperationType(this._networkID, fact);
   }
 
   updateMultiSig(
@@ -233,7 +239,7 @@ export class Account {
 
     const fact = new KeyUpdaterFact(token, targetAddr, keys, currentID);
 
-    return new OperationType(fact);
+    return new OperationType(this._networkID, fact);
   }
 
   private pubToKeys(

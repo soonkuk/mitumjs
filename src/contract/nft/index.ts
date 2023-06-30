@@ -1,14 +1,25 @@
 import { AxiosResponse } from "axios";
+
 import { isIPAddress, isAddress } from "../../utils/validation.js";
 
 import nftInfo from "./information.js";
 
+import { MintItem, MintFact } from "./mint.js";
+import { Creator } from "./creatorType.js";
+import { OperationType } from "../../types/operation.js";
+import { Fact } from "../../types/fact.js";
+import { NFTSigner, NFTSigners } from "./sign.js";
+import { TimeStamp } from "../../utils/time.js";
+
 export class Nft {
+  private _networkID: string = "";
   private _node: string = "";
   private _address: string = "";
+  private _collection: string = "";
 
-  constructor(provider?: string) {
+  constructor(networkID: string, provider?: string) {
     this._setNode(provider);
+    this._setChain(networkID);
   }
 
   private _setNode(provider?: string) {
@@ -17,39 +28,120 @@ export class Nft {
     }
   }
 
-  setAddress(contractAddress: string) {
+  private _setChain(networkID: string) {
+    this._networkID = networkID;
+  }
+
+  setGallery(contractAddress: string, collectionID: string) {
     if (this._address !== contractAddress && isAddress(contractAddress)) {
       this._address = contractAddress;
       console.log("Contract address is changed : ", this._address);
     } else {
       console.error("This is invalid address type");
     }
+
+    this.setCollection(collectionID);
+  }
+
+  setCollection(collectionID: string) {
+    if (this._collection !== collectionID) {
+      this._collection = collectionID;
+      console.log("Collection ID is changed : ", this._collection);
+    } else {
+      console.error("This is invalid collection ID type");
+    }
+  }
+
+  getContractAddress(): string {
+    return this._address.toString();
+  }
+
+  getCollectionId(): string {
+    return this._collection.toString();
   }
 
   // owner의 nft 갯수. TBD.
   // balanceOf() {}
 
   // tokenID의 소유자
-  async ownerOf(collection: string, tokenID: number): Promise<AxiosResponse> {
+  async ownerOf(tokenID: number): Promise<AxiosResponse> {
     return await nftInfo.getNftInfo(
       this._node,
       this._address,
-      collection,
+      this._collection,
       tokenID
     );
   }
 
-  // token의 이름 반환
+  // contract의 이름 반환
   name() {}
 
-  // token의 심볼 반환
-  Symbol() {}
+  symbol(): string {
+    return this._collection;
+  }
 
   // tokenID 에 대한 URI 반환
   tokenURI() {}
 
-  // nft 발행
-  mint() {}
+  private gererateCreator(originators: Creator[]): NFTSigners {
+    const nftsigners: NFTSigner[] = [];
+
+    let total: number = 0;
+    originators.forEach((originator) => {
+      const { account, share } = originator;
+      const nftsigner = new NFTSigner(account, share);
+      total += Number(share);
+      nftsigners.push(nftsigner);
+    });
+
+    return new NFTSigners(total, nftsigners);
+  }
+
+  mint(
+    sender: string,
+    uri: string,
+    hash: string,
+    currencyID: string,
+    creator: string
+  ): OperationType<Fact> {
+    const originator = this.gererateCreator([{ account: creator, share: 100 }]);
+    const token = new TimeStamp().UTC();
+
+    const item = new MintItem(
+      this._address,
+      this._collection,
+      hash,
+      uri,
+      originator,
+      currencyID
+    );
+    const fact = new MintFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  mintForMultiCreators(
+    sender: string,
+    uri: string,
+    hash: string,
+    currencyID: string,
+    creator: Creator[]
+  ): OperationType<Fact> {
+    const originators = this.gererateCreator(creator);
+    const token = new TimeStamp().UTC();
+
+    const item = new MintItem(
+      this._address,
+      this._collection,
+      hash,
+      uri,
+      originators,
+      currencyID
+    );
+    const fact = new MintFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
 
   // nft 호환 컨트랙트 끼리의 안전한 전송. 이 함수가 오버로딩 되었다.
   safeTransferFrom() {}

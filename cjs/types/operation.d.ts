@@ -13,7 +13,7 @@ export declare class OperationType<T extends Fact> implements IBuffer, IHintedOb
     readonly fact: T;
     private _factSigns;
     private _hash;
-    constructor(fact: T, memo?: string);
+    constructor(networkID: string, fact: T, memo?: string);
     setFactSigns(factSigns: FactSignType[]): void;
     get factSigns(): FactSignType[];
     get hash(): Buffer;

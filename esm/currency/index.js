@@ -9,14 +9,19 @@ import currencyInfo from "./information.js";
 import { NilFeeer, FixedFeeer, RatioFeeer, CurrencyPolicy, CurrencyDesign, } from "./design.js";
 import { SuffrageInflationFact, SuffrageInflationItem } from "./inflate.js";
 export class Currency {
-    constructor(provider) {
+    constructor(networkID, provider) {
+        this._networkID = "";
         this._node = "";
         this._setNode(provider);
+        this._setChain(networkID);
     }
     _setNode(provider) {
         if (isIPAddress(provider)) {
             this._node = provider;
         }
+    }
+    _setChain(networkID) {
+        this._networkID = networkID;
     }
     async getAllCurrencies() {
         return await currencyInfo.getAllCurrencyInfo(this._node);
@@ -47,7 +52,7 @@ export class Currency {
         const design = new CurrencyDesign(amount, data.genesisAddress, policy);
         const token = new TimeStamp().UTC();
         const fact = new CurrencyRegisterFact(token, design);
-        return new OperationType(fact);
+        return new OperationType(this._networkID, fact);
     }
     /** structure
      * inputData = {
@@ -65,7 +70,7 @@ export class Currency {
         const policy = new CurrencyPolicy(data.minBalance, feePolicy);
         const token = new TimeStamp().UTC();
         const fact = new CurrencyPolicyUpdaterFact(token, data.currencyID, policy);
-        return new OperationType(fact);
+        return new OperationType(this._networkID, fact);
     }
     setFeePolicy(feeType, feeReceiver, fee, minFee, maxFee) {
         let feePolicy;
@@ -94,14 +99,14 @@ export class Currency {
         const token = new TimeStamp().UTC();
         const item = new TransfersItem(receiver, [tokenAmount]);
         const fact = new TransfersFact(token, sender, [item]);
-        return new OperationType(fact);
+        return new OperationType(this._networkID, fact);
     }
     mint(receiver, currencyID, amount) {
         const tokenAmount = new Amount(currencyID, amount);
         const token = new TimeStamp().UTC();
         const item = new SuffrageInflationItem(receiver, tokenAmount);
         const fact = new SuffrageInflationFact(token, [item]);
-        return new OperationType(fact);
+        return new OperationType(this._networkID, fact);
     }
 }
 //# sourceMappingURL=index.js.map

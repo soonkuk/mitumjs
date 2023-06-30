@@ -5,7 +5,6 @@ import { Assert, ECODE, MitumError } from "../utils/error.js";
 import { SortFunc, sha3 } from "../utils/math.js";
 import { TimeStamp } from "../utils/time.js";
 
-import { MITUM_NETWORK_ID } from "../intro.js";
 import { Hint } from "./property.js";
 import { Fact } from "./fact.js";
 
@@ -29,8 +28,8 @@ export class OperationType<T extends Fact> implements IBuffer, IHintedObject {
   private _factSigns: FactSignType[];
   private _hash: Buffer;
 
-  constructor(fact: T, memo?: string) {
-    this.id = MITUM_NETWORK_ID;
+  constructor(networkID: string, fact: T, memo?: string) {
+    this.id = networkID;
     this.memo = memo ?? "";
     this.fact = fact;
 

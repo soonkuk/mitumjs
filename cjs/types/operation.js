@@ -8,7 +8,6 @@ const bs58_1 = __importDefault(require("bs58"));
 const error_js_1 = require("../utils/error.js");
 const math_js_1 = require("../utils/math.js");
 const time_js_1 = require("../utils/time.js");
-const intro_js_1 = require("../intro.js");
 const property_js_1 = require("./property.js");
 const account_js_1 = require("../contract/account.js");
 const factSign_js_1 = require("./factSign.js");
@@ -17,8 +16,8 @@ const create_js_1 = require("../account/create.js");
 const key_js_1 = require("../account/key.js");
 const publicKey_js_1 = require("../account/publicKey.js");
 class OperationType {
-    constructor(fact, memo) {
-        this.id = intro_js_1.MITUM_NETWORK_ID;
+    constructor(networkID, fact, memo) {
+        this.id = networkID;
         this.memo = memo !== null && memo !== void 0 ? memo : "";
         this.fact = fact;
         this.hint = new property_js_1.Hint(fact.operationHint);

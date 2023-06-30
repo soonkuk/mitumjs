@@ -1,5 +1,5 @@
 import { IHintedObject, IBuffer, HintedObject } from "../../types/interface.js";
-import { ContractID, CurrencyID, Hint } from "../../types/property.js";
+import { Hint } from "../../types/property.js";
 import { Assert, MitumError, ECODE } from "../../utils/error.js";
 import { OperationFact } from "../../types/fact.js";
 import { MitumConfig } from "../../utils/config.js";
@@ -133,10 +133,10 @@ export class NFTSignItem extends NFTItem {
   readonly nft: Big;
 
   constructor(
-    contract: Address,
-    collection: ContractID,
+    contract: string,
+    collection: string,
     nft: string | number | Buffer | BigInt | Uint8Array,
-    currency: CurrencyID
+    currency: string
   ) {
     super(HINT_NFT.HINT_NFT_SIGN_ITEM, contract, collection, currency);
     this.nft = new Big(nft);

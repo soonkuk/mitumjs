@@ -7,10 +7,10 @@ export default {
     collection: string,
     tokenID: number
   ): Promise<AxiosResponse> {
-    if (provider === "" || contract === "") {
+    if (provider === "" || contract === undefined || collection === undefined) {
       return Promise.reject(
         new Error(
-          "RPC-URL is not provided or You need to set 'contract address'."
+          "RPC-URL is not provided or You need to set 'contract address and collection id'."
         )
       );
     }

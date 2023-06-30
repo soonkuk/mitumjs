@@ -1,11 +1,8 @@
-import { MITUM_NETWORK_ID } from "../intro.js";
-
 export class Chain {
   private _chainID: string = "";
 
-  constructor() {
-    const chID = MITUM_NETWORK_ID;
-    this.setChainID(chID);
+  constructor(networkID: string) {
+    this.setChainID(networkID);
   }
 
   setChainID(chID: string) {

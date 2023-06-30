@@ -27,14 +27,19 @@ const key_js_1 = require("./key.js");
 const BTC = "btc";
 const ETH = "ether";
 class Account {
-    constructor(provider) {
+    constructor(networkID, provider) {
+        this._networkID = "";
         this._node = "";
         this._setNode(provider);
+        this._setChain(networkID);
     }
     _setNode(provider) {
         if ((0, validation_js_1.isIPAddress)(provider)) {
             this._node = provider;
         }
+    }
+    _setChain(networkID) {
+        this._networkID = networkID;
     }
     key(seed) {
         if (seed === undefined) {
@@ -92,7 +97,7 @@ class Account {
         const fact = new create_js_1.CreateAccountsFact(token, sender, [item]);
         return {
             wallet: { privatekey, publickey, address },
-            operation: new operation_js_1.OperationType(fact),
+            operation: new operation_js_1.OperationType(this._networkID, fact),
         };
     }
     touch(privatekey, wallet) {
@@ -109,7 +114,7 @@ class Account {
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], BTC);
         const fact = new create_js_1.CreateAccountsFact(token, senderAddr, [item]);
-        return new operation_js_1.OperationType(fact);
+        return new operation_js_1.OperationType(this._networkID, fact);
     }
     createEtherAccount(senderAddr, receiverPub, currentID, amount) {
         const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
@@ -117,7 +122,7 @@ class Account {
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], ETH);
         const fact = new create_js_1.CreateAccountsFact(token, senderAddr, [item]);
-        return new operation_js_1.OperationType(fact);
+        return new operation_js_1.OperationType(this._networkID, fact);
     }
     createMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
         const keys = this.pubToKeys(receiverPubArr, threshold);
@@ -125,7 +130,7 @@ class Account {
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], BTC);
         const fact = new create_js_1.CreateAccountsFact(token, senderAddr, [item]);
-        return new operation_js_1.OperationType(fact);
+        return new operation_js_1.OperationType(this._networkID, fact);
     }
     createEtherMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
         const keys = this.pubToKeys(receiverPubArr, threshold);
@@ -133,19 +138,19 @@ class Account {
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], ETH);
         const fact = new create_js_1.CreateAccountsFact(token, senderAddr, [item]);
-        return new operation_js_1.OperationType(fact);
+        return new operation_js_1.OperationType(this._networkID, fact);
     }
     update(targetAddr, newPubArr, currentID) {
         const key = this.pubToKeys([{ key: newPubArr, weight: 100 }], 100);
         const token = new time_js_1.TimeStamp().UTC();
         const fact = new keyUpdate_js_1.KeyUpdaterFact(token, targetAddr, key, currentID);
-        return new operation_js_1.OperationType(fact);
+        return new operation_js_1.OperationType(this._networkID, fact);
     }
     updateMultiSig(targetAddr, newPubArr, currentID, threshold) {
         const keys = this.pubToKeys(newPubArr, threshold);
         const token = new time_js_1.TimeStamp().UTC();
         const fact = new keyUpdate_js_1.KeyUpdaterFact(token, targetAddr, keys, currentID);
-        return new operation_js_1.OperationType(fact);
+        return new operation_js_1.OperationType(this._networkID, fact);
     }
     pubToKeys(pubKeys, threshold) {
         const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));

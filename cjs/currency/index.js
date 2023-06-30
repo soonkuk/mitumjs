@@ -24,14 +24,19 @@ const information_js_1 = __importDefault(require("./information.js"));
 const design_js_1 = require("./design.js");
 const inflate_js_1 = require("./inflate.js");
 class Currency {
-    constructor(provider) {
+    constructor(networkID, provider) {
+        this._networkID = "";
         this._node = "";
         this._setNode(provider);
+        this._setChain(networkID);
     }
     _setNode(provider) {
         if ((0, validation_js_1.isIPAddress)(provider)) {
             this._node = provider;
         }
+    }
+    _setChain(networkID) {
+        this._networkID = networkID;
     }
     getAllCurrencies() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -66,7 +71,7 @@ class Currency {
         const design = new design_js_1.CurrencyDesign(amount, data.genesisAddress, policy);
         const token = new time_js_1.TimeStamp().UTC();
         const fact = new register_js_1.CurrencyRegisterFact(token, design);
-        return new operation_js_1.OperationType(fact);
+        return new operation_js_1.OperationType(this._networkID, fact);
     }
     /** structure
      * inputData = {
@@ -84,7 +89,7 @@ class Currency {
         const policy = new design_js_1.CurrencyPolicy(data.minBalance, feePolicy);
         const token = new time_js_1.TimeStamp().UTC();
         const fact = new updatePolicy_js_1.CurrencyPolicyUpdaterFact(token, data.currencyID, policy);
-        return new operation_js_1.OperationType(fact);
+        return new operation_js_1.OperationType(this._networkID, fact);
     }
     setFeePolicy(feeType, feeReceiver, fee, minFee, maxFee) {
         let feePolicy;
@@ -113,14 +118,14 @@ class Currency {
         const token = new time_js_1.TimeStamp().UTC();
         const item = new transfer_js_1.TransfersItem(receiver, [tokenAmount]);
         const fact = new transfer_js_1.TransfersFact(token, sender, [item]);
-        return new operation_js_1.OperationType(fact);
+        return new operation_js_1.OperationType(this._networkID, fact);
     }
     mint(receiver, currencyID, amount) {
         const tokenAmount = new property_js_1.Amount(currencyID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new inflate_js_1.SuffrageInflationItem(receiver, tokenAmount);
         const fact = new inflate_js_1.SuffrageInflationFact(token, [item]);
-        return new operation_js_1.OperationType(fact);
+        return new operation_js_1.OperationType(this._networkID, fact);
     }
 }
 exports.Currency = Currency;

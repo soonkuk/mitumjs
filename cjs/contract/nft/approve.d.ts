@@ -2,13 +2,12 @@
 import { Address } from "../../account/address.js";
 import { NFTItem } from "./item.js";
 import { Big } from "../../utils/math.js";
-import { ContractID, CurrencyID } from "../../types/property.js";
 import { HintedObject } from "../../types/interface.js";
 import { OperationFact } from "../../types/fact.js";
 export declare class ApproveItem extends NFTItem {
     readonly approved: Address;
     readonly nft: Big;
-    constructor(contract: Address, collection: ContractID, approved: string, nft: string | number | Buffer | BigInt | Uint8Array, currency: CurrencyID);
+    constructor(contract: string, collection: string, approved: string, nft: string | number | Buffer | BigInt | Uint8Array, currency: string);
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;
     toString(): string;

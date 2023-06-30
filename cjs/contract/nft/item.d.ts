@@ -7,7 +7,7 @@ export declare abstract class NFTItem extends Item {
     readonly contract: Address;
     readonly collection: ContractID;
     readonly currency: CurrencyID;
-    constructor(hint: string, contract: Address, collection: ContractID, currency: CurrencyID);
+    constructor(hint: string, contract: string, collection: string, currency: string);
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;
 }

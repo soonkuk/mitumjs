@@ -3,9 +3,11 @@ import { Fact } from "../types/fact.js";
 import { AxiosResponse } from "axios";
 import { inputData } from "./design.js";
 export declare class Currency {
+    private _networkID;
     private _node;
-    constructor(provider?: string);
+    constructor(networkID: string, provider?: string);
     private _setNode;
+    private _setChain;
     getAllCurrencies(): Promise<AxiosResponse>;
     getCurrency(currencyID: string): Promise<AxiosResponse>;
     /** structure

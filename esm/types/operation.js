@@ -2,7 +2,6 @@ import base58 from "bs58";
 import { Assert, ECODE, MitumError } from "../utils/error.js";
 import { SortFunc, sha3 } from "../utils/math.js";
 import { TimeStamp } from "../utils/time.js";
-import { MITUM_NETWORK_ID } from "../intro.js";
 import { Hint } from "./property.js";
 import { CreateContractAccountsFact } from "../contract/account.js";
 import { M2FactSign, M2NodeFactSign } from "./factSign.js";
@@ -11,8 +10,8 @@ import { CreateAccountsFact } from "../account/create.js";
 import { M2KeyPair } from "../account/key.js";
 import { Key } from "../account/publicKey.js";
 export class OperationType {
-    constructor(fact, memo) {
-        this.id = MITUM_NETWORK_ID;
+    constructor(networkID, fact, memo) {
+        this.id = networkID;
         this.memo = memo ?? "";
         this.fact = fact;
         this.hint = new Hint(fact.operationHint);

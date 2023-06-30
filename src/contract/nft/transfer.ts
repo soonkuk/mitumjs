@@ -4,7 +4,6 @@ import { MitumError, Assert, ECODE } from "../../utils/error.js";
 import { Big } from "../../utils/math.js";
 import { NFTItem } from "./item.js";
 import { HINT_NFT } from "../../types/hintNft.js";
-import { ContractID, CurrencyID } from "../../types/property.js";
 import { HintedObject } from "../../types/interface.js";
 
 export class NFTTransferItem extends NFTItem {
@@ -12,11 +11,11 @@ export class NFTTransferItem extends NFTItem {
   readonly nft: Big;
 
   constructor(
-    contract: Address,
-    collection: ContractID,
+    contract: string,
+    collection: string,
     receiver: string,
     nft: string | number | Buffer | BigInt | Uint8Array,
-    currency: CurrencyID
+    currency: string
   ) {
     super(HINT_NFT.HINT_NFT_TRANSFER_ITEM, contract, collection, currency);
 

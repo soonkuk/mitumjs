@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import { IHintedObject, IBuffer, HintedObject } from "../../types/interface.js";
-import { ContractID, CurrencyID, Hint } from "../../types/property.js";
+import { Hint } from "../../types/property.js";
 import { OperationFact } from "../../types/fact.js";
 import { Big } from "../../utils/math.js";
 import { Address } from "../../account/address.js";
@@ -24,7 +24,7 @@ export declare class NFTSigners implements IHintedObject, IBuffer {
 }
 export declare class NFTSignItem extends NFTItem {
     readonly nft: Big;
-    constructor(contract: Address, collection: ContractID, nft: string | number | Buffer | BigInt | Uint8Array, currency: CurrencyID);
+    constructor(contract: string, collection: string, nft: string | number | Buffer | BigInt | Uint8Array, currency: string);
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;
     toString(): string;

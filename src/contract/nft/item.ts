@@ -10,15 +10,15 @@ export abstract class NFTItem extends Item {
 
   constructor(
     hint: string,
-    contract: Address,
-    collection: ContractID,
-    currency: CurrencyID
+    contract: string,
+    collection: string,
+    currency: string
   ) {
     super(hint);
 
-    this.contract = contract;
-    this.collection = collection;
-    this.currency = currency;
+    this.contract = new Address(contract);
+    this.collection = new ContractID(collection);
+    this.currency = new CurrencyID(currency);
   }
 
   toBuffer(): Buffer {

@@ -16,8 +16,8 @@ const axios_1 = __importDefault(require("axios"));
 exports.default = {
     getNftInfo(provider, contract, collection, tokenID) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (provider === "" || contract === "") {
-                return Promise.reject(new Error("RPC-URL is not provided or You need to set 'contract address'."));
+            if (provider === "" || contract === undefined || collection === undefined) {
+                return Promise.reject(new Error("RPC-URL is not provided or You need to set 'contract address and collection id'."));
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/nft/${contract}/collection/${collection}/${tokenID}`);

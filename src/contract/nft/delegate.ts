@@ -1,5 +1,4 @@
 import { MitumError, Assert, ECODE } from "../../utils/error.js";
-import { ContractID, CurrencyID } from "../../types/property.js";
 import { HintedObject } from "../../types/interface.js";
 import { OperationFact } from "../../types/fact.js";
 import { HINT_NFT } from "../../types/hintNft.js";
@@ -17,11 +16,11 @@ export class DelegateItem extends NFTItem {
   mode: DELEGATE;
 
   constructor(
-    contract: Address,
-    collection: ContractID,
+    contract: string,
+    collection: string,
     operator: string,
     mode: DELEGATE,
-    currency: CurrencyID
+    currency: string
   ) {
     super(HINT_NFT.HINT_DELEGATE_ITEM, contract, collection, currency);
 

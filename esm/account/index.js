@@ -12,14 +12,19 @@ import { M2KeyPair } from "./key.js";
 const BTC = "btc";
 const ETH = "ether";
 export class Account {
-    constructor(provider) {
+    constructor(networkID, provider) {
+        this._networkID = "";
         this._node = "";
         this._setNode(provider);
+        this._setChain(networkID);
     }
     _setNode(provider) {
         if (isIPAddress(provider)) {
             this._node = provider;
         }
+    }
+    _setChain(networkID) {
+        this._networkID = networkID;
     }
     key(seed) {
         if (seed === undefined) {
@@ -77,7 +82,7 @@ export class Account {
         const fact = new CreateAccountsFact(token, sender, [item]);
         return {
             wallet: { privatekey, publickey, address },
-            operation: new OperationType(fact),
+            operation: new OperationType(this._networkID, fact),
         };
     }
     async touch(privatekey, wallet) {
@@ -92,7 +97,7 @@ export class Account {
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], BTC);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
-        return new OperationType(fact);
+        return new OperationType(this._networkID, fact);
     }
     createEtherAccount(senderAddr, receiverPub, currentID, amount) {
         const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
@@ -100,7 +105,7 @@ export class Account {
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], ETH);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
-        return new OperationType(fact);
+        return new OperationType(this._networkID, fact);
     }
     createMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
         const keys = this.pubToKeys(receiverPubArr, threshold);
@@ -108,7 +113,7 @@ export class Account {
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], BTC);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
-        return new OperationType(fact);
+        return new OperationType(this._networkID, fact);
     }
     createEtherMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
         const keys = this.pubToKeys(receiverPubArr, threshold);
@@ -116,19 +121,19 @@ export class Account {
         const token = new TimeStamp().UTC();
         const item = new CreateAccountsItem(keys, [amountArr], ETH);
         const fact = new CreateAccountsFact(token, senderAddr, [item]);
-        return new OperationType(fact);
+        return new OperationType(this._networkID, fact);
     }
     update(targetAddr, newPubArr, currentID) {
         const key = this.pubToKeys([{ key: newPubArr, weight: 100 }], 100);
         const token = new TimeStamp().UTC();
         const fact = new KeyUpdaterFact(token, targetAddr, key, currentID);
-        return new OperationType(fact);
+        return new OperationType(this._networkID, fact);
     }
     updateMultiSig(targetAddr, newPubArr, currentID, threshold) {
         const keys = this.pubToKeys(newPubArr, threshold);
         const token = new TimeStamp().UTC();
         const fact = new KeyUpdaterFact(token, targetAddr, keys, currentID);
-        return new OperationType(fact);
+        return new OperationType(this._networkID, fact);
     }
     pubToKeys(pubKeys, threshold) {
         const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));

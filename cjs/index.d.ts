@@ -15,10 +15,10 @@ export declare class Mitum {
     nft: Nft;
     constructor(provider?: string);
     version(): string;
-    node(): Promise<AxiosResponse<any, any>>;
+    node(): Promise<AxiosResponse>;
     setNode(provider?: string): void;
     getNode(): string;
     chain(): string;
-    setChain(cID: string): void;
+    setChain(networkID: string): void;
 }
 export default Mitum;

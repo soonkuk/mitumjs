@@ -6,9 +6,11 @@ import { KeyPair } from "./iPair.js";
 import { M2KeyPair } from "./key.js";
 import { AxiosResponse } from "axios";
 export declare class Account {
+    private _networkID;
     private _node;
-    constructor(provider?: string);
+    constructor(networkID: string, provider?: string);
     private _setNode;
+    private _setChain;
     key(seed?: string): M2KeyPair;
     keys(n: number): {
         keys: Keys;

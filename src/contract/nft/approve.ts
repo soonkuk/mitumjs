@@ -3,7 +3,6 @@ import { NFTItem } from "./item.js";
 
 import { MitumError, Assert, ECODE } from "../../utils/error.js";
 import { Big } from "../../utils/math.js";
-import { ContractID, CurrencyID } from "../../types/property.js";
 import { HintedObject } from "../../types/interface.js";
 import { OperationFact } from "../../types/fact.js";
 import { HINT_NFT } from "../../types/hintNft.js";
@@ -13,11 +12,11 @@ export class ApproveItem extends NFTItem {
   readonly nft: Big;
 
   constructor(
-    contract: Address,
-    collection: ContractID,
+    contract: string,
+    collection: string,
     approved: string,
     nft: string | number | Buffer | BigInt | Uint8Array,
-    currency: CurrencyID
+    currency: string
   ) {
     super(HINT_NFT.HINT_APPROVE_ITEM, contract, collection, currency);
 

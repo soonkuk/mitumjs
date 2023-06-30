@@ -1,5 +1,4 @@
 /// <reference types="node" />
-import { ContractID, CurrencyID } from "../../types/property.js";
 import { HintedObject } from "../../types/interface.js";
 import { OperationFact } from "../../types/fact.js";
 import { Address } from "../../account/address.js";
@@ -10,7 +9,7 @@ export type DELEGATE = ALLOW | CANCEL;
 export declare class DelegateItem extends NFTItem {
     operator: Address;
     mode: DELEGATE;
-    constructor(contract: Address, collection: ContractID, operator: string, mode: DELEGATE, currency: CurrencyID);
+    constructor(contract: string, collection: string, operator: string, mode: DELEGATE, currency: string);
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;
     toString(): string;

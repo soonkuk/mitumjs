@@ -1,19 +1,23 @@
+import { MITUM_NETWORK_ID } from "./intro.js";
 import { Version, Node, Chain } from "./common/index.js";
 import { Account } from "./account/index.js";
 import { Currency } from "./currency/index.js";
 import { Block } from "./block/index.js";
 import { Operation } from "./operation/index.js";
 import { Nft } from "./contract/nft/index.js";
+// import { Timestamp } from "./contract/timestamp/index.js";
 export class Mitum {
+    // public timestamp: Timestamp;
     constructor(provider) {
         this._version = new Version();
         this._node = new Node(provider);
-        this._chain = new Chain();
-        this.account = new Account(provider);
-        this.currency = new Currency(provider);
+        this._chain = new Chain(MITUM_NETWORK_ID);
+        this.account = new Account(MITUM_NETWORK_ID, provider);
+        this.currency = new Currency(MITUM_NETWORK_ID, provider);
         this.block = new Block(provider);
         this.operation = new Operation(provider);
-        this.nft = new Nft(provider);
+        this.nft = new Nft(MITUM_NETWORK_ID, provider);
+        // this.timestamp = new Timestamp(provider);
     }
     version() {
         return this._version.getVersion();
@@ -22,12 +26,14 @@ export class Mitum {
         return await this._node.getNodeInfo();
     }
     setNode(provider) {
+        const networkID = this.chain();
         this._node.setNode(provider);
-        this.account = new Account(provider);
-        this.currency = new Currency(provider);
+        this.account = new Account(networkID, provider);
+        this.currency = new Currency(networkID, provider);
         this.block = new Block(provider);
         this.operation = new Operation(provider);
-        this.nft = new Nft(provider);
+        this.nft = new Nft(networkID, provider);
+        // this.timestamp = new Timestamp(networkID, provider);
     }
     getNode() {
         return this._node.getNodeUri();
@@ -35,8 +41,13 @@ export class Mitum {
     chain() {
         return this._chain.getChainID();
     }
-    setChain(cID) {
-        this._chain.setChainID(cID);
+    setChain(networkID) {
+        const provider = this.getNode();
+        this._chain.setChainID(networkID);
+        this.account = new Account(networkID, provider);
+        this.currency = new Currency(networkID, provider);
+        this.nft = new Nft(networkID, provider);
+        // this.timestamp = new Timestamp(networkID, provider);
     }
 }
 export default Mitum;

@@ -22,16 +22,22 @@ import {
 import { SuffrageInflationFact, SuffrageInflationItem } from "./inflate.js";
 
 export class Currency {
+  private _networkID: string = "";
   private _node: string = "";
 
-  constructor(provider?: string) {
+  constructor(networkID: string, provider?: string) {
     this._setNode(provider);
+    this._setChain(networkID);
   }
 
   private _setNode(provider?: string) {
     if (isIPAddress(provider)) {
       this._node = provider as string;
     }
+  }
+
+  private _setChain(networkID: string) {
+    this._networkID = networkID;
   }
 
   async getAllCurrencies(): Promise<AxiosResponse> {
@@ -75,7 +81,7 @@ export class Currency {
     const token = new TimeStamp().UTC();
     const fact = new CurrencyRegisterFact(token, design);
 
-    return new OperationType(fact);
+    return new OperationType(this._networkID, fact);
   }
 
   /** structure
@@ -101,7 +107,7 @@ export class Currency {
     const token = new TimeStamp().UTC();
     const fact = new CurrencyPolicyUpdaterFact(token, data.currencyID, policy);
 
-    return new OperationType(fact);
+    return new OperationType(this._networkID, fact);
   }
 
   private setFeePolicy(
@@ -150,7 +156,7 @@ export class Currency {
     const item = new TransfersItem(receiver, [tokenAmount]);
     const fact = new TransfersFact(token, sender, [item]);
 
-    return new OperationType(fact);
+    return new OperationType(this._networkID, fact);
   }
 
   mint(
@@ -164,6 +170,6 @@ export class Currency {
     const item = new SuffrageInflationItem(receiver, tokenAmount);
     const fact = new SuffrageInflationFact(token, [item]);
 
-    return new OperationType(fact);
+    return new OperationType(this._networkID, fact);
   }
 }
