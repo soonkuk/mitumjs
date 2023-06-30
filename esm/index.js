@@ -4,6 +4,7 @@ import { Account } from "./account/index.js";
 import { Currency } from "./currency/index.js";
 import { Block } from "./block/index.js";
 import { Operation } from "./operation/index.js";
+import { Contract } from "./contract/index.js";
 import { Nft } from "./contract/nft/index.js";
 // import { Timestamp } from "./contract/timestamp/index.js";
 export class Mitum {
@@ -16,6 +17,7 @@ export class Mitum {
         this.currency = new Currency(MITUM_NETWORK_ID, provider);
         this.block = new Block(provider);
         this.operation = new Operation(provider);
+        this.contract = new Contract(MITUM_NETWORK_ID, provider);
         this.nft = new Nft(MITUM_NETWORK_ID, provider);
         // this.timestamp = new Timestamp(provider);
     }
@@ -32,6 +34,7 @@ export class Mitum {
         this.currency = new Currency(networkID, provider);
         this.block = new Block(provider);
         this.operation = new Operation(provider);
+        this.contract = new Contract(networkID, provider);
         this.nft = new Nft(networkID, provider);
         // this.timestamp = new Timestamp(networkID, provider);
     }
@@ -46,6 +49,7 @@ export class Mitum {
         this._chain.setChainID(networkID);
         this.account = new Account(networkID, provider);
         this.currency = new Currency(networkID, provider);
+        this.contract = new Contract(networkID, provider);
         this.nft = new Nft(networkID, provider);
         // this.timestamp = new Timestamp(networkID, provider);
     }

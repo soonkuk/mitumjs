@@ -16,7 +16,8 @@ const index_js_2 = require("./account/index.js");
 const index_js_3 = require("./currency/index.js");
 const index_js_4 = require("./block/index.js");
 const index_js_5 = require("./operation/index.js");
-const index_js_6 = require("./contract/nft/index.js");
+const index_js_6 = require("./contract/index.js");
+const index_js_7 = require("./contract/nft/index.js");
 // import { Timestamp } from "./contract/timestamp/index.js";
 class Mitum {
     // public timestamp: Timestamp;
@@ -28,7 +29,8 @@ class Mitum {
         this.currency = new index_js_3.Currency(intro_js_1.MITUM_NETWORK_ID, provider);
         this.block = new index_js_4.Block(provider);
         this.operation = new index_js_5.Operation(provider);
-        this.nft = new index_js_6.Nft(intro_js_1.MITUM_NETWORK_ID, provider);
+        this.contract = new index_js_6.Contract(intro_js_1.MITUM_NETWORK_ID, provider);
+        this.nft = new index_js_7.Nft(intro_js_1.MITUM_NETWORK_ID, provider);
         // this.timestamp = new Timestamp(provider);
     }
     version() {
@@ -46,7 +48,8 @@ class Mitum {
         this.currency = new index_js_3.Currency(networkID, provider);
         this.block = new index_js_4.Block(provider);
         this.operation = new index_js_5.Operation(provider);
-        this.nft = new index_js_6.Nft(networkID, provider);
+        this.contract = new index_js_6.Contract(networkID, provider);
+        this.nft = new index_js_7.Nft(networkID, provider);
         // this.timestamp = new Timestamp(networkID, provider);
     }
     getNode() {
@@ -60,7 +63,8 @@ class Mitum {
         this._chain.setChainID(networkID);
         this.account = new index_js_2.Account(networkID, provider);
         this.currency = new index_js_3.Currency(networkID, provider);
-        this.nft = new index_js_6.Nft(networkID, provider);
+        this.contract = new index_js_6.Contract(networkID, provider);
+        this.nft = new index_js_7.Nft(networkID, provider);
         // this.timestamp = new Timestamp(networkID, provider);
     }
 }

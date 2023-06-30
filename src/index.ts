@@ -7,6 +7,7 @@ import { Operation } from "./operation/index.js";
 
 import { AxiosResponse } from "axios";
 
+import { Contract } from "./contract/index.js";
 import { Nft } from "./contract/nft/index.js";
 // import { Timestamp } from "./contract/timestamp/index.js";
 
@@ -20,6 +21,7 @@ export class Mitum {
   public block: Block;
   public operation: Operation;
 
+  public contract: Contract;
   public nft: Nft;
   // public timestamp: Timestamp;
 
@@ -33,6 +35,7 @@ export class Mitum {
     this.block = new Block(provider);
     this.operation = new Operation(provider);
 
+    this.contract = new Contract(MITUM_NETWORK_ID, provider);
     this.nft = new Nft(MITUM_NETWORK_ID, provider);
     // this.timestamp = new Timestamp(provider);
   }
@@ -55,6 +58,7 @@ export class Mitum {
     this.block = new Block(provider);
     this.operation = new Operation(provider);
 
+    this.contract = new Contract(networkID, provider);
     this.nft = new Nft(networkID, provider);
     // this.timestamp = new Timestamp(networkID, provider);
   }
@@ -75,6 +79,7 @@ export class Mitum {
     this.account = new Account(networkID, provider);
     this.currency = new Currency(networkID, provider);
 
+    this.contract = new Contract(networkID, provider);
     this.nft = new Nft(networkID, provider);
     // this.timestamp = new Timestamp(networkID, provider);
   }

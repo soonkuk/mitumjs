@@ -40,4 +40,5 @@ export declare const MitumConfig: {
     PAYMENT_PARAM: RangeConfig;
     MAX_NFT_SIGNER_SHARE: RangeConfig;
     MAX_NFT_SIGNERS_TOTAL: RangeConfig;
+    MAX_ROYALTY_RATE: RangeConfig;
 };
