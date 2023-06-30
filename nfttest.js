@@ -29,19 +29,31 @@ const test = async () => {
   //   const res = await mitum.operation.send(s1);
   //   exp("axios result", res.data);
 
-  const ca2 = mitum.contract.createEtherAccount(
+  // 현재 error. 다음주 중 수정 예정
+  //   const ca2 = mitum.contract.createEtherAccount(
+  //     sender,
+  //     pubkeyEther,
+  //     currencyID,
+  //     100
+  //   );
+  //   exp("mitum.contract.create() : ETH 컨트랙트 계정 생성", ca2);
+  //   const s2 = mitum.operation.sign(privatekey, ca2);
+  //   const res = await mitum.operation.send(s2);
+  //   exp("axios result", s2);
+
+  const keysArray = [
+    { key: "28V9psXoGyjQ5cVtDLSFddHSaBnMYV95Y8kpJUk4rQKREmpu", weight: 50 },
+    { key: "diLUcZugeDFW6ftQdcjdz8Ks1KBGiACo9GAcKQUgwFdfmpu", weight: 50 },
+  ];
+
+  const ca3 = mitum.contract.createMultiSig(
     sender,
-    pubkeyEther,
+    keysArray,
     currencyID,
+    1000,
     100
   );
-  exp("mitum.contract.create() : ETH 컨트랙트 계정 생성", ca2);
-  const s2 = mitum.operation.sign(privatekey, ca2);
-  //const res = await mitum.operation.send(s2);
-  exp("axios result", s2);
-
-  //   const ca3 = mitum.contract.createMultiSig();
-  //   exp("mitum.contract.create() : BTC 멀티시그 컨트랙트 계정 생성", ca3);
+  exp("mitum.contract.create() : BTC 멀티시그 컨트랙트 계정 생성", ca3);
 
   //   const ca4 = mitum.contract.createEtherMultiSig();
   //   exp("mitum.contract.create() : ETH 멀티시그 컨트랙트 계정 생성", ca4);

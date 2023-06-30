@@ -27,7 +27,7 @@ export class CollectionPolicyUpdaterFact extends Fact {
     name: string,
     royalty: string | number | Buffer | BigInt | Uint8Array,
     uri: string,
-    whites: Address[] | string[],
+    whites: string[],
     currency: string
   ) {
     super(HINT_NFT.HINT_COLLECTION_POLICY_UPDATER_OPERATION_FACT, token);

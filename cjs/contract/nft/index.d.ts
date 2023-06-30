@@ -1,7 +1,10 @@
+/// <reference types="node" />
 import { AxiosResponse } from "axios";
-import { Creator } from "./creatorType.js";
 import { OperationType } from "../../types/operation.js";
 import { Fact } from "../../types/fact.js";
+import { Creator } from "./creatorType.js";
+import { CollectionRegisterFact, inputData } from "./register.js";
+import { DelegateFact } from "./delegate.js";
 export declare class Nft {
     private _networkID;
     private _node;
@@ -14,17 +17,41 @@ export declare class Nft {
     setCollection(collectionID: string): void;
     getContractAddress(): string;
     getCollectionId(): string;
-    ownerOf(tokenID: number): Promise<AxiosResponse>;
-    name(): void;
+    ownerOf(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
+    name(collectionID?: string): Promise<AxiosResponse>;
     symbol(): string;
-    tokenURI(): void;
-    private gererateCreator;
+    totalSupply(collectionID?: string): Promise<AxiosResponse>;
+    tokenURI(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
+    /** structure
+     * inputData = {
+     *    contract: string;
+     *    name: string;
+     *    symbol: string;
+     *    uri: string;
+     *    royalty: string | number | Buffer | BigInt | Uint8Array
+     *    whiteLists: Address[],
+     *    currencyID: string
+     * }
+     */
+    createCollection(sender: string, data: inputData): OperationType<CollectionRegisterFact>;
     mint(sender: string, uri: string, hash: string, currencyID: string, creator: string): OperationType<Fact>;
     mintForMultiCreators(sender: string, uri: string, hash: string, currencyID: string, creator: Creator[]): OperationType<Fact>;
-    safeTransferFrom(): void;
+    /** structure
+     * inputData = {
+     *    contract: string;
+     *    name: string;
+     *    symbol: string;
+     *    uri: string;
+     *    royalty: string | number | Buffer | BigInt | Uint8Array
+     *    whiteLists: string[],
+     *    currencyID: string
+     * }
+     */
+    setPolicy(sender: string, data: inputData): OperationType<Fact>;
     transferFrom(): void;
-    approve(): void;
-    getApproved(): void;
-    setApprovalForAll(): void;
-    isApprovedForAll(): void;
+    transfer(): void;
+    approve(owner: string, operator: string, tokenID: string | number | Buffer | BigInt | Uint8Array, currencyID: string): OperationType<Fact>;
+    getApproved(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
+    setApprovalForAll(owner: string, operator: string, mode: boolean, currencyID: string): OperationType<DelegateFact>;
+    isApprovedForAll(owner: string, collectionID?: string): Promise<AxiosResponse>;
 }

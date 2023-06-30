@@ -12,7 +12,7 @@ export declare class CollectionPolicyUpdaterFact extends Fact {
     readonly collection: ContractID;
     readonly whites: Address[];
     readonly currency: CurrencyID;
-    constructor(token: string, sender: string, contract: string, collection: string, name: string, royalty: string | number | Buffer | BigInt | Uint8Array, uri: string, whites: Address[] | string[], currency: string);
+    constructor(token: string, sender: string, contract: string, collection: string, name: string, royalty: string | number | Buffer | BigInt | Uint8Array, uri: string, whites: string[], currency: string);
     toBuffer(): Buffer;
     toHintedObject(): {
         hash: string;

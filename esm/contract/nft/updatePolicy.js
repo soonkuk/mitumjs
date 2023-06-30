@@ -20,8 +20,8 @@ export class CollectionPolicyUpdaterFact extends Fact {
         Assert.check(Array.isArray(whites), MitumError.detail(ECODE.INVALID_PARAMETER, "'whites' is not Array."));
         Assert.check(MitumConfig.MAX_WHITELIST_IN_COLLECTION.satisfy(whites.length), MitumError.detail(ECODE.INVALID_PARAMETER, "White-lists length is out of range."));
         this.whites = whites.map((w) => {
-            Assert.check(typeof w === "string" || w instanceof Address, MitumError.detail(ECODE.INVALID_PARAMETER, "The element type of 'white-lists' is incorrect."));
-            return typeof w === "string" ? new Address(w) : w;
+            Assert.check(typeof w === "string", MitumError.detail(ECODE.INVALID_PARAMETER, "The element type of 'white-lists' is incorrect."));
+            return new Address(w);
         });
         const wSet = new Set(this.whites);
         Assert.check(wSet.size === whites.length, MitumError.detail(ECODE.INVALID_PARAMETER, "A duplicate item exists."));

@@ -2,9 +2,20 @@ import { Assert, MitumError, ECODE } from "../../utils/error.js";
 import { OperationFact } from "../../types/fact.js";
 import { MitumConfig } from "../../utils/config.js";
 import { HINT_NFT } from "../../types/hintNft.js";
-import { NFTSigners } from "./sign.js";
+import { NFTSigner, NFTSigners } from "./sign.js";
 import { NFTURI } from "./policy.js";
 import { NFTItem } from "./item.js";
+export function gererateCreator(originators) {
+    const nftsigners = [];
+    let total = 0;
+    originators.forEach((originator) => {
+        const { account, share } = originator;
+        const nftsigner = new NFTSigner(account, share);
+        total += Number(share);
+        nftsigners.push(nftsigner);
+    });
+    return new NFTSigners(total, nftsigners);
+}
 export class NFTHash {
     constructor(s) {
         Assert.check(typeof s === "string", MitumError.detail(ECODE.INVALID_PARAMETER, "The type of Hash is not 'string'."));

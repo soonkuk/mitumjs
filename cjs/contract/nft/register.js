@@ -26,8 +26,8 @@ class CollectionRegisterFact extends fact_js_1.Fact {
         error_js_1.Assert.check(Array.isArray(whites), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "'whites' is not Array."));
         error_js_1.Assert.check(config_js_1.MitumConfig.MAX_WHITELIST_IN_COLLECTION.satisfy(whites.length), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "White-lists length is out of range."));
         this.whites = whites.map((w) => {
-            error_js_1.Assert.check(typeof w === "string" || w instanceof address_js_1.Address, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "The element type of 'white-lists' is incorrect."));
-            return typeof w === "string" ? new address_js_1.Address(w) : w;
+            error_js_1.Assert.check(typeof w === "string", error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "The element type of 'white-lists' is incorrect."));
+            return new address_js_1.Address(w);
         });
         const wSet = new Set(this.whites);
         error_js_1.Assert.check(wSet.size === whites.length, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "A duplicate item exists."));
