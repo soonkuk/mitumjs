@@ -11,6 +11,7 @@ import { Creator } from "./creatorType.js";
 import { CollectionRegisterFact, inputData } from "./register.js";
 import { CollectionPolicyUpdaterFact } from "./updatePolicy.js";
 import { ApproveFact, ApproveItem } from "./approve.js";
+import { DelegateItem, DelegateFact, DELEGATE } from "./delegate.js";
 
 export class Nft {
   private _networkID: string = "";
@@ -241,17 +242,12 @@ export class Nft {
   }
 
   // nft 호환 컨트랙트 끼리의 안전한 전송. 이 함수가 오버로딩 되었다.
-  safeTransferFrom() {}
-
-  // approve 위임받은 자의 전송
   transferFrom() {}
 
+  // approve 위임받은 자의 전송
+  transfer() {}
+
   // 위임
-  //   contract: string,
-  //     collection: string,
-  //     approved: string,
-  //     nft: string | number | Buffer | BigInt | Uint8Array,
-  //     currency: string
   approve(
     owner: string,
     operator: string,
@@ -294,8 +290,49 @@ export class Nft {
   }
 
   // 소유한 모든 nft 를 위임
-  setApprovalForAll() {}
+  setApprovalForAll(
+    owner: string,
+    operator: string,
+    mode: boolean,
+    currencyID: string
+  ) {
+    const token = new TimeStamp().UTC();
+
+    let approved: DELEGATE = "allow";
+    if (mode == false) {
+      approved = "cancel";
+    }
+
+    const item = new DelegateItem(
+      this._address,
+      this._collection,
+      operator,
+      approved,
+      currencyID
+    );
+    const fact = new DelegateFact(token, owner, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
 
   // 모든 nft 를 위임하였냐
-  isApprovedForAll() {}
+  async isApprovedForAll(
+    owner: string,
+    collectionID?: string
+  ): Promise<AxiosResponse> {
+    let id = this._collection;
+
+    if (collectionID !== undefined) {
+      id = collectionID;
+    }
+
+    const res = await nftInfo.getOperationInfo(
+      this._node,
+      this._address,
+      id,
+      owner
+    );
+
+    return res.data;
+  }
 }
