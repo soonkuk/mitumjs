@@ -63,7 +63,10 @@ export class Nft {
   // balanceOf() {}
 
   // tokenID의 소유자
-  async ownerOf(tokenID: number): Promise<AxiosResponse> {
+  async ownerOf(
+    tokenID: number,
+    collectionID?: string
+  ): Promise<AxiosResponse> {
     return await nftInfo.getNftInfo(
       this._node,
       this._address,
@@ -73,11 +76,25 @@ export class Nft {
   }
 
   // contract의 이름 반환
-  name() {}
+  async name(collectionID?: string): Promise<AxiosResponse> {
+    let id = this._collection;
+
+    if (collectionID !== undefined) {
+      id = collectionID;
+    }
+
+    return await nftInfo.getCollectionInfo(
+      this._node,
+      this._address,
+      this._collection
+    );
+  }
 
   symbol(): string {
     return this._collection;
   }
+
+  totalSupply() {}
 
   // tokenID 에 대한 URI 반환
   tokenURI() {}
