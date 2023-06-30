@@ -10,6 +10,7 @@ import { MintItem, MintFact, gererateCreator } from "./mint.js";
 import { Creator } from "./creatorType.js";
 import { CollectionRegisterFact, inputData } from "./register.js";
 import { CollectionPolicyUpdaterFact } from "./updatePolicy.js";
+import { ApproveFact, ApproveItem } from "./approve.js";
 
 export class Nft {
   private _networkID: string = "";
@@ -246,10 +247,51 @@ export class Nft {
   transferFrom() {}
 
   // 위임
-  approve() {}
+  //   contract: string,
+  //     collection: string,
+  //     approved: string,
+  //     nft: string | number | Buffer | BigInt | Uint8Array,
+  //     currency: string
+  approve(
+    owner: string,
+    operator: string,
+    tokenID: string | number | Buffer | BigInt | Uint8Array,
+    currencyID: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const item = new ApproveItem(
+      this._address,
+      this._collection,
+      operator,
+      tokenID,
+      currencyID
+    );
+    const fact = new ApproveFact(token, owner, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
 
   // tokenId 가 위임되었는지 확인
-  getApproved() {}
+  async getApproved(
+    tokenID: number,
+    collectionID?: string
+  ): Promise<AxiosResponse> {
+    let id = this._collection;
+
+    if (collectionID !== undefined) {
+      id = collectionID;
+    }
+
+    const res = await nftInfo.getNftInfo(
+      this._node,
+      this._address,
+      id,
+      tokenID
+    );
+
+    return res.data.approved;
+  }
 
   // 소유한 모든 nft 를 위임
   setApprovalForAll() {}
