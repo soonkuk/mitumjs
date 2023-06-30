@@ -1,15 +1,15 @@
 import { AxiosResponse } from "axios";
 
 import { isIPAddress, isAddress } from "../../utils/validation.js";
+import { OperationType } from "../../types/operation.js";
+import { TimeStamp } from "../../utils/time.js";
+import { Fact } from "../../types/fact.js";
 
 import nftInfo from "./information.js";
-
+import { NFTSigner, NFTSigners } from "./sign.js";
 import { MintItem, MintFact } from "./mint.js";
 import { Creator } from "./creatorType.js";
-import { OperationType } from "../../types/operation.js";
-import { Fact } from "../../types/fact.js";
-import { NFTSigner, NFTSigners } from "./sign.js";
-import { TimeStamp } from "../../utils/time.js";
+import { CollectionRegisterFact, inputData } from "./register.js";
 
 export class Nft {
   private _networkID: string = "";
@@ -82,6 +82,35 @@ export class Nft {
 
   // tokenID 에 대한 URI 반환
   tokenURI() {}
+
+  /** structure
+   * inputData = {
+   *    contract: string;
+   *    name: string;
+   *    symbol: string;
+   *    uri: string;
+   *    royalty: string | number | Buffer | BigInt | Uint8Array
+   *    whiteLists: Address[],
+   *    currencyID: string
+   * }
+   */
+  createCollection(sender: string, data: inputData) {
+    const token = new TimeStamp().UTC();
+
+    const fact = new CollectionRegisterFact(
+      token,
+      sender,
+      data.contract,
+      data.symbol,
+      data.name,
+      data.royalty,
+      data.uri,
+      data.whiteLists,
+      data.currencyID
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
 
   private gererateCreator(originators: Creator[]): NFTSigners {
     const nftsigners: NFTSigner[] = [];

@@ -11,6 +11,16 @@ import { Fact } from "../../types/fact.js";
 import { CollectionName, PaymentParam, NFTURI } from "./policy.js";
 import { Address } from "../../account/address.js";
 
+export type inputData = {
+  contract: string;
+  name: string;
+  symbol: string;
+  uri: string;
+  royalty: string | number | Buffer | BigInt | Uint8Array;
+  whiteLists: Address[];
+  currencyID: string;
+};
+
 export class CollectionRegisterFact extends Fact {
   readonly sender: Address;
   readonly contract: Address;
