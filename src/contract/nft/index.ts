@@ -6,8 +6,7 @@ import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
 import nftInfo from "./information.js";
-import { NFTSigner, NFTSigners } from "./sign.js";
-import { MintItem, MintFact } from "./mint.js";
+import { MintItem, MintFact, gererateCreator } from "./mint.js";
 import { Creator } from "./creatorType.js";
 import { CollectionRegisterFact, inputData } from "./register.js";
 
@@ -112,20 +111,6 @@ export class Nft {
     return new OperationType(this._networkID, fact);
   }
 
-  private gererateCreator(originators: Creator[]): NFTSigners {
-    const nftsigners: NFTSigner[] = [];
-
-    let total: number = 0;
-    originators.forEach((originator) => {
-      const { account, share } = originator;
-      const nftsigner = new NFTSigner(account, share);
-      total += Number(share);
-      nftsigners.push(nftsigner);
-    });
-
-    return new NFTSigners(total, nftsigners);
-  }
-
   mint(
     sender: string,
     uri: string,
@@ -133,7 +118,7 @@ export class Nft {
     currencyID: string,
     creator: string
   ): OperationType<Fact> {
-    const originator = this.gererateCreator([{ account: creator, share: 100 }]);
+    const originator = gererateCreator([{ account: creator, share: 100 }]);
     const token = new TimeStamp().UTC();
 
     const item = new MintItem(
@@ -156,7 +141,7 @@ export class Nft {
     currencyID: string,
     creator: Creator[]
   ): OperationType<Fact> {
-    const originators = this.gererateCreator(creator);
+    const originators = gererateCreator(creator);
     const token = new TimeStamp().UTC();
 
     const item = new MintItem(
