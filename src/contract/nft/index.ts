@@ -67,15 +67,23 @@ export class Nft {
     tokenID: number,
     collectionID?: string
   ): Promise<AxiosResponse> {
-    return await nftInfo.getNftInfo(
+    let id = this._collection;
+
+    if (collectionID !== undefined) {
+      id = collectionID;
+    }
+
+    const res = await nftInfo.getNftInfo(
       this._node,
       this._address,
-      this._collection,
+      id,
       tokenID
     );
+
+    return res.data.owner;
   }
 
-  // contract의 이름 반환
+  // collection의 이름 반환
   async name(collectionID?: string): Promise<AxiosResponse> {
     let id = this._collection;
 
@@ -83,21 +91,48 @@ export class Nft {
       id = collectionID;
     }
 
-    return await nftInfo.getCollectionInfo(
-      this._node,
-      this._address,
-      this._collection
-    );
+    const res = await nftInfo.getCollectionInfo(this._node, this._address, id);
+
+    return res.data.name;
   }
 
   symbol(): string {
     return this._collection;
   }
 
-  totalSupply() {}
+  // 총 nft 발행량 조회
+  async totalSupply(collectionID?: string): Promise<AxiosResponse> {
+    let id = this._collection;
+
+    if (collectionID !== undefined) {
+      id = collectionID;
+    }
+
+    const res = await nftInfo.getAllNftInfo(this._node, this._address, id);
+
+    return res.data.length;
+  }
 
   // tokenID 에 대한 URI 반환
-  tokenURI() {}
+  async tokenURI(
+    tokenID: number,
+    collectionID?: string
+  ): Promise<AxiosResponse> {
+    let id = this._collection;
+
+    if (collectionID !== undefined) {
+      id = collectionID;
+    }
+
+    const res = await nftInfo.getNftInfo(
+      this._node,
+      this._address,
+      id,
+      tokenID
+    );
+
+    return res.data.uri;
+  }
 
   /** structure
    * inputData = {
@@ -173,6 +208,8 @@ export class Nft {
 
     return new OperationType(this._networkID, fact);
   }
+
+  setPolicy() {}
 
   // nft 호환 컨트랙트 끼리의 안전한 전송. 이 함수가 오버로딩 되었다.
   safeTransferFrom() {}
