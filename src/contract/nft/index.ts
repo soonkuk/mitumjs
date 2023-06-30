@@ -9,6 +9,7 @@ import nftInfo from "./information.js";
 import { MintItem, MintFact, gererateCreator } from "./mint.js";
 import { Creator } from "./creatorType.js";
 import { CollectionRegisterFact, inputData } from "./register.js";
+import { CollectionPolicyUpdaterFact } from "./updatePolicy.js";
 
 export class Nft {
   private _networkID: string = "";
@@ -209,7 +210,34 @@ export class Nft {
     return new OperationType(this._networkID, fact);
   }
 
-  setPolicy() {}
+  /** structure
+   * inputData = {
+   *    contract: string;
+   *    name: string;
+   *    symbol: string;
+   *    uri: string;
+   *    royalty: string | number | Buffer | BigInt | Uint8Array
+   *    whiteLists: string[],
+   *    currencyID: string
+   * }
+   */
+  setPolicy(sender: string, data: inputData): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new CollectionPolicyUpdaterFact(
+      token,
+      sender,
+      data.contract,
+      data.symbol,
+      data.name,
+      data.royalty,
+      data.uri,
+      data.whiteLists,
+      data.currencyID
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
 
   // nft 호환 컨트랙트 끼리의 안전한 전송. 이 함수가 오버로딩 되었다.
   safeTransferFrom() {}

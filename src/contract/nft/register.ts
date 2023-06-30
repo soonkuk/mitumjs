@@ -17,7 +17,7 @@ export type inputData = {
   symbol: string;
   uri: string;
   royalty: string | number | Buffer | BigInt | Uint8Array;
-  whiteLists: Address[];
+  whiteLists: string[];
   currencyID: string;
 };
 
@@ -39,7 +39,7 @@ export class CollectionRegisterFact extends Fact {
     name: string,
     royalty: string | number | Buffer | BigInt | Uint8Array,
     uri: string,
-    whites: Address[],
+    whites: string[],
     currency: string
   ) {
     super(HINT_NFT.HINT_COLLECTION_REGISTER_OPERATION_FACT, token);
@@ -66,14 +66,14 @@ export class CollectionRegisterFact extends Fact {
 
     this.whites = whites.map((w) => {
       Assert.check(
-        typeof w === "string" || w instanceof Address,
+        typeof w === "string",
         MitumError.detail(
           ECODE.INVALID_PARAMETER,
           "The element type of 'white-lists' is incorrect."
         )
       );
 
-      return typeof w === "string" ? new Address(w) : w;
+      return new Address(w);
     });
 
     const wSet = new Set(this.whites);

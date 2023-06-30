@@ -61,14 +61,14 @@ export class CollectionPolicyUpdaterFact extends Fact {
 
     this.whites = whites.map((w) => {
       Assert.check(
-        typeof w === "string" || w instanceof Address,
+        typeof w === "string",
         MitumError.detail(
           ECODE.INVALID_PARAMETER,
           "The element type of 'white-lists' is incorrect."
         )
       );
 
-      return typeof w === "string" ? new Address(w) : w;
+      return new Address(w);
     });
 
     const wSet = new Set(this.whites);
