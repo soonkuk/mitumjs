@@ -105,13 +105,17 @@ export class Account {
   ): { wallet: WalletType; operation: OperationType<Fact> } {
     let keypair: M2KeyPair;
 
-    if (seed === undefined) {
+    if (seed === undefined || typeof seed === "number") {
       keypair = M2KeyPair.random(BTC);
     } else {
       keypair = M2KeyPair.fromSeed(seed, BTC);
     }
 
-    const wt = weight;
+    let wt = weight;
+    if (typeof seed === "number") {
+      wt = seed;
+    }
+
     const privatekey = keypair.privateKey.toString();
     const publickey = keypair.publicKey.toString();
     const address = this.pubToKeys(
