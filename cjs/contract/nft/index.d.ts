@@ -13,10 +13,11 @@ export declare class Nft {
     constructor(networkID: string, provider?: string);
     private _setNode;
     private _setChain;
-    setGallery(contractAddress: string, collectionID: string): void;
+    setGallery(contractAddress: string, collectionID?: string): void;
     setCollection(collectionID: string): void;
     getContractAddress(): string;
     getCollectionId(): string;
+    getCollectionInfo(collectionID?: string): Promise<AxiosResponse>;
     ownerOf(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
     name(collectionID?: string): Promise<AxiosResponse>;
     symbol(): string;
@@ -29,13 +30,11 @@ export declare class Nft {
      *    symbol: string;
      *    uri: string;
      *    royalty: string | number | Buffer | BigInt | Uint8Array
-     *    whiteLists: Address[],
+     *    whiteLists: string[],
      *    currencyID: string
      * }
      */
     createCollection(sender: string, data: inputData): OperationType<CollectionRegisterFact>;
-    mint(sender: string, uri: string, hash: string, currencyID: string, creator: string): OperationType<Fact>;
-    mintForMultiCreators(sender: string, uri: string, hash: string, currencyID: string, creator: Creator[]): OperationType<Fact>;
     /** structure
      * inputData = {
      *    contract: string;
@@ -48,6 +47,8 @@ export declare class Nft {
      * }
      */
     setPolicy(sender: string, data: inputData): OperationType<Fact>;
+    mint(sender: string, uri: string, hash: string, currencyID: string, creator: string): OperationType<Fact>;
+    mintForMultiCreators(sender: string, uri: string, hash: string, currencyID: string, creator: Creator[]): OperationType<Fact>;
     transferFrom(): void;
     transfer(): void;
     approve(owner: string, operator: string, tokenID: string | number | Buffer | BigInt | Uint8Array, currencyID: string): OperationType<Fact>;

@@ -3,7 +3,7 @@ import { Assert, MitumError, ECODE } from "../../utils/error.js";
 import { ContractID, CurrencyID } from "../../types/property.js";
 import { MitumConfig } from "../../utils/config.js";
 import { HINT_NFT } from "../../types/hintNft.js";
-import { SortFunc } from "../../utils/math.js";
+// import { SortFunc } from "../../utils/math.js";
 import { Fact } from "../../types/fact.js";
 import { CollectionName, PaymentParam, NFTURI } from "./policy.js";
 import { Address } from "../../account/address.js";
@@ -37,7 +37,7 @@ export class CollectionRegisterFact extends Fact {
             this.royalty.toBuffer(),
             this.uri.toBuffer(),
             this.currency.toBuffer(),
-            Buffer.concat(this.whites.sort(SortFunc).map((w) => w.toBuffer())),
+            Buffer.concat(this.whites.map((w) => w.toBuffer())),
         ]);
     }
     toHintedObject() {
@@ -51,7 +51,7 @@ export class CollectionRegisterFact extends Fact {
             name: this.name.toString(),
             royalty: this.royalty.v,
             uri: this.uri.toString(),
-            whites: this.whites.sort(SortFunc).map((w) => w.toString()),
+            whites: this.whites.map((w) => w.toString()),
             currency: this.currency.toString(),
         };
     }

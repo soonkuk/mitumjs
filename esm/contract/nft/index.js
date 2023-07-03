@@ -32,7 +32,9 @@ export class Nft {
         else {
             console.error("This is invalid address type");
         }
-        this.setCollection(collectionID);
+        if (collectionID !== undefined) {
+            this.setCollection(collectionID);
+        }
     }
     setCollection(collectionID) {
         if (this._collection !== collectionID) {
@@ -48,6 +50,14 @@ export class Nft {
     }
     getCollectionId() {
         return this._collection.toString();
+    }
+    async getCollectionInfo(collectionID) {
+        let id = this._collection;
+        if (collectionID !== undefined) {
+            id = collectionID;
+        }
+        const res = await nftInfo.getCollectionInfo(this._node, this._address, id);
+        return res.data;
     }
     // owner의 nft 갯수. TBD.
     // balanceOf() {}
@@ -97,27 +107,13 @@ export class Nft {
      *    symbol: string;
      *    uri: string;
      *    royalty: string | number | Buffer | BigInt | Uint8Array
-     *    whiteLists: Address[],
+     *    whiteLists: string[],
      *    currencyID: string
      * }
      */
     createCollection(sender, data) {
         const token = new TimeStamp().UTC();
         const fact = new CollectionRegisterFact(token, sender, data.contract, data.symbol, data.name, data.royalty, data.uri, data.whiteLists, data.currencyID);
-        return new OperationType(this._networkID, fact);
-    }
-    mint(sender, uri, hash, currencyID, creator) {
-        const originator = gererateCreator([{ account: creator, share: 100 }]);
-        const token = new TimeStamp().UTC();
-        const item = new MintItem(this._address, this._collection, hash, uri, originator, currencyID);
-        const fact = new MintFact(token, sender, [item]);
-        return new OperationType(this._networkID, fact);
-    }
-    mintForMultiCreators(sender, uri, hash, currencyID, creator) {
-        const originators = gererateCreator(creator);
-        const token = new TimeStamp().UTC();
-        const item = new MintItem(this._address, this._collection, hash, uri, originators, currencyID);
-        const fact = new MintFact(token, sender, [item]);
         return new OperationType(this._networkID, fact);
     }
     /** structure
@@ -134,6 +130,20 @@ export class Nft {
     setPolicy(sender, data) {
         const token = new TimeStamp().UTC();
         const fact = new CollectionPolicyUpdaterFact(token, sender, data.contract, data.symbol, data.name, data.royalty, data.uri, data.whiteLists, data.currencyID);
+        return new OperationType(this._networkID, fact);
+    }
+    mint(sender, uri, hash, currencyID, creator) {
+        const originator = gererateCreator([{ account: creator, share: 100 }]);
+        const token = new TimeStamp().UTC();
+        const item = new MintItem(this._address, this._collection, hash, uri, originator, currencyID);
+        const fact = new MintFact(token, sender, [item]);
+        return new OperationType(this._networkID, fact);
+    }
+    mintForMultiCreators(sender, uri, hash, currencyID, creator) {
+        const originators = gererateCreator(creator);
+        const token = new TimeStamp().UTC();
+        const item = new MintItem(this._address, this._collection, hash, uri, originators, currencyID);
+        const fact = new MintFact(token, sender, [item]);
         return new OperationType(this._networkID, fact);
     }
     // nft 호환 컨트랙트 끼리의 안전한 전송. 이 함수가 오버로딩 되었다.

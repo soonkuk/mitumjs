@@ -1,4 +1,6 @@
+const { sha3, bufferToNumber } = require("eccrypto-js");
 const { Mitum } = require("./cjs");
+const { Big } = require("./cjs/utils/math.js");
 
 const mitum = new Mitum("http://127.0.0.1:54320");
 
@@ -60,18 +62,40 @@ const test = async () => {
   //   const ca4 = mitum.contract.createEtherMultiSig();
   //   exp("mitum.contract.create() : ETH 멀티시그 컨트랙트 계정 생성", ca4);
 
-  const wallet = mitum.contract.createWallet(sender, currencyID, 1000);
-  exp("mitum.contract.create() : 컨트랙트 wallet 생성", wallet.wallet);
-  exp("mitum.contract.create() : 컨트랙트 wallet 생성", wallet.operation);
+  //   const wallet = mitum.contract.createWallet(sender, currencyID, 1000);
+  //   exp("mitum.contract.create() : 컨트랙트 wallet 생성", wallet.wallet);
+  //   const res = await mitum.contract.touch(privatekey, wallet);
+  //   exp("mitum.contract.create() : 컨트랙트 wallet 생성", res.data);
 
-  // const contractAddress = "9BU7UbMqTerfFTNN7mJ692kYXHfEfC19TdL6cZHUW8s3mca";
-  // const contractID = "SITNFT";
-  // mitum.nft.setGallery(contractAddress, contractID);
-  // exp(
-  //   "mitum.nft.getContractAddress() : 갤러리 주소 반환",
-  //   mitum.nft.getContractAddress()
-  // );
-  // exp("mitum.nft.getCollectionId() : 심볼 반환", mitum.nft.getCollectionId());
+  const contract = "2gWeBMRnZ8kmwU7dvJgv3rHpui7ksHMRKLjJiPUsbBAAmca";
+  const sender2 = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
+  const privatekey2 = "CHNoLNrykannTec3L1Aa1kXsDkC2QS2tDXrTxhHAcySwmpr";
+  const name = "Social infra tech";
+  const symbol = "SIT";
+  const uri = "www.socialinfratech.com";
+  const royalty = 30;
+  const whiteLists = ["3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca"];
+  const inputData = {
+    contract: contract,
+    name: name,
+    symbol: symbol,
+    uri: uri,
+    royalty: royalty,
+    whiteLists: whiteLists,
+    currencyID: currencyID,
+  };
+  const c1 = mitum.nft.createCollection(sender2, inputData);
+  const ss1 = mitum.operation.sign(privatekey2, c1);
+  // const res = await mitum.operation.send(ss1);
+  exp("mitum.nft.createCollection()", ss1);
+
+  //   const contractID = "SIT";
+  //   mitum.nft.setGallery(contractAddress, contractID);
+  //   exp(
+  //     "mitum.nft.getContractAddress() : 갤러리 주소 반환",
+  //     mitum.nft.getContractAddress()
+  //   );
+  //   exp("mitum.nft.getCollectionId() : 심볼 반환", mitum.nft.getCollectionId());
 
   // const sender = "2gWeBMRnZ8kmwU7dvJgv3rHpui7ksHMRKLjJiPUsbBAAmca";
   // const uri = "https://socialinfratech.com";

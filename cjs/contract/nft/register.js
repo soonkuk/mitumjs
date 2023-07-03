@@ -9,7 +9,7 @@ const error_js_1 = require("../../utils/error.js");
 const property_js_1 = require("../../types/property.js");
 const config_js_1 = require("../../utils/config.js");
 const hintNft_js_1 = require("../../types/hintNft.js");
-const math_js_1 = require("../../utils/math.js");
+// import { SortFunc } from "../../utils/math.js";
 const fact_js_1 = require("../../types/fact.js");
 const policy_js_1 = require("./policy.js");
 const address_js_1 = require("../../account/address.js");
@@ -43,11 +43,11 @@ class CollectionRegisterFact extends fact_js_1.Fact {
             this.royalty.toBuffer(),
             this.uri.toBuffer(),
             this.currency.toBuffer(),
-            Buffer.concat(this.whites.sort(math_js_1.SortFunc).map((w) => w.toBuffer())),
+            Buffer.concat(this.whites.map((w) => w.toBuffer())),
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { hash: bs58_1.default.encode(this.hash), token: this.token.toString(), sender: this.sender.toString(), contract: this.contract.toString(), collection: this.collection.toString(), name: this.name.toString(), royalty: this.royalty.v, uri: this.uri.toString(), whites: this.whites.sort(math_js_1.SortFunc).map((w) => w.toString()), currency: this.currency.toString() });
+        return Object.assign(Object.assign({}, super.toHintedObject()), { hash: bs58_1.default.encode(this.hash), token: this.token.toString(), sender: this.sender.toString(), contract: this.contract.toString(), collection: this.collection.toString(), name: this.name.toString(), royalty: this.royalty.v, uri: this.uri.toString(), whites: this.whites.map((w) => w.toString()), currency: this.currency.toString() });
     }
     get operationHint() {
         return hintNft_js_1.HINT_NFT.HINT_COLLECTION_REGISTER_OPERATION;

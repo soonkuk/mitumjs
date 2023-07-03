@@ -5,7 +5,7 @@ import { ContractID, CurrencyID } from "../../types/property.js";
 import { MitumConfig } from "../../utils/config.js";
 import { HINT_NFT } from "../../types/hintNft.js";
 import { FactJson } from "../../types/iFact.js";
-import { SortFunc } from "../../utils/math.js";
+// import { SortFunc } from "../../utils/math.js";
 import { Fact } from "../../types/fact.js";
 
 import { CollectionName, PaymentParam, NFTURI } from "./policy.js";
@@ -54,13 +54,16 @@ export class CollectionRegisterFact extends Fact {
 
     Assert.check(
       Array.isArray(whites),
-      MitumError.detail(ECODE.INVALID_PARAMETER, "'whites' is not Array.")
+      MitumError.detail(
+        ECODE.INVALID_PARAMETER,
+        "'white-lists' of the params is not Array."
+      )
     );
     Assert.check(
       MitumConfig.MAX_WHITELIST_IN_COLLECTION.satisfy(whites.length),
       MitumError.detail(
         ECODE.INVALID_PARAMETER,
-        "White-lists length is out of range."
+        "'white-lists' length is out of range."
       )
     );
 
@@ -82,7 +85,7 @@ export class CollectionRegisterFact extends Fact {
       MitumError.detail(ECODE.INVALID_PARAMETER, "A duplicate item exists.")
     );
 
-    this._hash = this.hashing();
+    this._hash = this.toBuffer();
   }
 
   toBuffer(): Buffer {
@@ -95,7 +98,7 @@ export class CollectionRegisterFact extends Fact {
       this.royalty.toBuffer(),
       this.uri.toBuffer(),
       this.currency.toBuffer(),
-      Buffer.concat(this.whites.sort(SortFunc).map((w) => w.toBuffer())),
+      Buffer.concat(this.whites.map((w) => w.toBuffer())),
     ]);
   }
 
@@ -110,7 +113,7 @@ export class CollectionRegisterFact extends Fact {
       name: this.name.toString(),
       royalty: this.royalty.v,
       uri: this.uri.toString(),
-      whites: this.whites.sort(SortFunc).map((w) => w.toString()),
+      whites: this.whites.map((w) => w.toString()),
       currency: this.currency.toString(),
     };
   }

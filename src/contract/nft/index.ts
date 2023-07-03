@@ -34,7 +34,7 @@ export class Nft {
     this._networkID = networkID;
   }
 
-  setGallery(contractAddress: string, collectionID: string) {
+  setGallery(contractAddress: string, collectionID?: string) {
     if (this._address !== contractAddress && isAddress(contractAddress)) {
       this._address = contractAddress;
       console.log("Contract address is changed : ", this._address);
@@ -42,7 +42,9 @@ export class Nft {
       console.error("This is invalid address type");
     }
 
-    this.setCollection(collectionID);
+    if (collectionID !== undefined) {
+      this.setCollection(collectionID);
+    }
   }
 
   setCollection(collectionID: string) {
@@ -60,6 +62,18 @@ export class Nft {
 
   getCollectionId(): string {
     return this._collection.toString();
+  }
+
+  async getCollectionInfo(collectionID?: string): Promise<AxiosResponse> {
+    let id = this._collection;
+
+    if (collectionID !== undefined) {
+      id = collectionID;
+    }
+
+    const res = await nftInfo.getCollectionInfo(this._node, this._address, id);
+
+    return res.data;
   }
 
   // owner의 nft 갯수. TBD.
@@ -144,7 +158,7 @@ export class Nft {
    *    symbol: string;
    *    uri: string;
    *    royalty: string | number | Buffer | BigInt | Uint8Array
-   *    whiteLists: Address[],
+   *    whiteLists: string[],
    *    currencyID: string
    * }
    */
@@ -152,6 +166,35 @@ export class Nft {
     const token = new TimeStamp().UTC();
 
     const fact = new CollectionRegisterFact(
+      token,
+      sender,
+      data.contract,
+      data.symbol,
+      data.name,
+      data.royalty,
+      data.uri,
+      data.whiteLists,
+      data.currencyID
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  /** structure
+   * inputData = {
+   *    contract: string;
+   *    name: string;
+   *    symbol: string;
+   *    uri: string;
+   *    royalty: string | number | Buffer | BigInt | Uint8Array
+   *    whiteLists: string[],
+   *    currencyID: string
+   * }
+   */
+  setPolicy(sender: string, data: inputData): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new CollectionPolicyUpdaterFact(
       token,
       sender,
       data.contract,
@@ -208,35 +251,6 @@ export class Nft {
       currencyID
     );
     const fact = new MintFact(token, sender, [item]);
-
-    return new OperationType(this._networkID, fact);
-  }
-
-  /** structure
-   * inputData = {
-   *    contract: string;
-   *    name: string;
-   *    symbol: string;
-   *    uri: string;
-   *    royalty: string | number | Buffer | BigInt | Uint8Array
-   *    whiteLists: string[],
-   *    currencyID: string
-   * }
-   */
-  setPolicy(sender: string, data: inputData): OperationType<Fact> {
-    const token = new TimeStamp().UTC();
-
-    const fact = new CollectionPolicyUpdaterFact(
-      token,
-      sender,
-      data.contract,
-      data.symbol,
-      data.name,
-      data.royalty,
-      data.uri,
-      data.whiteLists,
-      data.currencyID
-    );
 
     return new OperationType(this._networkID, fact);
   }
