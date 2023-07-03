@@ -1,9 +1,9 @@
-import bs58 from "bs58";
+// import bs58 from "bs58";
 import { Assert, MitumError, ECODE } from "../../utils/error.js";
 import { ContractID, CurrencyID } from "../../types/property.js";
 import { MitumConfig } from "../../utils/config.js";
 import { HINT_NFT } from "../../types/hintNft.js";
-// import { SortFunc } from "../../utils/math.js";
+import { SortFunc } from "../../utils/math.js";
 import { Fact } from "../../types/fact.js";
 import { CollectionName, PaymentParam, NFTURI } from "./policy.js";
 import { Address } from "../../account/address.js";
@@ -17,8 +17,8 @@ export class CollectionRegisterFact extends Fact {
         this.royalty = new PaymentParam(royalty);
         this.uri = new NFTURI(uri);
         this.currency = new CurrencyID(currency);
-        Assert.check(Array.isArray(whites), MitumError.detail(ECODE.INVALID_PARAMETER, "'whites' is not Array."));
-        Assert.check(MitumConfig.MAX_WHITELIST_IN_COLLECTION.satisfy(whites.length), MitumError.detail(ECODE.INVALID_PARAMETER, "White-lists length is out of range."));
+        Assert.check(Array.isArray(whites), MitumError.detail(ECODE.INVALID_PARAMETER, "'white-lists' of the params is not Array."));
+        Assert.check(MitumConfig.MAX_WHITELIST_IN_COLLECTION.satisfy(whites.length), MitumError.detail(ECODE.INVALID_PARAMETER, "'white-lists' length is out of range."));
         this.whites = whites.map((w) => {
             Assert.check(typeof w === "string", MitumError.detail(ECODE.INVALID_PARAMETER, "The element type of 'white-lists' is incorrect."));
             return new Address(w);
@@ -37,14 +37,12 @@ export class CollectionRegisterFact extends Fact {
             this.royalty.toBuffer(),
             this.uri.toBuffer(),
             this.currency.toBuffer(),
-            Buffer.concat(this.whites.map((w) => w.toBuffer())),
+            Buffer.concat(this.whites.sort(SortFunc).map((w) => w.toBuffer())),
         ]);
     }
     toHintedObject() {
         return {
             ...super.toHintedObject(),
-            hash: bs58.encode(this.hash),
-            token: this.token.toString(),
             sender: this.sender.toString(),
             contract: this.contract.toString(),
             collection: this.collection.toString(),

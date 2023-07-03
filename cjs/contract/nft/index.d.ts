@@ -3,7 +3,7 @@ import { AxiosResponse } from "axios";
 import { OperationType } from "../../types/operation.js";
 import { Fact } from "../../types/fact.js";
 import { Creator } from "./creatorType.js";
-import { CollectionRegisterFact, inputData } from "./register.js";
+import { inputData } from "./register.js";
 import { DelegateFact } from "./delegate.js";
 export declare class Nft {
     private _networkID;
@@ -34,7 +34,7 @@ export declare class Nft {
      *    currencyID: string
      * }
      */
-    createCollection(sender: string, data: inputData): OperationType<CollectionRegisterFact>;
+    createCollection(sender: string, data: inputData): OperationType<Fact>;
     /** structure
      * inputData = {
      *    contract: string;

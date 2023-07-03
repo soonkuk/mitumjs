@@ -1,11 +1,11 @@
-import bs58 from "bs58";
+// import bs58 from "bs58";
 
 import { Assert, MitumError, ECODE } from "../../utils/error.js";
 import { ContractID, CurrencyID } from "../../types/property.js";
 import { MitumConfig } from "../../utils/config.js";
 import { HINT_NFT } from "../../types/hintNft.js";
 import { FactJson } from "../../types/iFact.js";
-// import { SortFunc } from "../../utils/math.js";
+import { SortFunc } from "../../utils/math.js";
 import { Fact } from "../../types/fact.js";
 
 import { CollectionName, PaymentParam, NFTURI } from "./policy.js";
@@ -85,7 +85,7 @@ export class CollectionRegisterFact extends Fact {
       MitumError.detail(ECODE.INVALID_PARAMETER, "A duplicate item exists.")
     );
 
-    this._hash = this.toBuffer();
+    this._hash = this.hashing();
   }
 
   toBuffer(): Buffer {
@@ -98,15 +98,13 @@ export class CollectionRegisterFact extends Fact {
       this.royalty.toBuffer(),
       this.uri.toBuffer(),
       this.currency.toBuffer(),
-      Buffer.concat(this.whites.map((w) => w.toBuffer())),
+      Buffer.concat(this.whites.sort(SortFunc).map((w) => w.toBuffer())),
     ]);
   }
 
   toHintedObject(): FactJson {
     return {
       ...super.toHintedObject(),
-      hash: bs58.encode(this.hash),
-      token: this.token.toString(),
       sender: this.sender.toString(),
       contract: this.contract.toString(),
       collection: this.collection.toString(),

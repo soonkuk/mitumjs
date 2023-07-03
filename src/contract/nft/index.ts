@@ -162,7 +162,7 @@ export class Nft {
    *    currencyID: string
    * }
    */
-  createCollection(sender: string, data: inputData) {
+  createCollection(sender: string, data: inputData): OperationType<Fact> {
     const token = new TimeStamp().UTC();
 
     const fact = new CollectionRegisterFact(
