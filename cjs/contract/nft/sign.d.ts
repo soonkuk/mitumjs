@@ -4,7 +4,9 @@ import { Hint } from "../../types/property.js";
 import { OperationFact } from "../../types/fact.js";
 import { Big } from "../../utils/math.js";
 import { Address } from "../../account/address.js";
+import { Creator } from "./creatorType.js";
 import { NFTItem } from "./item.js";
+export declare function gererateCreator(originators: Creator[]): NFTSigners;
 export declare class NFTSigner implements IHintedObject, IBuffer {
     readonly hint: Hint;
     readonly account: Address;

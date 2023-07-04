@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NFTSignFact = exports.NFTSignItem = exports.NFTSigners = exports.NFTSigner = void 0;
+exports.NFTSignFact = exports.NFTSignItem = exports.NFTSigners = exports.NFTSigner = exports.gererateCreator = void 0;
 const property_js_1 = require("../../types/property.js");
 const error_js_1 = require("../../utils/error.js");
 const fact_js_1 = require("../../types/fact.js");
@@ -10,6 +10,18 @@ const math_js_1 = require("../../utils/math.js");
 const math_js_2 = require("../../utils/math.js");
 const address_js_1 = require("../../account/address.js");
 const item_js_1 = require("./item.js");
+function gererateCreator(originators) {
+    const nftsigners = [];
+    let total = 0;
+    originators.forEach((originator) => {
+        const { account, share } = originator;
+        const nftsigner = new NFTSigner(account, share);
+        total += share;
+        nftsigners.push(nftsigner);
+    });
+    return new NFTSigners(total, nftsigners);
+}
+exports.gererateCreator = gererateCreator;
 class NFTSigner {
     constructor(account, share) {
         this.hint = new property_js_1.Hint(hintNft_js_1.HINT_NFT.HINT_NFT_SIGNER);
@@ -21,7 +33,7 @@ class NFTSigner {
     toBuffer() {
         return Buffer.concat([
             this.account.toBuffer(),
-            this.share.toBuffer(),
+            this.share.toBuffer("fill"),
             this.signed ? Buffer.from([1]) : Buffer.from([0]),
         ]);
     }
@@ -52,7 +64,7 @@ class NFTSigners {
     }
     toBuffer() {
         return Buffer.concat([
-            this.total.toBuffer(),
+            this.total.toBuffer("fill"),
             Buffer.concat(this.signers.sort(math_js_1.SortFunc).map((s) => s.toBuffer())),
         ]);
     }

@@ -2,10 +2,8 @@
 import { HintedObject, IBuffer, IString } from "../../types/interface.js";
 import { OperationFact } from "../../types/fact.js";
 import { NFTSigners } from "./sign.js";
-import { Creator } from "./creatorType.js";
 import { NFTURI } from "./policy.js";
 import { NFTItem } from "./item.js";
-export declare function gererateCreator(originators: Creator[]): NFTSigners;
 export declare class NFTHash implements IBuffer, IString {
     readonly s: string;
     constructor(s: string);

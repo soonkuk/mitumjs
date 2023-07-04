@@ -6,12 +6,13 @@ import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
 import nftInfo from "./information.js";
-import { MintItem, MintFact, gererateCreator } from "./mint.js";
+import { MintItem, MintFact } from "./mint.js";
 import { Creator } from "./creatorType.js";
 import { CollectionRegisterFact, inputData } from "./register.js";
 import { CollectionPolicyUpdaterFact } from "./updatePolicy.js";
 import { ApproveFact, ApproveItem } from "./approve.js";
 import { DelegateItem, DelegateFact, DELEGATE } from "./delegate.js";
+import { gererateCreator } from "./sign.js";
 
 export class Nft {
   private _networkID: string = "";

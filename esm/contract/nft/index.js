@@ -2,11 +2,12 @@ import { isIPAddress, isAddress } from "../../utils/validation.js";
 import { OperationType } from "../../types/operation.js";
 import { TimeStamp } from "../../utils/time.js";
 import nftInfo from "./information.js";
-import { MintItem, MintFact, gererateCreator } from "./mint.js";
+import { MintItem, MintFact } from "./mint.js";
 import { CollectionRegisterFact } from "./register.js";
 import { CollectionPolicyUpdaterFact } from "./updatePolicy.js";
 import { ApproveFact, ApproveItem } from "./approve.js";
 import { DelegateItem, DelegateFact } from "./delegate.js";
+import { gererateCreator } from "./sign.js";
 export class Nft {
     constructor(networkID, provider) {
         this._networkID = "";
@@ -134,8 +135,10 @@ export class Nft {
     }
     mint(sender, uri, hash, currencyID, creator) {
         const originator = gererateCreator([{ account: creator, share: 100 }]);
+        console.log(originator);
         const token = new TimeStamp().UTC();
         const item = new MintItem(this._address, this._collection, hash, uri, originator, currencyID);
+        console.log(item);
         const fact = new MintFact(token, sender, [item]);
         return new OperationType(this._networkID, fact);
     }

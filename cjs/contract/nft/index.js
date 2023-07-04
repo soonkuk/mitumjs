@@ -22,6 +22,7 @@ const register_js_1 = require("./register.js");
 const updatePolicy_js_1 = require("./updatePolicy.js");
 const approve_js_1 = require("./approve.js");
 const delegate_js_1 = require("./delegate.js");
+const sign_js_1 = require("./sign.js");
 class Nft {
     constructor(networkID, provider) {
         this._networkID = "";
@@ -158,14 +159,16 @@ class Nft {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     mint(sender, uri, hash, currencyID, creator) {
-        const originator = (0, mint_js_1.gererateCreator)([{ account: creator, share: 100 }]);
+        const originator = (0, sign_js_1.gererateCreator)([{ account: creator, share: 100 }]);
+        console.log(originator);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new mint_js_1.MintItem(this._address, this._collection, hash, uri, originator, currencyID);
+        console.log(item);
         const fact = new mint_js_1.MintFact(token, sender, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     mintForMultiCreators(sender, uri, hash, currencyID, creator) {
-        const originators = (0, mint_js_1.gererateCreator)(creator);
+        const originators = (0, sign_js_1.gererateCreator)(creator);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new mint_js_1.MintItem(this._address, this._collection, hash, uri, originators, currencyID);
         const fact = new mint_js_1.MintFact(token, sender, [item]);

@@ -41,7 +41,7 @@ class CollectionPolicyUpdaterFact extends fact_js_1.Fact {
             this.contract.toBuffer(),
             this.collection.toBuffer(),
             this.name.toBuffer(),
-            this.royalty.toBuffer(),
+            this.royalty.toBuffer("fill"),
             this.uri.toBuffer(),
             this.currency.toBuffer(),
             Buffer.concat(this.whites.sort(math_1.SortFunc).map((w) => w.toBuffer())),

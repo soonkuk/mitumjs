@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MintFact = exports.MintItem = exports.NFTHash = exports.gererateCreator = void 0;
+exports.MintFact = exports.MintItem = exports.NFTHash = void 0;
 const error_js_1 = require("../../utils/error.js");
 const fact_js_1 = require("../../types/fact.js");
 const config_js_1 = require("../../utils/config.js");
@@ -8,18 +8,6 @@ const hintNft_js_1 = require("../../types/hintNft.js");
 const sign_js_1 = require("./sign.js");
 const policy_js_1 = require("./policy.js");
 const item_js_1 = require("./item.js");
-function gererateCreator(originators) {
-    const nftsigners = [];
-    let total = 0;
-    originators.forEach((originator) => {
-        const { account, share } = originator;
-        const nftsigner = new sign_js_1.NFTSigner(account, share);
-        total += Number(share);
-        nftsigners.push(nftsigner);
-    });
-    return new sign_js_1.NFTSigners(total, nftsigners);
-}
-exports.gererateCreator = gererateCreator;
 class NFTHash {
     constructor(s) {
         error_js_1.Assert.check(typeof s === "string", error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "The type of Hash is not 'string'."));

@@ -101,7 +101,7 @@ const test = async () => {
 
   const cprivate = "CHNoLNrykannTec3L1Aa1kXsDkC2QS2tDXrTxhHAcySwmpr";
   const creator = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
-  const oper = mitum.nft.mint(creator, uri, hash, currencyID, creator);
+  const oper = mitum.nft.mint(creator, uri, hash, currencyID, sender);
   const ss3 = mitum.operation.sign(cprivate, oper);
   // const res2 = await mitum.operation.send(ss3);
   exp("mitum.nft.mint() : minting test", ss3);

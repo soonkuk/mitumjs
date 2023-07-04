@@ -8,7 +8,22 @@ import { SortFunc } from "../../utils/math.js";
 import { Big } from "../../utils/math.js";
 
 import { Address } from "../../account/address.js";
+import { Creator } from "./creatorType.js";
 import { NFTItem } from "./item.js";
+
+export function gererateCreator(originators: Creator[]): NFTSigners {
+  const nftsigners: NFTSigner[] = [];
+
+  let total: number = 0;
+  originators.forEach((originator) => {
+    const { account, share } = originator;
+    const nftsigner = new NFTSigner(account, share);
+    total += share;
+    nftsigners.push(nftsigner);
+  });
+
+  return new NFTSigners(total, nftsigners);
+}
 
 export class NFTSigner implements IHintedObject, IBuffer {
   readonly hint: Hint;
@@ -38,7 +53,7 @@ export class NFTSigner implements IHintedObject, IBuffer {
   toBuffer(): Buffer {
     return Buffer.concat([
       this.account.toBuffer(),
-      this.share.toBuffer(),
+      this.share.toBuffer("fill"),
       this.signed ? Buffer.from([1]) : Buffer.from([0]),
     ]);
   }
@@ -115,7 +130,7 @@ export class NFTSigners implements IHintedObject, IBuffer {
 
   toBuffer(): Buffer {
     return Buffer.concat([
-      this.total.toBuffer(),
+      this.total.toBuffer("fill"),
       Buffer.concat(this.signers.sort(SortFunc).map((s) => s.toBuffer())),
     ]);
   }

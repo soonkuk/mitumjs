@@ -4,24 +4,9 @@ import { OperationFact } from "../../types/fact.js";
 import { MitumConfig } from "../../utils/config.js";
 import { HINT_NFT } from "../../types/hintNft.js";
 
-import { NFTSigner, NFTSigners } from "./sign.js";
-import { Creator } from "./creatorType.js";
+import { NFTSigners } from "./sign.js";
 import { NFTURI } from "./policy.js";
 import { NFTItem } from "./item.js";
-
-export function gererateCreator(originators: Creator[]): NFTSigners {
-  const nftsigners: NFTSigner[] = [];
-
-  let total: number = 0;
-  originators.forEach((originator) => {
-    const { account, share } = originator;
-    const nftsigner = new NFTSigner(account, share);
-    total += Number(share);
-    nftsigners.push(nftsigner);
-  });
-
-  return new NFTSigners(total, nftsigners);
-}
 
 export class NFTHash implements IBuffer, IString {
   readonly s: string;
