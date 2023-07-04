@@ -67,19 +67,9 @@ export class CollectionRegisterFact extends Fact {
       )
     );
 
-    this.whites = whites.map((w) => {
-      Assert.check(
-        typeof w === "string",
-        MitumError.detail(
-          ECODE.INVALID_PARAMETER,
-          "The element type of 'white-lists' is incorrect."
-        )
-      );
+    this.whites = whites.map((w) => new Address(w));
 
-      return new Address(w);
-    });
-
-    const wSet = new Set(this.whites);
+    const wSet = new Set(whites);
     Assert.check(
       wSet.size === whites.length,
       MitumError.detail(ECODE.INVALID_PARAMETER, "A duplicate item exists.")
@@ -95,7 +85,7 @@ export class CollectionRegisterFact extends Fact {
       this.contract.toBuffer(),
       this.collection.toBuffer(),
       this.name.toBuffer(),
-      this.royalty.toBuffer(),
+      this.royalty.toBuffer("fill"),
       this.uri.toBuffer(),
       this.currency.toBuffer(),
       Buffer.concat(this.whites.sort(SortFunc).map((w) => w.toBuffer())),
@@ -111,7 +101,7 @@ export class CollectionRegisterFact extends Fact {
       name: this.name.toString(),
       royalty: this.royalty.v,
       uri: this.uri.toString(),
-      whites: this.whites.map((w) => w.toString()),
+      whites: this.whites.sort(SortFunc).map((w) => w.toString()),
       currency: this.currency.toString(),
     };
   }

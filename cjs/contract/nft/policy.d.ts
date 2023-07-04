@@ -12,7 +12,7 @@ export declare class NFTURI implements IBuffer, IString {
 export declare class PaymentParam implements IBuffer {
     private param;
     constructor(param: string | number | Buffer | BigInt | Uint8Array);
-    toBuffer(): Buffer;
+    toBuffer(option?: "fill"): Buffer;
     get v(): number;
 }
 export declare class CollectionName implements IBuffer, IString {
@@ -28,7 +28,7 @@ export declare class CollectionPolicy implements IBuffer, IHintedObject {
     readonly royalty: PaymentParam;
     readonly uri: NFTURI;
     readonly whites: Address[];
-    constructor(name: string, royalty: string | number | Buffer | BigInt | Uint8Array, uri: string, whites: string[] | Address[]);
+    constructor(name: string, royalty: string | number | Buffer | BigInt | Uint8Array, uri: string, whites: string[]);
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;
 }

@@ -48,8 +48,8 @@ export class PaymentParam implements IBuffer {
     );
   }
 
-  toBuffer(): Buffer {
-    return this.param.toBuffer();
+  toBuffer(option?: "fill"): Buffer {
+    return this.param.toBuffer(option);
   }
 
   get v() {
@@ -111,7 +111,7 @@ export class CollectionPolicy implements IBuffer, IHintedObject {
     name: string,
     royalty: string | number | Buffer | BigInt | Uint8Array,
     uri: string,
-    whites: string[] | Address[]
+    whites: string[]
   ) {
     this.hint = new Hint(HINT_NFT.HINT_COLLECTION_POLICY);
     this.name = new CollectionName(name);
@@ -130,19 +130,9 @@ export class CollectionPolicy implements IBuffer, IHintedObject {
       )
     );
 
-    this.whites = whites.map((w) => {
-      Assert.check(
-        typeof w === "string" || w instanceof Address,
-        MitumError.detail(
-          ECODE.INVALID_PARAMETER,
-          "White-list's type is incorrect."
-        )
-      );
+    this.whites = whites.map((w) => new Address(w));
 
-      return typeof w === "string" ? new Address(w) : w;
-    });
-
-    const wset = new Set(this.whites);
+    const wset = new Set(whites);
     Assert.check(
       wset.size === whites.length,
       MitumError.detail(

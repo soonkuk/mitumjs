@@ -22,11 +22,8 @@ class CollectionRegisterFact extends fact_js_1.Fact {
         this.currency = new property_js_1.CurrencyID(currency);
         error_js_1.Assert.check(Array.isArray(whites), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "'white-lists' of the params is not Array."));
         error_js_1.Assert.check(config_js_1.MitumConfig.MAX_WHITELIST_IN_COLLECTION.satisfy(whites.length), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "'white-lists' length is out of range."));
-        this.whites = whites.map((w) => {
-            error_js_1.Assert.check(typeof w === "string", error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "The element type of 'white-lists' is incorrect."));
-            return new address_js_1.Address(w);
-        });
-        const wSet = new Set(this.whites);
+        this.whites = whites.map((w) => new address_js_1.Address(w));
+        const wSet = new Set(whites);
         error_js_1.Assert.check(wSet.size === whites.length, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "A duplicate item exists."));
         this._hash = this.hashing();
     }
@@ -37,14 +34,14 @@ class CollectionRegisterFact extends fact_js_1.Fact {
             this.contract.toBuffer(),
             this.collection.toBuffer(),
             this.name.toBuffer(),
-            this.royalty.toBuffer(),
+            this.royalty.toBuffer("fill"),
             this.uri.toBuffer(),
             this.currency.toBuffer(),
             Buffer.concat(this.whites.sort(math_js_1.SortFunc).map((w) => w.toBuffer())),
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { sender: this.sender.toString(), contract: this.contract.toString(), collection: this.collection.toString(), name: this.name.toString(), royalty: this.royalty.v, uri: this.uri.toString(), whites: this.whites.map((w) => w.toString()), currency: this.currency.toString() });
+        return Object.assign(Object.assign({}, super.toHintedObject()), { sender: this.sender.toString(), contract: this.contract.toString(), collection: this.collection.toString(), name: this.name.toString(), royalty: this.royalty.v, uri: this.uri.toString(), whites: this.whites.sort(math_js_1.SortFunc).map((w) => w.toString()), currency: this.currency.toString() });
     }
     get operationHint() {
         return hintNft_js_1.HINT_NFT.HINT_COLLECTION_REGISTER_OPERATION;

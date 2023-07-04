@@ -26,8 +26,8 @@ class PaymentParam {
         this.param = new math_js_2.Big(param);
         error_js_1.Assert.check(config_js_1.MitumConfig.PAYMENT_PARAM.satisfy(this.param.v), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "PaymentParam's size is out of range."));
     }
-    toBuffer() {
-        return this.param.toBuffer();
+    toBuffer(option) {
+        return this.param.toBuffer(option);
     }
     get v() {
         return this.param.v;
@@ -65,11 +65,8 @@ class CollectionPolicy {
         this.uri = new NFTURI(uri);
         error_js_1.Assert.check(Array.isArray(whites), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "White-lists is not Array."));
         error_js_1.Assert.check(config_js_1.MitumConfig.MAX_WHITELIST_IN_COLLECTION.satisfy(whites.length), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "White-lists length is out of range."));
-        this.whites = whites.map((w) => {
-            error_js_1.Assert.check(typeof w === "string" || w instanceof address_js_1.Address, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "White-list's type is incorrect."));
-            return typeof w === "string" ? new address_js_1.Address(w) : w;
-        });
-        const wset = new Set(this.whites);
+        this.whites = whites.map((w) => new address_js_1.Address(w));
+        const wset = new Set(whites);
         error_js_1.Assert.check(wset.size === whites.length, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "A duplicate value exists in the white-lists."));
     }
     toBuffer() {
