@@ -70,7 +70,7 @@ export class AddTemplateFact extends Fact {
       this.sender.toBuffer(),
       this.contract.toBuffer(),
       this.credentialServiceID.toBuffer(),
-      this.templateID.toBuffer(),
+      this.templateID.toBuffer("fill"),
       this.templateName.toBuffer(),
       this.serviceDate.toBuffer(),
       this.expirationDate.toBuffer(),
