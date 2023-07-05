@@ -81,12 +81,9 @@ export class MintItem extends NFTItem {
   toHintedObject(): HintedObject {
     return {
       ...super.toHintedObject(),
-      contract: this.contract.toString(),
-      collection: this.collection.toString(),
       hash: this.hash.toString(),
       uri: this.uri.toString(),
       creators: this.creators.toHintedObject(),
-      currency: this.currency.toString(),
     };
   }
 
