@@ -6,6 +6,7 @@ import { Block } from "./block/index.js";
 import { Operation } from "./operation/index.js";
 import { Contract } from "./contract/index.js";
 import { Nft } from "./contract/nft/index.js";
+import { Credential } from "./contract/credential/index.js";
 // import { Timestamp } from "./contract/timestamp/index.js";
 export class Mitum {
     // public timestamp: Timestamp;
@@ -19,6 +20,7 @@ export class Mitum {
         this.operation = new Operation(provider);
         this.contract = new Contract(MITUM_NETWORK_ID, provider);
         this.nft = new Nft(MITUM_NETWORK_ID, provider);
+        this.credential = new Credential(MITUM_NETWORK_ID, provider);
         // this.timestamp = new Timestamp(provider);
     }
     version() {
@@ -36,6 +38,7 @@ export class Mitum {
         this.operation = new Operation(provider);
         this.contract = new Contract(networkID, provider);
         this.nft = new Nft(networkID, provider);
+        this.credential = new Credential(networkID, provider);
         // this.timestamp = new Timestamp(networkID, provider);
     }
     getNode() {
@@ -51,6 +54,7 @@ export class Mitum {
         this.currency = new Currency(networkID, provider);
         this.contract = new Contract(networkID, provider);
         this.nft = new Nft(networkID, provider);
+        this.credential = new Credential(networkID, provider);
         // this.timestamp = new Timestamp(networkID, provider);
     }
 }
