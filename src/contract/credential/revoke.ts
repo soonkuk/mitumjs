@@ -35,9 +35,7 @@ export abstract class RevokeCredentialsItem extends CredentialsItem {
   }
 
   toHintedObject(): HintedObject {
-    return {
-      ...super.toHintedObject(),
-    };
+    return { ...super.toHintedObject() };
   }
 }
 
