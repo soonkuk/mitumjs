@@ -1,7 +1,8 @@
-import { Address } from "../../account/address.js";
 import { ContractID, CurrencyID } from "../../types/property.js";
-import { Fact } from "../../types/fact.js";
 import { FactJson } from "../../types/iFact.js";
+import { Fact } from "../../types/fact.js";
+
+import { Address } from "../../account/address.js";
 
 const CreateCredentialServiceFactHint =
   "mitum-credential-create-credential-service-operation-fact";
