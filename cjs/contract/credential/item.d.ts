@@ -15,4 +15,5 @@ export declare abstract class CredentialsItem extends Item {
     constructor(hint: string, contract: string, credentialServiceID: string, holder: string, templateID: number, id: string, currency: string);
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;
+    toString(): string;
 }

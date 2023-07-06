@@ -12,7 +12,7 @@ const AssignCredentialsHint = "mitum-credential-assign-credentials-operation";
 
 const MaxAssignCredentialsItems = 10;
 
-export abstract class AssignCredentialsItem extends CredentialsItem {
+export class AssignCredentialsItem extends CredentialsItem {
   readonly value: String;
   readonly validfrom: Big;
   readonly validuntil: Big;
@@ -44,6 +44,10 @@ export abstract class AssignCredentialsItem extends CredentialsItem {
     this.validfrom = new Big(validfrom);
     this.validuntil = new Big(validuntil);
     this.did = new String(did);
+  }
+
+  toString(): string {
+    return this.value.toString();
   }
 
   toBuffer(): Buffer {

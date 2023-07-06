@@ -18,6 +18,9 @@ class AssignCredentialsItem extends item_js_1.CredentialsItem {
         this.validuntil = new math_js_1.Big(validuntil);
         this.did = new string_js_1.String(did);
     }
+    toString() {
+        return this.value.toString();
+    }
     toBuffer() {
         return Buffer.concat([
             super.toBuffer(),

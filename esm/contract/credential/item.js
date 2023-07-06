@@ -33,5 +33,8 @@ export class CredentialsItem extends Item {
             currency: this.currency.toString(),
         };
     }
+    toString() {
+        return this.id.toString();
+    }
 }
 //# sourceMappingURL=item.js.map

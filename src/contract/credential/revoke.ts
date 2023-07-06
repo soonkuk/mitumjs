@@ -10,7 +10,7 @@ const RevokeCredentialsHint = "mitum-credential-revoke-credentials-operation";
 
 const MaxRevokeCredentialsItems = 10;
 
-export abstract class RevokeCredentialsItem extends CredentialsItem {
+export class RevokeCredentialsItem extends CredentialsItem {
   constructor(
     contract: string,
     credentialServiceID: string,
@@ -34,12 +34,16 @@ export abstract class RevokeCredentialsItem extends CredentialsItem {
     return Buffer.concat([super.toBuffer(), this.currency.toBuffer()]);
   }
 
+  toString(): string {
+    return super.toString();
+  }
+
   toHintedObject(): HintedObject {
     return { ...super.toHintedObject() };
   }
 }
 
-export class AssignCredentialsFact extends OperationFact<RevokeCredentialsItem> {
+export class RevokeCredentialsFact extends OperationFact<RevokeCredentialsItem> {
   constructor(token: string, sender: string, items: RevokeCredentialsItem[]) {
     super(RevokeCredentialsFactHint, token, sender, items);
 

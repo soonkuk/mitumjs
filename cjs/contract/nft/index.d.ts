@@ -13,8 +13,8 @@ export declare class Nft {
     constructor(networkID: string, provider?: string);
     private _setNode;
     private _setChain;
-    setGallery(contractAddress: string, collectionID?: string): void;
-    setCollection(collectionID: string): void;
+    setContractAddress(contractAddress: string): void;
+    setCollectionId(collectionID: string): void;
     getContractAddress(): string;
     getCollectionId(): string;
     getCollectionInfo(collectionID?: string): Promise<AxiosResponse>;

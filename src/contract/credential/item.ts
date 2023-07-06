@@ -53,4 +53,8 @@ export abstract class CredentialsItem extends Item {
       currency: this.currency.toString(),
     };
   }
+
+  toString(): string {
+    return this.id.toString();
+  }
 }

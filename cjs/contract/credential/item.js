@@ -28,6 +28,9 @@ class CredentialsItem extends item_js_1.Item {
     toHintedObject() {
         return Object.assign(Object.assign({}, super.toHintedObject()), { contract: this.contract.toString(), credentialServiceID: this.credentialServiceID.toString(), holder: this.holder.toString(), templateID: this.templateID.v, id: this.id.toString(), currency: this.currency.toString() });
     }
+    toString() {
+        return this.id.toString();
+    }
 }
 exports.CredentialsItem = CredentialsItem;
 //# sourceMappingURL=item.js.map

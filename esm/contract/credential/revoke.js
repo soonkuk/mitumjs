@@ -12,13 +12,14 @@ export class RevokeCredentialsItem extends CredentialsItem {
     toBuffer() {
         return Buffer.concat([super.toBuffer(), this.currency.toBuffer()]);
     }
+    toString() {
+        return super.toString();
+    }
     toHintedObject() {
-        return {
-            ...super.toHintedObject(),
-        };
+        return { ...super.toHintedObject() };
     }
 }
-export class AssignCredentialsFact extends OperationFact {
+export class RevokeCredentialsFact extends OperationFact {
     constructor(token, sender, items) {
         super(RevokeCredentialsFactHint, token, sender, items);
         items.forEach((item) => {

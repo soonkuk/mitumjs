@@ -25,7 +25,7 @@ export class Nft {
     _setChain(networkID) {
         this._networkID = networkID;
     }
-    setGallery(contractAddress, collectionID) {
+    setContractAddress(contractAddress) {
         if (this._address !== contractAddress && isAddress(contractAddress)) {
             this._address = contractAddress;
             console.log("Contract address is changed : ", this._address);
@@ -33,11 +33,8 @@ export class Nft {
         else {
             console.error("This is invalid address type");
         }
-        if (collectionID !== undefined) {
-            this.setCollection(collectionID);
-        }
     }
-    setCollection(collectionID) {
+    setCollectionId(collectionID) {
         if (this._collection !== collectionID) {
             this._collection = collectionID;
             console.log("Collection ID is changed : ", this._collection);

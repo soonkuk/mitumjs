@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AssignCredentialsFact = exports.RevokeCredentialsItem = void 0;
+exports.RevokeCredentialsFact = exports.RevokeCredentialsItem = void 0;
 const error_js_1 = require("../../utils/error.js");
 const fact_js_1 = require("../../types/fact.js");
 const item_js_1 = require("./item.js");
@@ -15,12 +15,15 @@ class RevokeCredentialsItem extends item_js_1.CredentialsItem {
     toBuffer() {
         return Buffer.concat([super.toBuffer(), this.currency.toBuffer()]);
     }
+    toString() {
+        return super.toString();
+    }
     toHintedObject() {
         return Object.assign({}, super.toHintedObject());
     }
 }
 exports.RevokeCredentialsItem = RevokeCredentialsItem;
-class AssignCredentialsFact extends fact_js_1.OperationFact {
+class RevokeCredentialsFact extends fact_js_1.OperationFact {
     constructor(token, sender, items) {
         super(RevokeCredentialsFactHint, token, sender, items);
         items.forEach((item) => {
@@ -35,5 +38,5 @@ class AssignCredentialsFact extends fact_js_1.OperationFact {
         return RevokeCredentialsHint;
     }
 }
-exports.AssignCredentialsFact = AssignCredentialsFact;
+exports.RevokeCredentialsFact = RevokeCredentialsFact;
 //# sourceMappingURL=revoke.js.map

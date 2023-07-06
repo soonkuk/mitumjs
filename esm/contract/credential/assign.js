@@ -15,6 +15,9 @@ export class AssignCredentialsItem extends CredentialsItem {
         this.validuntil = new Big(validuntil);
         this.did = new String(did);
     }
+    toString() {
+        return this.value.toString();
+    }
     toBuffer() {
         return Buffer.concat([
             super.toBuffer(),
