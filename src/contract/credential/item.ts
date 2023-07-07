@@ -46,9 +46,9 @@ export abstract class CredentialsItem extends Item {
     return {
       ...super.toHintedObject(),
       contract: this.contract.toString(),
-      credentialServiceID: this.credentialServiceID.toString(),
+      credential_service_id: this.credentialServiceID.toString(),
       holder: this.holder.toString(),
-      templateID: this.templateID.v,
+      template_id: this.templateID.v,
       id: this.id.toString(),
       currency: this.currency.toString(),
     };

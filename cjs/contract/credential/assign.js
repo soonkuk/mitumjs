@@ -32,7 +32,7 @@ class AssignCredentialsItem extends item_js_1.CredentialsItem {
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { value: this.value.toString(), validfrom: this.validfrom.v, validuntil: this.validuntil.v, did: this.did.toString() });
+        return Object.assign(Object.assign({}, super.toHintedObject()), { value: this.value.toString(), valid_from: this.validfrom.v, valid_until: this.validuntil.v, did: this.did.toString() });
     }
 }
 exports.AssignCredentialsItem = AssignCredentialsItem;

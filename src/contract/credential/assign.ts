@@ -65,8 +65,8 @@ export class AssignCredentialsItem extends CredentialsItem {
     return {
       ...super.toHintedObject(),
       value: this.value.toString(),
-      validfrom: this.validfrom.v,
-      validuntil: this.validuntil.v,
+      valid_from: this.validfrom.v,
+      valid_until: this.validuntil.v,
       did: this.did.toString(),
     };
   }

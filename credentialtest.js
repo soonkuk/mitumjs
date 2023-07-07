@@ -43,22 +43,36 @@ const test = async () => {
   //   const res = await mitum.operation.send(s11);
   //   exp("create credential test", res.data);
 
-  const temData = {
+  //   const temData = {
+  //     templateId: 77,
+  //     templateName: "default",
+  //     serviceDate: "2023-07-03",
+  //     expirationDate: "2023-12-31",
+  //     templateShare: true,
+  //     multiAudit: false,
+  //     displayName: "SITcredentials",
+  //     subjectKey: "SITdevcredential",
+  //     description: "proofofdev",
+  //     creator: "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca",
+  //   };
+  //   const f2 = mitum.credential.addTemplate(sender, temData, currencyID);
+  //   const o2 = mitum.operation.sign(privatekey, f2);
+  //   const s2 = await mitum.operation.send(o2);
+  //   exp("add template", s2.data);
+
+  const issueData = {
+    holder: sender,
     templateId: 77,
-    templateName: "default",
-    serviceDate: "2023-07-03",
-    expirationDate: "2023-12-31",
-    templateShare: true,
-    multiAudit: false,
-    displayName: "SITcredentials",
-    subjectKey: "SITdevcredential",
-    description: "proofofdev",
-    creator: "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca",
+    id: "sefthia100",
+    value: "sefthia200",
+    validFrom: 100,
+    validUntil: 200,
+    did: "sefthia300",
   };
-  const f2 = mitum.credential.addTemplate(sender, temData, currencyID);
-  const o2 = mitum.operation.sign(privatekey, f2);
-  const s2 = await mitum.operation.send(o2);
-  exp("add template", s2.data);
+  const f3 = mitum.credential.issue(sender, issueData, currencyID);
+  const o3 = mitum.operation.sign(privatekey, f3);
+  const s3 = await mitum.operation.send(o3);
+  exp("issue credential", s3.status);
 
   //   mitum.credential.addTemplate();
   //   mitum.credential.issue();
