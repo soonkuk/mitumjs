@@ -159,7 +159,7 @@ class Account {
         const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
         return new publicKey_js_1.Keys(pubs, threshold);
     }
-    getAccount(address) {
+    getAccountInfo(address) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield information_js_1.default.getAddressInfo(this._node, address);
         });

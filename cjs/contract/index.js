@@ -8,6 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Contract = void 0;
 const validation_js_1 = require("../utils/validation.js");
@@ -17,6 +20,7 @@ const time_js_1 = require("../utils/time.js");
 const key_js_1 = require("../account/key.js");
 const index_js_1 = require("../operation/index.js");
 const property_js_1 = require("../types/property.js");
+const information_js_1 = __importDefault(require("../account/information.js"));
 const account_js_1 = require("./account.js");
 const BTC = "btc";
 const ETH = "ether";
@@ -103,6 +107,11 @@ class Contract {
     pubToKeys(pubKeys, threshold) {
         const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
         return new publicKey_js_1.Keys(pubs, threshold);
+    }
+    getAccountInfo(address) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield information_js_1.default.getAddressInfo(this._node, address);
+        });
     }
 }
 exports.Contract = Contract;

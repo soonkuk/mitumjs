@@ -5,6 +5,7 @@ import { TimeStamp } from "../utils/time.js";
 import { M2KeyPair } from "../account/key.js";
 import { Operation } from "../operation/index.js";
 import { Amount } from "../types/property.js";
+import accountInfo from "../account/information.js";
 import { CreateContractAccountsItem, CreateContractAccountsFact, } from "./account.js";
 const BTC = "btc";
 const ETH = "ether";
@@ -89,6 +90,9 @@ export class Contract {
     pubToKeys(pubKeys, threshold) {
         const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
         return new Keys(pubs, threshold);
+    }
+    async getAccountInfo(address) {
+        return await accountInfo.getAddressInfo(this._node, address);
     }
 }
 //# sourceMappingURL=index.js.map

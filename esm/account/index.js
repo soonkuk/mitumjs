@@ -142,7 +142,7 @@ export class Account {
         const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
         return new Keys(pubs, threshold);
     }
-    async getAccount(address) {
+    async getAccountInfo(address) {
         return await accountInfo.getAddressInfo(this._node, address);
     }
     async getOperation(address) {
