@@ -9,6 +9,7 @@ import { M2KeyPair } from "../account/key.js";
 import { Operation } from "../operation/index.js";
 import { AxiosResponse } from "axios";
 import { Amount } from "../types/property.js";
+import accountInfo from "../account/information.js";
 
 import {
   CreateContractAccountsItem,
@@ -164,5 +165,9 @@ export class Contract {
   ): Keys {
     const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
     return new Keys(pubs, threshold);
+  }
+
+  async getAccountInfo(address: string): Promise<AxiosResponse> {
+    return await accountInfo.getAddressInfo(this._node, address);
   }
 }
