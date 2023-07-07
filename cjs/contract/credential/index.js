@@ -60,7 +60,7 @@ class Credential {
     getContractAddress() {
         return this._address.toString();
     }
-    getCredentialId() {
+    getServiceId() {
         return this._serviceID.toString();
     }
     createCredential(sender, credentialId, currency) {

@@ -13,7 +13,7 @@ export declare class Credential {
     setContractAddress(contractAddress: string): void;
     setServiceId(serviceId: string): void;
     getContractAddress(): string;
-    getCredentialId(): string;
+    getServiceId(): string;
     createCredential(sender: string, credentialId: string, currency: string): OperationType<Fact>;
     /** Description of templateData **
       templateData = {

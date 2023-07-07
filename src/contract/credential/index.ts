@@ -56,7 +56,7 @@ export class Credential {
     return this._address.toString();
   }
 
-  getCredentialId(): string {
+  getServiceId(): string {
     return this._serviceID.toString();
   }
 
