@@ -6,12 +6,12 @@ export declare class Credential {
     private _networkID;
     private _node;
     private _address;
-    private _credentialID;
+    private _serviceID;
     constructor(networkID: string, provider?: string);
     private _setNode;
     private _setChain;
     setContractAddress(contractAddress: string): void;
-    setCredentialId(_credentialID: string): void;
+    setServiceId(serviceId: string): void;
     getContractAddress(): string;
     getCredentialId(): string;
     createCredential(sender: string, credentialId: string, currency: string): OperationType<Fact>;
@@ -43,5 +43,8 @@ export declare class Credential {
     */
     issue(sender: string, data: issueData, currency: string): OperationType<Fact>;
     revoke(sender: string, holder: string, templateId: number, id: string, currency: string): OperationType<Fact>;
-    getCredential(id: string, credentialId?: string): Promise<AxiosResponse>;
+    getServiceInfo(serviceId?: string): Promise<AxiosResponse>;
+    getCredentialInfo(serviceId: string, templateId: string, credentialId: string): Promise<AxiosResponse>;
+    getTemplate(serviceId: string, templateId: string): Promise<AxiosResponse>;
+    claimCredential(serviceID: string, holder: string): Promise<AxiosResponse>;
 }
