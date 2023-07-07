@@ -60,12 +60,12 @@ export class Credential {
     return this._serviceID.toString();
   }
 
-  createCredential(
+  createCredentialService(
     sender: string,
-    credentialId: string,
+    serviceId: string,
     currency: string
   ): OperationType<Fact> {
-    this.setServiceId(credentialId);
+    this.setServiceId(serviceId);
 
     const token = new TimeStamp().UTC();
 

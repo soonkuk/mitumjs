@@ -63,8 +63,8 @@ class Credential {
     getServiceId() {
         return this._serviceID.toString();
     }
-    createCredential(sender, credentialId, currency) {
-        this.setServiceId(credentialId);
+    createCredentialService(sender, serviceId, currency) {
+        this.setServiceId(serviceId);
         const token = new time_js_1.TimeStamp().UTC();
         const fact = new create_js_1.CreateCredentialServiceFact(token, sender, this._address, this._serviceID, currency);
         return new operation_js_1.OperationType(this._networkID, fact);
