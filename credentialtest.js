@@ -32,15 +32,34 @@ const test = async () => {
 
   // set
   mitum.credential.setContractAddress(contract);
+  mitum.credential.setCredentialId(credentialId);
 
-  const c11 = mitum.credential.createCredential(
-    sender,
-    credentialId,
-    currencyID
-  );
-  const s11 = mitum.operation.sign(privatekey, c11);
-  const res = await mitum.operation.send(s11);
-  exp("create credential test", res.data);
+  //   const c11 = mitum.credential.createCredential(
+  //     sender,
+  //     credentialId,
+  //     currencyID
+  //   );
+  //   const s11 = mitum.operation.sign(privatekey, c11);
+  //   const res = await mitum.operation.send(s11);
+  //   exp("create credential test", res.data);
+
+  const temData = {
+    templateId: 77,
+    templateName: "default",
+    serviceDate: "2023-07-03",
+    expirationDate: "2023-12-31",
+    templateShare: true,
+    multiAudit: false,
+    displayName: "SITcredentials",
+    subjectKey: "SITdevcredential",
+    description: "proofofdev",
+    creator: "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca",
+  };
+  const f2 = mitum.credential.addTemplate(sender, temData, currencyID);
+  const o2 = mitum.operation.sign(privatekey, f2);
+  const s2 = await mitum.operation.send(o2);
+  exp("add template", s2.data);
+
   //   mitum.credential.addTemplate();
   //   mitum.credential.issue();
   //   mitum.credential.revoke();

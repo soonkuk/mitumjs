@@ -1,9 +1,9 @@
 import { ContractID, CurrencyID } from "../../types/property.js";
 import { Boolean } from "../../types/boolean.js";
-import { TimeStamp } from "../../utils/time.js";
 import { FactJson } from "../../types/iFact.js";
 import { String } from "../../types/string.js";
 import { Fact } from "../../types/fact.js";
+import { Date } from "../../types/date.js";
 import { Big } from "../../utils/math.js";
 
 import { Address } from "../../account/address.js";
@@ -17,8 +17,8 @@ export class AddTemplateFact extends Fact {
   readonly credentialServiceID: ContractID;
   readonly templateID: Big;
   readonly templateName: String;
-  readonly serviceDate: TimeStamp;
-  readonly expirationDate: TimeStamp;
+  readonly serviceDate: Date;
+  readonly expirationDate: Date;
   readonly templateShare: Boolean;
   readonly multiAudit: Boolean;
   readonly displayName: String;
@@ -51,8 +51,8 @@ export class AddTemplateFact extends Fact {
     this.credentialServiceID = new ContractID(credentialServiceID);
     this.templateID = new Big(templateID);
     this.templateName = new String(templateName);
-    this.serviceDate = new TimeStamp(serviceDate);
-    this.expirationDate = new TimeStamp(expirationDate);
+    this.serviceDate = new Date(serviceDate);
+    this.expirationDate = new Date(expirationDate);
     this.templateShare = new Boolean(templateShare);
     this.multiAudit = new Boolean(multiAudit);
     this.displayName = new String(displayName);
@@ -89,15 +89,15 @@ export class AddTemplateFact extends Fact {
       ...super.toHintedObject(),
       sender: this.sender.toString(),
       contract: this.contract.toString(),
-      credentialServiceID: this.credentialServiceID.toString(),
-      templateID: this.templateID.v,
-      templateName: this.templateName.toString(),
-      serviceDate: this.serviceDate.toString(),
-      expirationDate: this.expirationDate.toString(),
-      templateShare: this.templateShare.v,
-      multiAudit: this.multiAudit.v,
-      displayName: this.displayName.toString(),
-      subjectKey: this.subjectKey.toString(),
+      credential_service_id: this.credentialServiceID.toString(),
+      template_id: this.templateID.v,
+      template_name: this.templateName.toString(),
+      service_date: this.serviceDate.v,
+      expiration_date: this.expirationDate.v,
+      template_share: this.templateShare.v,
+      multi_audit: this.multiAudit.v,
+      display_name: this.displayName.toString(),
+      subject_key: this.subjectKey.toString(),
       description: this.description.toString(),
       creator: this.creator.toString(),
       currency: this.currency.toString(),
