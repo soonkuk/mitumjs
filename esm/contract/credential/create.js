@@ -26,7 +26,7 @@ export class CreateCredentialServiceFact extends Fact {
             ...super.toHintedObject(),
             sender: this.sender.toString(),
             contract: this.contract.toString(),
-            credentialServiceID: this.credentialServiceID.toString(),
+            credential_service_id: this.credentialServiceID.toString(),
             currency: this.currency.toString(),
         };
     }

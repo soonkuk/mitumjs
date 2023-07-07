@@ -25,7 +25,7 @@ class CreateCredentialServiceFact extends fact_js_1.Fact {
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { sender: this.sender.toString(), contract: this.contract.toString(), credentialServiceID: this.credentialServiceID.toString(), currency: this.currency.toString() });
+        return Object.assign(Object.assign({}, super.toHintedObject()), { sender: this.sender.toString(), contract: this.contract.toString(), credential_service_id: this.credentialServiceID.toString(), currency: this.currency.toString() });
     }
     get operationHint() {
         return CreateCredentialServiceHint;

@@ -46,9 +46,9 @@ export class Credential {
   setCredentialId(_credentialID: string) {
     if (this._credentialID !== _credentialID) {
       this._credentialID = _credentialID;
-      console.log("Collection ID is changed : ", this._credentialID);
+      console.log("Credential ID is changed : ", this._credentialID);
     } else {
-      console.error("This is invalid collection ID type");
+      console.error("This is invalid credential ID type");
     }
   }
 
@@ -60,7 +60,13 @@ export class Credential {
     return this._credentialID.toString();
   }
 
-  createCredential(sender: string, currency: string): OperationType<Fact> {
+  createCredential(
+    sender: string,
+    credentialId: string,
+    currency: string
+  ): OperationType<Fact> {
+    this.setCredentialId(credentialId);
+
     const token = new TimeStamp().UTC();
 
     const fact = new CreateCredentialServiceFact(

@@ -14,7 +14,7 @@ export declare class Credential {
     setCredentialId(_credentialID: string): void;
     getContractAddress(): string;
     getCredentialId(): string;
-    createCredential(sender: string, currency: string): OperationType<Fact>;
+    createCredential(sender: string, credentialId: string, currency: string): OperationType<Fact>;
     /** Description of templateData **
       templateData = {
           templateId: number,

@@ -36,10 +36,10 @@ export class Credential {
     setCredentialId(_credentialID) {
         if (this._credentialID !== _credentialID) {
             this._credentialID = _credentialID;
-            console.log("Collection ID is changed : ", this._credentialID);
+            console.log("Credential ID is changed : ", this._credentialID);
         }
         else {
-            console.error("This is invalid collection ID type");
+            console.error("This is invalid credential ID type");
         }
     }
     getContractAddress() {
@@ -48,7 +48,8 @@ export class Credential {
     getCredentialId() {
         return this._credentialID.toString();
     }
-    createCredential(sender, currency) {
+    createCredential(sender, credentialId, currency) {
+        this.setCredentialId(credentialId);
         const token = new TimeStamp().UTC();
         const fact = new CreateCredentialServiceFact(token, sender, this._address, this._credentialID, currency);
         return new OperationType(this._networkID, fact);

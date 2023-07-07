@@ -28,15 +28,22 @@ const test = async () => {
 
   // const token = "2023-07-03 07:51:25.876 +0000 UTC";
   const contract = "2gWeBMRnZ8kmwU7dvJgv3rHpui7ksHMRKLjJiPUsbBAAmca";
-  const credentialId = "SIT";
+  const credentialId = "PIK";
 
   // set
   mitum.credential.setContractAddress(contract);
-  mitum.credential.setCredentialId(credentialId);
-  mitum.credential.createCredential();
-  mitum.credential.addTemplate();
-  mitum.credential.issue();
-  mitum.credential.revoke();
+
+  const c11 = mitum.credential.createCredential(
+    sender,
+    credentialId,
+    currencyID
+  );
+  const s11 = mitum.operation.sign(privatekey, c11);
+  const res = await mitum.operation.send(s11);
+  exp("create credential test", res.data);
+  //   mitum.credential.addTemplate();
+  //   mitum.credential.issue();
+  //   mitum.credential.revoke();
 };
 
 test();
