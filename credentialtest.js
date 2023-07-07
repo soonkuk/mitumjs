@@ -60,23 +60,30 @@ const test = async () => {
   //   const s2 = await mitum.operation.send(o2);
   //   exp("add template", s2.data);
 
-  const issueData = {
-    holder: sender,
-    templateId: 77,
-    id: "sefthia100",
-    value: "sefthia200",
-    validFrom: 100,
-    validUntil: 200,
-    did: "sefthia300",
-  };
-  const f3 = mitum.credential.issue(sender, issueData, currencyID);
-  const o3 = mitum.operation.sign(privatekey, f3);
-  const s3 = await mitum.operation.send(o3);
-  exp("issue credential", s3.status);
+  //   const issueData = {
+  //     holder: sender,
+  //     templateId: 77,
+  //     id: "sefthia100",
+  //     value: "sefthia200",
+  //     validFrom: 100,
+  //     validUntil: 200,
+  //     did: "sefthia300",
+  //   };
+  //   const f3 = mitum.credential.issue(sender, issueData, currencyID);
+  //   const o3 = mitum.operation.sign(privatekey, f3);
+  //   const s3 = await mitum.operation.send(o3);
+  //   exp("issue credential", s3.status);
 
-  //   mitum.credential.addTemplate();
-  //   mitum.credential.issue();
-  //   mitum.credential.revoke();
+  const f4 = mitum.credential.revoke(
+    sender,
+    sender,
+    77,
+    "sefthia100",
+    currencyID
+  );
+  const o4 = mitum.operation.sign(privatekey, f4);
+  const s4 = await mitum.operation.send(o4);
+  exp("revoke credential", s4.status);
 };
 
 test();

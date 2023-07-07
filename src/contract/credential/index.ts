@@ -17,7 +17,7 @@ export class Credential {
   private _networkID: string = "";
   private _node: string = "";
   private _address: string = "";
-  private _credentialID: string = "";
+  private _serviceID: string = "";
 
   constructor(networkID: string, provider?: string) {
     this._setNode(provider);
@@ -43,10 +43,10 @@ export class Credential {
     }
   }
 
-  setCredentialId(_credentialID: string) {
-    if (this._credentialID !== _credentialID) {
-      this._credentialID = _credentialID;
-      console.log("Credential ID is changed : ", this._credentialID);
+  setServiceId(serviceId: string) {
+    if (this._serviceID !== serviceId) {
+      this._serviceID = serviceId;
+      console.log("Credential ID is changed : ", this._serviceID);
     } else {
       console.error("This is invalid credential ID type");
     }
@@ -57,7 +57,7 @@ export class Credential {
   }
 
   getCredentialId(): string {
-    return this._credentialID.toString();
+    return this._serviceID.toString();
   }
 
   createCredential(
@@ -65,7 +65,7 @@ export class Credential {
     credentialId: string,
     currency: string
   ): OperationType<Fact> {
-    this.setCredentialId(credentialId);
+    this.setServiceId(credentialId);
 
     const token = new TimeStamp().UTC();
 
@@ -73,7 +73,7 @@ export class Credential {
       token,
       sender,
       this._address,
-      this._credentialID,
+      this._serviceID,
       currency
     );
 
@@ -105,7 +105,7 @@ export class Credential {
       token,
       sender,
       this._address,
-      this._credentialID,
+      this._serviceID,
       data.templateId,
       data.templateName,
       data.serviceDate,
@@ -142,7 +142,7 @@ export class Credential {
 
     const item = new AssignCredentialsItem(
       this._address,
-      this._credentialID,
+      this._serviceID,
       data.holder,
       data.templateId,
       data.id,
@@ -168,7 +168,7 @@ export class Credential {
 
     const item = new RevokeCredentialsItem(
       this._address,
-      this._credentialID,
+      this._serviceID,
       holder,
       templateId,
       id,
@@ -179,21 +179,61 @@ export class Credential {
     return new OperationType(this._networkID, fact);
   }
 
-  async getCredential(
-    id: string,
-    credentialId?: string
-  ): Promise<AxiosResponse> {
-    let serviceId = this._credentialID;
+  async getServiceInfo(serviceId?: string): Promise<AxiosResponse> {
+    let sid = this._serviceID;
 
-    if (credentialId !== undefined) {
-      serviceId = credentialId;
+    if (serviceId !== undefined) {
+      sid = serviceId;
     }
 
+    const res = await credentialInfo.getServiceInfo(
+      this._node,
+      this._address,
+      sid
+    );
+
+    return res.data;
+  }
+
+  async getCredentialInfo(
+    serviceId: string,
+    templateId: string,
+    credentialId: string
+  ): Promise<AxiosResponse> {
     const res = await credentialInfo.getCredentialInfo(
       this._node,
       this._address,
-      id,
-      serviceId
+      serviceId,
+      templateId,
+      credentialId
+    );
+
+    return res.data;
+  }
+
+  async getTemplate(
+    serviceId: string,
+    templateId: string
+  ): Promise<AxiosResponse> {
+    const res = await credentialInfo.getTemplate(
+      this._node,
+      this._address,
+      serviceId,
+      templateId
+    );
+
+    return res.data;
+  }
+
+  async claimCredential(
+    serviceID: string,
+    holder: string
+  ): Promise<AxiosResponse> {
+    const res = await credentialInfo.getCredentialByHolder(
+      this._node,
+      this._address,
+      serviceID,
+      holder
     );
 
     return res.data;
