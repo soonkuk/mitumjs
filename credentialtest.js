@@ -28,20 +28,26 @@ const test = async () => {
 
   // const token = "2023-07-03 07:51:25.876 +0000 UTC";
   const contract = "2gWeBMRnZ8kmwU7dvJgv3rHpui7ksHMRKLjJiPUsbBAAmca";
-  const credentialId = "PIK";
+  const credentialId = "SIT2";
 
   // set
   mitum.credential.setContractAddress(contract);
-  mitum.credential.setCredentialId(credentialId);
+  mitum.credential.setServiceId(credentialId);
 
-  //   const c11 = mitum.credential.createCredential(
-  //     sender,
-  //     credentialId,
-  //     currencyID
-  //   );
-  //   const s11 = mitum.operation.sign(privatekey, c11);
-  //   const res = await mitum.operation.send(s11);
-  //   exp("create credential test", res.data);
+  //   const g1 = mitum.credential.getContractAddress();
+  //   exp("", g1);
+  //   const g2 = mitum.credential.getServiceId();
+  //   exp("", g2);
+
+  // const newService = mitum.credential.createCredentialService(
+  //   sender,
+  //   credentialId,
+  //   currencyID
+  // );
+  // const s11 = mitum.operation.sign(privatekey, newService);
+  // const res = await mitum.operation.send(s11);
+  // exp("create credential test", res.status);
+  // exp("create credential test", newService);
 
   //   const temData = {
   //     templateId: 77,
@@ -60,19 +66,19 @@ const test = async () => {
   //   const s2 = await mitum.operation.send(o2);
   //   exp("add template", s2.data);
 
-  //   const issueData = {
-  //     holder: sender,
-  //     templateId: 77,
-  //     id: "sefthia100",
-  //     value: "sefthia200",
-  //     validFrom: 100,
-  //     validUntil: 200,
-  //     did: "sefthia300",
-  //   };
-  //   const f3 = mitum.credential.issue(sender, issueData, currencyID);
-  //   const o3 = mitum.operation.sign(privatekey, f3);
-  //   const s3 = await mitum.operation.send(o3);
-  //   exp("issue credential", s3.status);
+  // const issueData = {
+  //   holder: sender,
+  //   templateId: 77,
+  //   id: "sefthia100",
+  //   value: "sefthia200",
+  //   validFrom: 100,
+  //   validUntil: 200,
+  //   did: "sefthia300",
+  // };
+  // const f3 = mitum.credential.issue(sender, issueData, currencyID);
+  // // const o3 = mitum.operation.sign(privatekey, f3);
+  // // const s3 = await mitum.operation.send(o3);
+  // exp("issue credential", f3);
 
   const f4 = mitum.credential.revoke(
     sender,
@@ -81,9 +87,9 @@ const test = async () => {
     "sefthia100",
     currencyID
   );
-  const o4 = mitum.operation.sign(privatekey, f4);
-  const s4 = await mitum.operation.send(o4);
-  exp("revoke credential", s4.status);
+  // const o4 = mitum.operation.sign(privatekey, f4);
+  // const s4 = await mitum.operation.send(o4);
+  exp("revoke credential", f4);
 };
 
 test();

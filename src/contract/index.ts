@@ -167,7 +167,7 @@ export class Contract {
     return new Keys(pubs, threshold);
   }
 
-  async getAccountInfo(address: string): Promise<AxiosResponse> {
+  async getContractInfo(address: string): Promise<AxiosResponse> {
     return await accountInfo.getAddressInfo(this._node, address);
   }
 }
