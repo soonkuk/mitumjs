@@ -69,7 +69,6 @@ export class Nft {
         const res = await nftInfo.getNftInfo(this._node, this._contractAddress, id, tokenID);
         return res.data.owner;
     }
-    // collection의 이름 반환
     async name(collectionID) {
         let id = this._collection;
         if (collectionID !== undefined) {
@@ -79,7 +78,7 @@ export class Nft {
         return res.data._embedded.policy.name;
     }
     symbol() {
-        return this._collection;
+        return this.getCollectionId();
     }
     // 총 nft 발행량 조회
     async totalSupply(collectionID) {

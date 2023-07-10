@@ -104,7 +104,6 @@ export class Nft {
     return res.data.owner;
   }
 
-  // collection의 이름 반환
   async name(collectionID?: string): Promise<AxiosResponse> {
     let id = this._collection;
 
@@ -122,7 +121,7 @@ export class Nft {
   }
 
   symbol(): string {
-    return this._collection;
+    return this.getCollectionId();
   }
 
   // 총 nft 발행량 조회

@@ -55,7 +55,7 @@ const test = async () => {
   // exp("mitum.nft.createCollection()", res.status);
 
   // collection 정보 조회
-  const info1 = await mitum.nft.name();
+  const info1 = mitum.nft.symbol();
   console.log(info1);
 };
 

@@ -88,7 +88,6 @@ class Nft {
             return res.data.owner;
         });
     }
-    // collection의 이름 반환
     name(collectionID) {
         return __awaiter(this, void 0, void 0, function* () {
             let id = this._collection;
@@ -100,7 +99,7 @@ class Nft {
         });
     }
     symbol() {
-        return this._collection;
+        return this.getCollectionId();
     }
     // 총 nft 발행량 조회
     totalSupply(collectionID) {
