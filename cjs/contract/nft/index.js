@@ -75,6 +75,16 @@ class Nft {
             return res.data;
         });
     }
+    getCollectionPolicy(collectionID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let id = this._collection;
+            if (collectionID !== undefined) {
+                id = collectionID;
+            }
+            const res = yield information_js_1.default.getCollectionInfo(this._node, this._contractAddress, id);
+            return res.data._embedded.policy;
+        });
+    }
     // owner의 nft 갯수. TBD.
     // balanceOf() {}
     // tokenID의 소유자

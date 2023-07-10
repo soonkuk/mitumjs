@@ -18,6 +18,7 @@ export declare class Nft {
     getContractAddress(): string;
     getCollectionId(): string;
     getCollectionInfo(collectionID?: string): Promise<AxiosResponse>;
+    getCollectionPolicy(collectionID?: string): Promise<AxiosResponse>;
     ownerOf(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
     name(collectionID?: string): Promise<AxiosResponse>;
     symbol(): string;

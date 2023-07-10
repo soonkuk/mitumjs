@@ -58,6 +58,14 @@ export class Nft {
         const res = await nftInfo.getCollectionInfo(this._node, this._contractAddress, id);
         return res.data;
     }
+    async getCollectionPolicy(collectionID) {
+        let id = this._collection;
+        if (collectionID !== undefined) {
+            id = collectionID;
+        }
+        const res = await nftInfo.getCollectionInfo(this._node, this._contractAddress, id);
+        return res.data._embedded.policy;
+    }
     // owner의 nft 갯수. TBD.
     // balanceOf() {}
     // tokenID의 소유자
