@@ -108,7 +108,7 @@ class Contract {
         const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
         return new publicKey_js_1.Keys(pubs, threshold);
     }
-    getAccountInfo(address) {
+    getContractInfo(address) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield information_js_1.default.getAddressInfo(this._node, address);
         });

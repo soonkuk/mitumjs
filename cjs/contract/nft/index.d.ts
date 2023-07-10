@@ -2,13 +2,13 @@
 import { AxiosResponse } from "axios";
 import { OperationType } from "../../types/operation.js";
 import { Fact } from "../../types/fact.js";
-import { Creator } from "./creatorType.js";
-import { inputData } from "./register.js";
+import { collectionData } from "./register.js";
 import { DelegateFact } from "./delegate.js";
+import { Creator } from "./creatorType.js";
 export declare class Nft {
     private _networkID;
     private _node;
-    private _address;
+    private _contractAddress;
     private _collection;
     constructor(networkID: string, provider?: string);
     private _setNode;
@@ -24,29 +24,25 @@ export declare class Nft {
     totalSupply(collectionID?: string): Promise<AxiosResponse>;
     tokenURI(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
     /** structure
-     * inputData = {
-     *    contract: string;
+     * collectionData = {
      *    name: string;
      *    symbol: string;
      *    uri: string;
      *    royalty: string | number | Buffer | BigInt | Uint8Array
      *    whiteLists: string[],
-     *    currencyID: string
      * }
      */
-    createCollection(sender: string, data: inputData): OperationType<Fact>;
+    createCollection(sender: string, data: collectionData, currencyID: string): OperationType<Fact>;
     /** structure
      * inputData = {
-     *    contract: string;
      *    name: string;
      *    symbol: string;
      *    uri: string;
      *    royalty: string | number | Buffer | BigInt | Uint8Array
      *    whiteLists: string[],
-     *    currencyID: string
      * }
      */
-    setPolicy(sender: string, data: inputData): OperationType<Fact>;
+    setPolicy(sender: string, data: collectionData, currencyId: string): OperationType<Fact>;
     mint(sender: string, uri: string, hash: string, currencyID: string, creator: string): OperationType<Fact>;
     mintForMultiCreators(sender: string, uri: string, hash: string, currencyID: string, creator: Creator[]): OperationType<Fact>;
     transferFrom(): void;

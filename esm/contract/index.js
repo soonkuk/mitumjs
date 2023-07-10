@@ -91,7 +91,7 @@ export class Contract {
         const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
         return new Keys(pubs, threshold);
     }
-    async getAccountInfo(address) {
+    async getContractInfo(address) {
         return await accountInfo.getAddressInfo(this._node, address);
     }
 }

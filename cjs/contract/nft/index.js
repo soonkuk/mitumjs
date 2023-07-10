@@ -16,18 +16,18 @@ exports.Nft = void 0;
 const validation_js_1 = require("../../utils/validation.js");
 const operation_js_1 = require("../../types/operation.js");
 const time_js_1 = require("../../utils/time.js");
-const information_js_1 = __importDefault(require("./information.js"));
-const mint_js_1 = require("./mint.js");
 const register_js_1 = require("./register.js");
+const delegate_js_1 = require("./delegate.js");
 const updatePolicy_js_1 = require("./updatePolicy.js");
 const approve_js_1 = require("./approve.js");
-const delegate_js_1 = require("./delegate.js");
+const mint_js_1 = require("./mint.js");
 const sign_js_1 = require("./sign.js");
+const information_js_1 = __importDefault(require("./information.js"));
 class Nft {
     constructor(networkID, provider) {
         this._networkID = "";
         this._node = "";
-        this._address = "";
+        this._contractAddress = "";
         this._collection = "";
         this._setNode(provider);
         this._setChain(networkID);
@@ -41,9 +41,10 @@ class Nft {
         this._networkID = networkID;
     }
     setContractAddress(contractAddress) {
-        if (this._address !== contractAddress && (0, validation_js_1.isAddress)(contractAddress)) {
-            this._address = contractAddress;
-            console.log("Contract address is changed : ", this._address);
+        if (this._contractAddress !== contractAddress &&
+            (0, validation_js_1.isAddress)(contractAddress)) {
+            this._contractAddress = contractAddress;
+            console.log("Contract address is changed : ", this._contractAddress);
         }
         else {
             console.error("This is invalid address type");
@@ -59,7 +60,7 @@ class Nft {
         }
     }
     getContractAddress() {
-        return this._address.toString();
+        return this._contractAddress.toString();
     }
     getCollectionId() {
         return this._collection.toString();
@@ -70,7 +71,7 @@ class Nft {
             if (collectionID !== undefined) {
                 id = collectionID;
             }
-            const res = yield information_js_1.default.getCollectionInfo(this._node, this._address, id);
+            const res = yield information_js_1.default.getCollectionInfo(this._node, this._contractAddress, id);
             return res.data;
         });
     }
@@ -83,7 +84,7 @@ class Nft {
             if (collectionID !== undefined) {
                 id = collectionID;
             }
-            const res = yield information_js_1.default.getNftInfo(this._node, this._address, id, tokenID);
+            const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
             return res.data.owner;
         });
     }
@@ -94,7 +95,7 @@ class Nft {
             if (collectionID !== undefined) {
                 id = collectionID;
             }
-            const res = yield information_js_1.default.getCollectionInfo(this._node, this._address, id);
+            const res = yield information_js_1.default.getCollectionInfo(this._node, this._contractAddress, id);
             return res.data.name;
         });
     }
@@ -108,7 +109,7 @@ class Nft {
             if (collectionID !== undefined) {
                 id = collectionID;
             }
-            const res = yield information_js_1.default.getAllNftInfo(this._node, this._address, id);
+            const res = yield information_js_1.default.getAllNftInfo(this._node, this._contractAddress, id);
             return res.data.length;
         });
     }
@@ -119,53 +120,50 @@ class Nft {
             if (collectionID !== undefined) {
                 id = collectionID;
             }
-            const res = yield information_js_1.default.getNftInfo(this._node, this._address, id, tokenID);
+            const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
             return res.data.uri;
         });
     }
     /** structure
-     * inputData = {
-     *    contract: string;
+     * collectionData = {
      *    name: string;
      *    symbol: string;
      *    uri: string;
      *    royalty: string | number | Buffer | BigInt | Uint8Array
      *    whiteLists: string[],
-     *    currencyID: string
      * }
      */
-    createCollection(sender, data) {
+    createCollection(sender, data, currencyID) {
         const token = new time_js_1.TimeStamp().UTC();
-        const fact = new register_js_1.CollectionRegisterFact(token, sender, data.contract, data.symbol, data.name, data.royalty, data.uri, data.whiteLists, data.currencyID);
+        const fact = new register_js_1.CollectionRegisterFact(token, sender, this._contractAddress, data.symbol, data.name, data.royalty, data.uri, data.whiteLists, currencyID);
+        this.setCollectionId(data.symbol);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     /** structure
      * inputData = {
-     *    contract: string;
      *    name: string;
      *    symbol: string;
      *    uri: string;
      *    royalty: string | number | Buffer | BigInt | Uint8Array
      *    whiteLists: string[],
-     *    currencyID: string
      * }
      */
-    setPolicy(sender, data) {
+    setPolicy(sender, data, currencyId) {
         const token = new time_js_1.TimeStamp().UTC();
-        const fact = new updatePolicy_js_1.CollectionPolicyUpdaterFact(token, sender, data.contract, data.symbol, data.name, data.royalty, data.uri, data.whiteLists, data.currencyID);
+        const fact = new updatePolicy_js_1.CollectionPolicyUpdaterFact(token, sender, this._contractAddress, data.symbol, data.name, data.royalty, data.uri, data.whiteLists, currencyId);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     mint(sender, uri, hash, currencyID, creator) {
         const originator = (0, sign_js_1.gererateCreator)([{ account: creator, share: 100 }]);
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new mint_js_1.MintItem(this._address, this._collection, hash, uri, originator, currencyID);
+        const item = new mint_js_1.MintItem(this._contractAddress, this._collection, hash, uri, originator, currencyID);
         const fact = new mint_js_1.MintFact(token, sender, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     mintForMultiCreators(sender, uri, hash, currencyID, creator) {
         const originators = (0, sign_js_1.gererateCreator)(creator);
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new mint_js_1.MintItem(this._address, this._collection, hash, uri, originators, currencyID);
+        const item = new mint_js_1.MintItem(this._contractAddress, this._collection, hash, uri, originators, currencyID);
         const fact = new mint_js_1.MintFact(token, sender, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
@@ -176,7 +174,7 @@ class Nft {
     // 위임
     approve(owner, operator, tokenID, currencyID) {
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new approve_js_1.ApproveItem(this._address, this._collection, operator, tokenID, currencyID);
+        const item = new approve_js_1.ApproveItem(this._contractAddress, this._collection, operator, tokenID, currencyID);
         const fact = new approve_js_1.ApproveFact(token, owner, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
@@ -187,7 +185,7 @@ class Nft {
             if (collectionID !== undefined) {
                 id = collectionID;
             }
-            const res = yield information_js_1.default.getNftInfo(this._node, this._address, id, tokenID);
+            const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
             return res.data.approved;
         });
     }
@@ -198,7 +196,7 @@ class Nft {
         if (mode == false) {
             approved = "cancel";
         }
-        const item = new delegate_js_1.DelegateItem(this._address, this._collection, operator, approved, currencyID);
+        const item = new delegate_js_1.DelegateItem(this._contractAddress, this._collection, operator, approved, currencyID);
         const fact = new delegate_js_1.DelegateFact(token, owner, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
@@ -209,7 +207,7 @@ class Nft {
             if (collectionID !== undefined) {
                 id = collectionID;
             }
-            const res = yield information_js_1.default.getOperationInfo(this._node, this._address, id, owner);
+            const res = yield information_js_1.default.getOperationInfo(this._node, this._contractAddress, id, owner);
             return res.data;
         });
     }

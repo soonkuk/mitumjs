@@ -5,19 +5,19 @@ import { OperationType } from "../../types/operation.js";
 import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
-import nftInfo from "./information.js";
-import { MintItem, MintFact } from "./mint.js";
-import { Creator } from "./creatorType.js";
-import { CollectionRegisterFact, inputData } from "./register.js";
+import { CollectionRegisterFact, collectionData } from "./register.js";
+import { DelegateItem, DelegateFact, DELEGATE } from "./delegate.js";
 import { CollectionPolicyUpdaterFact } from "./updatePolicy.js";
 import { ApproveFact, ApproveItem } from "./approve.js";
-import { DelegateItem, DelegateFact, DELEGATE } from "./delegate.js";
+import { MintItem, MintFact } from "./mint.js";
 import { gererateCreator } from "./sign.js";
+import { Creator } from "./creatorType.js";
+import nftInfo from "./information.js";
 
 export class Nft {
   private _networkID: string = "";
   private _node: string = "";
-  private _address: string = "";
+  private _contractAddress: string = "";
   private _collection: string = "";
 
   constructor(networkID: string, provider?: string) {
@@ -36,9 +36,12 @@ export class Nft {
   }
 
   setContractAddress(contractAddress: string) {
-    if (this._address !== contractAddress && isAddress(contractAddress)) {
-      this._address = contractAddress;
-      console.log("Contract address is changed : ", this._address);
+    if (
+      this._contractAddress !== contractAddress &&
+      isAddress(contractAddress)
+    ) {
+      this._contractAddress = contractAddress;
+      console.log("Contract address is changed : ", this._contractAddress);
     } else {
       console.error("This is invalid address type");
     }
@@ -54,7 +57,7 @@ export class Nft {
   }
 
   getContractAddress(): string {
-    return this._address.toString();
+    return this._contractAddress.toString();
   }
 
   getCollectionId(): string {
@@ -68,7 +71,11 @@ export class Nft {
       id = collectionID;
     }
 
-    const res = await nftInfo.getCollectionInfo(this._node, this._address, id);
+    const res = await nftInfo.getCollectionInfo(
+      this._node,
+      this._contractAddress,
+      id
+    );
 
     return res.data;
   }
@@ -89,7 +96,7 @@ export class Nft {
 
     const res = await nftInfo.getNftInfo(
       this._node,
-      this._address,
+      this._contractAddress,
       id,
       tokenID
     );
@@ -105,7 +112,11 @@ export class Nft {
       id = collectionID;
     }
 
-    const res = await nftInfo.getCollectionInfo(this._node, this._address, id);
+    const res = await nftInfo.getCollectionInfo(
+      this._node,
+      this._contractAddress,
+      id
+    );
 
     return res.data.name;
   }
@@ -122,7 +133,11 @@ export class Nft {
       id = collectionID;
     }
 
-    const res = await nftInfo.getAllNftInfo(this._node, this._address, id);
+    const res = await nftInfo.getAllNftInfo(
+      this._node,
+      this._contractAddress,
+      id
+    );
 
     return res.data.length;
   }
@@ -140,7 +155,7 @@ export class Nft {
 
     const res = await nftInfo.getNftInfo(
       this._node,
-      this._address,
+      this._contractAddress,
       id,
       tokenID
     );
@@ -149,58 +164,64 @@ export class Nft {
   }
 
   /** structure
-   * inputData = {
-   *    contract: string;
+   * collectionData = {
    *    name: string;
    *    symbol: string;
    *    uri: string;
    *    royalty: string | number | Buffer | BigInt | Uint8Array
    *    whiteLists: string[],
-   *    currencyID: string
    * }
    */
-  createCollection(sender: string, data: inputData): OperationType<Fact> {
+  createCollection(
+    sender: string,
+    data: collectionData,
+    currencyID: string
+  ): OperationType<Fact> {
     const token = new TimeStamp().UTC();
 
     const fact = new CollectionRegisterFact(
       token,
       sender,
-      data.contract,
+      this._contractAddress,
       data.symbol,
       data.name,
       data.royalty,
       data.uri,
       data.whiteLists,
-      data.currencyID
+      currencyID
     );
+
+    this.setCollectionId(data.symbol);
 
     return new OperationType(this._networkID, fact);
   }
 
   /** structure
    * inputData = {
-   *    contract: string;
    *    name: string;
    *    symbol: string;
    *    uri: string;
    *    royalty: string | number | Buffer | BigInt | Uint8Array
    *    whiteLists: string[],
-   *    currencyID: string
    * }
    */
-  setPolicy(sender: string, data: inputData): OperationType<Fact> {
+  setPolicy(
+    sender: string,
+    data: collectionData,
+    currencyId: string
+  ): OperationType<Fact> {
     const token = new TimeStamp().UTC();
 
     const fact = new CollectionPolicyUpdaterFact(
       token,
       sender,
-      data.contract,
+      this._contractAddress,
       data.symbol,
       data.name,
       data.royalty,
       data.uri,
       data.whiteLists,
-      data.currencyID
+      currencyId
     );
 
     return new OperationType(this._networkID, fact);
@@ -217,7 +238,7 @@ export class Nft {
     const token = new TimeStamp().UTC();
 
     const item = new MintItem(
-      this._address,
+      this._contractAddress,
       this._collection,
       hash,
       uri,
@@ -240,7 +261,7 @@ export class Nft {
     const token = new TimeStamp().UTC();
 
     const item = new MintItem(
-      this._address,
+      this._contractAddress,
       this._collection,
       hash,
       uri,
@@ -268,7 +289,7 @@ export class Nft {
     const token = new TimeStamp().UTC();
 
     const item = new ApproveItem(
-      this._address,
+      this._contractAddress,
       this._collection,
       operator,
       tokenID,
@@ -292,7 +313,7 @@ export class Nft {
 
     const res = await nftInfo.getNftInfo(
       this._node,
-      this._address,
+      this._contractAddress,
       id,
       tokenID
     );
@@ -315,7 +336,7 @@ export class Nft {
     }
 
     const item = new DelegateItem(
-      this._address,
+      this._contractAddress,
       this._collection,
       operator,
       approved,
@@ -339,7 +360,7 @@ export class Nft {
 
     const res = await nftInfo.getOperationInfo(
       this._node,
-      this._address,
+      this._contractAddress,
       id,
       owner
     );

@@ -27,5 +27,5 @@ export declare class Contract {
         key: string;
     }>, currentID: string, amount: number, threshold: number): OperationType<Fact>;
     private pubToKeys;
-    getAccountInfo(address: string): Promise<AxiosResponse>;
+    getContractInfo(address: string): Promise<AxiosResponse>;
 }
