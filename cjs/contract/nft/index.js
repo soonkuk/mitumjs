@@ -96,7 +96,7 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getCollectionInfo(this._node, this._contractAddress, id);
-            return res.data.name;
+            return res.data._embedded.policy.name;
         });
     }
     symbol() {

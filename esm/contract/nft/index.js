@@ -76,7 +76,7 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getCollectionInfo(this._node, this._contractAddress, id);
-        return res.data.name;
+        return res.data._embedded.policy.name;
     }
     symbol() {
         return this._collection;

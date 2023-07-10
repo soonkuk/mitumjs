@@ -118,7 +118,7 @@ export class Nft {
       id
     );
 
-    return res.data.name;
+    return res.data._embedded.policy.name;
   }
 
   symbol(): string {

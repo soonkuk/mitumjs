@@ -55,8 +55,8 @@ const test = async () => {
   // exp("mitum.nft.createCollection()", res.status);
 
   // collection 정보 조회
-  // const info1 = await mitum.nft.getCollectionInfo();
-  // console.log(info1);
+  const info1 = await mitum.nft.name();
+  console.log(info1);
 };
 
 test();
