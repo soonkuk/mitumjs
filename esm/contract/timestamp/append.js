@@ -1,8 +1,8 @@
-import { ContractID, CurrencyID } from "../../types/property";
-import { String } from "../../types/string";
-import { Fact } from "../../types/fact";
-import { Big } from "../../utils/math";
-import { Address } from "../../account/address";
+import { ContractID, CurrencyID } from "../../types/property.js";
+import { String } from "../../types/string.js";
+import { Fact } from "../../types/fact.js";
+import { Big } from "../../utils/math.js";
+import { Address } from "../../account/address.js";
 const AppendFactHint = "mitum-timestamp-append-operation-fact";
 const AppendHint = "mitum-timestamp-append-operation";
 export class AppendFact extends Fact {

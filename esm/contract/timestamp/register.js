@@ -1,6 +1,6 @@
-import { ContractID, CurrencyID } from "../../types/property";
-import { Fact } from "../../types/fact";
-import { Address } from "../../account/address";
+import { ContractID, CurrencyID } from "../../types/property.js";
+import { Fact } from "../../types/fact.js";
+import { Address } from "../../account/address.js";
 const ServiceRegisterFactHint = "mitum-timestamp-service-register-operation-fact";
 const ServiceRegisterHint = "mitum-timestamp-service-register-operation";
 export class ServiceRegisterFact extends Fact {

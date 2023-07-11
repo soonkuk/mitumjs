@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppendFact = void 0;
-const property_1 = require("../../types/property");
-const string_1 = require("../../types/string");
-const fact_1 = require("../../types/fact");
-const math_1 = require("../../utils/math");
-const address_1 = require("../../account/address");
+const property_js_1 = require("../../types/property.js");
+const string_js_1 = require("../../types/string.js");
+const fact_js_1 = require("../../types/fact.js");
+const math_js_1 = require("../../utils/math.js");
+const address_js_1 = require("../../account/address.js");
 const AppendFactHint = "mitum-timestamp-append-operation-fact";
 const AppendHint = "mitum-timestamp-append-operation";
-class AppendFact extends fact_1.Fact {
+class AppendFact extends fact_js_1.Fact {
     constructor(token, sender, contract, serviceID, projectID, requestTimestamp, data, currency) {
         super(AppendFactHint, token);
-        this.sender = new address_1.Address(sender);
-        this.contract = new address_1.Address(contract);
-        this.serviceID = new property_1.ContractID(serviceID);
-        this.projectID = new string_1.String(projectID);
-        this.requestTimeStamp = new math_1.Big(requestTimestamp);
-        this.data = new string_1.String(data);
-        this.currency = new property_1.CurrencyID(currency);
+        this.sender = new address_js_1.Address(sender);
+        this.contract = new address_js_1.Address(contract);
+        this.serviceID = new property_js_1.ContractID(serviceID);
+        this.projectID = new string_js_1.String(projectID);
+        this.requestTimeStamp = new math_js_1.Big(requestTimestamp);
+        this.data = new string_js_1.String(data);
+        this.currency = new property_js_1.CurrencyID(currency);
         this._hash = this.hashing();
     }
     toBuffer() {

@@ -1,10 +1,10 @@
 /// <reference types="node" />
-import { ContractID, CurrencyID } from "../../types/property";
-import { FactJson } from "../../types/iFact";
-import { String } from "../../types/string";
-import { Fact } from "../../types/fact";
-import { Big } from "../../utils/math";
-import { Address } from "../../account/address";
+import { ContractID, CurrencyID } from "../../types/property.js";
+import { FactJson } from "../../types/iFact.js";
+import { String } from "../../types/string.js";
+import { Fact } from "../../types/fact.js";
+import { Big } from "../../utils/math.js";
+import { Address } from "../../account/address.js";
 export declare class AppendFact extends Fact {
     readonly sender: Address;
     readonly contract: Address;

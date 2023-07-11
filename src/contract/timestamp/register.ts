@@ -1,8 +1,8 @@
-import { ContractID, CurrencyID } from "../../types/property";
-import { FactJson } from "../../types/iFact";
-import { Fact } from "../../types/fact";
+import { ContractID, CurrencyID } from "../../types/property.js";
+import { FactJson } from "../../types/iFact.js";
+import { Fact } from "../../types/fact.js";
 
-import { Address } from "../../account/address";
+import { Address } from "../../account/address.js";
 
 const ServiceRegisterFactHint =
   "mitum-timestamp-service-register-operation-fact";

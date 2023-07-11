@@ -44,6 +44,18 @@ const test = async () => {
   const projectId = "protocon";
   const a1 = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
   const a2 = "2VKEH78tLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8Bmca";
+  const priv1 = "CHNoLNrykannTec3L1Aa1kXsDkC2QS2tDXrTxhHAcySwmpr";
+  const priv2 = "62LMhQdA2BabwWTyA5Y4gipeby8uUtz39MWJt8vSXxGvmpr";
+
+  // createTimestampService
+  const oper1 = mitum.timestamp.createTimestampService(a1, currencyID);
+  const oper2 = mitum.timestamp.createTimestampService(a2, currencyID);
+  const s3 = mitum.operation.sign(priv1, oper1);
+  const s4 = mitum.operation.sign(priv2, oper2);
+  const res1 = await mitum.operation.send(s3);
+  const res2 = await mitum.operation.send(s4);
+  console.log(res1.status);
+  console.log(res2.status);
 };
 
 test();
