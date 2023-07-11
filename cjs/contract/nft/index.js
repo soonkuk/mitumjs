@@ -56,9 +56,6 @@ class Nft {
             this._collection = collectionID;
             console.log("Collection ID is changed : ", this._collection);
         }
-        else {
-            console.error("This is invalid collection ID type");
-        }
     }
     getContractAddress() {
         return this._contractAddress.toString();

@@ -53,9 +53,6 @@ class Credential {
             this._serviceID = serviceId;
             console.log("Credential ID is changed : ", this._serviceID);
         }
-        else {
-            console.error("This is invalid credential ID type");
-        }
     }
     getContractAddress() {
         return this._address.toString();

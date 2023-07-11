@@ -35,10 +35,7 @@ export class Timestamp {
     setServiceId(serviceId) {
         if (this._serviceID !== serviceId) {
             this._serviceID = serviceId;
-            console.log("Credential ID is changed : ", this._serviceID);
-        }
-        else {
-            console.error("This is invalid credential ID type");
+            console.log("Service ID is changed : ", this._serviceID);
         }
     }
     getContractAddress() {
