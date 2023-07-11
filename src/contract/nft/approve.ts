@@ -9,13 +9,13 @@ import { HINT_NFT } from "../../types/hintNft.js";
 
 export class ApproveItem extends NFTItem {
   readonly approved: Address;
-  readonly nft: Big;
+  readonly tokenId: Big;
 
   constructor(
     contract: string,
     collection: string,
     approved: string,
-    nft: string | number | Buffer | BigInt | Uint8Array,
+    tokenId: string | number | Buffer | BigInt | Uint8Array,
     currency: string
   ) {
     super(HINT_NFT.HINT_APPROVE_ITEM, contract, collection, currency);
@@ -29,14 +29,14 @@ export class ApproveItem extends NFTItem {
     );
 
     this.approved = new Address(approved);
-    this.nft = new Big(nft);
+    this.tokenId = new Big(tokenId);
   }
 
   toBuffer(): Buffer {
     return Buffer.concat([
       super.toBuffer(),
       this.approved.toBuffer(),
-      this.nft.toBuffer(),
+      this.tokenId.toBuffer("fill"),
       this.currency.toBuffer(),
     ]);
   }
@@ -45,12 +45,12 @@ export class ApproveItem extends NFTItem {
     return {
       ...super.toHintedObject(),
       approved: this.approved.toString(),
-      nft: this.nft.v,
+      nftidx: this.tokenId.v,
     };
   }
 
   toString(): string {
-    return this.nft.toString();
+    return this.tokenId.toString();
   }
 }
 

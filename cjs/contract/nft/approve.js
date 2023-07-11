@@ -8,25 +8,25 @@ const math_js_1 = require("../../utils/math.js");
 const fact_js_1 = require("../../types/fact.js");
 const hintNft_js_1 = require("../../types/hintNft.js");
 class ApproveItem extends item_js_1.NFTItem {
-    constructor(contract, collection, approved, nft, currency) {
+    constructor(contract, collection, approved, tokenId, currency) {
         super(hintNft_js_1.HINT_NFT.HINT_APPROVE_ITEM, contract, collection, currency);
         error_js_1.Assert.check(contract.toString() !== approved, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_ITEM, "The contract address is the same as the 'approved' address."));
         this.approved = new address_js_1.Address(approved);
-        this.nft = new math_js_1.Big(nft);
+        this.tokenId = new math_js_1.Big(tokenId);
     }
     toBuffer() {
         return Buffer.concat([
             super.toBuffer(),
             this.approved.toBuffer(),
-            this.nft.toBuffer(),
+            this.tokenId.toBuffer("fill"),
             this.currency.toBuffer(),
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { approved: this.approved.toString(), nft: this.nft.v });
+        return Object.assign(Object.assign({}, super.toHintedObject()), { approved: this.approved.toString(), nftidx: this.tokenId.v });
     }
     toString() {
-        return this.nft.toString();
+        return this.tokenId.toString();
     }
 }
 exports.ApproveItem = ApproveItem;

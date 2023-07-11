@@ -110,7 +110,6 @@ class Nft {
     symbol() {
         return this.getCollectionId();
     }
-    // 총 nft 발행량 조회 //// 여기부터 할 차례임...
     totalSupply(collectionID) {
         return __awaiter(this, void 0, void 0, function* () {
             let id = this._collection;
@@ -121,7 +120,6 @@ class Nft {
             return res.data._embedded.length;
         });
     }
-    // tokenID 에 대한 URI 반환
     tokenURI(tokenID, collectionID) {
         return __awaiter(this, void 0, void 0, function* () {
             let id = this._collection;
@@ -175,11 +173,10 @@ class Nft {
         const fact = new mint_js_1.MintFact(token, sender, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
-    // nft 호환 컨트랙트 끼리의 안전한 전송. 이 함수가 오버로딩 되었다.
+    // approve 위임받은 자의 전송
     transferFrom() { }
     // approve 위임받은 자의 전송
     transfer() { }
-    // 위임
     approve(owner, operator, tokenID, currencyID) {
         const token = new time_js_1.TimeStamp().UTC();
         const item = new approve_js_1.ApproveItem(this._contractAddress, this._collection, operator, tokenID, currencyID);

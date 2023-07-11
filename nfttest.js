@@ -107,8 +107,16 @@ const test = async () => {
   // console.log(uri333);
 
   // 전체 nft 발행량 조회
-  const count = await mitum.nft.totalSupply();
-  console.log(count);
+  // const count = await mitum.nft.totalSupply();
+  // console.log(count);
+
+  // approve
+  const owner = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
+  const operator = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
+  const f4 = mitum.nft.approve(owner, operator, 0, currencyID);
+  const s4 = mitum.operation.sign(privatekey, f4);
+  const res = await mitum.operation.send(s4);
+  console.log(res.status);
 };
 
 test();

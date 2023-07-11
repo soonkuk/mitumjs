@@ -5,17 +5,17 @@ import { Big } from "../../utils/math.js";
 import { OperationFact } from "../../types/fact.js";
 import { HINT_NFT } from "../../types/hintNft.js";
 export class ApproveItem extends NFTItem {
-    constructor(contract, collection, approved, nft, currency) {
+    constructor(contract, collection, approved, tokenId, currency) {
         super(HINT_NFT.HINT_APPROVE_ITEM, contract, collection, currency);
         Assert.check(contract.toString() !== approved, MitumError.detail(ECODE.INVALID_ITEM, "The contract address is the same as the 'approved' address."));
         this.approved = new Address(approved);
-        this.nft = new Big(nft);
+        this.tokenId = new Big(tokenId);
     }
     toBuffer() {
         return Buffer.concat([
             super.toBuffer(),
             this.approved.toBuffer(),
-            this.nft.toBuffer(),
+            this.tokenId.toBuffer("fill"),
             this.currency.toBuffer(),
         ]);
     }
@@ -23,11 +23,11 @@ export class ApproveItem extends NFTItem {
         return {
             ...super.toHintedObject(),
             approved: this.approved.toString(),
-            nft: this.nft.v,
+            nftidx: this.tokenId.v,
         };
     }
     toString() {
-        return this.nft.toString();
+        return this.tokenId.toString();
     }
 }
 export class ApproveFact extends OperationFact {
