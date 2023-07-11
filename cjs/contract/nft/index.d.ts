@@ -5,6 +5,7 @@ import { Fact } from "../../types/fact.js";
 import { collectionData } from "./register.js";
 import { DelegateFact } from "./delegate.js";
 import { Creator } from "./creatorType.js";
+import { NFTTransferFact } from "./transfer.js";
 export declare class Nft {
     private _networkID;
     private _node;
@@ -46,8 +47,7 @@ export declare class Nft {
     setPolicy(sender: string, data: collectionData, currencyId: string): OperationType<Fact>;
     mint(sender: string, uri: string, hash: string, currencyID: string, creator: string): OperationType<Fact>;
     mintForMultiCreators(sender: string, uri: string, hash: string, currencyID: string, creator: Creator[]): OperationType<Fact>;
-    transferFrom(): void;
-    transfer(): void;
+    transfer(sender: string, receiver: string, tokenId: string | number | Buffer | BigInt | Uint8Array, currencyId: string): OperationType<NFTTransferFact>;
     approve(owner: string, operator: string, tokenID: string | number | Buffer | BigInt | Uint8Array, currencyID: string): OperationType<Fact>;
     getApproved(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
     setApprovalForAll(owner: string, operator: string, mode: boolean, currencyID: string): OperationType<DelegateFact>;

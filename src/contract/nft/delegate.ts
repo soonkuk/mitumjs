@@ -55,7 +55,7 @@ export class DelegateItem extends NFTItem {
   toHintedObject(): HintedObject {
     return {
       ...super.toHintedObject(),
-      operator: this.operator.toString,
+      operator: this.operator.toString(),
       mode: this.mode,
     };
   }

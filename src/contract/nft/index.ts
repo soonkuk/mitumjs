@@ -13,6 +13,7 @@ import { MintItem, MintFact } from "./mint.js";
 import { gererateCreator } from "./sign.js";
 import { Creator } from "./creatorType.js";
 import nftInfo from "./information.js";
+import { NFTTransferFact, NFTTransferItem } from "./transfer.js";
 
 export class Nft {
   private _networkID: string = "";
@@ -285,11 +286,25 @@ export class Nft {
     return new OperationType(this._networkID, fact);
   }
 
-  // approve 위임받은 자의 전송
-  transferFrom() {}
+  transfer(
+    sender: string,
+    receiver: string,
+    tokenId: string | number | Buffer | BigInt | Uint8Array,
+    currencyId: string
+  ) {
+    const token = new TimeStamp().UTC();
 
-  // approve 위임받은 자의 전송
-  transfer() {}
+    const item = new NFTTransferItem(
+      this._contractAddress,
+      this._collection,
+      receiver,
+      tokenId,
+      currencyId
+    );
+    const fact = new NFTTransferFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
 
   approve(
     owner: string,
@@ -311,7 +326,6 @@ export class Nft {
     return new OperationType(this._networkID, fact);
   }
 
-  // tokenId 가 위임되었는지 확인
   async getApproved(
     tokenID: number,
     collectionID?: string
@@ -329,10 +343,9 @@ export class Nft {
       tokenID
     );
 
-    return res.data.approved;
+    return res.data._embedded.approved;
   }
 
-  // 소유한 모든 nft 를 위임
   setApprovalForAll(
     owner: string,
     operator: string,

@@ -8,25 +8,25 @@ const math_js_1 = require("../../utils/math.js");
 const item_js_1 = require("./item.js");
 const hintNft_js_1 = require("../../types/hintNft.js");
 class NFTTransferItem extends item_js_1.NFTItem {
-    constructor(contract, collection, receiver, nft, currency) {
+    constructor(contract, collection, receiver, tokenId, currency) {
         super(hintNft_js_1.HINT_NFT.HINT_NFT_TRANSFER_ITEM, contract, collection, currency);
         error_js_1.Assert.check(contract.toString() !== receiver, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_PARAMETER, "The contract address is the same as the receiver address."));
         this.receiver = new address_js_1.Address(receiver);
-        this.nft = new math_js_1.Big(nft);
+        this.tokenId = new math_js_1.Big(tokenId);
     }
     toBuffer() {
         return Buffer.concat([
             super.toBuffer(),
             this.receiver.toBuffer(),
-            this.nft.toBuffer(),
+            this.tokenId.toBuffer("fill"),
             this.currency.toBuffer(),
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { receiver: this.receiver.toString(), nft: this.nft.v });
+        return Object.assign(Object.assign({}, super.toHintedObject()), { receiver: this.receiver.toString(), nft: this.tokenId.v });
     }
     toString() {
-        return this.nft.toString();
+        return this.tokenId.toString();
     }
 }
 exports.NFTTransferItem = NFTTransferItem;

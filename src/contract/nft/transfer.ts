@@ -8,13 +8,13 @@ import { HintedObject } from "../../types/interface.js";
 
 export class NFTTransferItem extends NFTItem {
   readonly receiver: Address;
-  readonly nft: Big;
+  readonly tokenId: Big;
 
   constructor(
     contract: string,
     collection: string,
     receiver: string,
-    nft: string | number | Buffer | BigInt | Uint8Array,
+    tokenId: string | number | Buffer | BigInt | Uint8Array,
     currency: string
   ) {
     super(HINT_NFT.HINT_NFT_TRANSFER_ITEM, contract, collection, currency);
@@ -28,14 +28,14 @@ export class NFTTransferItem extends NFTItem {
     );
 
     this.receiver = new Address(receiver);
-    this.nft = new Big(nft);
+    this.tokenId = new Big(tokenId);
   }
 
   toBuffer(): Buffer {
     return Buffer.concat([
       super.toBuffer(),
       this.receiver.toBuffer(),
-      this.nft.toBuffer(),
+      this.tokenId.toBuffer("fill"),
       this.currency.toBuffer(),
     ]);
   }
@@ -44,12 +44,12 @@ export class NFTTransferItem extends NFTItem {
     return {
       ...super.toHintedObject(),
       receiver: this.receiver.toString(),
-      nft: this.nft.v,
+      nft: this.tokenId.v,
     };
   }
 
   toString(): string {
-    return this.nft.toString();
+    return this.tokenId.toString();
   }
 }
 

@@ -6,8 +6,8 @@ import { NFTItem } from "./item.js";
 import { HintedObject } from "../../types/interface.js";
 export declare class NFTTransferItem extends NFTItem {
     readonly receiver: Address;
-    readonly nft: Big;
-    constructor(contract: string, collection: string, receiver: string, nft: string | number | Buffer | BigInt | Uint8Array, currency: string);
+    readonly tokenId: Big;
+    constructor(contract: string, collection: string, receiver: string, tokenId: string | number | Buffer | BigInt | Uint8Array, currency: string);
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;
     toString(): string;

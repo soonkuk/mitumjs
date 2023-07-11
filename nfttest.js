@@ -111,11 +111,41 @@ const test = async () => {
   // console.log(count);
 
   // approve
+  // const owner = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
+  // const operator = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
+  // const f4 = mitum.nft.approve(owner, operator, 0, currencyID);
+  // const s4 = mitum.operation.sign(privatekey, f4);
+  // const res = await mitum.operation.send(s4);
+  // console.log(res.status);
+
+  // getApproved
+  // const tokenID = 0;
+  // const approved = await mitum.nft.getApproved(tokenID);
+  // console.log(approved);
+
+  // setApprovedAll
+  // const owner = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
+  // const operator = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
+  // const mode = true;
+  // const oper2 = mitum.nft.setApprovalForAll(owner, operator, mode, currencyID);
+  // const s5 = mitum.operation.sign(privatekey, oper2);
+  // const res = await mitum.operation.send(s5);
+  // console.log(oper2);
+
+  // isApprovedForAll ***********************************************************
+  // const owner = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
+  // const operator = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
+  // const res = await mitum.nft.isApprovedForAll(owner);
+  // console.log(res);
+
+  // transfer
   const owner = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
+  const ownerPriv = privatekey;
   const operator = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
-  const f4 = mitum.nft.approve(owner, operator, 0, currencyID);
-  const s4 = mitum.operation.sign(privatekey, f4);
-  const res = await mitum.operation.send(s4);
+  const operatorPriv = "CHNoLNrykannTec3L1Aa1kXsDkC2QS2tDXrTxhHAcySwmpr";
+  const fact1 = mitum.nft.transfer(operator, operator, 0, currencyID);
+  const s5 = mitum.operation.sign(operatorPriv, fact1);
+  const res = await mitum.operation.send(s5);
   console.log(res.status);
 };
 

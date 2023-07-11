@@ -5,17 +5,17 @@ import { Big } from "../../utils/math.js";
 import { NFTItem } from "./item.js";
 import { HINT_NFT } from "../../types/hintNft.js";
 export class NFTTransferItem extends NFTItem {
-    constructor(contract, collection, receiver, nft, currency) {
+    constructor(contract, collection, receiver, tokenId, currency) {
         super(HINT_NFT.HINT_NFT_TRANSFER_ITEM, contract, collection, currency);
         Assert.check(contract.toString() !== receiver, MitumError.detail(ECODE.INVALID_PARAMETER, "The contract address is the same as the receiver address."));
         this.receiver = new Address(receiver);
-        this.nft = new Big(nft);
+        this.tokenId = new Big(tokenId);
     }
     toBuffer() {
         return Buffer.concat([
             super.toBuffer(),
             this.receiver.toBuffer(),
-            this.nft.toBuffer(),
+            this.tokenId.toBuffer("fill"),
             this.currency.toBuffer(),
         ]);
     }
@@ -23,11 +23,11 @@ export class NFTTransferItem extends NFTItem {
         return {
             ...super.toHintedObject(),
             receiver: this.receiver.toString(),
-            nft: this.nft.v,
+            nft: this.tokenId.v,
         };
     }
     toString() {
-        return this.nft.toString();
+        return this.tokenId.toString();
     }
 }
 export class NFTTransferFact extends OperationFact {

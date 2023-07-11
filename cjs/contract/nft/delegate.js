@@ -23,7 +23,7 @@ class DelegateItem extends item_js_1.NFTItem {
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { operator: this.operator.toString, mode: this.mode });
+        return Object.assign(Object.assign({}, super.toHintedObject()), { operator: this.operator.toString(), mode: this.mode });
     }
     toString() {
         return (this.contract.toString() +

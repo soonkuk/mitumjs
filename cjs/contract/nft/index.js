@@ -23,6 +23,7 @@ const approve_js_1 = require("./approve.js");
 const mint_js_1 = require("./mint.js");
 const sign_js_1 = require("./sign.js");
 const information_js_1 = __importDefault(require("./information.js"));
+const transfer_js_1 = require("./transfer.js");
 class Nft {
     constructor(networkID, provider) {
         this._networkID = "";
@@ -173,17 +174,18 @@ class Nft {
         const fact = new mint_js_1.MintFact(token, sender, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
-    // approve 위임받은 자의 전송
-    transferFrom() { }
-    // approve 위임받은 자의 전송
-    transfer() { }
+    transfer(sender, receiver, tokenId, currencyId) {
+        const token = new time_js_1.TimeStamp().UTC();
+        const item = new transfer_js_1.NFTTransferItem(this._contractAddress, this._collection, receiver, tokenId, currencyId);
+        const fact = new transfer_js_1.NFTTransferFact(token, sender, [item]);
+        return new operation_js_1.OperationType(this._networkID, fact);
+    }
     approve(owner, operator, tokenID, currencyID) {
         const token = new time_js_1.TimeStamp().UTC();
         const item = new approve_js_1.ApproveItem(this._contractAddress, this._collection, operator, tokenID, currencyID);
         const fact = new approve_js_1.ApproveFact(token, owner, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
-    // tokenId 가 위임되었는지 확인
     getApproved(tokenID, collectionID) {
         return __awaiter(this, void 0, void 0, function* () {
             let id = this._collection;
@@ -191,10 +193,9 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
-            return res.data.approved;
+            return res.data._embedded.approved;
         });
     }
-    // 소유한 모든 nft 를 위임
     setApprovalForAll(owner, operator, mode, currencyID) {
         const token = new time_js_1.TimeStamp().UTC();
         let approved = "allow";

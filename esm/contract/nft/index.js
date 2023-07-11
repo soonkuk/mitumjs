@@ -8,6 +8,7 @@ import { ApproveFact, ApproveItem } from "./approve.js";
 import { MintItem, MintFact } from "./mint.js";
 import { gererateCreator } from "./sign.js";
 import nftInfo from "./information.js";
+import { NFTTransferFact, NFTTransferItem } from "./transfer.js";
 export class Nft {
     constructor(networkID, provider) {
         this._networkID = "";
@@ -146,26 +147,26 @@ export class Nft {
         const fact = new MintFact(token, sender, [item]);
         return new OperationType(this._networkID, fact);
     }
-    // approve 위임받은 자의 전송
-    transferFrom() { }
-    // approve 위임받은 자의 전송
-    transfer() { }
+    transfer(sender, receiver, tokenId, currencyId) {
+        const token = new TimeStamp().UTC();
+        const item = new NFTTransferItem(this._contractAddress, this._collection, receiver, tokenId, currencyId);
+        const fact = new NFTTransferFact(token, sender, [item]);
+        return new OperationType(this._networkID, fact);
+    }
     approve(owner, operator, tokenID, currencyID) {
         const token = new TimeStamp().UTC();
         const item = new ApproveItem(this._contractAddress, this._collection, operator, tokenID, currencyID);
         const fact = new ApproveFact(token, owner, [item]);
         return new OperationType(this._networkID, fact);
     }
-    // tokenId 가 위임되었는지 확인
     async getApproved(tokenID, collectionID) {
         let id = this._collection;
         if (collectionID !== undefined) {
             id = collectionID;
         }
         const res = await nftInfo.getNftInfo(this._node, this._contractAddress, id, tokenID);
-        return res.data.approved;
+        return res.data._embedded.approved;
     }
-    // 소유한 모든 nft 를 위임
     setApprovalForAll(owner, operator, mode, currencyID) {
         const token = new TimeStamp().UTC();
         let approved = "allow";
