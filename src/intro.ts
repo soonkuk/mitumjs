@@ -26,6 +26,6 @@ const MITUM_VERSION = "v0.0.1";
 const MITUM_NETWORK_ID = "mitum";
 
 /** @dev The sdk version of mitum.js */
-const MITUM_JS_VERSION = "v1.1.0 Prehistoric";
+const MITUM_JS_VERSION = "v1.1.5 Prehistoric";
 
 export { MITUM_VERSION, MITUM_NETWORK_ID, MITUM_JS_VERSION };
