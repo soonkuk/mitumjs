@@ -139,14 +139,14 @@ const test = async () => {
   // console.log(res);
 
   // transfer
-  const owner = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
-  const ownerPriv = privatekey;
-  const operator = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
-  const operatorPriv = "CHNoLNrykannTec3L1Aa1kXsDkC2QS2tDXrTxhHAcySwmpr";
-  const fact1 = mitum.nft.transfer(operator, operator, 0, currencyID);
-  const s5 = mitum.operation.sign(operatorPriv, fact1);
-  const res = await mitum.operation.send(s5);
-  console.log(res.status);
+  // const owner = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
+  // const ownerPriv = privatekey;
+  // const operator = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
+  // const operatorPriv = "CHNoLNrykannTec3L1Aa1kXsDkC2QS2tDXrTxhHAcySwmpr";
+  // const fact1 = mitum.nft.transfer(operator, operator, 0, currencyID);
+  // const s5 = mitum.operation.sign(operatorPriv, fact1);
+  // const res = await mitum.operation.send(s5);
+  // console.log(res.status);
 };
 
 test();
