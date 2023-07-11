@@ -102,10 +102,13 @@ const test = async () => {
   // console.log(info2);
 
   // token uri 조회
-  const tokenID = 2;
+  // const tokenID = 2;
+  // const uri333 = await mitum.nft.tokenURI(tokenID);
+  // console.log(uri333);
 
-  const uri333 = await mitum.nft.tokenURI(tokenID);
-  console.log(uri333);
+  // 전체 nft 발행량 조회
+  const count = await mitum.nft.totalSupply();
+  console.log(count);
 };
 
 test();

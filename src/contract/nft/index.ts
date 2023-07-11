@@ -139,7 +139,6 @@ export class Nft {
     return this.getCollectionId();
   }
 
-  // 총 nft 발행량 조회 //// 여기부터 할 차례임...
   async totalSupply(collectionID?: string): Promise<AxiosResponse> {
     let id = this._collection;
 
@@ -153,10 +152,9 @@ export class Nft {
       id
     );
 
-    return res.data.length;
+    return res.data._embedded.length;
   }
 
-  // tokenID 에 대한 URI 반환
   async tokenURI(
     tokenID: number,
     collectionID?: string
@@ -287,13 +285,12 @@ export class Nft {
     return new OperationType(this._networkID, fact);
   }
 
-  // nft 호환 컨트랙트 끼리의 안전한 전송. 이 함수가 오버로딩 되었다.
+  // approve 위임받은 자의 전송
   transferFrom() {}
 
   // approve 위임받은 자의 전송
   transfer() {}
 
-  // 위임
   approve(
     owner: string,
     operator: string,

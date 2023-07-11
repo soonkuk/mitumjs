@@ -118,7 +118,7 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getAllNftInfo(this._node, this._contractAddress, id);
-            return res.data.length;
+            return res.data._embedded.length;
         });
     }
     // tokenID 에 대한 URI 반환
