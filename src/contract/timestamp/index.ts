@@ -8,6 +8,7 @@ import { Fact } from "../../types/fact.js";
 
 import timestampInfo from "./information.js";
 import { AppendFact } from "./append.js";
+import { ServiceRegisterFact } from "./register.js";
 
 export class Credential {
   private _networkID: string = "";
@@ -108,6 +109,23 @@ export class Credential {
       projectID,
       requestTime,
       data,
+      currencyID
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  createTimestampService(
+    sender: string,
+    currencyID: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new ServiceRegisterFact(
+      token,
+      sender,
+      this._contractAddress,
+      this._serviceID,
       currencyID
     );
 
