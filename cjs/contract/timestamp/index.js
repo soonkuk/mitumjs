@@ -83,9 +83,10 @@ class Timestamp {
         const fact = new append_js_1.AppendFact(token, sender, this._contractAddress, this._serviceID, projectID, requestTime, data, currencyID);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
-    createTimestampService(sender, currencyID) {
+    createTimestampService(sender, serviceId, currencyID) {
         const token = new time_js_1.TimeStamp().UTC();
-        const fact = new register_js_1.ServiceRegisterFact(token, sender, this._contractAddress, this._serviceID, currencyID);
+        const fact = new register_js_1.ServiceRegisterFact(token, sender, this._contractAddress, serviceId, currencyID);
+        this.setServiceId(serviceId);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
 }

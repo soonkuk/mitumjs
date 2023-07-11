@@ -47,6 +47,9 @@ const test = async () => {
   const priv1 = "CHNoLNrykannTec3L1Aa1kXsDkC2QS2tDXrTxhHAcySwmpr";
   const priv2 = "62LMhQdA2BabwWTyA5Y4gipeby8uUtz39MWJt8vSXxGvmpr";
 
+  mitum.timestamp.setContractAddress(contract);
+  mitum.timestamp.setServiceId(serviceId);
+
   // createTimestampService
   const oper1 = mitum.timestamp.createTimestampService(a1, currencyID);
   const oper2 = mitum.timestamp.createTimestampService(a2, currencyID);

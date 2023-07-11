@@ -64,9 +64,10 @@ export class Timestamp {
         const fact = new AppendFact(token, sender, this._contractAddress, this._serviceID, projectID, requestTime, data, currencyID);
         return new OperationType(this._networkID, fact);
     }
-    createTimestampService(sender, currencyID) {
+    createTimestampService(sender, serviceId, currencyID) {
         const token = new time().UTC();
-        const fact = new ServiceRegisterFact(token, sender, this._contractAddress, this._serviceID, currencyID);
+        const fact = new ServiceRegisterFact(token, sender, this._contractAddress, serviceId, currencyID);
+        this.setServiceId(serviceId);
         return new OperationType(this._networkID, fact);
     }
 }

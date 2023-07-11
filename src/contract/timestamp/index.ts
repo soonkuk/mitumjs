@@ -117,6 +117,7 @@ export class Timestamp {
 
   createTimestampService(
     sender: string,
+    serviceId: string,
     currencyID: string
   ): OperationType<Fact> {
     const token = new time().UTC();
@@ -125,9 +126,11 @@ export class Timestamp {
       token,
       sender,
       this._contractAddress,
-      this._serviceID,
+      serviceId,
       currencyID
     );
+
+    this.setServiceId(serviceId);
 
     return new OperationType(this._networkID, fact);
   }

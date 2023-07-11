@@ -16,5 +16,5 @@ export declare class Timestamp {
     getServiceInfo(serviceID?: string): Promise<AxiosResponse>;
     getTimestampInfo(serviceID: string, projectID: string, tID: number): Promise<AxiosResponse>;
     append(sender: string, projectID: string, requestTime: number, data: string, currencyID: string): OperationType<Fact>;
-    createTimestampService(sender: string, currencyID: string): OperationType<Fact>;
+    createTimestampService(sender: string, serviceId: string, currencyID: string): OperationType<Fact>;
 }
