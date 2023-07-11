@@ -11,7 +11,7 @@ import timestampInfo from "./information.js";
 export class Credential {
   private _networkID: string = "";
   private _node: string = "";
-  private _address: string = "";
+  private _contractAddress: string = "";
   private _serviceID: string = "";
 
   constructor(networkID: string, provider?: string) {
@@ -30,9 +30,12 @@ export class Credential {
   }
 
   setContractAddress(contractAddress: string) {
-    if (this._address !== contractAddress && isAddress(contractAddress)) {
-      this._address = contractAddress;
-      console.log("Contract address is changed : ", this._address);
+    if (
+      this._contractAddress !== contractAddress &&
+      isAddress(contractAddress)
+    ) {
+      this._contractAddress = contractAddress;
+      console.log("Contract address is changed : ", this._contractAddress);
     } else {
       console.error("This is invalid address type");
     }
@@ -48,7 +51,7 @@ export class Credential {
   }
 
   getContractAddress(): string {
-    return this._address.toString();
+    return this._contractAddress.toString();
   }
 
   getServiceId(): string {
@@ -64,8 +67,24 @@ export class Credential {
 
     const res = await timestampInfo.getServiceInfo(
       this._node,
-      this._address,
+      this._contractAddress,
       sid
+    );
+
+    return res.data;
+  }
+
+  async getTimestampInfo(
+    serviceID: string,
+    projectID: string,
+    tID: number
+  ): Promise<AxiosResponse> {
+    const res = await timestampInfo.getTimestampInfo(
+      this._node,
+      this._contractAddress,
+      serviceID,
+      projectID,
+      tID
     );
 
     return res.data;

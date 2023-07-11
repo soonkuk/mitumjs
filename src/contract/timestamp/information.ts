@@ -26,76 +26,27 @@ export default {
     }
   },
 
-  async getCredentialInfo(
+  async getTimestampInfo(
     provider: string,
     contract: string,
-    serviceId: string,
-    templateId: string,
-    credentialId: string
+    serviceID: string,
+    projectID: string,
+    tID: number
   ): Promise<AxiosResponse> {
-    if (provider === "" || contract === "" || serviceId === "") {
+    if (
+      provider === "" ||
+      contract === "" ||
+      serviceID === "" ||
+      projectID === ""
+    ) {
       return Promise.reject(
-        new Error(
-          "RPC-URL is not provided or You need to set 'contract address and credential id'."
-        )
+        new Error("RPC-URL is not provided or You need to set correct params")
       );
     }
 
     try {
       const res = await axios.get(
-        `${provider}/did/${contract}/issuer/${serviceId}/template/${templateId}/credential/${credentialId}`
-      );
-      return res;
-    } catch (error: any) {
-      return Promise.reject(
-        new Error(`Error getting node information: ${error.message}`)
-      );
-    }
-  },
-
-  async getTemplate(
-    provider: string,
-    contract: string,
-    serviceId: string,
-    templateId: string
-  ): Promise<AxiosResponse> {
-    if (provider === "" || contract === "" || serviceId === "") {
-      return Promise.reject(
-        new Error(
-          "RPC-URL is not provided or You need to set 'contract address and credential id'."
-        )
-      );
-    }
-
-    try {
-      const res = await axios.get(
-        `${provider}/did/${contract}/issuer/${serviceId}/template/${templateId}`
-      );
-      return res;
-    } catch (error: any) {
-      return Promise.reject(
-        new Error(`Error getting node information: ${error.message}`)
-      );
-    }
-  },
-
-  async getCredentialByHolder(
-    provider: string,
-    contract: string,
-    serviceId: string,
-    holder: string
-  ): Promise<AxiosResponse> {
-    if (provider === "" || contract === "" || serviceId === "") {
-      return Promise.reject(
-        new Error(
-          "RPC-URL is not provided or You need to set 'contract address and credential id'."
-        )
-      );
-    }
-
-    try {
-      const res = await axios.get(
-        `${provider}/did/${contract}/issuer/${serviceId}/holder/${holder}`
+        `${provider}/timestamp/${contract}/service/${serviceID}/project/${projectID}/id/${tID}`
       );
       return res;
     } catch (error: any) {
