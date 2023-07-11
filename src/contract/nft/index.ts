@@ -99,7 +99,6 @@ export class Nft {
   // owner의 nft 갯수. TBD.
   // balanceOf() {}
 
-  // tokenID의 소유자
   async ownerOf(
     tokenID: number,
     collectionID?: string
@@ -117,7 +116,7 @@ export class Nft {
       tokenID
     );
 
-    return res.data.owner;
+    return res.data._embedded.owner;
   }
 
   async name(collectionID?: string): Promise<AxiosResponse> {
@@ -140,7 +139,7 @@ export class Nft {
     return this.getCollectionId();
   }
 
-  // 총 nft 발행량 조회
+  // 총 nft 발행량 조회 //// 여기부터 할 차례임...
   async totalSupply(collectionID?: string): Promise<AxiosResponse> {
     let id = this._collection;
 
@@ -175,7 +174,7 @@ export class Nft {
       tokenID
     );
 
-    return res.data.uri;
+    return res.data._embedded.uri;
   }
 
   /** structure

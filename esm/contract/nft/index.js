@@ -68,14 +68,13 @@ export class Nft {
     }
     // owner의 nft 갯수. TBD.
     // balanceOf() {}
-    // tokenID의 소유자
     async ownerOf(tokenID, collectionID) {
         let id = this._collection;
         if (collectionID !== undefined) {
             id = collectionID;
         }
         const res = await nftInfo.getNftInfo(this._node, this._contractAddress, id, tokenID);
-        return res.data.owner;
+        return res.data._embedded.owner;
     }
     async name(collectionID) {
         let id = this._collection;
@@ -88,7 +87,7 @@ export class Nft {
     symbol() {
         return this.getCollectionId();
     }
-    // 총 nft 발행량 조회
+    // 총 nft 발행량 조회 //// 여기부터 할 차례임...
     async totalSupply(collectionID) {
         let id = this._collection;
         if (collectionID !== undefined) {
@@ -104,7 +103,7 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getNftInfo(this._node, this._contractAddress, id, tokenID);
-        return res.data.uri;
+        return res.data._embedded.uri;
     }
     /** structure
      * collectionData = {

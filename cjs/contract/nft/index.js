@@ -87,7 +87,6 @@ class Nft {
     }
     // owner의 nft 갯수. TBD.
     // balanceOf() {}
-    // tokenID의 소유자
     ownerOf(tokenID, collectionID) {
         return __awaiter(this, void 0, void 0, function* () {
             let id = this._collection;
@@ -95,7 +94,7 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
-            return res.data.owner;
+            return res.data._embedded.owner;
         });
     }
     name(collectionID) {
@@ -111,7 +110,7 @@ class Nft {
     symbol() {
         return this.getCollectionId();
     }
-    // 총 nft 발행량 조회
+    // 총 nft 발행량 조회 //// 여기부터 할 차례임...
     totalSupply(collectionID) {
         return __awaiter(this, void 0, void 0, function* () {
             let id = this._collection;
@@ -130,7 +129,7 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
-            return res.data.uri;
+            return res.data._embedded.uri;
         });
     }
     /** structure
