@@ -7,6 +7,7 @@ import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
 import timestampInfo from "./information.js";
+import { AppendFact } from "./append.js";
 
 export class Credential {
   private _networkID: string = "";
@@ -88,5 +89,28 @@ export class Credential {
     );
 
     return res.data;
+  }
+
+  append(
+    sender: string,
+    projectID: string,
+    requestTime: number,
+    data: string,
+    currencyID: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new AppendFact(
+      token,
+      sender,
+      this._contractAddress,
+      this._serviceID,
+      projectID,
+      requestTime,
+      data,
+      currencyID
+    );
+
+    return new OperationType(this._networkID, fact);
   }
 }
