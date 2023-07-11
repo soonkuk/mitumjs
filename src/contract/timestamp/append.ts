@@ -58,10 +58,10 @@ export class AppendFact extends Fact {
     return {
       ...super.toHintedObject(),
       sender: this.sender.toString(),
-      contract: this.contract.toString(),
-      service_id: this.serviceID.toString(),
-      projectID: this.projectID.toString(),
-      requestTimeStamp: this.requestTimeStamp.v,
+      target: this.contract.toString(),
+      service: this.serviceID.toString(),
+      projectid: this.projectID.toString(),
+      request_timestamp: this.requestTimeStamp.v,
       data: this.data.toString(),
       currency: this.currency.toString(),
     };
