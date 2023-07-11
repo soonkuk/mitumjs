@@ -6,7 +6,7 @@ import { isAddress } from "../../utils/validation.js";
 import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
-import credentialInfo from "./information.js";
+import timestampInfo from "./information.js";
 
 export class Credential {
   private _networkID: string = "";
@@ -55,7 +55,19 @@ export class Credential {
     return this._serviceID.toString();
   }
 
-  getServiceInfo(?:serviceID): Promise<AxiosResponse> {
+  async getServiceInfo(serviceID?: string): Promise<AxiosResponse> {
+    let sid = this._serviceID;
 
+    if (serviceID !== undefined) {
+      sid = serviceID;
+    }
+
+    const res = await timestampInfo.getServiceInfo(
+      this._node,
+      this._address,
+      sid
+    );
+
+    return res.data;
   }
 }
