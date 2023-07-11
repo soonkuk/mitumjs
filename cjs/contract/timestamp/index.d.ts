@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { OperationType } from "../../types/operation.js";
 import { Fact } from "../../types/fact.js";
-export declare class Credential {
+export declare class Timestamp {
     private _networkID;
     private _node;
     private _contractAddress;

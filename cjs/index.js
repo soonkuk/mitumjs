@@ -19,9 +19,8 @@ const index_js_5 = require("./operation/index.js");
 const index_js_6 = require("./contract/index.js");
 const index_js_7 = require("./contract/nft/index.js");
 const index_js_8 = require("./contract/credential/index.js");
-// import { Timestamp } from "./contract/timestamp/index.js";
+const index_js_9 = require("./contract/timestamp/index.js");
 class Mitum {
-    // public timestamp: Timestamp;
     constructor(provider) {
         this._version = new index_js_1.Version();
         this._node = new index_js_1.Node(provider);
@@ -33,7 +32,7 @@ class Mitum {
         this.contract = new index_js_6.Contract(intro_js_1.MITUM_NETWORK_ID, provider);
         this.nft = new index_js_7.Nft(intro_js_1.MITUM_NETWORK_ID, provider);
         this.credential = new index_js_8.Credential(intro_js_1.MITUM_NETWORK_ID, provider);
-        // this.timestamp = new Timestamp(provider);
+        this.timestamp = new index_js_9.Timestamp(intro_js_1.MITUM_NETWORK_ID, provider);
     }
     version() {
         return this._version.getVersion();
@@ -53,7 +52,7 @@ class Mitum {
         this.contract = new index_js_6.Contract(networkID, provider);
         this.nft = new index_js_7.Nft(networkID, provider);
         this.credential = new index_js_8.Credential(networkID, provider);
-        // this.timestamp = new Timestamp(networkID, provider);
+        this.timestamp = new index_js_9.Timestamp(networkID, provider);
     }
     getNode() {
         return this._node.getNodeUri();
@@ -69,7 +68,7 @@ class Mitum {
         this.contract = new index_js_6.Contract(networkID, provider);
         this.nft = new index_js_7.Nft(networkID, provider);
         this.credential = new index_js_8.Credential(networkID, provider);
-        // this.timestamp = new Timestamp(networkID, provider);
+        this.timestamp = new index_js_9.Timestamp(networkID, provider);
     }
 }
 exports.Mitum = Mitum;

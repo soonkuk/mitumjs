@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Credential = void 0;
+exports.Timestamp = void 0;
 const operation_js_1 = require("../../types/operation.js");
 const validation_js_1 = require("../../utils/validation.js");
 const validation_js_2 = require("../../utils/validation.js");
@@ -20,7 +20,7 @@ const time_js_1 = require("../../utils/time.js");
 const information_js_1 = __importDefault(require("./information.js"));
 const append_js_1 = require("./append.js");
 const register_js_1 = require("./register.js");
-class Credential {
+class Timestamp {
     constructor(networkID, provider) {
         this._networkID = "";
         this._node = "";
@@ -89,5 +89,5 @@ class Credential {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
 }
-exports.Credential = Credential;
+exports.Timestamp = Timestamp;
 //# sourceMappingURL=index.js.map

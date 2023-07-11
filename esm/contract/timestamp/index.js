@@ -1,11 +1,11 @@
 import { OperationType } from "../../types/operation.js";
 import { isIPAddress } from "../../utils/validation.js";
 import { isAddress } from "../../utils/validation.js";
-import { TimeStamp } from "../../utils/time.js";
+import { TimeStamp as time } from "../../utils/time.js";
 import timestampInfo from "./information.js";
 import { AppendFact } from "./append.js";
 import { ServiceRegisterFact } from "./register.js";
-export class Credential {
+export class Timestamp {
     constructor(networkID, provider) {
         this._networkID = "";
         this._node = "";
@@ -60,12 +60,12 @@ export class Credential {
         return res.data;
     }
     append(sender, projectID, requestTime, data, currencyID) {
-        const token = new TimeStamp().UTC();
+        const token = new time().UTC();
         const fact = new AppendFact(token, sender, this._contractAddress, this._serviceID, projectID, requestTime, data, currencyID);
         return new OperationType(this._networkID, fact);
     }
     createTimestampService(sender, currencyID) {
-        const token = new TimeStamp().UTC();
+        const token = new time().UTC();
         const fact = new ServiceRegisterFact(token, sender, this._contractAddress, this._serviceID, currencyID);
         return new OperationType(this._networkID, fact);
     }

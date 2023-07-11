@@ -3,14 +3,14 @@ import { AxiosResponse } from "axios";
 import { OperationType } from "../../types/operation.js";
 import { isIPAddress } from "../../utils/validation.js";
 import { isAddress } from "../../utils/validation.js";
-import { TimeStamp } from "../../utils/time.js";
+import { TimeStamp as time } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
 import timestampInfo from "./information.js";
 import { AppendFact } from "./append.js";
 import { ServiceRegisterFact } from "./register.js";
 
-export class Credential {
+export class Timestamp {
   private _networkID: string = "";
   private _node: string = "";
   private _contractAddress: string = "";
@@ -99,7 +99,7 @@ export class Credential {
     data: string,
     currencyID: string
   ): OperationType<Fact> {
-    const token = new TimeStamp().UTC();
+    const token = new time().UTC();
 
     const fact = new AppendFact(
       token,
@@ -119,7 +119,7 @@ export class Credential {
     sender: string,
     currencyID: string
   ): OperationType<Fact> {
-    const token = new TimeStamp().UTC();
+    const token = new time().UTC();
 
     const fact = new ServiceRegisterFact(
       token,
