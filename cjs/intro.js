@@ -28,6 +28,6 @@ exports.MITUM_VERSION = MITUM_VERSION;
 const MITUM_NETWORK_ID = "mitum";
 exports.MITUM_NETWORK_ID = MITUM_NETWORK_ID;
 /** @dev The sdk version of mitum.js */
-const MITUM_JS_VERSION = "v1.1.0 Prehistoric";
+const MITUM_JS_VERSION = "v1.1.5 Prehistoric";
 exports.MITUM_JS_VERSION = MITUM_JS_VERSION;
 //# sourceMappingURL=intro.js.map

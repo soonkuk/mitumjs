@@ -23,5 +23,5 @@ declare const MITUM_VERSION = "v0.0.1";
 /** @dev The network name of mitum-blockchain */
 declare const MITUM_NETWORK_ID = "mitum";
 /** @dev The sdk version of mitum.js */
-declare const MITUM_JS_VERSION = "v1.1.0 Prehistoric";
+declare const MITUM_JS_VERSION = "v1.1.5 Prehistoric";
 export { MITUM_VERSION, MITUM_NETWORK_ID, MITUM_JS_VERSION };
