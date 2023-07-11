@@ -52,8 +52,6 @@ export class Nft {
     if (this._collection !== collectionID) {
       this._collection = collectionID;
       console.log("Collection ID is changed : ", this._collection);
-    } else {
-      console.error("This is invalid collection ID type");
     }
   }
 

@@ -51,14 +51,15 @@ const test = async () => {
   mitum.timestamp.setServiceId(serviceId);
 
   // createTimestampService
-  const oper1 = mitum.timestamp.createTimestampService(a1, currencyID);
-  const oper2 = mitum.timestamp.createTimestampService(a2, currencyID);
-  const s3 = mitum.operation.sign(priv1, oper1);
-  const s4 = mitum.operation.sign(priv2, oper2);
+  const oper1 = mitum.timestamp.createTimestampService(
+    sender,
+    serviceId,
+    currencyID
+  );
+  const s3 = mitum.operation.sign(privatekey, oper1);
   const res1 = await mitum.operation.send(s3);
-  const res2 = await mitum.operation.send(s4);
+  console.log(oper1);
   console.log(res1.status);
-  console.log(res2.status);
 };
 
 test();
