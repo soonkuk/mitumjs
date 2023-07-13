@@ -9,12 +9,17 @@ import { Fact } from "../../types/fact.js";
 import { AuthorizeOperatorsFact, AuthorizeOperatorsItem } from "./authorize.js";
 import { IssueSecurityTokensFact, IssueSecurityTokensItem } from "./issue.js";
 import { RedeemTokensFact, RedeemTokensItem } from "./redeem.js";
+import { stData } from "./design.js";
+import { RevokeOperatorsFact, RevokeOperatorsItem } from "./revoke.js";
+import { SetDocumentFact } from "./document.js";
+import {
+  TransferSecurityTokensPartitionFact,
+  TransferSecurityTokensPartitionItem,
+} from "./transfer.js";
 import {
   CreateSecurityTokensFact,
   CreateSecurityTokensItem,
 } from "./create.js";
-import { stData } from "./design.js";
-import { RevokeOperatorsFact, RevokeOperatorsItem } from "./revoke.js";
 
 export class St {
   private _networkID: string = "";
@@ -174,6 +179,53 @@ export class St {
       currencyID
     );
     const fact = new RevokeOperatorsFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  setDocument(
+    sender: string,
+    title: string,
+    uri: string,
+    documentHash: string,
+    currencyID: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new SetDocumentFact(
+      token,
+      sender,
+      this._contractAddress,
+      this._serviceID,
+      title,
+      uri,
+      documentHash,
+      currencyID
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  transferByPartition(
+    sender: string,
+    holder: string,
+    receiver: string,
+    partition: string,
+    amount: number,
+    currencyID: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const item = new TransferSecurityTokensPartitionItem(
+      this._contractAddress,
+      this._serviceID,
+      holder,
+      receiver,
+      partition,
+      amount,
+      currencyID
+    );
+    const fact = new TransferSecurityTokensPartitionFact(token, sender, [item]);
 
     return new OperationType(this._networkID, fact);
   }

@@ -43,7 +43,7 @@ interface IERC1643 {
 
     // Document Management
     function getDocument(bytes32 _name) view returns (string memory, bytes32, uint256);
-    function setDocument(bytes32 _name, string memory _uri, bytes32 _documentHash);
+    // function setDocument(bytes32 _name, string memory _uri, bytes32 _documentHash);
     function removeDocument(bytes32 _name);
     function getAllDocuments() view returns (bytes32[] memory);
 }
@@ -58,7 +58,7 @@ interface IERC1400 is IERC20, IERC1643 {
     function transferFromWithData(address from, address to, uint256 value, bytes calldata data);
   
     // *************** Partition Token Transfers ****************
-    function transferByPartition(bytes32 partition, address to, uint256 value, bytes calldata data) returns (bytes32);
+    // function transferByPartition(bytes32 partition, address to, uint256 value, bytes calldata data) returns (bytes32);
     function operatorTransferByPartition(bytes32 partition, address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData) returns (bytes32);
     function allowanceByPartition(bytes32 partition, address owner, address spender) view returns (uint256);
   
