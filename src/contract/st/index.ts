@@ -6,6 +6,11 @@ import { isAddress } from "../../utils/validation.js";
 import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 import { AuthorizeOperatorsFact, AuthorizeOperatorsItem } from "./authorize.js";
+import {
+  CreateSecurityTokensFact,
+  CreateSecurityTokensItem,
+} from "./create.js";
+import { stData } from "./design.js";
 
 export class Timestamp {
   private _networkID: string = "";
@@ -71,6 +76,36 @@ export class Timestamp {
       currencyID
     );
     const fact = new AuthorizeOperatorsFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  /** structure
+   * stData = {
+   *    serviceId: string;
+   *    granularity: number;
+   *    defaultPartition: string;
+   *    controllers: string[];
+   * }
+   */
+  createSTService(
+    sender: string,
+    data: stData,
+    currency: string
+  ): OperationType<Fact> {
+    this.setServiceId(data.serviceId);
+
+    const token = new TimeStamp().UTC();
+
+    const item = new CreateSecurityTokensItem(
+      this._contractAddress,
+      data.serviceId,
+      data.granularity,
+      data.defaultPartition,
+      data.controllers,
+      currency
+    );
+    const fact = new CreateSecurityTokensFact(token, sender, [item]);
 
     return new OperationType(this._networkID, fact);
   }

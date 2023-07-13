@@ -42,49 +42,50 @@ test();
 interface IERC1643 {
 
     // Document Management
-    function getDocument(bytes32 _name) external view returns (string memory, bytes32, uint256);
-    function setDocument(bytes32 _name, string memory _uri, bytes32 _documentHash) external;
-    function removeDocument(bytes32 _name) external;
-    function getAllDocuments() external view returns (bytes32[] memory);
+    function getDocument(bytes32 _name) view returns (string memory, bytes32, uint256);
+    function setDocument(bytes32 _name, string memory _uri, bytes32 _documentHash);
+    function removeDocument(bytes32 _name);
+    function getAllDocuments() view returns (bytes32[] memory);
 }
 interface IERC1400 is IERC20, IERC1643 {
 
     // ******************* Token Information ********************
-    function balanceOfByPartition(bytes32 partition, address tokenHolder) external view returns (uint256);
+    function balanceOfByPartition(bytes32 partition, address tokenHolder) view returns (uint256);
     function partitionsOf(address tokenHolder) external view returns (bytes32[] memory);
   
     // *********************** Transfers ************************
-    function transferWithData(address to, uint256 value, bytes calldata data) external;
-    function transferFromWithData(address from, address to, uint256 value, bytes calldata data) external;
+    function transferWithData(address to, uint256 value, bytes calldata data);
+    function transferFromWithData(address from, address to, uint256 value, bytes calldata data);
   
     // *************** Partition Token Transfers ****************
-    function transferByPartition(bytes32 partition, address to, uint256 value, bytes calldata data) external returns (bytes32);
-    function operatorTransferByPartition(bytes32 partition, address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData) external returns (bytes32);
-    function allowanceByPartition(bytes32 partition, address owner, address spender) external view returns (uint256);
+    function transferByPartition(bytes32 partition, address to, uint256 value, bytes calldata data) returns (bytes32);
+    function operatorTransferByPartition(bytes32 partition, address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData) returns (bytes32);
+    function allowanceByPartition(bytes32 partition, address owner, address spender) view returns (uint256);
   
     // ****************** Controller Operation ******************
-    function isControllable() external view returns (bool);
-    function controllerTransfer(address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData) external; // removed because same action can be achieved with "operatorTransferByPartition"
-    function controllerRedeem(address tokenHolder, uint256 value, bytes calldata data, bytes calldata operatorData) external; // removed because same action can be achieved with "operatorRedeemByPartition"
+    function isControllable() view returns (bool);
+    function controllerTransfer(address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData); // removed because same action can be achieved with "operatorTransferByPartition"
+    function controllerRedeem(address tokenHolder, uint256 value, bytes calldata data, bytes calldata operatorData); // removed because same action can be achieved with "operatorRedeemByPartition"
   
     // ****************** Operator Management *******************
-    function authorizeOperator(address operator) external;
-    function revokeOperator(address operator) external;
-    function authorizeOperatorByPartition(bytes32 partition, address operator) external;
-    function revokeOperatorByPartition(bytes32 partition, address operator) external;
+    // function authorizeOperator(address operator);
+    function authorizeOperatorByPartition(bytes32 partition, address operator);
+
+    function revokeOperator(address operator);
+    function revokeOperatorByPartition(bytes32 partition, address operator);
   
     // ****************** Operator Information ******************
-    function isOperator(address operator, address tokenHolder) external view returns (bool);
-    function isOperatorForPartition(bytes32 partition, address operator, address tokenHolder) external view returns (bool);
+    function isOperator(address operator, address tokenHolder) view returns (bool);
+    function isOperatorForPartition(bytes32 partition, address operator, address tokenHolder) view returns (bool);
   
     // ********************* Token Issuance *********************
     function isIssuable() external view returns (bool);
-    function issue(address tokenHolder, uint256 value, bytes calldata data) external;
-    function issueByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata data) external;
+    function issue(address tokenHolder, uint256 value, bytes calldata data);
+    function issueByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata data);
   
     // ******************** Token Redemption ********************
-    function redeem(uint256 value, bytes calldata data) external;
-    function redeemFrom(address tokenHolder, uint256 value, bytes calldata data) external;
-    function redeemByPartition(bytes32 partition, uint256 value, bytes calldata data) external;
-    function operatorRedeemByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata operatorData) external;
+    function redeem(uint256 value, bytes calldata data);
+    function redeemFrom(address tokenHolder, uint256 value, bytes calldata data);
+    function redeemByPartition(bytes32 partition, uint256 value, bytes calldata data);
+    function operatorRedeemByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata operatorData);
   }
