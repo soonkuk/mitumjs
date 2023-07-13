@@ -3,8 +3,9 @@ import { AxiosResponse } from "axios";
 import { OperationType } from "../../types/operation.js";
 import { isIPAddress } from "../../utils/validation.js";
 import { isAddress } from "../../utils/validation.js";
-import { TimeStamp as time } from "../../utils/time.js";
+import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
+import { AuthorizeOperatorsFact, AuthorizeOperatorsItem } from "./authorize.js";
 
 export class Timestamp {
   private _networkID: string = "";
@@ -52,5 +53,25 @@ export class Timestamp {
 
   getServiceId(): string {
     return this._serviceID.toString();
+  }
+
+  authorizeOperator(
+    sender: string,
+    operator: string,
+    partition: string,
+    currencyID: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const item = new AuthorizeOperatorsItem(
+      this._contractAddress,
+      this._serviceID,
+      operator,
+      partition,
+      currencyID
+    );
+    const fact = new AuthorizeOperatorsFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
   }
 }
