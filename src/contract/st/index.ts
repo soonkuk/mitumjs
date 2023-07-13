@@ -5,15 +5,17 @@ import { isIPAddress } from "../../utils/validation.js";
 import { isAddress } from "../../utils/validation.js";
 import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
+
 import { AuthorizeOperatorsFact, AuthorizeOperatorsItem } from "./authorize.js";
+import { IssueSecurityTokensFact, IssueSecurityTokensItem } from "./issue.js";
+import { RedeemTokensFact, RedeemTokensItem } from "./redeem.js";
 import {
   CreateSecurityTokensFact,
   CreateSecurityTokensItem,
 } from "./create.js";
 import { stData } from "./design.js";
-import { IssueSecurityTokensFact, IssueSecurityTokensItem } from "./issue.js";
 
-export class Timestamp {
+export class St {
   private _networkID: string = "";
   private _node: string = "";
   private _contractAddress: string = "";
@@ -129,6 +131,28 @@ export class Timestamp {
       currency
     );
     const fact = new IssueSecurityTokensFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  redeem(
+    sender: string,
+    tokenHolder: string,
+    partition: string,
+    amount: number,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const item = new RedeemTokensItem(
+      this._contractAddress,
+      this._serviceID,
+      tokenHolder,
+      amount,
+      partition,
+      currency
+    );
+    const fact = new RedeemTokensFact(token, sender, [item]);
 
     return new OperationType(this._networkID, fact);
   }

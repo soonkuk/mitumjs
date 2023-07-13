@@ -79,12 +79,12 @@ interface IERC1400 is IERC20, IERC1643 {
     function isOperatorForPartition(bytes32 partition, address operator, address tokenHolder) view returns (bool);
   
     // ********************* Token Issuance *********************
-    function isIssuable() external view returns (bool);
+    function isIssuable() view returns (bool);
     // function issue(address tokenHolder, uint256 value, bytes calldata data);
     function issueByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata data);
   
     // ******************** Token Redemption ********************
-    function redeem(uint256 value, bytes calldata data);
+    // function redeem(uint256 value, bytes calldata data);
     function redeemFrom(address tokenHolder, uint256 value, bytes calldata data);
     function redeemByPartition(bytes32 partition, uint256 value, bytes calldata data);
     function operatorRedeemByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata operatorData);
