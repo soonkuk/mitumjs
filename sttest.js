@@ -71,7 +71,7 @@ interface IERC1400 is IERC20, IERC1643 {
     // function authorizeOperator(address operator);
     function authorizeOperatorByPartition(bytes32 partition, address operator);
 
-    function revokeOperator(address operator);
+    // function revokeOperator(address operator);
     function revokeOperatorByPartition(bytes32 partition, address operator);
   
     // ****************** Operator Information ******************

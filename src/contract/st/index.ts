@@ -14,6 +14,7 @@ import {
   CreateSecurityTokensItem,
 } from "./create.js";
 import { stData } from "./design.js";
+import { RevokeOperatorsFact, RevokeOperatorsItem } from "./revoke.js";
 
 export class St {
   private _networkID: string = "";
@@ -153,6 +154,26 @@ export class St {
       currency
     );
     const fact = new RedeemTokensFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  revokeOperator(
+    sender: string,
+    operator: string,
+    partition: string,
+    currencyID: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const item = new RevokeOperatorsItem(
+      this._contractAddress,
+      this._serviceID,
+      operator,
+      partition,
+      currencyID
+    );
+    const fact = new RevokeOperatorsFact(token, sender, [item]);
 
     return new OperationType(this._networkID, fact);
   }
