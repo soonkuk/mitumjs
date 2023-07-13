@@ -80,7 +80,7 @@ interface IERC1400 is IERC20, IERC1643 {
   
     // ********************* Token Issuance *********************
     function isIssuable() external view returns (bool);
-    function issue(address tokenHolder, uint256 value, bytes calldata data);
+    // function issue(address tokenHolder, uint256 value, bytes calldata data);
     function issueByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata data);
   
     // ******************** Token Redemption ********************

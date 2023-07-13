@@ -11,6 +11,7 @@ import {
   CreateSecurityTokensItem,
 } from "./create.js";
 import { stData } from "./design.js";
+import { IssueSecurityTokensFact, IssueSecurityTokensItem } from "./issue.js";
 
 export class Timestamp {
   private _networkID: string = "";
@@ -106,6 +107,28 @@ export class Timestamp {
       currency
     );
     const fact = new CreateSecurityTokensFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  issue(
+    sender: string,
+    receiver: string,
+    partition: string,
+    amount: number,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const item = new IssueSecurityTokensItem(
+      this._contractAddress,
+      this._serviceID,
+      receiver,
+      amount,
+      partition,
+      currency
+    );
+    const fact = new IssueSecurityTokensFact(token, sender, [item]);
 
     return new OperationType(this._networkID, fact);
   }
