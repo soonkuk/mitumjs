@@ -7,6 +7,7 @@ import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
 import { AddControllersFact, AddControllersItem } from "./addController.js";
+import { AddCustomersFact, AddCustomersItem } from "./addCustomer.js";
 
 export class St {
   private _networkID: string = "";
@@ -70,6 +71,26 @@ export class St {
       currency
     );
     const fact = new AddControllersFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  addCustomer(
+    sender: string,
+    customer: string,
+    status: boolean,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const item = new AddCustomersItem(
+      this._contractAddress,
+      this._serviceID,
+      customer,
+      status,
+      currency
+    );
+    const fact = new AddCustomersFact(token, sender, [item]);
 
     return new OperationType(this._networkID, fact);
   }
