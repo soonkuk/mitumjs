@@ -11,13 +11,13 @@ export abstract class STItem extends Item {
   constructor(
     hint: string,
     contract: string,
-    collection: string,
+    serviceId: string,
     currency: string
   ) {
     super(hint);
 
     this.contract = new Address(contract);
-    this.service = new ContractID(collection);
+    this.service = new ContractID(serviceId);
     this.currency = new CurrencyID(currency);
   }
 
