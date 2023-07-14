@@ -8,6 +8,7 @@ import { Fact } from "../../types/fact.js";
 
 import { AddControllersFact, AddControllersItem } from "./addController.js";
 import { AddCustomersFact, AddCustomersItem } from "./addCustomer.js";
+import { CreateKYCServiceFact } from "./create.js";
 
 export class St {
   private _networkID: string = "";
@@ -91,6 +92,28 @@ export class St {
       currency
     );
     const fact = new AddCustomersFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  createSTService(
+    sender: string,
+    serviceID: string,
+    controllers: string[],
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new CreateKYCServiceFact(
+      token,
+      sender,
+      this._contractAddress,
+      serviceID,
+      controllers,
+      currency
+    );
+
+    this.setServiceId(serviceID);
 
     return new OperationType(this._networkID, fact);
   }
