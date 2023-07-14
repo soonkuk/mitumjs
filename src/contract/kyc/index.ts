@@ -7,6 +7,8 @@ import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
 import { AddControllersFact, AddControllersItem } from "./addController.js";
+import { RemoveControllersFact, RemoveControllersItem } from "./remove.js";
+import { UpdateCustomersFact, UpdateCustomersItem } from "./update.js";
 import { AddCustomersFact, AddCustomersItem } from "./addCustomer.js";
 import { CreateKYCServiceFact } from "./create.js";
 
@@ -125,13 +127,33 @@ export class St {
   ): OperationType<Fact> {
     const token = new TimeStamp().UTC();
 
-    const item = new AddControllersItem(
+    const item = new RemoveControllersItem(
       this._contractAddress,
       this._serviceID,
       controller,
       currency
     );
-    const fact = new AddControllersFact(token, sender, [item]);
+    const fact = new RemoveControllersFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  updateCustomer(
+    sender: string,
+    customer: string,
+    status: boolean,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const item = new UpdateCustomersItem(
+      this._contractAddress,
+      this._serviceID,
+      customer,
+      status,
+      currency
+    );
+    const fact = new UpdateCustomersFact(token, sender, [item]);
 
     return new OperationType(this._networkID, fact);
   }
