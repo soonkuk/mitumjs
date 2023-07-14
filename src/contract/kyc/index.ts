@@ -12,7 +12,7 @@ import { UpdateCustomersFact, UpdateCustomersItem } from "./update.js";
 import { AddCustomersFact, AddCustomersItem } from "./addCustomer.js";
 import { CreateKYCServiceFact } from "./create.js";
 
-export class St {
+export class Kyc {
   private _networkID: string = "";
   private _node: string = "";
   private _contractAddress: string = "";
@@ -98,7 +98,7 @@ export class St {
     return new OperationType(this._networkID, fact);
   }
 
-  createSTService(
+  createKYCService(
     sender: string,
     serviceID: string,
     controllers: string[],
