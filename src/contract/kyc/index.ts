@@ -6,6 +6,8 @@ import { isAddress } from "../../utils/validation.js";
 import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
+import { AddControllersFact, AddControllersItem } from "./addController.js";
+
 export class St {
   private _networkID: string = "";
   private _node: string = "";
@@ -52,5 +54,23 @@ export class St {
 
   getServiceId(): string {
     return this._serviceID.toString();
+  }
+
+  addController(
+    sender: string,
+    controller: string,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const item = new AddControllersItem(
+      this._contractAddress,
+      this._serviceID,
+      controller,
+      currency
+    );
+    const fact = new AddControllersFact(token, sender, [item]);
+
+    return new OperationType(this._networkID, fact);
   }
 }
