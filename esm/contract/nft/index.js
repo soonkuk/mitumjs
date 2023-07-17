@@ -183,5 +183,13 @@ export class Nft {
         const res = await nftInfo.getOperationInfo(this._node, this._contractAddress, id, owner);
         return res.data;
     }
+    async getNFTInfo(tokenID, collectionID) {
+        let id = this._collection;
+        if (collectionID !== undefined) {
+            id = collectionID;
+        }
+        const res = await nftInfo.getNftInfo(this._node, this._contractAddress, id, tokenID);
+        return res.data;
+    }
 }
 //# sourceMappingURL=index.js.map

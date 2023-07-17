@@ -52,4 +52,5 @@ export declare class Nft {
     getApproved(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
     setApprovalForAll(owner: string, operator: string, mode: boolean, currencyID: string): OperationType<DelegateFact>;
     isApprovedForAll(owner: string, collectionID?: string): Promise<AxiosResponse>;
+    getNFTInfo(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
 }

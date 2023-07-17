@@ -214,6 +214,16 @@ class Nft {
             return res.data;
         });
     }
+    getNFTInfo(tokenID, collectionID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let id = this._collection;
+            if (collectionID !== undefined) {
+                id = collectionID;
+            }
+            const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
+            return res.data;
+        });
+    }
 }
 exports.Nft = Nft;
 //# sourceMappingURL=index.js.map

@@ -9,9 +9,9 @@ const exp = (s, b) => {
 const test = async () => {
   const provider = "http://15.165.34.166:54320";
 
-  const pv1 = "KiDrbhuX5i3tc7G2gR3e1KAejCaxL6FtrfctULgU8z1mpr";
-  const pb1 = "2522xqjYEeidYJkEzjokcyvYihwHn1eNkvdygkPSQgaw1mpu";
-  const a1 = "CWLZQXfx72u5z82MFZAKUGwejwYED5jNy1X4hRjeU4VNmca";
+  const pv1 = "Auf6amfGtuHRx5dbhvhGNpwt1EtLG4ZTnbriEiuihDfJmpr";
+  const pb1 = "27SnBRSvhX9eEswL4SXVRaewhoxuK6jVLUNyfWMThqHsZmpu";
+  const a1 = "5zPANS8TqGwvVh1bghiFQpX2v4GqPsW2Rx1xtonNPMsSmca";
 
   const pv2 = "96UQnof9743WAykeq6a3f54vg9MENicWCrrqN9yam9aZmpr";
   const pb2 = "oxaoi8FuZpLJkEU8kStm8dndhwbo4FtfcCiJo76MkpiQmpu";
@@ -53,7 +53,7 @@ const test = async () => {
   //   exp("mitum.account.createWallet()", res);
   //   console.log(wallet1.wallet);
 
-  //   const w1 = mitum.account.create(a1, pb3, currencyID, 100);
+  //   const w1 = mitum.account.create(a1, pb4, currencyID, 100);
   //   const o1 = mitum.operation.sign(pv1, w1);
   //   const res = await mitum.operation.send(o1);
   //   exp("mitum.account.create()", res.status);
@@ -84,7 +84,7 @@ const test = async () => {
   //   exp("mitum.contract.createWallet()", res);
   //   console.log(wc.wallet);
 
-  console.log("===== nft test =====");
+  //   console.log("===== nft test =====");
   mitum.nft.setContractAddress(contractAddress);
   //   exp("mitum.getContractAddress()", mitum.nft.getContractAddress());
 
@@ -157,6 +157,121 @@ const test = async () => {
 
   //   exp("mitum.nft.getApproved()", await mitum.nft.getApproved(2));
   //   exp("mitum.nft.getCollectionInfo()", await mitum.nft.getCollectionInfo());
+  //   exp("mitum.nft.getNFTInfo()", await mitum.nft.getNFTInfo(2));
+
+  console.log("===== timestamp test =====");
+  mitum.timestamp.setContractAddress(contractAddress);
+  //   exp(
+  //     "mitum.timestamp.getContractAddress()",
+  //     mitum.timestamp.getContractAddress()
+  //   );
+
+  //   const f10 = mitum.timestamp.createTimestampService(a1, symbol, currencyID);
+  //   const s10 = mitum.operation.sign(pv1, f10);
+  //   const res10 = await mitum.operation.send(s10);
+  //   exp("mitum.timestamp.creatSevice()", res10.status);
+  mitum.timestamp.setServiceId(symbol);
+
+  //   const projectID = "protocon";
+  //   const requestTime = 10000000;
+  //   const data = "exampleRequestDataexampleRequestDataexampleRequestData";
+  //   const tID = 0;
+  //   const f11 = mitum.timestamp.append(
+  //     a1,
+  //     projectID,
+  //     requestTime,
+  //     data,
+  //     currencyID
+  //   );
+  //   const s11 = mitum.operation.sign(pv1, f11);
+  //   const res11 = await mitum.operation.send(s11);
+  //   exp("mitum.timestamp.append()", res11.status);
+  //   const result = await mitum.timestamp.getTimestampInfo(symbol, projectID, tID);
+  //   exp("mitum.timestamp.getTimestampInfo()", result.data);
+
+  //   const sres = await mitum.timestamp.getServiceInfo();
+  //   exp("mitum.timestamp.getServiceInfo()", sres.status);
+
+  console.log("===== credential test =====");
+  mitum.credential.setContractAddress(contractAddress);
+  //   exp(
+  //     "mitum.credential.getContractAddress()",
+  //     mitum.credential.getContractAddress()
+  //   );
+
+  //   const f20 = mitum.credential.createCredentialService(a1, symbol, currencyID);
+  //   const s20 = mitum.operation.sign(pv1, f20);
+  //   const res20 = await mitum.operation.send(s20);
+  //   exp("mitum.credential.createCredentialService()", res20.status);
+  mitum.credential.setServiceId(symbol);
+
+  const templateId = 12;
+  const templateName = "social";
+  const serviceDate = "2023-07-03";
+  const expirationDate = "2023-12-31";
+  const templateShare = true;
+  const multiAudit = false;
+  const displayName = "SITcredential";
+  const subjectKey = "sitsubjectkey";
+  const description = "sitcredentialservice";
+  const creator = a1;
+  //   const data = {
+  //     templateId: templateId,
+  //     templateName: templateName,
+  //     serviceDate: serviceDate,
+  //     expirationDate: expirationDate,
+  //     templateShare: templateShare,
+  //     multiAudit: multiAudit,
+  //     displayName: displayName,
+  //     subjectKey: subjectKey,
+  //     description: description,
+  //     creator: creator,
+  //   };
+  //   const f21 = mitum.credential.addTemplate(a1, data, currencyID);
+  //   const s21 = mitum.operation.sign(pv1, f21);
+  //   const res = await mitum.operation.send(s21);
+  //   exp("mitum.credential.addTemplate()", res.status);
+
+  const holder = a3;
+  const id = "serfthia1";
+  const value = "authenticated";
+  const validFrom = 100;
+  const validUntil = 200;
+  const did = "2023k654212048";
+  //   const issueData = {
+  //     holder: holder,
+  //     templateId: templateId,
+  //     id: id,
+  //     value: value,
+  //     validFrom: validFrom,
+  //     validUntil: validUntil,
+  //     did: did,
+  //   };
+  //   const f22 = mitum.credential.issue(a1, issueData, currencyID);
+  //   const s22 = mitum.operation.sign(pv1, f22);
+  //   const res22 = await mitum.operation.send(s22);
+  //   exp("mitum.credential.issue()", res22.status);
+
+  //   const f23 = mitum.credential.revoke(a1, a2, templateId, id, currencyID);
+  //   const s23 = mitum.operation.sign(pv1, f23);
+  //   const res23 = await mitum.operation.send(s23);
+  //   exp("mitum.credential.revoke()", res23.status);
+
+  //   const info2 = await mitum.credential.getServiceInfo();
+  //   exp("mitum.credential.getServiceInfo()", info2);
+
+  //   const info3 = await mitum.credential.getCredentialInfo(
+  //     symbol,
+  //     templateId,
+  //     id
+  //   );
+  //   exp("mitum.credential.getCredentialInfo()", info3);
+
+  //   const info4 = await mitum.credential.getTemplate(symbol, templateId);
+  //   exp("mitum.credential.getTemplate()", info4);
+
+  //   const info5 = await mitum.credential.claimCredential(symbol, holder);
+  //   exp("mitum.credential.claimCredential()", info5);
 };
 
 test();
