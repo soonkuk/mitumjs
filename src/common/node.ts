@@ -5,7 +5,9 @@ export class Node {
   private _node: string = "";
 
   constructor(provider?: string) {
-    this.setNode(provider);
+    if (provider !== undefined) {
+      this.setNode(provider);
+    }
   }
 
   setNode(provider?: string) {

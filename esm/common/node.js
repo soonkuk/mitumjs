@@ -3,7 +3,9 @@ import { isIPAddress } from "../utils/validation.js";
 export class Node {
     constructor(provider) {
         this._node = "";
-        this.setNode(provider);
+        if (provider !== undefined) {
+            this.setNode(provider);
+        }
     }
     setNode(provider) {
         if (isIPAddress(provider)) {

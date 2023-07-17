@@ -28,4 +28,5 @@ export declare class St {
     revokeOperator(sender: string, operator: string, partition: string, currencyID: string): OperationType<Fact>;
     setDocument(sender: string, title: string, uri: string, documentHash: string, currencyID: string): OperationType<Fact>;
     transferByPartition(sender: string, holder: string, receiver: string, partition: string, amount: number, currencyID: string): OperationType<Fact>;
+    auxFunction(): string;
 }

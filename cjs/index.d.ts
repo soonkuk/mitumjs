@@ -7,6 +7,8 @@ import { Contract } from "./contract/index.js";
 import { Nft } from "./contract/nft/index.js";
 import { Credential } from "./contract/credential/index.js";
 import { Timestamp } from "./contract/timestamp/index.js";
+import { St } from "./contract/st/index.js";
+import { Kyc } from "./contract/kyc/index.js";
 export declare class Mitum {
     private _version;
     private _node;
@@ -19,6 +21,8 @@ export declare class Mitum {
     nft: Nft;
     credential: Credential;
     timestamp: Timestamp;
+    st: St;
+    kyc: Kyc;
     constructor(provider?: string);
     version(): string;
     node(): Promise<AxiosResponse>;

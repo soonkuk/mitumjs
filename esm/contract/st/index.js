@@ -1,3 +1,4 @@
+// import { AxiosResponse } from "axios";
 import { OperationType } from "../../types/operation.js";
 import { isIPAddress } from "../../utils/validation.js";
 import { isAddress } from "../../utils/validation.js";
@@ -97,6 +98,9 @@ export class St {
         const item = new TransferSecurityTokensPartitionItem(this._contractAddress, this._serviceID, holder, receiver, partition, amount, currencyID);
         const fact = new TransferSecurityTokensPartitionFact(token, sender, [item]);
         return new OperationType(this._networkID, fact);
+    }
+    auxFunction() {
+        return this._node;
     }
 }
 //# sourceMappingURL=index.js.map

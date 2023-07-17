@@ -1,4 +1,5 @@
 "use strict";
+// import { AxiosResponse } from "axios";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.St = void 0;
 const operation_js_1 = require("../../types/operation.js");
@@ -100,6 +101,9 @@ class St {
         const item = new transfer_js_1.TransferSecurityTokensPartitionItem(this._contractAddress, this._serviceID, holder, receiver, partition, amount, currencyID);
         const fact = new transfer_js_1.TransferSecurityTokensPartitionFact(token, sender, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
+    }
+    auxFunction() {
+        return this._node;
     }
 }
 exports.St = St;

@@ -1,6 +1,7 @@
 "use strict";
+// import { AxiosResponse } from "axios";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.St = void 0;
+exports.Kyc = void 0;
 const operation_js_1 = require("../../types/operation.js");
 const validation_js_1 = require("../../utils/validation.js");
 const validation_js_2 = require("../../utils/validation.js");
@@ -10,7 +11,7 @@ const remove_js_1 = require("./remove.js");
 const update_js_1 = require("./update.js");
 const addCustomer_js_1 = require("./addCustomer.js");
 const create_js_1 = require("./create.js");
-class St {
+class Kyc {
     constructor(networkID, provider) {
         this._networkID = "";
         this._node = "";
@@ -61,7 +62,7 @@ class St {
         const fact = new addCustomer_js_1.AddCustomersFact(token, sender, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
-    createSTService(sender, serviceID, controllers, currency) {
+    createKYCService(sender, serviceID, controllers, currency) {
         const token = new time_js_1.TimeStamp().UTC();
         const fact = new create_js_1.CreateKYCServiceFact(token, sender, this._contractAddress, serviceID, controllers, currency);
         this.setServiceId(serviceID);
@@ -79,6 +80,9 @@ class St {
         const fact = new update_js_1.UpdateCustomersFact(token, sender, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
+    auxFunction() {
+        return this._node;
+    }
 }
-exports.St = St;
+exports.Kyc = Kyc;
 //# sourceMappingURL=index.js.map

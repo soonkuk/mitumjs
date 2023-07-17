@@ -1,3 +1,4 @@
+// import { AxiosResponse } from "axios";
 import { OperationType } from "../../types/operation.js";
 import { isIPAddress } from "../../utils/validation.js";
 import { isAddress } from "../../utils/validation.js";
@@ -7,7 +8,7 @@ import { RemoveControllersFact, RemoveControllersItem } from "./remove.js";
 import { UpdateCustomersFact, UpdateCustomersItem } from "./update.js";
 import { AddCustomersFact, AddCustomersItem } from "./addCustomer.js";
 import { CreateKYCServiceFact } from "./create.js";
-export class St {
+export class Kyc {
     constructor(networkID, provider) {
         this._networkID = "";
         this._node = "";
@@ -58,7 +59,7 @@ export class St {
         const fact = new AddCustomersFact(token, sender, [item]);
         return new OperationType(this._networkID, fact);
     }
-    createSTService(sender, serviceID, controllers, currency) {
+    createKYCService(sender, serviceID, controllers, currency) {
         const token = new TimeStamp().UTC();
         const fact = new CreateKYCServiceFact(token, sender, this._contractAddress, serviceID, controllers, currency);
         this.setServiceId(serviceID);
@@ -75,6 +76,9 @@ export class St {
         const item = new UpdateCustomersItem(this._contractAddress, this._serviceID, customer, status, currency);
         const fact = new UpdateCustomersFact(token, sender, [item]);
         return new OperationType(this._networkID, fact);
+    }
+    auxFunction() {
+        return this._node;
     }
 }
 //# sourceMappingURL=index.js.map

@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+// import { AxiosResponse } from "axios";
 
 import { OperationType } from "../../types/operation.js";
 import { isIPAddress } from "../../utils/validation.js";
@@ -156,5 +156,9 @@ export class Kyc {
     const fact = new UpdateCustomersFact(token, sender, [item]);
 
     return new OperationType(this._networkID, fact);
+  }
+
+  auxFunction(): string {
+    return this._node;
   }
 }

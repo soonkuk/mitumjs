@@ -1,6 +1,6 @@
 import { OperationType } from "../../types/operation.js";
 import { Fact } from "../../types/fact.js";
-export declare class St {
+export declare class Kyc {
     private _networkID;
     private _node;
     private _contractAddress;
@@ -14,7 +14,8 @@ export declare class St {
     getServiceId(): string;
     addController(sender: string, controller: string, currency: string): OperationType<Fact>;
     addCustomer(sender: string, customer: string, status: boolean, currency: string): OperationType<Fact>;
-    createSTService(sender: string, serviceID: string, controllers: string[], currency: string): OperationType<Fact>;
+    createKYCService(sender: string, serviceID: string, controllers: string[], currency: string): OperationType<Fact>;
     removeController(sender: string, controller: string, currency: string): OperationType<Fact>;
     updateCustomer(sender: string, customer: string, status: boolean, currency: string): OperationType<Fact>;
+    auxFunction(): string;
 }

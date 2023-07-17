@@ -18,7 +18,9 @@ const validation_js_1 = require("../utils/validation.js");
 class Node {
     constructor(provider) {
         this._node = "";
-        this.setNode(provider);
+        if (provider !== undefined) {
+            this.setNode(provider);
+        }
     }
     setNode(provider) {
         if ((0, validation_js_1.isIPAddress)(provider)) {
