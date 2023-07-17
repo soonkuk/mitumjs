@@ -389,4 +389,24 @@ export class Nft {
 
     return res.data;
   }
+
+  async getNFTInfo(
+    tokenID: number,
+    collectionID?: string
+  ): Promise<AxiosResponse> {
+    let id = this._collection;
+
+    if (collectionID !== undefined) {
+      id = collectionID;
+    }
+
+    const res = await nftInfo.getNftInfo(
+      this._node,
+      this._contractAddress,
+      id,
+      tokenID
+    );
+
+    return res.data;
+  }
 }

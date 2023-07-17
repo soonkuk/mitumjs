@@ -192,7 +192,7 @@ const test = async () => {
     "mitum.account.updateMultiSig() : single 또는 multi sig account 를 새로운 multi sig account 로 변경",
     updateOperation2
   );
-  const info2 = await mitum.account.getAccount(
+  const info2 = await mitum.account.getAccountInfo(
     "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca"
   );
   exp("mitum.account.getAccountInfo() : 특정 주소의 정보 확인", info2.data);
@@ -283,10 +283,7 @@ const test = async () => {
     "DNQF7ruLFUD8ZXXrZimjFZdHAJSwc754dz1JdGADwTEDmpr",
     newWallet
   );
+  console.log(data);
 };
 
-// test();
-
-const s1 = "2gWeBMRnZ8kmwU7dvJgv3rHpui7ksHMRKLjJiPUsbBAAmca";
-const s2 = "3053a018f11efb96750d49273cc8137dc11140dceca";
-console.log(s1.length, s2.length);
+test();
