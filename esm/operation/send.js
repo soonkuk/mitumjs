@@ -12,7 +12,7 @@ export async function sendOperation(signedOperation, provider, headers) {
         return await axios.post(`${provider}/builder/send`, signedOperation);
     }
     catch (error) {
-        return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+        return Promise.reject(new Error(`Error getting node information: ${error.response.data}`));
     }
 }
 //# sourceMappingURL=send.js.map

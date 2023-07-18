@@ -4,7 +4,7 @@ export async function sendOperation(
   signedOperation: any,
   provider: string,
   headers?: { [i: string]: any }
-): Promise<AxiosResponse> {
+): Promise<AxiosResponse | null> {
   if (provider === "") {
     return Promise.reject(new Error("RPC-URL is not provided."));
   }
@@ -18,7 +18,7 @@ export async function sendOperation(
     return await axios.post(`${provider}/builder/send`, signedOperation);
   } catch (error: any) {
     return Promise.reject(
-      new Error(`Error getting node information: ${error.message}`)
+      new Error(`Error getting node information: ${error.response.data}`)
     );
   }
 }

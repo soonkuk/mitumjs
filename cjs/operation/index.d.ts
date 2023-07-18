@@ -10,5 +10,5 @@ export declare class Operation {
     sign(privatekey: string, operation: OperationType<Fact>, option?: string): any;
     send(signedOperation: any, headers?: {
         [i: string]: any;
-    }): Promise<AxiosResponse>;
+    }): Promise<AxiosResponse | null>;
 }

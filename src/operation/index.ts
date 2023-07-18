@@ -41,7 +41,7 @@ export class Operation {
   send(
     signedOperation: any,
     headers?: { [i: string]: any }
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     return sendOperation(signedOperation, this._node, headers);
   }
 }

@@ -31,7 +31,7 @@ export declare class Account {
     touch(privatekey: string, wallet: {
         wallet: WalletType;
         operation: OperationType<Fact>;
-    }): Promise<AxiosResponse>;
+    }): Promise<AxiosResponse | null>;
     create(senderAddr: string, receiverPub: string, currentID: string, amount: number): OperationType<Fact>;
     createEtherAccount(senderAddr: string, receiverPub: string, currentID: string, amount: number): OperationType<Fact>;
     createMultiSig(senderAddr: string, receiverPubArr: Array<{

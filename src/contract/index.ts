@@ -82,10 +82,15 @@ export class Contract {
   async touch(
     privatekey: string,
     wallet: { wallet: WalletType; operation: OperationType<Fact> }
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     const oper = new Operation(this._node);
     const signedOperation = oper.sign(privatekey, wallet.operation);
     const res = await oper.send(signedOperation);
+
+    if (!res) {
+      return null;
+    }
+
     return res.data;
   }
 

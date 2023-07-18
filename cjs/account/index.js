@@ -151,6 +151,9 @@ class Account {
             const oper = new index_js_1.Operation(this._node);
             const signedOperation = oper.sign(privatekey, wallet.operation);
             const res = yield oper.send(signedOperation);
+            if (!res) {
+                return null;
+            }
             return res.data;
         });
     }
