@@ -1,9 +1,7 @@
 import { OperationType } from "../types/operation.js";
 import { Fact } from "../types/fact.js";
-import { Key, Keys } from "./publicKey.js";
+import { Key } from "./publicKey.js";
 import { WalletType } from "../types/wallet.js";
-import { KeyPair } from "./iPair.js";
-import { M2KeyPair } from "./key.js";
 import { AxiosResponse } from "axios";
 export declare class Account {
     private _networkID;
@@ -11,17 +9,11 @@ export declare class Account {
     constructor(networkID: string, provider?: string);
     private _setNode;
     private _setChain;
-    key(seed?: string): M2KeyPair;
-    keys(n: number): {
-        keys: Keys;
-        keypairs: KeyPair[];
-    };
-    fromPrivateKey(key: string | Key): M2KeyPair;
-    etherKey(seed?: string): M2KeyPair;
-    etherKeys(n: number): {
-        keys: Keys;
-        keypairs: KeyPair[];
-    };
+    key(seed?: string): WalletType;
+    keys(n: number): Array<WalletType>;
+    fromPrivateKey(key: string | Key): WalletType;
+    etherKey(seed?: string): WalletType;
+    etherKeys(n: number): Array<WalletType>;
     address(pubKey: string): string;
     etherAddress(pubKey: string): string;
     addressForMultiSig(pubKeys: Array<{

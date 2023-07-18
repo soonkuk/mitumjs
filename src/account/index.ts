@@ -12,7 +12,6 @@ import { Operation } from "../operation/index.js";
 import { WalletType } from "../types/wallet.js";
 import { KeyUpdaterFact } from "./keyUpdate.js";
 import accountInfo from "./information.js";
-import { KeyPair } from "./iPair.js";
 import { M2KeyPair } from "./key.js";
 
 import { AxiosResponse } from "axios";
@@ -39,32 +38,77 @@ export class Account {
     this._networkID = networkID;
   }
 
-  key(seed?: string): M2KeyPair {
+  key(seed?: string): WalletType {
+    let keyInfo: M2KeyPair;
     if (seed === undefined) {
-      return M2KeyPair.random(BTC);
+      keyInfo = M2KeyPair.random(BTC);
+      return <WalletType>{
+        privatekey: keyInfo.privateKey.toString(),
+        publickey: keyInfo.publicKey.toString(),
+        address: this.address(keyInfo.publicKey.toString()),
+      };
     }
 
-    return M2KeyPair.fromSeed(seed, BTC);
+    keyInfo = M2KeyPair.fromSeed(seed, BTC);
+    return <WalletType>{
+      privatekey: keyInfo.privateKey.toString(),
+      publickey: keyInfo.publicKey.toString(),
+      address: this.address(keyInfo.publicKey.toString()),
+    };
   }
 
-  keys(n: number): { keys: Keys; keypairs: KeyPair[] } {
-    return M2RandomN(n, BTC);
+  keys(n: number): Array<WalletType> {
+    const keypairs = M2RandomN(n, BTC).keypairs;
+
+    const keysInfo = keypairs.map((keypair) => {
+      return <WalletType>{
+        privatekey: keypair.privateKey.toString(),
+        publickey: keypair.publicKey.toString(),
+        address: this.address(keypair.publicKey.toString()),
+      };
+    });
+    return keysInfo;
   }
 
-  fromPrivateKey(key: string | Key): M2KeyPair {
-    return M2KeyPair.fromPrivate(key);
+  fromPrivateKey(key: string | Key): WalletType {
+    const keyInfo = M2KeyPair.fromPrivate(key);
+    return <WalletType>{
+      privatekey: keyInfo.privateKey.toString(),
+      publickey: keyInfo.publicKey.toString(),
+      address: this.address(keyInfo.publicKey.toString()),
+    };
   }
 
-  etherKey(seed?: string): M2KeyPair {
+  etherKey(seed?: string): WalletType {
+    let keyInfo: M2KeyPair;
     if (seed === undefined || seed.length === 0) {
-      return M2KeyPair.random(ETH);
+      keyInfo = M2KeyPair.random(ETH);
+      return <WalletType>{
+        privatekey: keyInfo.privateKey.toString(),
+        publickey: keyInfo.publicKey.toString(),
+        address: this.etherAddress(keyInfo.publicKey.toString()),
+      };
     }
 
-    return M2KeyPair.fromSeed(seed, ETH);
+    keyInfo = M2KeyPair.fromSeed(seed, ETH);
+    return <WalletType>{
+      privatekey: keyInfo.privateKey.toString(),
+      publickey: keyInfo.publicKey.toString(),
+      address: this.etherAddress(keyInfo.publicKey.toString()),
+    };
   }
 
-  etherKeys(n: number): { keys: Keys; keypairs: KeyPair[] } {
-    return M2EtherRandomN(n, ETH);
+  etherKeys(n: number): Array<WalletType> {
+    const keypairs = M2EtherRandomN(n, ETH).keypairs;
+
+    const keysInfo = keypairs.map((keypair) => {
+      return <WalletType>{
+        privatekey: keypair.privateKey.toString(),
+        publickey: keypair.publicKey.toString(),
+        address: this.etherAddress(keypair.publicKey.toString()),
+      };
+    });
+    return keysInfo;
   }
 
   address(pubKey: string): string {

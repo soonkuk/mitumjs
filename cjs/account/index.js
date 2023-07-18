@@ -42,25 +42,68 @@ class Account {
         this._networkID = networkID;
     }
     key(seed) {
+        let keyInfo;
         if (seed === undefined) {
-            return key_js_1.M2KeyPair.random(BTC);
+            keyInfo = key_js_1.M2KeyPair.random(BTC);
+            return {
+                privatekey: keyInfo.privateKey.toString(),
+                publickey: keyInfo.publicKey.toString(),
+                address: this.address(keyInfo.publicKey.toString()),
+            };
         }
-        return key_js_1.M2KeyPair.fromSeed(seed, BTC);
+        keyInfo = key_js_1.M2KeyPair.fromSeed(seed, BTC);
+        return {
+            privatekey: keyInfo.privateKey.toString(),
+            publickey: keyInfo.publicKey.toString(),
+            address: this.address(keyInfo.publicKey.toString()),
+        };
     }
     keys(n) {
-        return (0, random_js_1.M2RandomN)(n, BTC);
+        const keypairs = (0, random_js_1.M2RandomN)(n, BTC).keypairs;
+        const keysInfo = keypairs.map((keypair) => {
+            return {
+                privatekey: keypair.privateKey.toString(),
+                publickey: keypair.publicKey.toString(),
+                address: this.address(keypair.publicKey.toString()),
+            };
+        });
+        return keysInfo;
     }
     fromPrivateKey(key) {
-        return key_js_1.M2KeyPair.fromPrivate(key);
+        const keyInfo = key_js_1.M2KeyPair.fromPrivate(key);
+        return {
+            privatekey: keyInfo.privateKey.toString(),
+            publickey: keyInfo.publicKey.toString(),
+            address: this.address(keyInfo.publicKey.toString()),
+        };
     }
     etherKey(seed) {
+        let keyInfo;
         if (seed === undefined || seed.length === 0) {
-            return key_js_1.M2KeyPair.random(ETH);
+            keyInfo = key_js_1.M2KeyPair.random(ETH);
+            return {
+                privatekey: keyInfo.privateKey.toString(),
+                publickey: keyInfo.publicKey.toString(),
+                address: this.etherAddress(keyInfo.publicKey.toString()),
+            };
         }
-        return key_js_1.M2KeyPair.fromSeed(seed, ETH);
+        keyInfo = key_js_1.M2KeyPair.fromSeed(seed, ETH);
+        return {
+            privatekey: keyInfo.privateKey.toString(),
+            publickey: keyInfo.publicKey.toString(),
+            address: this.etherAddress(keyInfo.publicKey.toString()),
+        };
     }
     etherKeys(n) {
-        return (0, random_js_1.M2EtherRandomN)(n, ETH);
+        const keypairs = (0, random_js_1.M2EtherRandomN)(n, ETH).keypairs;
+        const keysInfo = keypairs.map((keypair) => {
+            return {
+                privatekey: keypair.privateKey.toString(),
+                publickey: keypair.publicKey.toString(),
+                address: this.etherAddress(keypair.publicKey.toString()),
+            };
+        });
+        return keysInfo;
     }
     address(pubKey) {
         const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100).address;

@@ -273,8 +273,8 @@ const test = async () => {
   //   const info5 = await mitum.credential.claimCredential(symbol, holder);
   //   exp("mitum.credential.claimCredential()", info5);
 
-  const info = await mitum.account.getAccountInfo(a1);
-  console.log(info.data._embedded.balance);
+  const info = mitum.account.etherKeys(2);
+  console.log(info);
 };
 
 test();
