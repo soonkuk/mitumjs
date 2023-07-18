@@ -17,14 +17,16 @@ exports.default = {
     getServiceInfo(provider, contract, serviceId) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "" || contract === "" || serviceId === "") {
-                return Promise.reject(new Error("RPC-URL is not provided or You need to set 'contract address and service id'."));
+                console.error("RPC-URL is not provided or You need to set 'contract address and service id'.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/timestamp/${contract}/service/${serviceId}`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },
@@ -34,14 +36,16 @@ exports.default = {
                 contract === "" ||
                 serviceID === "" ||
                 projectID === "") {
-                return Promise.reject(new Error("RPC-URL is not provided or You need to set correct params"));
+                console.error("RPC-URL is not provided or You need to set 'contract address and service id'.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/timestamp/${contract}/service/${serviceID}/project/${projectID}/id/${tID}`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },

@@ -17,56 +17,64 @@ exports.default = {
     getAllBlocksInfo(provider) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                return Promise.reject(new Error("RPC-URL is not provided."));
+                console.error("RPC-URL is not provided.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/block/manifests`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },
     getBlockByHeight(provider, height) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                return Promise.reject(new Error("RPC-URL is not provided."));
+                console.error("RPC-URL is not provided.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/block/${height}/manifest`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },
     getBlockByHash(provider, blockhash) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                return Promise.reject(new Error("RPC-URL is not provided."));
+                console.error("RPC-URL is not provided.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/block/${blockhash}/manifest`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },
     getOperations(provider, block) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                return Promise.reject(new Error("RPC-URL is not provided."));
+                console.error("RPC-URL is not provided.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/block/${block}/operations`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },

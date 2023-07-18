@@ -66,12 +66,18 @@ class Timestamp {
                 sid = serviceID;
             }
             const res = yield information_js_1.default.getServiceInfo(this._node, this._contractAddress, sid);
+            if (!res) {
+                return null;
+            }
             return res.data;
         });
     }
     getTimestampInfo(serviceID, projectID, tID) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield information_js_1.default.getTimestampInfo(this._node, this._contractAddress, serviceID, projectID, tID);
+            if (!res) {
+                return null;
+            }
             return res.data;
         });
     }

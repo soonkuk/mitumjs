@@ -5,13 +5,12 @@ export default {
     provider: string,
     contract: string,
     serviceId: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     if (provider === "" || contract === "" || serviceId === "") {
-      return Promise.reject(
-        new Error(
-          "RPC-URL is not provided or You need to set 'contract address and service id'."
-        )
+      console.error(
+        "RPC-URL is not provided or You need to set 'contract address and service id'."
       );
+      return null;
     }
 
     try {
@@ -20,9 +19,8 @@ export default {
       );
       return res;
     } catch (error: any) {
-      return Promise.reject(
-        new Error(`Error getting node information: ${error.message}`)
-      );
+      console.error(error);
+      return null;
     }
   },
 
@@ -32,16 +30,17 @@ export default {
     serviceID: string,
     projectID: string,
     tID: number
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     if (
       provider === "" ||
       contract === "" ||
       serviceID === "" ||
       projectID === ""
     ) {
-      return Promise.reject(
-        new Error("RPC-URL is not provided or You need to set correct params")
+      console.error(
+        "RPC-URL is not provided or You need to set 'contract address and service id'."
       );
+      return null;
     }
 
     try {
@@ -50,9 +49,8 @@ export default {
       );
       return res;
     } catch (error: any) {
-      return Promise.reject(
-        new Error(`Error getting node information: ${error.message}`)
-      );
+      console.error(error);
+      return null;
     }
   },
 };

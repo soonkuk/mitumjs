@@ -63,7 +63,9 @@ export class Nft {
     return this._collection.toString();
   }
 
-  async getCollectionInfo(collectionID?: string): Promise<AxiosResponse> {
+  async getCollectionInfo(
+    collectionID?: string
+  ): Promise<AxiosResponse | null> {
     let id = this._collection;
 
     if (collectionID !== undefined) {
@@ -75,11 +77,17 @@ export class Nft {
       this._contractAddress,
       id
     );
+
+    if (!res) {
+      return null;
+    }
 
     return res.data;
   }
 
-  async getCollectionPolicy(collectionID?: string): Promise<AxiosResponse> {
+  async getCollectionPolicy(
+    collectionID?: string
+  ): Promise<AxiosResponse | null> {
     let id = this._collection;
 
     if (collectionID !== undefined) {
@@ -91,6 +99,10 @@ export class Nft {
       this._contractAddress,
       id
     );
+
+    if (!res) {
+      return null;
+    }
 
     return res.data._embedded.policy;
   }
@@ -101,7 +113,7 @@ export class Nft {
   async ownerOf(
     tokenID: number,
     collectionID?: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     let id = this._collection;
 
     if (collectionID !== undefined) {
@@ -115,10 +127,14 @@ export class Nft {
       tokenID
     );
 
+    if (!res) {
+      return null;
+    }
+
     return res.data._embedded.owner;
   }
 
-  async name(collectionID?: string): Promise<AxiosResponse> {
+  async name(collectionID?: string): Promise<AxiosResponse | null> {
     let id = this._collection;
 
     if (collectionID !== undefined) {
@@ -131,6 +147,10 @@ export class Nft {
       id
     );
 
+    if (!res) {
+      return null;
+    }
+
     return res.data._embedded.policy.name;
   }
 
@@ -138,7 +158,7 @@ export class Nft {
     return this.getCollectionId();
   }
 
-  async totalSupply(collectionID?: string): Promise<AxiosResponse> {
+  async totalSupply(collectionID?: string): Promise<AxiosResponse | null> {
     let id = this._collection;
 
     if (collectionID !== undefined) {
@@ -151,13 +171,17 @@ export class Nft {
       id
     );
 
+    if (!res) {
+      return null;
+    }
+
     return res.data._embedded.length;
   }
 
   async tokenURI(
     tokenID: number,
     collectionID?: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     let id = this._collection;
 
     if (collectionID !== undefined) {
@@ -170,6 +194,10 @@ export class Nft {
       id,
       tokenID
     );
+
+    if (!res) {
+      return null;
+    }
 
     return res.data._embedded.uri;
   }
@@ -327,7 +355,7 @@ export class Nft {
   async getApproved(
     tokenID: number,
     collectionID?: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     let id = this._collection;
 
     if (collectionID !== undefined) {
@@ -340,6 +368,10 @@ export class Nft {
       id,
       tokenID
     );
+
+    if (!res) {
+      return null;
+    }
 
     return res.data._embedded.approved;
   }
@@ -373,7 +405,7 @@ export class Nft {
   async isApprovedForAll(
     owner: string,
     collectionID?: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     let id = this._collection;
 
     if (collectionID !== undefined) {
@@ -387,13 +419,17 @@ export class Nft {
       owner
     );
 
+    if (!res) {
+      return null;
+    }
+
     return res.data;
   }
 
   async getNFTInfo(
     tokenID: number,
     collectionID?: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     let id = this._collection;
 
     if (collectionID !== undefined) {
@@ -406,6 +442,10 @@ export class Nft {
       id,
       tokenID
     );
+
+    if (!res) {
+      return null;
+    }
 
     return res.data;
   }

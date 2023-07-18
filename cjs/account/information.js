@@ -17,42 +17,48 @@ exports.default = {
     getAddressInfo(provider, address) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                return Promise.reject(new Error("RPC-URL is not provided."));
+                console.error("RPC-URL is not provided.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/account/${address}`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },
     getOperationsByAddress(provider, address) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                return Promise.reject(new Error("RPC-URL is not provided."));
+                console.error("RPC-URL is not provided.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/account/${address}/operations`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },
     getAccountInfoByPublickey(provider, publickey) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                return Promise.reject(new Error("RPC-URL is not provided."));
+                console.error("RPC-URL is not provided.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/accounts?publickey=${publickey}`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },

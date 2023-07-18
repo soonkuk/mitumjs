@@ -254,15 +254,24 @@ export class Account {
     return new Keys(pubs, threshold);
   }
 
-  async getAccountInfo(address: string): Promise<AxiosResponse> {
+  async getAccountInfo(address: string): Promise<AxiosResponse | null> {
     return await accountInfo.getAddressInfo(this._node, address);
   }
 
-  async getOperation(address: string): Promise<AxiosResponse> {
+  async getOperation(address: string): Promise<AxiosResponse | null> {
     return await accountInfo.getOperationsByAddress(this._node, address);
   }
 
-  async getByPublickey(publickey: string): Promise<AxiosResponse> {
+  async getByPublickey(publickey: string): Promise<AxiosResponse | null> {
     return await accountInfo.getAccountInfoByPublickey(this._node, publickey);
+  }
+
+  async balance(address: string): Promise<AxiosResponse | null> {
+    const info = await accountInfo.getAddressInfo(this._node, address);
+
+    if (info) {
+      return info.data._embedded.balance;
+    }
+    return null;
   }
 }

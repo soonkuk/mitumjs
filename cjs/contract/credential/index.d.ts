@@ -43,8 +43,8 @@ export declare class Credential {
     */
     issue(sender: string, data: issueData, currency: string): OperationType<Fact>;
     revoke(sender: string, holder: string, templateId: number, id: string, currency: string): OperationType<Fact>;
-    getServiceInfo(serviceId?: string): Promise<AxiosResponse>;
-    getCredentialInfo(serviceId: string, templateId: string, credentialId: string): Promise<AxiosResponse>;
-    getTemplate(serviceId: string, templateId: string): Promise<AxiosResponse>;
-    claimCredential(serviceID: string, holder: string): Promise<AxiosResponse>;
+    getServiceInfo(serviceId?: string): Promise<AxiosResponse | null>;
+    getCredentialInfo(serviceId: string, templateId: string, credentialId: string): Promise<AxiosResponse | null>;
+    getTemplate(serviceId: string, templateId: string): Promise<AxiosResponse | null>;
+    claimCredential(serviceID: string, holder: string): Promise<AxiosResponse | null>;
 }

@@ -99,18 +99,30 @@ export class Credential {
             sid = serviceId;
         }
         const res = await credentialInfo.getServiceInfo(this._node, this._address, sid);
+        if (!res) {
+            return null;
+        }
         return res.data;
     }
     async getCredentialInfo(serviceId, templateId, credentialId) {
         const res = await credentialInfo.getCredentialInfo(this._node, this._address, serviceId, templateId, credentialId);
+        if (!res) {
+            return null;
+        }
         return res.data;
     }
     async getTemplate(serviceId, templateId) {
         const res = await credentialInfo.getTemplate(this._node, this._address, serviceId, templateId);
+        if (!res) {
+            return null;
+        }
         return res.data;
     }
     async claimCredential(serviceID, holder) {
         const res = await credentialInfo.getCredentialByHolder(this._node, this._address, serviceID, holder);
+        if (!res) {
+            return null;
+        }
         return res.data;
     }
 }

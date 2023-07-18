@@ -115,24 +115,36 @@ class Credential {
                 sid = serviceId;
             }
             const res = yield information_js_1.default.getServiceInfo(this._node, this._address, sid);
+            if (!res) {
+                return null;
+            }
             return res.data;
         });
     }
     getCredentialInfo(serviceId, templateId, credentialId) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield information_js_1.default.getCredentialInfo(this._node, this._address, serviceId, templateId, credentialId);
+            if (!res) {
+                return null;
+            }
             return res.data;
         });
     }
     getTemplate(serviceId, templateId) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield information_js_1.default.getTemplate(this._node, this._address, serviceId, templateId);
+            if (!res) {
+                return null;
+            }
             return res.data;
         });
     }
     claimCredential(serviceID, holder) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield information_js_1.default.getCredentialByHolder(this._node, this._address, serviceID, holder);
+            if (!res) {
+                return null;
+            }
             return res.data;
         });
     }

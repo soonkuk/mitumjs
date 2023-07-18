@@ -13,8 +13,8 @@ export declare class Timestamp {
     setServiceId(serviceId: string): void;
     getContractAddress(): string;
     getServiceId(): string;
-    getServiceInfo(serviceID?: string): Promise<AxiosResponse>;
-    getTimestampInfo(serviceID: string, projectID: string, tID: number): Promise<AxiosResponse>;
+    getServiceInfo(serviceID?: string): Promise<AxiosResponse | null>;
+    getTimestampInfo(serviceID: string, projectID: string, tID: number): Promise<AxiosResponse | null>;
     append(sender: string, projectID: string, requestTime: number, data: string, currencyID: string): OperationType<Fact>;
     createTimestampService(sender: string, serviceId: string, currencyID: string): OperationType<Fact>;
 }

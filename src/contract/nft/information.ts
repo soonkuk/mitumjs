@@ -6,13 +6,12 @@ export default {
     contract: string,
     collection: string,
     tokenID: number
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     if (provider === "" || contract === undefined || collection === undefined) {
-      return Promise.reject(
-        new Error(
-          "RPC-URL is not provided or You need to set 'contract address and collection id'."
-        )
+      console.error(
+        "RPC-URL is not provided or You need to set 'contract address and collection id'."
       );
+      return null;
     }
 
     try {
@@ -21,9 +20,8 @@ export default {
       );
       return res;
     } catch (error: any) {
-      return Promise.reject(
-        new Error(`Error getting node information: ${error.message}`)
-      );
+      console.error(error);
+      return null;
     }
   },
 
@@ -31,13 +29,12 @@ export default {
     provider: string,
     contract: string,
     collection: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     if (provider === "" || contract === undefined || collection === undefined) {
-      return Promise.reject(
-        new Error(
-          "RPC-URL is not provided or You need to set 'contract address and collection id'."
-        )
+      console.error(
+        "RPC-URL is not provided or You need to set 'contract address and collection id'."
       );
+      return null;
     }
 
     try {
@@ -46,9 +43,8 @@ export default {
       );
       return res;
     } catch (error: any) {
-      return Promise.reject(
-        new Error(`Error getting node information: ${error.message}`)
-      );
+      console.error(error);
+      return null;
     }
   },
 
@@ -56,13 +52,12 @@ export default {
     provider: string,
     contract: string,
     collection: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     if (provider === "" || contract === undefined || collection === undefined) {
-      return Promise.reject(
-        new Error(
-          "RPC-URL is not provided or You need to set 'contract address and collection id'."
-        )
+      console.error(
+        "RPC-URL is not provided or You need to set 'contract address and collection id'."
       );
+      return null;
     }
 
     try {
@@ -71,9 +66,8 @@ export default {
       );
       return res;
     } catch (error: any) {
-      return Promise.reject(
-        new Error(`Error getting node information: ${error.message}`)
-      );
+      console.error(error);
+      return null;
     }
   },
 
@@ -82,13 +76,12 @@ export default {
     contract: string,
     collection: string,
     address: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     if (provider === "" || contract === undefined || collection === undefined) {
-      return Promise.reject(
-        new Error(
-          "RPC-URL is not provided or You need to set 'contract address and collection id'."
-        )
+      console.error(
+        "RPC-URL is not provided or You need to set 'contract address and collection id'."
       );
+      return null;
     }
 
     try {
@@ -97,9 +90,8 @@ export default {
       );
       return res;
     } catch (error: any) {
-      return Promise.reject(
-        new Error(`Error getting node information: ${error.message}`)
-      );
+      console.error(error);
+      return null;
     }
   },
 };

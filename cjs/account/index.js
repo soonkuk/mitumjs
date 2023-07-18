@@ -174,6 +174,15 @@ class Account {
             return yield information_js_1.default.getAccountInfoByPublickey(this._node, publickey);
         });
     }
+    balance(address) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const info = yield information_js_1.default.getAddressInfo(this._node, address);
+            if (info) {
+                return info.data._embedded.balance;
+            }
+            return null;
+        });
+    }
 }
 exports.Account = Account;
 //# sourceMappingURL=index.js.map

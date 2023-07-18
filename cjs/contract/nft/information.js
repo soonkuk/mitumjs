@@ -17,56 +17,64 @@ exports.default = {
     getNftInfo(provider, contract, collection, tokenID) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "" || contract === undefined || collection === undefined) {
-                return Promise.reject(new Error("RPC-URL is not provided or You need to set 'contract address and collection id'."));
+                console.error("RPC-URL is not provided or You need to set 'contract address and collection id'.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/nft/${contract}/collection/${collection}/${tokenID}`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },
     getCollectionInfo(provider, contract, collection) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "" || contract === undefined || collection === undefined) {
-                return Promise.reject(new Error("RPC-URL is not provided or You need to set 'contract address and collection id'."));
+                console.error("RPC-URL is not provided or You need to set 'contract address and collection id'.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/nft/${contract}/collection/${collection}`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },
     getAllNftInfo(provider, contract, collection) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "" || contract === undefined || collection === undefined) {
-                return Promise.reject(new Error("RPC-URL is not provided or You need to set 'contract address and collection id'."));
+                console.error("RPC-URL is not provided or You need to set 'contract address and collection id'.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/nft/${contract}/collection/${collection}/nfts`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },
     getOperationInfo(provider, contract, collection, address) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "" || contract === undefined || collection === undefined) {
-                return Promise.reject(new Error("RPC-URL is not provided or You need to set 'contract address and collection id'."));
+                console.error("RPC-URL is not provided or You need to set 'contract address and collection id'.");
+                return null;
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/nft/${contract}/collection/${collection}/account/${address}/operators`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                console.error(error);
+                return null;
             }
         });
     },

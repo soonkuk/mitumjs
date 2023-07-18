@@ -151,5 +151,12 @@ export class Account {
     async getByPublickey(publickey) {
         return await accountInfo.getAccountInfoByPublickey(this._node, publickey);
     }
+    async balance(address) {
+        const info = await accountInfo.getAddressInfo(this._node, address);
+        if (info) {
+            return info.data._embedded.balance;
+        }
+        return null;
+    }
 }
 //# sourceMappingURL=index.js.map

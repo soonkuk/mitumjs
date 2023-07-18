@@ -56,7 +56,8 @@ export declare class Account {
         key: string;
     }>, currentID: string, threshold: number): OperationType<Fact>;
     private pubToKeys;
-    getAccountInfo(address: string): Promise<AxiosResponse>;
-    getOperation(address: string): Promise<AxiosResponse>;
-    getByPublickey(publickey: string): Promise<AxiosResponse>;
+    getAccountInfo(address: string): Promise<AxiosResponse | null>;
+    getOperation(address: string): Promise<AxiosResponse | null>;
+    getByPublickey(publickey: string): Promise<AxiosResponse | null>;
+    balance(address: string): Promise<AxiosResponse | null>;
 }

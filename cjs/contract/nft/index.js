@@ -70,6 +70,9 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getCollectionInfo(this._node, this._contractAddress, id);
+            if (!res) {
+                return null;
+            }
             return res.data;
         });
     }
@@ -80,6 +83,9 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getCollectionInfo(this._node, this._contractAddress, id);
+            if (!res) {
+                return null;
+            }
             return res.data._embedded.policy;
         });
     }
@@ -92,6 +98,9 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
+            if (!res) {
+                return null;
+            }
             return res.data._embedded.owner;
         });
     }
@@ -102,6 +111,9 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getCollectionInfo(this._node, this._contractAddress, id);
+            if (!res) {
+                return null;
+            }
             return res.data._embedded.policy.name;
         });
     }
@@ -115,6 +127,9 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getAllNftInfo(this._node, this._contractAddress, id);
+            if (!res) {
+                return null;
+            }
             return res.data._embedded.length;
         });
     }
@@ -125,6 +140,9 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
+            if (!res) {
+                return null;
+            }
             return res.data._embedded.uri;
         });
     }
@@ -190,6 +208,9 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
+            if (!res) {
+                return null;
+            }
             return res.data._embedded.approved;
         });
     }
@@ -211,6 +232,9 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getOperationInfo(this._node, this._contractAddress, id, owner);
+            if (!res) {
+                return null;
+            }
             return res.data;
         });
     }
@@ -221,6 +245,9 @@ class Nft {
                 id = collectionID;
             }
             const res = yield information_js_1.default.getNftInfo(this._node, this._contractAddress, id, tokenID);
+            if (!res) {
+                return null;
+            }
             return res.data;
         });
     }

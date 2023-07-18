@@ -54,6 +54,9 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getCollectionInfo(this._node, this._contractAddress, id);
+        if (!res) {
+            return null;
+        }
         return res.data;
     }
     async getCollectionPolicy(collectionID) {
@@ -62,6 +65,9 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getCollectionInfo(this._node, this._contractAddress, id);
+        if (!res) {
+            return null;
+        }
         return res.data._embedded.policy;
     }
     // owner의 nft 갯수. TBD.
@@ -72,6 +78,9 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getNftInfo(this._node, this._contractAddress, id, tokenID);
+        if (!res) {
+            return null;
+        }
         return res.data._embedded.owner;
     }
     async name(collectionID) {
@@ -80,6 +89,9 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getCollectionInfo(this._node, this._contractAddress, id);
+        if (!res) {
+            return null;
+        }
         return res.data._embedded.policy.name;
     }
     symbol() {
@@ -91,6 +103,9 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getAllNftInfo(this._node, this._contractAddress, id);
+        if (!res) {
+            return null;
+        }
         return res.data._embedded.length;
     }
     async tokenURI(tokenID, collectionID) {
@@ -99,6 +114,9 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getNftInfo(this._node, this._contractAddress, id, tokenID);
+        if (!res) {
+            return null;
+        }
         return res.data._embedded.uri;
     }
     /** structure
@@ -162,6 +180,9 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getNftInfo(this._node, this._contractAddress, id, tokenID);
+        if (!res) {
+            return null;
+        }
         return res.data._embedded.approved;
     }
     setApprovalForAll(owner, operator, mode, currencyID) {
@@ -181,6 +202,9 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getOperationInfo(this._node, this._contractAddress, id, owner);
+        if (!res) {
+            return null;
+        }
         return res.data;
     }
     async getNFTInfo(tokenID, collectionID) {
@@ -189,6 +213,9 @@ export class Nft {
             id = collectionID;
         }
         const res = await nftInfo.getNftInfo(this._node, this._contractAddress, id, tokenID);
+        if (!res) {
+            return null;
+        }
         return res.data;
     }
 }

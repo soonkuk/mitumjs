@@ -18,13 +18,13 @@ export declare class Nft {
     setCollectionId(collectionID: string): void;
     getContractAddress(): string;
     getCollectionId(): string;
-    getCollectionInfo(collectionID?: string): Promise<AxiosResponse>;
-    getCollectionPolicy(collectionID?: string): Promise<AxiosResponse>;
-    ownerOf(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
-    name(collectionID?: string): Promise<AxiosResponse>;
+    getCollectionInfo(collectionID?: string): Promise<AxiosResponse | null>;
+    getCollectionPolicy(collectionID?: string): Promise<AxiosResponse | null>;
+    ownerOf(tokenID: number, collectionID?: string): Promise<AxiosResponse | null>;
+    name(collectionID?: string): Promise<AxiosResponse | null>;
     symbol(): string;
-    totalSupply(collectionID?: string): Promise<AxiosResponse>;
-    tokenURI(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
+    totalSupply(collectionID?: string): Promise<AxiosResponse | null>;
+    tokenURI(tokenID: number, collectionID?: string): Promise<AxiosResponse | null>;
     /** structure
      * collectionData = {
      *    name: string;
@@ -49,8 +49,8 @@ export declare class Nft {
     mintForMultiCreators(sender: string, uri: string, hash: string, currencyID: string, creator: Creator[]): OperationType<Fact>;
     transfer(sender: string, receiver: string, tokenId: string | number | Buffer | BigInt | Uint8Array, currencyId: string): OperationType<NFTTransferFact>;
     approve(owner: string, operator: string, tokenID: string | number | Buffer | BigInt | Uint8Array, currencyID: string): OperationType<Fact>;
-    getApproved(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
+    getApproved(tokenID: number, collectionID?: string): Promise<AxiosResponse | null>;
     setApprovalForAll(owner: string, operator: string, mode: boolean, currencyID: string): OperationType<DelegateFact>;
-    isApprovedForAll(owner: string, collectionID?: string): Promise<AxiosResponse>;
-    getNFTInfo(tokenID: number, collectionID?: string): Promise<AxiosResponse>;
+    isApprovedForAll(owner: string, collectionID?: string): Promise<AxiosResponse | null>;
+    getNFTInfo(tokenID: number, collectionID?: string): Promise<AxiosResponse | null>;
 }

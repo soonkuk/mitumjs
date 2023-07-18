@@ -58,7 +58,7 @@ export class Timestamp {
     return this._serviceID.toString();
   }
 
-  async getServiceInfo(serviceID?: string): Promise<AxiosResponse> {
+  async getServiceInfo(serviceID?: string): Promise<AxiosResponse | null> {
     let sid = this._serviceID;
 
     if (serviceID !== undefined) {
@@ -71,6 +71,10 @@ export class Timestamp {
       sid
     );
 
+    if (!res) {
+      return null;
+    }
+
     return res.data;
   }
 
@@ -78,7 +82,7 @@ export class Timestamp {
     serviceID: string,
     projectID: string,
     tID: number
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | null> {
     const res = await timestampInfo.getTimestampInfo(
       this._node,
       this._contractAddress,
@@ -86,6 +90,10 @@ export class Timestamp {
       projectID,
       tID
     );
+
+    if (!res) {
+      return null;
+    }
 
     return res.data;
   }

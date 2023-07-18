@@ -50,10 +50,16 @@ export class Timestamp {
             sid = serviceID;
         }
         const res = await timestampInfo.getServiceInfo(this._node, this._contractAddress, sid);
+        if (!res) {
+            return null;
+        }
         return res.data;
     }
     async getTimestampInfo(serviceID, projectID, tID) {
         const res = await timestampInfo.getTimestampInfo(this._node, this._contractAddress, serviceID, projectID, tID);
+        if (!res) {
+            return null;
+        }
         return res.data;
     }
     append(sender, projectID, requestTime, data, currencyID) {
