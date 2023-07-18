@@ -17,48 +17,42 @@ exports.default = {
     getAddressInfo(provider, address) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                console.error("RPC-URL is not provided.");
-                return null;
+                throw new Error("RPC-URL is not provided.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/account/${address}`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },
     getOperationsByAddress(provider, address) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                console.error("RPC-URL is not provided.");
-                return null;
+                throw new Error("RPC-URL is not provided.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/account/${address}/operations`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },
     getAccountInfoByPublickey(provider, publickey) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                console.error("RPC-URL is not provided.");
-                return null;
+                throw new Error("RPC-URL is not provided.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/accounts?publickey=${publickey}`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },

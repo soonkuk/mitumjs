@@ -1,7 +1,7 @@
 import axios from "axios";
 export async function sendOperation(signedOperation, provider, headers) {
     if (provider === "") {
-        return Promise.reject(new Error("RPC-URL is not provided."));
+        throw new Error("RPC-URL is not provided.");
     }
     try {
         if (headers) {
@@ -12,7 +12,7 @@ export async function sendOperation(signedOperation, provider, headers) {
         return await axios.post(`${provider}/builder/send`, signedOperation);
     }
     catch (error) {
-        return Promise.reject(new Error(`Error getting node information: ${error.response.data}`));
+        throw new Error(error.response.data);
     }
 }
 //# sourceMappingURL=send.js.map

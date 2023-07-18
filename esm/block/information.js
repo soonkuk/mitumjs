@@ -2,58 +2,50 @@ import axios from "axios";
 export default {
     async getAllBlocksInfo(provider) {
         if (provider === "") {
-            console.error("RPC-URL is not provided.");
-            return null;
+            throw new Error("RPC-URL is not provided.");
         }
         try {
             const res = await axios.get(`${provider}/block/manifests`);
             return res;
         }
         catch (error) {
-            console.error(error);
-            return null;
+            throw new Error(error.response.data);
         }
     },
     async getBlockByHeight(provider, height) {
         if (provider === "") {
-            console.error("RPC-URL is not provided.");
-            return null;
+            throw new Error("RPC-URL is not provided.");
         }
         try {
             const res = await axios.get(`${provider}/block/${height}/manifest`);
             return res;
         }
         catch (error) {
-            console.error(error);
-            return null;
+            throw new Error(error.response.data);
         }
     },
     async getBlockByHash(provider, blockhash) {
         if (provider === "") {
-            console.error("RPC-URL is not provided.");
-            return null;
+            throw new Error("RPC-URL is not provided.");
         }
         try {
             const res = await axios.get(`${provider}/block/${blockhash}/manifest`);
             return res;
         }
         catch (error) {
-            console.error(error);
-            return null;
+            throw new Error(error.response.data);
         }
     },
     async getOperations(provider, block) {
         if (provider === "") {
-            console.error("RPC-URL is not provided.");
-            return null;
+            throw new Error("RPC-URL is not provided.");
         }
         try {
             const res = await axios.get(`${provider}/block/${block}/operations`);
             return res;
         }
         catch (error) {
-            console.error(error);
-            return null;
+            throw new Error(error.response.data);
         }
     },
 };

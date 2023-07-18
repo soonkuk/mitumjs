@@ -184,14 +184,10 @@ export class Account {
   async touch(
     privatekey: string,
     wallet: { wallet: WalletType; operation: OperationType<Fact> }
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     const oper = new Operation(this._node);
     const signedOperation = oper.sign(privatekey, wallet.operation);
     const res = await oper.send(signedOperation);
-    if (!res) {
-      return null;
-    }
-
     return res.data;
   }
 
@@ -302,24 +298,20 @@ export class Account {
     return new Keys(pubs, threshold);
   }
 
-  async getAccountInfo(address: string): Promise<AxiosResponse | null> {
+  async getAccountInfo(address: string): Promise<AxiosResponse> {
     return await accountInfo.getAddressInfo(this._node, address);
   }
 
-  async getOperation(address: string): Promise<AxiosResponse | null> {
+  async getOperation(address: string): Promise<AxiosResponse> {
     return await accountInfo.getOperationsByAddress(this._node, address);
   }
 
-  async getByPublickey(publickey: string): Promise<AxiosResponse | null> {
+  async getByPublickey(publickey: string): Promise<AxiosResponse> {
     return await accountInfo.getAccountInfoByPublickey(this._node, publickey);
   }
 
-  async balance(address: string): Promise<AxiosResponse | null> {
+  async balance(address: string): Promise<AxiosResponse> {
     const info = await accountInfo.getAddressInfo(this._node, address);
-
-    if (info) {
-      return info.data._embedded.balance;
-    }
-    return null;
+    return info.data._embedded.balance;
   }
 }

@@ -6,12 +6,11 @@ export default {
     contract: string,
     collection: string,
     tokenID: number
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "" || contract === undefined || collection === undefined) {
-      console.error(
+      throw new Error(
         "RPC-URL is not provided or You need to set 'contract address and collection id'."
       );
-      return null;
     }
 
     try {
@@ -20,8 +19,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 
@@ -29,12 +27,11 @@ export default {
     provider: string,
     contract: string,
     collection: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "" || contract === undefined || collection === undefined) {
-      console.error(
+      throw new Error(
         "RPC-URL is not provided or You need to set 'contract address and collection id'."
       );
-      return null;
     }
 
     try {
@@ -43,8 +40,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 
@@ -52,12 +48,11 @@ export default {
     provider: string,
     contract: string,
     collection: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "" || contract === undefined || collection === undefined) {
-      console.error(
+      throw new Error(
         "RPC-URL is not provided or You need to set 'contract address and collection id'."
       );
-      return null;
     }
 
     try {
@@ -66,8 +61,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 
@@ -76,12 +70,11 @@ export default {
     contract: string,
     collection: string,
     address: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "" || contract === undefined || collection === undefined) {
-      console.error(
+      throw new Error(
         "RPC-URL is not provided or You need to set 'contract address and collection id'."
       );
-      return null;
     }
 
     try {
@@ -90,8 +83,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 };

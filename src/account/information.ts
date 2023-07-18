@@ -4,46 +4,41 @@ export default {
   async getAddressInfo(
     provider: string,
     address: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "") {
-      console.error("RPC-URL is not provided.");
-      return null;
+      throw new Error("RPC-URL is not provided.");
     }
 
     try {
       const res = await axios.get(`${provider}/account/${address}`);
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 
   async getOperationsByAddress(
     provider: string,
     address: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "") {
-      console.error("RPC-URL is not provided.");
-      return null;
+      throw new Error("RPC-URL is not provided.");
     }
 
     try {
       const res = await axios.get(`${provider}/account/${address}/operations`);
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 
   async getAccountInfoByPublickey(
     provider: string,
     publickey: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "") {
-      console.error("RPC-URL is not provided.");
-      return null;
+      throw new Error("RPC-URL is not provided.");
     }
 
     try {
@@ -52,8 +47,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 };

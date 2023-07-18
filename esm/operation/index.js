@@ -22,8 +22,8 @@ export class Operation {
     sign(privatekey, operation, option) {
         return signOperation(privatekey, operation, option);
     }
-    send(signedOperation, headers) {
-        return sendOperation(signedOperation, this._node, headers);
+    async send(signedOperation, headers) {
+        return await sendOperation(signedOperation, this._node, headers);
     }
 }
 //# sourceMappingURL=index.js.map

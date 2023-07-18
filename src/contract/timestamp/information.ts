@@ -7,10 +7,9 @@ export default {
     serviceId: string
   ): Promise<AxiosResponse | null> {
     if (provider === "" || contract === "" || serviceId === "") {
-      console.error(
+      throw new Error(
         "RPC-URL is not provided or You need to set 'contract address and service id'."
       );
-      return null;
     }
 
     try {
@@ -19,8 +18,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 
@@ -37,10 +35,9 @@ export default {
       serviceID === "" ||
       projectID === ""
     ) {
-      console.error(
+      throw new Error(
         "RPC-URL is not provided or You need to set 'contract address and service id'."
       );
-      return null;
     }
 
     try {
@@ -49,8 +46,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 };

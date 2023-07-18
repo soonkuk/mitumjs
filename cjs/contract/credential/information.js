@@ -17,64 +17,56 @@ exports.default = {
     getServiceInfo(provider, contract, serviceId) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "" || contract === "" || serviceId === "") {
-                console.error("RPC-URL is not provided or You need to set 'contract address and credential id'.");
-                return null;
+                throw new Error("RPC-URL is not provided or You need to set 'contract address and credential id'.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/did/${contract}/issuer/${serviceId}`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },
     getCredentialInfo(provider, contract, serviceId, templateId, credentialId) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "" || contract === "" || serviceId === "") {
-                console.error("RPC-URL is not provided or You need to set 'contract address and credential id'.");
-                return null;
+                throw new Error("RPC-URL is not provided or You need to set 'contract address and credential id'.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/did/${contract}/issuer/${serviceId}/template/${templateId}/credential/${credentialId}`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },
     getTemplate(provider, contract, serviceId, templateId) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "" || contract === "" || serviceId === "") {
-                console.error("RPC-URL is not provided or You need to set 'contract address and credential id'.");
-                return null;
+                throw new Error("RPC-URL is not provided or You need to set 'contract address and credential id'.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/did/${contract}/issuer/${serviceId}/template/${templateId}`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },
     getCredentialByHolder(provider, contract, serviceId, holder) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "" || contract === "" || serviceId === "") {
-                console.error("RPC-URL is not provided or You need to set 'contract address and credential id'.");
-                return null;
+                throw new Error("RPC-URL is not provided or You need to set 'contract address and credential id'.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/did/${contract}/issuer/${serviceId}/holder/${holder}`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },

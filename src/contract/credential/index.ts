@@ -177,7 +177,7 @@ export class Credential {
     return new OperationType(this._networkID, fact);
   }
 
-  async getServiceInfo(serviceId?: string): Promise<AxiosResponse | null> {
+  async getServiceInfo(serviceId?: string): Promise<AxiosResponse> {
     let sid = this._serviceID;
 
     if (serviceId !== undefined) {
@@ -190,10 +190,6 @@ export class Credential {
       sid
     );
 
-    if (!res) {
-      return null;
-    }
-
     return res.data;
   }
 
@@ -201,7 +197,7 @@ export class Credential {
     serviceId: string,
     templateId: string,
     credentialId: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     const res = await credentialInfo.getCredentialInfo(
       this._node,
       this._address,
@@ -210,17 +206,13 @@ export class Credential {
       credentialId
     );
 
-    if (!res) {
-      return null;
-    }
-
     return res.data;
   }
 
   async getTemplate(
     serviceId: string,
     templateId: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     const res = await credentialInfo.getTemplate(
       this._node,
       this._address,
@@ -228,27 +220,19 @@ export class Credential {
       templateId
     );
 
-    if (!res) {
-      return null;
-    }
-
     return res.data;
   }
 
   async claimCredential(
     serviceID: string,
     holder: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     const res = await credentialInfo.getCredentialByHolder(
       this._node,
       this._address,
       serviceID,
       holder
     );
-
-    if (!res) {
-      return null;
-    }
 
     return res.data;
   }

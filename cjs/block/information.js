@@ -17,64 +17,56 @@ exports.default = {
     getAllBlocksInfo(provider) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                console.error("RPC-URL is not provided.");
-                return null;
+                throw new Error("RPC-URL is not provided.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/block/manifests`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },
     getBlockByHeight(provider, height) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                console.error("RPC-URL is not provided.");
-                return null;
+                throw new Error("RPC-URL is not provided.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/block/${height}/manifest`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },
     getBlockByHash(provider, blockhash) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                console.error("RPC-URL is not provided.");
-                return null;
+                throw new Error("RPC-URL is not provided.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/block/${blockhash}/manifest`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },
     getOperations(provider, block) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                console.error("RPC-URL is not provided.");
-                return null;
+                throw new Error("RPC-URL is not provided.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/block/${block}/operations`);
                 return res;
             }
             catch (error) {
-                console.error(error);
-                return null;
+                throw new Error(error.response.data);
             }
         });
     },

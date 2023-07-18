@@ -17,7 +17,7 @@ const axios_1 = __importDefault(require("axios"));
 function sendOperation(signedOperation, provider, headers) {
     return __awaiter(this, void 0, void 0, function* () {
         if (provider === "") {
-            return Promise.reject(new Error("RPC-URL is not provided."));
+            throw new Error("RPC-URL is not provided.");
         }
         try {
             if (headers) {
@@ -28,7 +28,7 @@ function sendOperation(signedOperation, provider, headers) {
             return yield axios_1.default.post(`${provider}/builder/send`, signedOperation);
         }
         catch (error) {
-            return Promise.reject(new Error(`Error getting node information: ${error.response.data}`));
+            throw new Error(error.response.data);
         }
     });
 }

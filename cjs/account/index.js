@@ -151,9 +151,6 @@ class Account {
             const oper = new index_js_1.Operation(this._node);
             const signedOperation = oper.sign(privatekey, wallet.operation);
             const res = yield oper.send(signedOperation);
-            if (!res) {
-                return null;
-            }
             return res.data;
         });
     }
@@ -223,10 +220,7 @@ class Account {
     balance(address) {
         return __awaiter(this, void 0, void 0, function* () {
             const info = yield information_js_1.default.getAddressInfo(this._node, address);
-            if (info) {
-                return info.data._embedded.balance;
-            }
-            return null;
+            return info.data._embedded.balance;
         });
     }
 }

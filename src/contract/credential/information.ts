@@ -5,12 +5,11 @@ export default {
     provider: string,
     contract: string,
     serviceId: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "" || contract === "" || serviceId === "") {
-      console.error(
+      throw new Error(
         "RPC-URL is not provided or You need to set 'contract address and credential id'."
       );
-      return null;
     }
 
     try {
@@ -19,8 +18,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 
@@ -30,12 +28,11 @@ export default {
     serviceId: string,
     templateId: string,
     credentialId: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "" || contract === "" || serviceId === "") {
-      console.error(
+      throw new Error(
         "RPC-URL is not provided or You need to set 'contract address and credential id'."
       );
-      return null;
     }
 
     try {
@@ -44,8 +41,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 
@@ -54,12 +50,11 @@ export default {
     contract: string,
     serviceId: string,
     templateId: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "" || contract === "" || serviceId === "") {
-      console.error(
+      throw new Error(
         "RPC-URL is not provided or You need to set 'contract address and credential id'."
       );
-      return null;
     }
 
     try {
@@ -68,8 +63,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 
@@ -78,12 +72,11 @@ export default {
     contract: string,
     serviceId: string,
     holder: string
-  ): Promise<AxiosResponse | null> {
+  ): Promise<AxiosResponse> {
     if (provider === "" || contract === "" || serviceId === "") {
-      console.error(
+      throw new Error(
         "RPC-URL is not provided or You need to set 'contract address and credential id'."
       );
-      return null;
     }
 
     try {
@@ -92,8 +85,7 @@ export default {
       );
       return res;
     } catch (error: any) {
-      console.error(error);
-      return null;
+      throw new Error(error.response.data);
     }
   },
 };

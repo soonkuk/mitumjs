@@ -135,9 +135,6 @@ export class Account {
         const oper = new Operation(this._node);
         const signedOperation = oper.sign(privatekey, wallet.operation);
         const res = await oper.send(signedOperation);
-        if (!res) {
-            return null;
-        }
         return res.data;
     }
     create(senderAddr, receiverPub, currentID, amount) {
@@ -199,10 +196,7 @@ export class Account {
     }
     async balance(address) {
         const info = await accountInfo.getAddressInfo(this._node, address);
-        if (info) {
-            return info.data._embedded.balance;
-        }
-        return null;
+        return info.data._embedded.balance;
     }
 }
 //# sourceMappingURL=index.js.map

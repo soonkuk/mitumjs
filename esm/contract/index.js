@@ -53,9 +53,6 @@ export class Contract {
         const oper = new Operation(this._node);
         const signedOperation = oper.sign(privatekey, wallet.operation);
         const res = await oper.send(signedOperation);
-        if (!res) {
-            return null;
-        }
         return res.data;
     }
     create(senderAddr, receiverPub, currentID, amount) {

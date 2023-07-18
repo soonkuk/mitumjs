@@ -38,10 +38,10 @@ export class Operation {
     return signOperation(privatekey, operation, option);
   }
 
-  send(
+  async send(
     signedOperation: any,
     headers?: { [i: string]: any }
-  ): Promise<AxiosResponse | null> {
-    return sendOperation(signedOperation, this._node, headers);
+  ): Promise<AxiosResponse> {
+    return await sendOperation(signedOperation, this._node, headers);
   }
 }

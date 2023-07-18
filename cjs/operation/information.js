@@ -17,28 +17,28 @@ exports.default = {
     getAllOperationsInfo(provider) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                return Promise.reject(new Error("RPC-URL is not provided."));
+                throw new Error("RPC-URL is not provided.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/block/operations`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                throw new Error(error.response.data);
             }
         });
     },
     getOperationInfo(provider, facthash) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "") {
-                return Promise.reject(new Error("RPC-URL is not provided."));
+                throw new Error("RPC-URL is not provided.");
             }
             try {
                 const res = yield axios_1.default.get(`${provider}/block/operation/${facthash}`);
                 return res;
             }
             catch (error) {
-                return Promise.reject(new Error(`Error getting node information: ${error.message}`));
+                throw new Error(error.response.data);
             }
         });
     },
