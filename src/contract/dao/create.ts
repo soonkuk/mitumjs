@@ -9,7 +9,7 @@ import { DaoOption } from "./design.js";
 import { Percent } from "./design.js";
 
 const CreateDAOFactHint = "mitum-dao-create-dao-operation-fact";
-const CreateDAOHint = "mitum-sto-set-document-operation";
+const CreateDAOHint = "mitum-dao-create-dao-operation";
 
 export class CreateDAOFact extends Fact {
   readonly sender: Address;
