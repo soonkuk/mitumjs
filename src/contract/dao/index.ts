@@ -14,6 +14,7 @@ import { ExecuteFact } from "./execute.js";
 import { PreSnapFact } from "./snapBefore.js";
 import { ProposeFact } from "./propose.js";
 import { RegisterFact } from "./register.js";
+import { VoteFact } from "./vote.js";
 
 export class Dao {
   private _networkID: string = "";
@@ -246,6 +247,7 @@ export class Dao {
   castVote(
     sender: string,
     proposalId: string,
+    vote: number,
     currency: string
   ): OperationType<Fact> {
     const token = new TimeStamp().UTC();
@@ -256,6 +258,7 @@ export class Dao {
       this._contractAddress,
       this._serviceID,
       proposalId,
+      vote,
       currency
     );
 
