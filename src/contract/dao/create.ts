@@ -1,7 +1,6 @@
 import { Amount, ContractID, CurrencyID } from "../../types/property.js";
 import { FactJson } from "../../types/iFact.js";
 import { Fact } from "../../types/fact.js";
-import { String } from "../../types/string.js";
 import { Address } from "../../account/address.js";
 import { Big } from "../../utils/math.js";
 
