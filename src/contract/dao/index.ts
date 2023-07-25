@@ -13,6 +13,7 @@ import { PostSnapFact } from "./snapAfter.js";
 import { ExecuteFact } from "./execute.js";
 import { PreSnapFact } from "./snapBefore.js";
 import { ProposeFact } from "./propose.js";
+import { RegisterFact } from "./register.js";
 
 export class Dao {
   private _networkID: string = "";
