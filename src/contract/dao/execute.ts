@@ -7,7 +7,7 @@ import { Fact } from "../../types/fact.js";
 const ExecuteFactHint = "mitum-dao-execute-operation-fact";
 const ExecuteHint = "mitum-dao-execute-operation";
 
-export class CreateDAOFact extends Fact {
+export class ExecuteFact extends Fact {
   readonly sender: Address;
   readonly contract: Address;
   readonly serviceId: ContractID;
