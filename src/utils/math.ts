@@ -126,3 +126,26 @@ export class Float implements IBuffer, IString {
     return "" + this.n;
   }
 }
+
+export class Uint8 implements IBuffer, IString {
+  readonly n: number;
+
+  constructor(n: number) {
+    if (n < 0 || n > 255) {
+      throw new Error("Out of range for uint8 type");
+    }
+    this.n = n;
+  }
+
+  toBuffer(): Buffer {
+    return Buffer.from([this.n]);
+  }
+
+  get v(): number {
+    return this.n;
+  }
+
+  toString(): string {
+    return this.n.toString();
+  }
+}
