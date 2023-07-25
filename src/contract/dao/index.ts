@@ -3,7 +3,11 @@ import { OperationType } from "../../types/operation.js";
 import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
+import { CancelProposalFact } from "./cancel.js";
 import { CreateDAOFact } from "./create.js";
+import { PostSnapFact } from "./snapAfter.js";
+import { ExecuteFact } from "./execute.js";
+import { PreSnapFact } from "./snapBefore.js";
 import { daoData } from "./design.js";
 
 export class Dao {
@@ -99,6 +103,141 @@ export class Dao {
       data.timelock,
       data.turnout,
       data.quorum,
+      currency
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  propose(
+    sender: string,
+    proposalId: string,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new ProposeFact(
+      token,
+      sender,
+      this._contractAddress,
+      this._serviceID,
+      proposalId,
+      currency
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  register(
+    sender: string,
+    proposalId: string,
+    delegator: string,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new RegisterFact(
+      token,
+      sender,
+      this._contractAddress,
+      this._serviceID,
+      proposalId,
+      delegator,
+      currency
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  cancel(
+    sender: string,
+    proposalId: string,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new CancelProposalFact(
+      token,
+      sender,
+      this._contractAddress,
+      this._serviceID,
+      proposalId,
+      currency
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  snapBeforeVoting(
+    sender: string,
+    proposalId: string,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new PreSnapFact(
+      token,
+      sender,
+      this._contractAddress,
+      this._serviceID,
+      proposalId,
+      currency
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  castVote(
+    sender: string,
+    proposalId: string,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new VoteFact(
+      token,
+      sender,
+      this._contractAddress,
+      this._serviceID,
+      proposalId,
+      currency
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  snapAfterVoting(
+    sender: string,
+    proposalId: string,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new PostSnapFact(
+      token,
+      sender,
+      this._contractAddress,
+      this._serviceID,
+      proposalId,
+      currency
+    );
+
+    return new OperationType(this._networkID, fact);
+  }
+
+  execute(
+    sender: string,
+    proposalId: string,
+    currency: string
+  ): OperationType<Fact> {
+    const token = new TimeStamp().UTC();
+
+    const fact = new ExecuteFact(
+      token,
+      sender,
+      this._contractAddress,
+      this._serviceID,
+      proposalId,
       currency
     );
 
