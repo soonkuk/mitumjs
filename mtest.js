@@ -273,24 +273,7 @@ const test = async () => {
   //   const info5 = await mitum.credential.claimCredential(symbol, holder);
   //   exp("mitum.credential.claimCredential()", info5);
 
-  const sender = "5qA26ygWafSaiqJo7hwtrJBeFaz3ZBgJwnW6SKq2ZMVdmca";
-  const privatekey = "6XXWmrBHyeX3q9n7DHx6g1et2md6KqNZR5Pdwe5cSDqZmpr";
-  const publickey = "mx9migsrkE29sZge6RT82SKnkmJ6AjQWacbx9VxsJhywmpu";
-  const currency_id = "PEN";
-  const amount = 10;
-  const rawOperation = mitum.account.create(
-    sender,
-    publickey,
-    currency_id,
-    amount
-  );
-  //   console.log(rawOperation);
-
-  const signedOperation = mitum.operation.sign(privatekey, rawOperation);
-  // console.log(signedOperation);
-
-  const info = await mitum.operation.send(signedOperation);
-  console.log(info);
+  console.log((await mitum.account.getAccountInfo(a1)).data);
 };
 
 test();
