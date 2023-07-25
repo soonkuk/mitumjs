@@ -26,9 +26,7 @@ export class DaoOption implements IBuffer, IString {
   }
 }
 
-export type daoData = {
-  serviceId: string;
-  option: string;
+export type policyData = {
   voteToken: string;
   threshold: number;
   fee: number;
@@ -38,9 +36,14 @@ export type daoData = {
   preSnapPeriod: number;
   votingPeriod: number;
   postSnapPeriod: number;
-  timelock: number;
+  executionDelay: number;
   turnout: number;
   quorum: number;
+};
+
+export type daoData = policyData & {
+  serviceId: string;
+  option: string;
 };
 
 export class Percent implements IBuffer, IString {

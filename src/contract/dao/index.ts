@@ -1,14 +1,18 @@
 import { isIPAddress, isAddress } from "../../utils/validation.js";
 import { OperationType } from "../../types/operation.js";
+import { HintedObject } from "../../types/interface.js";
 import { TimeStamp } from "../../utils/time.js";
 import { Fact } from "../../types/fact.js";
 
+import { TransferCalldata, GovernanceCallData, Calldata } from "./calldata.js";
+import { CryptoProposal, BizProposal, Proposal } from "./proposal.js";
+import { daoData, policyData } from "./design.js";
 import { CancelProposalFact } from "./cancel.js";
 import { CreateDAOFact } from "./create.js";
 import { PostSnapFact } from "./snapAfter.js";
 import { ExecuteFact } from "./execute.js";
 import { PreSnapFact } from "./snapBefore.js";
-import { daoData } from "./design.js";
+import { ProposeFact } from "./propose.js";
 
 export class Dao {
   private _networkID: string = "";
@@ -71,7 +75,7 @@ export class Dao {
         preSnapPeriod: number,
         votingPeriod: number,
         postSnapPeriod: number,
-        timelock: number,
+        executionDelay: number,
         turnout: number,
         quorum: number,
    } 
@@ -100,7 +104,7 @@ export class Dao {
       data.preSnapPeriod,
       data.votingPeriod,
       data.postSnapPeriod,
-      data.timelock,
+      data.executionDelay,
       data.turnout,
       data.quorum,
       currency
@@ -109,9 +113,58 @@ export class Dao {
     return new OperationType(this._networkID, fact);
   }
 
+  formTransferCalldata(
+    sender: string,
+    receiver: string,
+    currency: string,
+    amount: number
+  ): HintedObject {
+    return new TransferCalldata(
+      sender,
+      receiver,
+      currency,
+      amount
+    ).toHintedObject();
+  }
+
+  /** policyData = {
+        voteToken: string,
+        threshold: number,
+        fee: number,
+        proposers: string[],
+        waitingTime: number,
+        registrationPeriod: number,
+        preSnapPeriod: number,
+        votingPeriod: number,
+        postSnapPeriod: number,
+        executionDelay: number,
+        turnout: number,
+        quorum: number
+      }
+   */
+  formSetPolicyCalldata(policyData: policyData): HintedObject {
+    return new GovernanceCallData(policyData).toHintedObject();
+  }
+
+  writeCryptoProposal(proposer: string, startTime: number, calldata: Calldata) {
+    return new CryptoProposal(proposer, startTime, calldata).toHintedObject();
+  }
+
+  writeBizProposal(
+    proposer: string,
+    startTime: number,
+    url: string,
+    hash: string,
+    options: number
+  ) {
+    return new BizProposal(proposer, startTime, url, hash, options);
+  }
+
   propose(
     sender: string,
     proposalId: string,
+    startTime: number,
+    proposal: Proposal,
     currency: string
   ): OperationType<Fact> {
     const token = new TimeStamp().UTC();
@@ -122,6 +175,8 @@ export class Dao {
       this._contractAddress,
       this._serviceID,
       proposalId,
+      startTime,
+      proposal,
       currency
     );
 

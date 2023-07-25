@@ -21,12 +21,12 @@ const test = async () => {
   const pb3 = "28V9psXoGyjQ5cVtDLSFddHSaBnMYV95Y8kpJUk4rQKREmpu";
   const a3 = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
 
-  const pv4 = "EKqiTgBbHxJnv6vbTSywXUb31gDasDHWKkoxbUnm3JD5mpr";
-  const pb4 = "iYrk7D6nv4EpCRr2pMSuQfSE8XmyEtLKziCEAKngErBDmpu";
-  const a4 = "3bLWFGHhYLA4QDEKjP6QhSdTtdSTRJVk37DNR8ZNnUAEmca";
+  const pv4 = "6XXWmrBHyeX3q9n7DHx6g1et2md6KqNZR5Pdwe5cSDqZmpr";
+  const pb4 = "2BMCPdRL6qgk54he4Zh1H6DYpNcmLDdstZDTiuJSQt6Aqmpu";
+  const a4 = "5qA26ygWafSaiqJo7hwtrJBeFaz3ZBgJwnW6SKq2ZMVdmca";
 
   const contractPubkey = "diLUcZugeDFW6ftQdcjdz8Ks1KBGiACo9GAcKQUgwFdfmpu";
-  const contractAddress = "2VKEH78tLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8Bmca";
+  const contractAddress = "DBs9tyMUodWgPiMkxGNjjUwVX6YDm2Kh3rQaDZQcHrYnmca";
 
   const currencyID = "PEN";
 
@@ -199,10 +199,11 @@ const test = async () => {
   //     mitum.credential.getContractAddress()
   //   );
 
-  //   const f20 = mitum.credential.createCredentialService(a1, symbol, currencyID);
-  //   const s20 = mitum.operation.sign(pv1, f20);
-  //   const res20 = await mitum.operation.send(s20);
-  //   exp("mitum.credential.createCredentialService()", res20.status);
+  const sId = "dri";
+  const f20 = mitum.credential.createCredentialService(a4, sId, currencyID);
+  const s20 = mitum.operation.sign(pv4, f20);
+  // const res20 = await mitum.operation.send(s20);
+  exp("mitum.credential.createCredentialService()", s20);
   mitum.credential.setServiceId(symbol);
 
   const templateId = 12;
@@ -272,8 +273,6 @@ const test = async () => {
 
   //   const info5 = await mitum.credential.claimCredential(symbol, holder);
   //   exp("mitum.credential.claimCredential()", info5);
-
-  console.log((await mitum.account.getAccountInfo(a1)).data);
 };
 
 test();

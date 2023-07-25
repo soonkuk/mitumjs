@@ -80,16 +80,15 @@ const test = async () => {
   // // const s3 = await mitum.operation.send(o3);
   // exp("issue credential", f3);
 
-  const f4 = mitum.credential.revoke(
-    sender,
-    sender,
-    77,
-    "sefthia100",
-    currencyID
-  );
+  // const f4 = mitum.credential.revoke(
+  //   sender,
+  //   sender,
+  //   77,
+  //   "sefthia100",
+  //   currencyID
+  // );
   // const o4 = mitum.operation.sign(privatekey, f4);
   // const s4 = await mitum.operation.send(o4);
-  exp("revoke credential", f4);
 };
 
 test();
