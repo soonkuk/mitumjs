@@ -160,14 +160,14 @@ export class Dao {
     startTime: number,
     url: string,
     hash: string,
-    options: number
+    voteOptions: number
   ) {
     return new BizProposal(
       proposer,
       startTime,
       url,
       hash,
-      options
+      voteOptions
     ).toHintedObject();
   }
 
@@ -256,7 +256,7 @@ export class Dao {
   castVote(
     sender: string,
     proposalId: string,
-    vote: number,
+    voteOption: number,
     currency: string
   ): OperationType<Fact> {
     const token = new TimeStamp().UTC();
@@ -267,7 +267,7 @@ export class Dao {
       this._contractAddress,
       this._serviceID,
       proposalId,
-      vote,
+      voteOption,
       currency
     );
 
