@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Float = exports.Big = exports.SortFunc = exports.keccak256 = exports.sha3 = exports.sha256 = void 0;
+exports.Uint8 = exports.Float = exports.Big = exports.SortFunc = exports.keccak256 = exports.sha3 = exports.sha256 = void 0;
 const js_sha3_1 = __importDefault(require("js-sha3"));
 const { sha3_256, keccak256: keccak_256 } = js_sha3_1.default;
 const sha256_1 = require("@noble/hashes/sha256");
@@ -99,4 +99,22 @@ class Float {
     }
 }
 exports.Float = Float;
+class Uint8 {
+    constructor(n) {
+        if (n < 0 || n > 255) {
+            throw new Error("Out of range for uint8 type");
+        }
+        this.n = n;
+    }
+    toBuffer() {
+        return Buffer.from([this.n]);
+    }
+    get v() {
+        return this.n;
+    }
+    toString() {
+        return this.n.toString();
+    }
+}
+exports.Uint8 = Uint8;
 //# sourceMappingURL=math.js.map

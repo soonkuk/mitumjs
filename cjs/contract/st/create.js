@@ -11,7 +11,7 @@ const item_js_1 = require("./item.js");
 const CreateSecurityTokensItemHint = "mitum-sto-create-security-tokens-item";
 const CreateSecurityTokensFactHint = "mitum-sto-create-security-tokens-operation-fact";
 const CreateSecurityTokensHint = "mitum-sto-create-security-tokenss-operation";
-const MaxCreateSecurityTokensItems = 10;
+const MaxCreateSecurityTokensItems = 20;
 class CreateSecurityTokensItem extends item_js_1.STItem {
     constructor(contract, serviceID, granularity, defaultPartition, controllers, currency) {
         super(CreateSecurityTokensItemHint, contract, serviceID, currency);

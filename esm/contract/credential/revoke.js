@@ -4,7 +4,7 @@ import { CredentialsItem } from "./item.js";
 const RevokeCredentialsItemHint = "mitum-credential-revoke-credentials-item";
 const RevokeCredentialsFactHint = "mitum-credential-revoke-credentials-operation-fact";
 const RevokeCredentialsHint = "mitum-credential-revoke-credentials-operation";
-const MaxRevokeCredentialsItems = 10;
+const MaxRevokeCredentialsItems = 20;
 export class RevokeCredentialsItem extends CredentialsItem {
     constructor(contract, credentialServiceID, holder, templateID, id, currency) {
         super(RevokeCredentialsItemHint, contract, credentialServiceID, holder, templateID, id, currency);

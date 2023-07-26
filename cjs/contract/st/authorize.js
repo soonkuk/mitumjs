@@ -9,7 +9,7 @@ const partition_js_1 = require("./partition.js");
 const AuthorizeOperatorsItemHint = "mitum-sto-authorize-operators-item";
 const AuthorizeOperatorsFactHint = "mitum-sto-authorize-operator-operation-fact";
 const AuthorizeOperatorsHint = "mitum-sto-authorize-operator-operation";
-const MaxAuthorizeOperatorsItems = 10;
+const MaxAuthorizeOperatorsItems = 20;
 class AuthorizeOperatorsItem extends item_js_1.STItem {
     constructor(contract, serviceID, operator, partition, currency) {
         super(AuthorizeOperatorsItemHint, contract, serviceID, currency);

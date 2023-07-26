@@ -22,4 +22,11 @@ export declare class Float implements IBuffer, IString {
     toBuffer(): Buffer;
     toString(): string;
 }
+export declare class Uint8 implements IBuffer, IString {
+    readonly n: number;
+    constructor(n: number);
+    toBuffer(): Buffer;
+    get v(): number;
+    toString(): string;
+}
 export {};

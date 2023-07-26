@@ -8,7 +8,7 @@ const item_js_1 = require("./item.js");
 const AddControllersItemHint = "mitum-kyc-add-controllers-item";
 const AddControllersFactHint = "mitum-kyc-add-controllers-operation-fact";
 const AddControllersHint = "mitum-kyc-add-controllers-operation";
-const MaxAddControllersItems = 10;
+const MaxAddControllersItems = 20;
 class AddControllersItem extends item_js_1.KYCItem {
     constructor(contract, serviceID, controller, currency) {
         super(AddControllersItemHint, contract, serviceID, currency);

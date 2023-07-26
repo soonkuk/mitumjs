@@ -9,7 +9,7 @@ const partition_js_1 = require("./partition.js");
 const RevokeOperatorsItemHint = "mitum-sto-revoke-operators-item";
 const RevokeOperatorsFactHint = "mitum-sto-revoke-operator-operation-fact";
 const RevokeOperatorsHint = "mitum-sto-revoke-operator-operation";
-const MaxRevokeOperatorsItems = 10;
+const MaxRevokeOperatorsItems = 20;
 class RevokeOperatorsItem extends item_js_1.STItem {
     constructor(contract, serviceID, operator, partition, currency) {
         super(RevokeOperatorsItemHint, contract, serviceID, currency);

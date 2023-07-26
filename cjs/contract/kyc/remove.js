@@ -8,7 +8,7 @@ const item_js_1 = require("./item.js");
 const RemoveControllersItemHint = "mitum-kyc-remove-controllers-item";
 const RemoveControllersFactHint = "mitum-kyc-remove-controllers-operation-fact";
 const RemoveControllersHint = "mitum-kyc-remove-controllers-operation";
-const MaxRemoveControllersItems = 10;
+const MaxRemoveControllersItems = 20;
 class RemoveControllersItem extends item_js_1.KYCItem {
     constructor(contract, serviceID, controller, currency) {
         super(RemoveControllersItemHint, contract, serviceID, currency);

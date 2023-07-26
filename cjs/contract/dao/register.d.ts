@@ -1,0 +1,18 @@
+/// <reference types="node" />
+import { ContractID, CurrencyID } from "../../types/property.js";
+import { Address } from "../../account/address.js";
+import { FactJson } from "../../types/iFact.js";
+import { String } from "../../types/string.js";
+import { Fact } from "../../types/fact.js";
+export declare class RegisterFact extends Fact {
+    readonly sender: Address;
+    readonly contract: Address;
+    readonly serviceId: ContractID;
+    readonly proposalId: String;
+    readonly delegator: Address;
+    readonly currency: CurrencyID;
+    constructor(token: string, sender: string, contract: string, serviceId: string, proposalId: string, delegator: string, currency: string);
+    toBuffer(): Buffer;
+    toHintedObject(): FactJson;
+    get operationHint(): string;
+}

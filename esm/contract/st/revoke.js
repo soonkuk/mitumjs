@@ -6,7 +6,7 @@ import { Partition } from "./partition.js";
 const RevokeOperatorsItemHint = "mitum-sto-revoke-operators-item";
 const RevokeOperatorsFactHint = "mitum-sto-revoke-operator-operation-fact";
 const RevokeOperatorsHint = "mitum-sto-revoke-operator-operation";
-const MaxRevokeOperatorsItems = 10;
+const MaxRevokeOperatorsItems = 20;
 export class RevokeOperatorsItem extends STItem {
     constructor(contract, serviceID, operator, partition, currency) {
         super(RevokeOperatorsItemHint, contract, serviceID, currency);

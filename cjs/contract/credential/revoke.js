@@ -7,7 +7,7 @@ const item_js_1 = require("./item.js");
 const RevokeCredentialsItemHint = "mitum-credential-revoke-credentials-item";
 const RevokeCredentialsFactHint = "mitum-credential-revoke-credentials-operation-fact";
 const RevokeCredentialsHint = "mitum-credential-revoke-credentials-operation";
-const MaxRevokeCredentialsItems = 10;
+const MaxRevokeCredentialsItems = 20;
 class RevokeCredentialsItem extends item_js_1.CredentialsItem {
     constructor(contract, credentialServiceID, holder, templateID, id, currency) {
         super(RevokeCredentialsItemHint, contract, credentialServiceID, holder, templateID, id, currency);

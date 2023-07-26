@@ -10,7 +10,7 @@ const item_js_1 = require("./item.js");
 const TransferSecurityTokensPartitionItemHint = "mitum-sto-transfer-security-tokens-partition-item";
 const TransferSecurityTokensPartitionFactHint = "mitum-sto-transfer-security-tokens-partition-operation-fact";
 const TransferSecurityTokensPartitionHint = "mitum-sto-transfer-security-tokens-partition-operation";
-const MaxTransferSecurityTokensPartitionItems = 10;
+const MaxTransferSecurityTokensPartitionItems = 20;
 class TransferSecurityTokensPartitionItem extends item_js_1.STItem {
     constructor(contract, serviceID, tokenholder, receiver, partition, amount, currency) {
         super(TransferSecurityTokensPartitionItemHint, contract, serviceID, currency);

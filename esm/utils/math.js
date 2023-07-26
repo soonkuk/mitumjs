@@ -87,4 +87,21 @@ export class Float {
         return "" + this.n;
     }
 }
+export class Uint8 {
+    constructor(n) {
+        if (n < 0 || n > 255) {
+            throw new Error("Out of range for uint8 type");
+        }
+        this.n = n;
+    }
+    toBuffer() {
+        return Buffer.from([this.n]);
+    }
+    get v() {
+        return this.n;
+    }
+    toString() {
+        return this.n.toString();
+    }
+}
 //# sourceMappingURL=math.js.map

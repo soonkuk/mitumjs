@@ -6,7 +6,7 @@ import { KYCItem } from "./item.js";
 const UpdateCustomersItemHint = "mitum-kyc-update-customers-item";
 const UpdateCustomersFactHint = "mitum-kyc-update-customers-operation-fact";
 const UpdateCustomersHint = "mitum-kyc-update-customers-operation";
-const MaxUpdateCustomersItems = 10;
+const MaxUpdateCustomersItems = 20;
 export class UpdateCustomersItem extends KYCItem {
     constructor(contract, serviceID, customer, status, currency) {
         super(UpdateCustomersItemHint, contract, serviceID, currency);

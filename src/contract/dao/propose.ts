@@ -1,4 +1,4 @@
-import { Amount, ContractID, CurrencyID } from "../../types/property.js";
+import { ContractID, CurrencyID } from "../../types/property.js";
 import { FactJson } from "../../types/iFact.js";
 import { Fact } from "../../types/fact.js";
 import { Address } from "../../account/address.js";

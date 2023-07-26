@@ -9,7 +9,7 @@ const item_js_1 = require("./item.js");
 const UpdateCustomersItemHint = "mitum-kyc-update-customers-item";
 const UpdateCustomersFactHint = "mitum-kyc-update-customers-operation-fact";
 const UpdateCustomersHint = "mitum-kyc-update-customers-operation";
-const MaxUpdateCustomersItems = 10;
+const MaxUpdateCustomersItems = 20;
 class UpdateCustomersItem extends item_js_1.KYCItem {
     constructor(contract, serviceID, customer, status, currency) {
         super(UpdateCustomersItemHint, contract, serviceID, currency);

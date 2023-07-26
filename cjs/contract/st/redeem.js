@@ -10,7 +10,7 @@ const item_js_1 = require("./item.js");
 const RedeemTokensItemHint = "mitum-sto-redeem-tokens-item";
 const RedeemTokensFactHint = "mitum-sto-redeem-tokens-operation-fact";
 const RedeemTokensHint = "mitum-sto-redeem-tokens-operation";
-const MaxRedeemSecurityTokensItems = 10;
+const MaxRedeemSecurityTokensItems = 20;
 class RedeemTokensItem extends item_js_1.STItem {
     constructor(contract, serviceID, tokenHolder, amount, partition, currency) {
         super(RedeemTokensItemHint, contract, serviceID, currency);

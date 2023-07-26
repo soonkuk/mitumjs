@@ -5,7 +5,7 @@ import { KYCItem } from "./item.js";
 const RemoveControllersItemHint = "mitum-kyc-remove-controllers-item";
 const RemoveControllersFactHint = "mitum-kyc-remove-controllers-operation-fact";
 const RemoveControllersHint = "mitum-kyc-remove-controllers-operation";
-const MaxRemoveControllersItems = 10;
+const MaxRemoveControllersItems = 20;
 export class RemoveControllersItem extends KYCItem {
     constructor(contract, serviceID, controller, currency) {
         super(RemoveControllersItemHint, contract, serviceID, currency);

@@ -6,7 +6,7 @@ import { String } from "../../types/string.js";
 const AssignCredentialsItemHint = "mitum-credential-assign-credentials-item";
 const AssignCredentialsFactHint = "mitum-credential-assign-credentials-operation-fact";
 const AssignCredentialsHint = "mitum-credential-assign-credentials-operation";
-const MaxAssignCredentialsItems = 10;
+const MaxAssignCredentialsItems = 20;
 export class AssignCredentialsItem extends CredentialsItem {
     constructor(contract, credentialServiceID, holder, templateID, id, value, validfrom, validuntil, did, currency) {
         super(AssignCredentialsItemHint, contract, credentialServiceID, holder, templateID, id, currency);

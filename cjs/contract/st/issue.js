@@ -10,7 +10,7 @@ const item_js_1 = require("./item.js");
 const IssueSecurityTokensItemHint = "mitum-sto-issue-security-tokens-item";
 const IssueSecurityTokensFactHint = "mitum-sto-issue-security-tokens-operation-fact";
 const IssueSecurityTokensHint = "mitum-sto-issue-security-tokens-operation";
-const MaxIssueSecurityTokensItems = 10;
+const MaxIssueSecurityTokensItems = 20;
 class IssueSecurityTokensItem extends item_js_1.STItem {
     constructor(contract, serviceID, receiver, amount, partition, currency) {
         super(IssueSecurityTokensItemHint, contract, serviceID, currency);
