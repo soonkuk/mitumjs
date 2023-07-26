@@ -99,8 +99,8 @@ export class Dao {
     writeCryptoProposal(proposer, startTime, calldata) {
         return new CryptoProposal(proposer, startTime, calldata).toHintedObject();
     }
-    writeBizProposal(proposer, startTime, url, hash, options) {
-        return new BizProposal(proposer, startTime, url, hash, options).toHintedObject();
+    writeBizProposal(proposer, startTime, url, hash, voteOptions) {
+        return new BizProposal(proposer, startTime, url, hash, voteOptions).toHintedObject();
     }
     propose(sender, proposalId, startTime, proposal, currency) {
         const token = new TimeStamp().UTC();
@@ -122,9 +122,9 @@ export class Dao {
         const fact = new PreSnapFact(token, sender, this._contractAddress, this._serviceID, proposalId, currency);
         return new OperationType(this._networkID, fact);
     }
-    castVote(sender, proposalId, vote, currency) {
+    castVote(sender, proposalId, voteOption, currency) {
         const token = new TimeStamp().UTC();
-        const fact = new VoteFact(token, sender, this._contractAddress, this._serviceID, proposalId, vote, currency);
+        const fact = new VoteFact(token, sender, this._contractAddress, this._serviceID, proposalId, voteOption, currency);
         return new OperationType(this._networkID, fact);
     }
     snapAfterVoting(sender, proposalId, currency) {

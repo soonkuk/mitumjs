@@ -54,12 +54,12 @@ export declare class Dao {
      */
     formSetPolicyCalldata(policyData: policyData): HintedObject;
     writeCryptoProposal(proposer: string, startTime: number, calldata: Calldata): HintedObject;
-    writeBizProposal(proposer: string, startTime: number, url: string, hash: string, options: number): HintedObject;
+    writeBizProposal(proposer: string, startTime: number, url: string, hash: string, voteOptions: number): HintedObject;
     propose(sender: string, proposalId: string, startTime: number, proposal: Proposal, currency: string): OperationType<Fact>;
     register(sender: string, proposalId: string, delegator: string, currency: string): OperationType<Fact>;
     cancel(sender: string, proposalId: string, currency: string): OperationType<Fact>;
     snapBeforeVoting(sender: string, proposalId: string, currency: string): OperationType<Fact>;
-    castVote(sender: string, proposalId: string, vote: number, currency: string): OperationType<Fact>;
+    castVote(sender: string, proposalId: string, voteOption: number, currency: string): OperationType<Fact>;
     snapAfterVoting(sender: string, proposalId: string, currency: string): OperationType<Fact>;
     execute(sender: string, proposalId: string, currency: string): OperationType<Fact>;
     getServiceInfo(serviceId?: string): Promise<AxiosResponse>;

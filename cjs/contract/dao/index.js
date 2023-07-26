@@ -114,8 +114,8 @@ class Dao {
     writeCryptoProposal(proposer, startTime, calldata) {
         return new proposal_js_1.CryptoProposal(proposer, startTime, calldata).toHintedObject();
     }
-    writeBizProposal(proposer, startTime, url, hash, options) {
-        return new proposal_js_1.BizProposal(proposer, startTime, url, hash, options).toHintedObject();
+    writeBizProposal(proposer, startTime, url, hash, voteOptions) {
+        return new proposal_js_1.BizProposal(proposer, startTime, url, hash, voteOptions).toHintedObject();
     }
     propose(sender, proposalId, startTime, proposal, currency) {
         const token = new time_js_1.TimeStamp().UTC();
@@ -137,9 +137,9 @@ class Dao {
         const fact = new snapBefore_js_1.PreSnapFact(token, sender, this._contractAddress, this._serviceID, proposalId, currency);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
-    castVote(sender, proposalId, vote, currency) {
+    castVote(sender, proposalId, voteOption, currency) {
         const token = new time_js_1.TimeStamp().UTC();
-        const fact = new vote_js_1.VoteFact(token, sender, this._contractAddress, this._serviceID, proposalId, vote, currency);
+        const fact = new vote_js_1.VoteFact(token, sender, this._contractAddress, this._serviceID, proposalId, voteOption, currency);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     snapAfterVoting(sender, proposalId, currency) {
