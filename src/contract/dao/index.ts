@@ -1,3 +1,5 @@
+import { AxiosResponse } from "axios";
+
 import { isIPAddress, isAddress } from "../../utils/validation.js";
 import { OperationType } from "../../types/operation.js";
 import { HintedObject } from "../../types/interface.js";
@@ -15,6 +17,7 @@ import { PreSnapFact } from "./snapBefore.js";
 import { ProposeFact } from "./propose.js";
 import { RegisterFact } from "./register.js";
 import { VoteFact } from "./vote.js";
+import daoInfo from "./information.js";
 
 export class Dao {
   private _networkID: string = "";
@@ -301,5 +304,80 @@ export class Dao {
     );
 
     return new OperationType(this._networkID, fact);
+  }
+
+  async getServiceInfo(serviceId?: string): Promise<AxiosResponse> {
+    let daoId = this._serviceID;
+    if (serviceId !== undefined) {
+      daoId = serviceId;
+    }
+
+    const res = await daoInfo.getServiceInfo(
+      this._node,
+      this._contractAddress,
+      daoId
+    );
+
+    return res.data;
+  }
+
+  async getProposalInfo(
+    serviceId: string,
+    proposalId: string
+  ): Promise<AxiosResponse> {
+    const res = await daoInfo.getProposalInfo(
+      this._node,
+      this._contractAddress,
+      serviceId,
+      proposalId
+    );
+
+    return res.data;
+  }
+
+  async getDelegatorInfo(
+    serviceId: string,
+    proposalId: string,
+    delegator: string
+  ): Promise<AxiosResponse> {
+    const res = await daoInfo.getDelegatorInfo(
+      this._node,
+      this._contractAddress,
+      serviceId,
+      proposalId,
+      delegator
+    );
+
+    return res.data;
+  }
+
+  async getVoterInfo(
+    serviceId: string,
+    proposalId: string,
+    voter: string
+  ): Promise<AxiosResponse> {
+    const res = await daoInfo.getVoterInfo(
+      this._node,
+      this._contractAddress,
+      serviceId,
+      proposalId,
+      voter
+    );
+
+    return res.data;
+  }
+
+  async getVotingResult(
+    serviceId: string,
+    proposalId: string
+  ): Promise<AxiosResponse> {
+    const res = await daoInfo.getVotingResult(
+      this._node,
+      this._contractAddress,
+      serviceId,
+      proposalId
+    );
+
+    return res.data;
   }
 }
