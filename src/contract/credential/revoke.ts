@@ -8,7 +8,7 @@ const RevokeCredentialsFactHint =
   "mitum-credential-revoke-credentials-operation-fact";
 const RevokeCredentialsHint = "mitum-credential-revoke-credentials-operation";
 
-const MaxRevokeCredentialsItems = 10;
+const MaxRevokeCredentialsItems = 20;
 
 export class RevokeCredentialsItem extends CredentialsItem {
   constructor(

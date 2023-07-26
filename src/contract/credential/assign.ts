@@ -10,7 +10,7 @@ const AssignCredentialsFactHint =
   "mitum-credential-assign-credentials-operation-fact";
 const AssignCredentialsHint = "mitum-credential-assign-credentials-operation";
 
-const MaxAssignCredentialsItems = 10;
+const MaxAssignCredentialsItems = 20;
 
 export class AssignCredentialsItem extends CredentialsItem {
   readonly value: String;
