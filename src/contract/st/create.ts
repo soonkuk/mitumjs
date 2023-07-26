@@ -13,7 +13,7 @@ const CreateSecurityTokensFactHint =
   "mitum-sto-create-security-tokens-operation-fact";
 const CreateSecurityTokensHint = "mitum-sto-create-security-tokenss-operation";
 
-const MaxCreateSecurityTokensItems = 10;
+const MaxCreateSecurityTokensItems = 20;
 
 export class CreateSecurityTokensItem extends STItem {
   readonly granularity: Big;

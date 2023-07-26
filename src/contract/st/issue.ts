@@ -12,7 +12,7 @@ const IssueSecurityTokensFactHint =
   "mitum-sto-issue-security-tokens-operation-fact";
 const IssueSecurityTokensHint = "mitum-sto-issue-security-tokens-operation";
 
-const MaxIssueSecurityTokensItems = 10;
+const MaxIssueSecurityTokensItems = 20;
 
 export class IssueSecurityTokensItem extends STItem {
   readonly receiver: Address;

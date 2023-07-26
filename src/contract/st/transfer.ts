@@ -14,7 +14,7 @@ const TransferSecurityTokensPartitionFactHint =
 const TransferSecurityTokensPartitionHint =
   "mitum-sto-transfer-security-tokens-partition-operation";
 
-const MaxTransferSecurityTokensPartitionItems = 10;
+const MaxTransferSecurityTokensPartitionItems = 20;
 
 export class TransferSecurityTokensPartitionItem extends STItem {
   readonly tokenholder: Address;

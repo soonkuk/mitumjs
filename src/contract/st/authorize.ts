@@ -10,7 +10,7 @@ const AuthorizeOperatorsFactHint =
   "mitum-sto-authorize-operator-operation-fact";
 const AuthorizeOperatorsHint = "mitum-sto-authorize-operator-operation";
 
-const MaxAuthorizeOperatorsItems = 10;
+const MaxAuthorizeOperatorsItems = 20;
 
 export class AuthorizeOperatorsItem extends STItem {
   readonly operator: Address;

@@ -10,7 +10,7 @@ const UpdateCustomersItemHint = "mitum-kyc-update-customers-item";
 const UpdateCustomersFactHint = "mitum-kyc-update-customers-operation-fact";
 const UpdateCustomersHint = "mitum-kyc-update-customers-operation";
 
-const MaxUpdateCustomersItems = 10;
+const MaxUpdateCustomersItems = 20;
 
 export class UpdateCustomersItem extends KYCItem {
   readonly customer: Address;
