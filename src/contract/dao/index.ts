@@ -162,7 +162,13 @@ export class Dao {
     hash: string,
     options: number
   ) {
-    return new BizProposal(proposer, startTime, url, hash, options);
+    return new BizProposal(
+      proposer,
+      startTime,
+      url,
+      hash,
+      options
+    ).toHintedObject();
   }
 
   propose(

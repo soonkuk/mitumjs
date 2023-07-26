@@ -100,7 +100,7 @@ export class Dao {
         return new CryptoProposal(proposer, startTime, calldata).toHintedObject();
     }
     writeBizProposal(proposer, startTime, url, hash, options) {
-        return new BizProposal(proposer, startTime, url, hash, options);
+        return new BizProposal(proposer, startTime, url, hash, options).toHintedObject();
     }
     propose(sender, proposalId, startTime, proposal, currency) {
         const token = new TimeStamp().UTC();

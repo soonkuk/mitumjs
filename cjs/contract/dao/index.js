@@ -115,7 +115,7 @@ class Dao {
         return new proposal_js_1.CryptoProposal(proposer, startTime, calldata).toHintedObject();
     }
     writeBizProposal(proposer, startTime, url, hash, options) {
-        return new proposal_js_1.BizProposal(proposer, startTime, url, hash, options);
+        return new proposal_js_1.BizProposal(proposer, startTime, url, hash, options).toHintedObject();
     }
     propose(sender, proposalId, startTime, proposal, currency) {
         const token = new time_js_1.TimeStamp().UTC();

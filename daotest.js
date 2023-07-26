@@ -36,7 +36,48 @@ const test = async () => {
   //   const res = await mitum.operation.send(s);
   //   console.log(res.status);
 
-  //
+  const serviceId = "SIT";
+  const serviceId2 = "SST";
+  const serviceId3 = "SSP";
+  mitum.dao.setContractAddress(contractAddress);
+  mitum.dao.setServiceId(serviceId);
+
+  // create dao service
+  const option01 = "crypto";
+  const option02 = "biz";
+  const option03 = "any"; // must throw error
+  const voteToken = "MCC";
+  const threshold = 88888;
+  const fee = 100;
+  const proposers = [];
+  const waitingTime = 180000;
+  const registrationPeriod = 180000;
+  const preSnapPeriod = 180000;
+  const votingPeriod = 180000;
+  const postSnapPeriod = 180000;
+  const executionDelay = 180000;
+  const turnout = 0;
+  const quorum = 0;
+  const daoData = {
+    serviceId: serviceId,
+    option: option01,
+    voteToken: voteToken,
+    threshold: threshold,
+    fee: fee,
+    proposers: proposers,
+    waitingTime: waitingTime,
+    registrationPeriod: registrationPeriod,
+    preSnapPeriod: preSnapPeriod,
+    votingPeriod: votingPeriod,
+    postSnapPeriod: postSnapPeriod,
+    executionDelay: executionDelay,
+    turnout: turnout,
+    quorum: quorum,
+  };
+  const o = mitum.dao.createDAOService(a1, daoData, currencyID);
+  // const s = mitum.operation.sign(pv1, o);
+  // const res = await mitum.operation.send(s);
+  console.log(o);
 };
 
 test();
