@@ -22,6 +22,7 @@ const index_js_8 = require("./contract/credential/index.js");
 const index_js_9 = require("./contract/timestamp/index.js");
 const index_js_10 = require("./contract/st/index.js");
 const index_js_11 = require("./contract/kyc/index.js");
+const index_js_12 = require("./contract/dao/index.js");
 class Mitum {
     constructor(provider) {
         this._version = new index_js_1.Version();
@@ -37,6 +38,7 @@ class Mitum {
         this.timestamp = new index_js_9.Timestamp(intro_js_1.MITUM_NETWORK_ID, provider);
         this.st = new index_js_10.St(intro_js_1.MITUM_NETWORK_ID, provider);
         this.kyc = new index_js_11.Kyc(intro_js_1.MITUM_NETWORK_ID, provider);
+        this.dao = new index_js_12.Dao(intro_js_1.MITUM_NETWORK_ID, provider);
     }
     version() {
         return this._version.getVersion();
@@ -59,6 +61,7 @@ class Mitum {
         this.timestamp = new index_js_9.Timestamp(networkID, provider);
         this.st = new index_js_10.St(networkID, provider);
         this.kyc = new index_js_11.Kyc(networkID, provider);
+        this.dao = new index_js_12.Dao(networkID, provider);
     }
     getNode() {
         return this._node.getNodeUri();
@@ -77,6 +80,7 @@ class Mitum {
         this.timestamp = new index_js_9.Timestamp(networkID, provider);
         this.st = new index_js_10.St(networkID, provider);
         this.kyc = new index_js_11.Kyc(networkID, provider);
+        this.dao = new index_js_12.Dao(networkID, provider);
     }
 }
 exports.Mitum = Mitum;

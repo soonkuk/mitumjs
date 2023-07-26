@@ -9,6 +9,7 @@ import { Credential } from "./contract/credential/index.js";
 import { Timestamp } from "./contract/timestamp/index.js";
 import { St } from "./contract/st/index.js";
 import { Kyc } from "./contract/kyc/index.js";
+import { Dao } from "./contract/dao/index.js";
 export declare class Mitum {
     private _version;
     private _node;
@@ -23,6 +24,7 @@ export declare class Mitum {
     timestamp: Timestamp;
     st: St;
     kyc: Kyc;
+    dao: Dao;
     constructor(provider?: string);
     version(): string;
     node(): Promise<AxiosResponse>;

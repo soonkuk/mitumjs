@@ -10,6 +10,7 @@ import { Credential } from "./contract/credential/index.js";
 import { Timestamp } from "./contract/timestamp/index.js";
 import { St } from "./contract/st/index.js";
 import { Kyc } from "./contract/kyc/index.js";
+import { Dao } from "./contract/dao/index.js";
 export class Mitum {
     constructor(provider) {
         this._version = new Version();
@@ -25,6 +26,7 @@ export class Mitum {
         this.timestamp = new Timestamp(MITUM_NETWORK_ID, provider);
         this.st = new St(MITUM_NETWORK_ID, provider);
         this.kyc = new Kyc(MITUM_NETWORK_ID, provider);
+        this.dao = new Dao(MITUM_NETWORK_ID, provider);
     }
     version() {
         return this._version.getVersion();
@@ -45,6 +47,7 @@ export class Mitum {
         this.timestamp = new Timestamp(networkID, provider);
         this.st = new St(networkID, provider);
         this.kyc = new Kyc(networkID, provider);
+        this.dao = new Dao(networkID, provider);
     }
     getNode() {
         return this._node.getNodeUri();
@@ -63,6 +66,7 @@ export class Mitum {
         this.timestamp = new Timestamp(networkID, provider);
         this.st = new St(networkID, provider);
         this.kyc = new Kyc(networkID, provider);
+        this.dao = new Dao(networkID, provider);
     }
 }
 export default Mitum;
