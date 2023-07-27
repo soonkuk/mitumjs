@@ -57,7 +57,7 @@ class Dao {
     setServiceId(serviceId) {
         if (this._serviceID !== serviceId) {
             this._serviceID = serviceId;
-            console.log("Credential ID is changed : ", this._serviceID);
+            console.log("DAO ID is changed : ", this._serviceID);
         }
     }
     getContractAddress() {
@@ -91,7 +91,7 @@ class Dao {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     formTransferCalldata(sender, receiver, currency, amount) {
-        return new calldata_js_1.TransferCalldata(sender, receiver, currency, amount).toHintedObject();
+        return new calldata_js_1.TransferCalldata(sender, receiver, currency, amount);
     }
     /** policyData = {
           voteToken: string,
@@ -109,17 +109,17 @@ class Dao {
         }
      */
     formSetPolicyCalldata(policyData) {
-        return new calldata_js_1.GovernanceCallData(policyData).toHintedObject();
+        return new calldata_js_1.GovernanceCallData(policyData);
     }
     writeCryptoProposal(proposer, startTime, calldata) {
-        return new proposal_js_1.CryptoProposal(proposer, startTime, calldata).toHintedObject();
+        return new proposal_js_1.CryptoProposal(proposer, startTime, calldata);
     }
     writeBizProposal(proposer, startTime, url, hash, voteOptions) {
-        return new proposal_js_1.BizProposal(proposer, startTime, url, hash, voteOptions).toHintedObject();
+        return new proposal_js_1.BizProposal(proposer, startTime, url, hash, voteOptions);
     }
-    propose(sender, proposalId, startTime, proposal, currency) {
+    propose(sender, proposalId, proposal, currency) {
         const token = new time_js_1.TimeStamp().UTC();
-        const fact = new propose_js_1.ProposeFact(token, sender, this._contractAddress, this._serviceID, proposalId, startTime, proposal, currency);
+        const fact = new propose_js_1.ProposeFact(token, sender, this._contractAddress, this._serviceID, proposalId, proposal, currency);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     register(sender, proposalId, delegator, currency) {

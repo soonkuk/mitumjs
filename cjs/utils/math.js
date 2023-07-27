@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Uint8 = exports.Float = exports.Big = exports.SortFunc = exports.keccak256 = exports.sha3 = exports.sha256 = void 0;
+exports.Percent = exports.Uint8 = exports.Float = exports.Big = exports.SortFunc = exports.keccak256 = exports.sha3 = exports.sha256 = void 0;
 const js_sha3_1 = __importDefault(require("js-sha3"));
 const { sha3_256, keccak256: keccak_256 } = js_sha3_1.default;
 const sha256_1 = require("@noble/hashes/sha256");
@@ -107,7 +107,9 @@ class Uint8 {
         this.n = n;
     }
     toBuffer() {
-        return Buffer.from([this.n]);
+        const buffer = Buffer.alloc(1);
+        buffer.writeUint8(this.n, 0);
+        return buffer;
     }
     get v() {
         return this.n;
@@ -117,4 +119,22 @@ class Uint8 {
     }
 }
 exports.Uint8 = Uint8;
+class Percent {
+    constructor(p) {
+        if (p > 100) {
+            throw new Error("The value can't exceed 100 percent.");
+        }
+        this.p = new Uint8(p);
+    }
+    toBuffer() {
+        return this.p.toBuffer();
+    }
+    toString() {
+        return this.p.toString();
+    }
+    get v() {
+        return this.p.v;
+    }
+}
+exports.Percent = Percent;
 //# sourceMappingURL=math.js.map

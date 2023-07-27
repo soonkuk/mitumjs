@@ -1,5 +1,4 @@
 import { IBuffer, IString } from "../../types/interface.js";
-import { Uint8 } from "../../utils/math.js";
 
 export const CRYPTO = "crypto";
 export const BIZ = "biz";
@@ -45,27 +44,3 @@ export type daoData = policyData & {
   serviceId: string;
   option: string;
 };
-
-export class Percent implements IBuffer, IString {
-  readonly p: Uint8;
-
-  constructor(p: number) {
-    if (p > 100) {
-      throw new Error("The turnout or quorum value can't exceed 100 percent.");
-    }
-
-    this.p = new Uint8(p);
-  }
-
-  toBuffer(): Buffer {
-    return this.p.toBuffer();
-  }
-
-  toString(): string {
-    return this.p.toString();
-  }
-
-  get v(): number {
-    return this.p.v;
-  }
-}

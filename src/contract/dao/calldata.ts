@@ -74,7 +74,7 @@ export class GovernanceCallData implements Calldata {
   }
 
   toBuffer(): Buffer {
-    return Buffer.concat([this.policy.toBuffer()]);
+    return this.policy.toBuffer();
   }
 
   toHintedObject(): HintedObject {

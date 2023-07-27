@@ -32,7 +32,7 @@ export class GovernanceCallData {
         this.policy = new Policy(p.voteToken, p.threshold, p.fee, p.proposers, p.waitingTime, p.registrationPeriod, p.preSnapPeriod, p.votingPeriod, p.postSnapPeriod, p.executionDelay, p.turnout, p.quorum);
     }
     toBuffer() {
-        return Buffer.concat([this.policy.toBuffer()]);
+        return this.policy.toBuffer();
     }
     toHintedObject() {
         return {

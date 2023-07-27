@@ -138,7 +138,9 @@ export class Uint8 implements IBuffer, IString {
   }
 
   toBuffer(): Buffer {
-    return Buffer.from([this.n]);
+    const buffer = Buffer.alloc(1);
+    buffer.writeUint8(this.n, 0);
+    return buffer;
   }
 
   get v(): number {
@@ -147,5 +149,29 @@ export class Uint8 implements IBuffer, IString {
 
   toString(): string {
     return this.n.toString();
+  }
+}
+
+export class Percent implements IBuffer, IString {
+  readonly p: Uint8;
+
+  constructor(p: number) {
+    if (p > 100) {
+      throw new Error("The value can't exceed 100 percent.");
+    }
+
+    this.p = new Uint8(p);
+  }
+
+  toBuffer(): Buffer {
+    return this.p.toBuffer();
+  }
+
+  toString(): string {
+    return this.p.toString();
+  }
+
+  get v(): number {
+    return this.p.v;
   }
 }

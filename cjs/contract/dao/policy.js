@@ -4,7 +4,7 @@ exports.Policy = void 0;
 const property_js_1 = require("../../types/property.js");
 const proposer_js_1 = require("./proposer.js");
 const math_js_1 = require("../../utils/math.js");
-const design_js_1 = require("./design.js");
+const math_js_2 = require("../../utils/math.js");
 const PolicyHint = "mitum-dao-policy";
 class Policy {
     constructor(voteToken, threshold, fee, proposers, waitingTime, registrationPeriod, preSnapPeriod, votingPeriod, postSnapPeriod, executionDelay, turnout, quorum) {
@@ -19,8 +19,8 @@ class Policy {
         this.votingPeriod = new math_js_1.Big(votingPeriod);
         this.postSnapPeriod = new math_js_1.Big(postSnapPeriod);
         this.executionDelay = new math_js_1.Big(executionDelay);
-        this.turnout = new design_js_1.Percent(turnout);
-        this.quorum = new design_js_1.Percent(quorum);
+        this.turnout = new math_js_2.Percent(turnout);
+        this.quorum = new math_js_2.Percent(quorum);
     }
     toBuffer() {
         return Buffer.concat([

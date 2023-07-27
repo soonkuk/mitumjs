@@ -3,10 +3,9 @@ import { Amount, ContractID, CurrencyID } from "../../types/property.js";
 import { FactJson } from "../../types/iFact.js";
 import { Fact } from "../../types/fact.js";
 import { Address } from "../../account/address.js";
-import { Big } from "../../utils/math.js";
+import { Big, Percent } from "../../utils/math.js";
 import { Proposers } from "./proposer.js";
 import { DaoOption } from "./design.js";
-import { Percent } from "./design.js";
 export declare class CreateDAOFact extends Fact {
     readonly sender: Address;
     readonly contract: Address;

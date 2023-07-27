@@ -95,13 +95,32 @@ export class Uint8 {
         this.n = n;
     }
     toBuffer() {
-        return Buffer.from([this.n]);
+        const buffer = Buffer.alloc(1);
+        buffer.writeUint8(this.n, 0);
+        return buffer;
     }
     get v() {
         return this.n;
     }
     toString() {
         return this.n.toString();
+    }
+}
+export class Percent {
+    constructor(p) {
+        if (p > 100) {
+            throw new Error("The value can't exceed 100 percent.");
+        }
+        this.p = new Uint8(p);
+    }
+    toBuffer() {
+        return this.p.toBuffer();
+    }
+    toString() {
+        return this.p.toString();
+    }
+    get v() {
+        return this.p.v;
     }
 }
 //# sourceMappingURL=math.js.map

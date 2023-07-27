@@ -29,4 +29,11 @@ export declare class Uint8 implements IBuffer, IString {
     get v(): number;
     toString(): string;
 }
+export declare class Percent implements IBuffer, IString {
+    readonly p: Uint8;
+    constructor(p: number);
+    toBuffer(): Buffer;
+    toString(): string;
+    get v(): number;
+}
 export {};

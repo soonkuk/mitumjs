@@ -1,18 +1,16 @@
 import { ContractID, CurrencyID } from "../../types/property.js";
 import { Fact } from "../../types/fact.js";
 import { Address } from "../../account/address.js";
-import { Big } from "../../utils/math.js";
 import { String } from "../../types/string.js";
 const ProposeFactHint = "mitum-dao-propose-operation-fact";
 const ProposeHint = "mitum-dao-propose-operation";
 export class ProposeFact extends Fact {
-    constructor(token, sender, contract, serviceId, proposalId, startTime, proposal, currency) {
+    constructor(token, sender, contract, serviceId, proposalId, proposal, currency) {
         super(ProposeFactHint, token);
         this.sender = new Address(sender);
         this.contract = new Address(contract);
         this.serviceId = new ContractID(serviceId);
         this.proposalId = new String(proposalId);
-        this.startTime = new Big(startTime);
         this.proposal = proposal;
         this.currency = new CurrencyID(currency);
         this._hash = this.hashing();
@@ -24,7 +22,6 @@ export class ProposeFact extends Fact {
             this.contract.toBuffer(),
             this.serviceId.toBuffer(),
             this.proposalId.toBuffer(),
-            this.startTime.toBuffer("fill"),
             this.proposal.toBuffer(),
             this.currency.toBuffer(),
         ]);
@@ -36,7 +33,6 @@ export class ProposeFact extends Fact {
             contract: this.contract.toString(),
             dao_id: this.serviceId.toString(),
             proposal_id: this.proposalId.toString(),
-            start_time: this.startTime.v,
             proposal: this.proposal.toHintedObject(),
             currency: this.currency.toString(),
         };

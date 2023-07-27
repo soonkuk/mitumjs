@@ -3,7 +3,7 @@ import { OperationType } from "../../types/operation.js";
 import { HintedObject } from "../../types/interface.js";
 import { Fact } from "../../types/fact.js";
 import { Calldata } from "./calldata.js";
-import { Proposal } from "./proposal.js";
+import { CryptoProposal, BizProposal, Proposal } from "./proposal.js";
 import { daoData, policyData } from "./design.js";
 export declare class Dao {
     private _networkID;
@@ -53,9 +53,9 @@ export declare class Dao {
         }
      */
     formSetPolicyCalldata(policyData: policyData): HintedObject;
-    writeCryptoProposal(proposer: string, startTime: number, calldata: Calldata): HintedObject;
-    writeBizProposal(proposer: string, startTime: number, url: string, hash: string, voteOptions: number): HintedObject;
-    propose(sender: string, proposalId: string, startTime: number, proposal: Proposal, currency: string): OperationType<Fact>;
+    writeCryptoProposal(proposer: string, startTime: number, calldata: Calldata): CryptoProposal;
+    writeBizProposal(proposer: string, startTime: number, url: string, hash: string, voteOptions: number): BizProposal;
+    propose(sender: string, proposalId: string, proposal: Proposal, currency: string): OperationType<Fact>;
     register(sender: string, proposalId: string, delegator: string, currency: string): OperationType<Fact>;
     cancel(sender: string, proposalId: string, currency: string): OperationType<Fact>;
     snapBeforeVoting(sender: string, proposalId: string, currency: string): OperationType<Fact>;

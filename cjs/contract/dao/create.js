@@ -7,7 +7,6 @@ const address_js_1 = require("../../account/address.js");
 const math_js_1 = require("../../utils/math.js");
 const proposer_js_1 = require("./proposer.js");
 const design_js_1 = require("./design.js");
-const design_js_2 = require("./design.js");
 const CreateDAOFactHint = "mitum-dao-create-dao-operation-fact";
 const CreateDAOHint = "mitum-dao-create-dao-operation";
 class CreateDAOFact extends fact_js_1.Fact {
@@ -20,15 +19,20 @@ class CreateDAOFact extends fact_js_1.Fact {
         this.voteToken = new property_js_1.CurrencyID(voteToken);
         this.threshold = new property_js_1.Amount(voteToken, threshold);
         this.fee = new property_js_1.Amount(voteToken, fee);
-        this.proposers = new proposer_js_1.Proposers(true, proposers);
+        if (proposers.length === 0) {
+            this.proposers = new proposer_js_1.Proposers(false, proposers);
+        }
+        else {
+            this.proposers = new proposer_js_1.Proposers(true, proposers);
+        }
         this.waitingTime = new math_js_1.Big(waitingTime);
         this.registrationPeriod = new math_js_1.Big(registrationPeriod);
         this.preSnapPeriod = new math_js_1.Big(preSnapPeriod);
         this.votingPeriod = new math_js_1.Big(votingPeriod);
         this.postSnapPeriod = new math_js_1.Big(postSnapPeriod);
         this.executionDelay = new math_js_1.Big(executionDelay);
-        this.turnout = new design_js_2.Percent(turnout);
-        this.quorum = new design_js_2.Percent(quorum);
+        this.turnout = new math_js_1.Percent(turnout);
+        this.quorum = new math_js_1.Percent(quorum);
         this.currency = new property_js_1.CurrencyID(currency);
         this._hash = this.hashing();
     }

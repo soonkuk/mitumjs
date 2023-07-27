@@ -1,6 +1,5 @@
 /// <reference types="node" />
 import { IBuffer, IString } from "../../types/interface.js";
-import { Uint8 } from "../../utils/math.js";
 export declare const CRYPTO = "crypto";
 export declare const BIZ = "biz";
 export type DaoType = typeof CRYPTO | typeof BIZ;
@@ -28,10 +27,3 @@ export type daoData = policyData & {
     serviceId: string;
     option: string;
 };
-export declare class Percent implements IBuffer, IString {
-    readonly p: Uint8;
-    constructor(p: number);
-    toBuffer(): Buffer;
-    toString(): string;
-    get v(): number;
-}

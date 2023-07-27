@@ -42,7 +42,7 @@ export class Dao {
     setServiceId(serviceId) {
         if (this._serviceID !== serviceId) {
             this._serviceID = serviceId;
-            console.log("Credential ID is changed : ", this._serviceID);
+            console.log("DAO ID is changed : ", this._serviceID);
         }
     }
     getContractAddress() {
@@ -76,7 +76,7 @@ export class Dao {
         return new OperationType(this._networkID, fact);
     }
     formTransferCalldata(sender, receiver, currency, amount) {
-        return new TransferCalldata(sender, receiver, currency, amount).toHintedObject();
+        return new TransferCalldata(sender, receiver, currency, amount);
     }
     /** policyData = {
           voteToken: string,
@@ -94,17 +94,17 @@ export class Dao {
         }
      */
     formSetPolicyCalldata(policyData) {
-        return new GovernanceCallData(policyData).toHintedObject();
+        return new GovernanceCallData(policyData);
     }
     writeCryptoProposal(proposer, startTime, calldata) {
-        return new CryptoProposal(proposer, startTime, calldata).toHintedObject();
+        return new CryptoProposal(proposer, startTime, calldata);
     }
     writeBizProposal(proposer, startTime, url, hash, voteOptions) {
-        return new BizProposal(proposer, startTime, url, hash, voteOptions).toHintedObject();
+        return new BizProposal(proposer, startTime, url, hash, voteOptions);
     }
-    propose(sender, proposalId, startTime, proposal, currency) {
+    propose(sender, proposalId, proposal, currency) {
         const token = new TimeStamp().UTC();
-        const fact = new ProposeFact(token, sender, this._contractAddress, this._serviceID, proposalId, startTime, proposal, currency);
+        const fact = new ProposeFact(token, sender, this._contractAddress, this._serviceID, proposalId, proposal, currency);
         return new OperationType(this._networkID, fact);
     }
     register(sender, proposalId, delegator, currency) {

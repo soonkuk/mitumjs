@@ -2,7 +2,6 @@ import { ContractID, CurrencyID } from "../../types/property.js";
 import { FactJson } from "../../types/iFact.js";
 import { Fact } from "../../types/fact.js";
 import { Address } from "../../account/address.js";
-import { Big } from "../../utils/math.js";
 import { String } from "../../types/string.js";
 
 import { Proposal } from "./proposal.js";
@@ -15,7 +14,6 @@ export class ProposeFact extends Fact {
   readonly contract: Address;
   readonly serviceId: ContractID;
   readonly proposalId: String;
-  readonly startTime: Big;
   readonly proposal: Proposal;
   readonly currency: CurrencyID;
 
@@ -25,7 +23,6 @@ export class ProposeFact extends Fact {
     contract: string,
     serviceId: string,
     proposalId: string,
-    startTime: number,
     proposal: Proposal,
     currency: string
   ) {
@@ -35,7 +32,6 @@ export class ProposeFact extends Fact {
     this.contract = new Address(contract);
     this.serviceId = new ContractID(serviceId);
     this.proposalId = new String(proposalId);
-    this.startTime = new Big(startTime);
     this.proposal = proposal;
     this.currency = new CurrencyID(currency);
 
@@ -49,7 +45,6 @@ export class ProposeFact extends Fact {
       this.contract.toBuffer(),
       this.serviceId.toBuffer(),
       this.proposalId.toBuffer(),
-      this.startTime.toBuffer("fill"),
       this.proposal.toBuffer(),
       this.currency.toBuffer(),
     ]);
@@ -62,7 +57,6 @@ export class ProposeFact extends Fact {
       contract: this.contract.toString(),
       dao_id: this.serviceId.toString(),
       proposal_id: this.proposalId.toString(),
-      start_time: this.startTime.v,
       proposal: this.proposal.toHintedObject(),
       currency: this.currency.toString(),
     };

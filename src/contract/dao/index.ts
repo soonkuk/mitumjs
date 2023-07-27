@@ -55,7 +55,7 @@ export class Dao {
   setServiceId(serviceId: string) {
     if (this._serviceID !== serviceId) {
       this._serviceID = serviceId;
-      console.log("Credential ID is changed : ", this._serviceID);
+      console.log("DAO ID is changed : ", this._serviceID);
     }
   }
 
@@ -124,12 +124,7 @@ export class Dao {
     currency: string,
     amount: number
   ): HintedObject {
-    return new TransferCalldata(
-      sender,
-      receiver,
-      currency,
-      amount
-    ).toHintedObject();
+    return new TransferCalldata(sender, receiver, currency, amount);
   }
 
   /** policyData = {
@@ -148,11 +143,11 @@ export class Dao {
       }
    */
   formSetPolicyCalldata(policyData: policyData): HintedObject {
-    return new GovernanceCallData(policyData).toHintedObject();
+    return new GovernanceCallData(policyData);
   }
 
   writeCryptoProposal(proposer: string, startTime: number, calldata: Calldata) {
-    return new CryptoProposal(proposer, startTime, calldata).toHintedObject();
+    return new CryptoProposal(proposer, startTime, calldata);
   }
 
   writeBizProposal(
@@ -162,19 +157,12 @@ export class Dao {
     hash: string,
     voteOptions: number
   ) {
-    return new BizProposal(
-      proposer,
-      startTime,
-      url,
-      hash,
-      voteOptions
-    ).toHintedObject();
+    return new BizProposal(proposer, startTime, url, hash, voteOptions);
   }
 
   propose(
     sender: string,
     proposalId: string,
-    startTime: number,
     proposal: Proposal,
     currency: string
   ): OperationType<Fact> {
@@ -186,7 +174,6 @@ export class Dao {
       this._contractAddress,
       this._serviceID,
       proposalId,
-      startTime,
       proposal,
       currency
     );

@@ -2,7 +2,7 @@ import { HintedObject, IBuffer, IHintedObject } from "../../types/interface.js";
 import { Amount, CurrencyID, Hint } from "../../types/property.js";
 import { Proposers } from "./proposer.js";
 import { Big } from "../../utils/math.js";
-import { Percent } from "./design.js";
+import { Percent } from "../../utils/math.js";
 
 const PolicyHint = "mitum-dao-policy";
 

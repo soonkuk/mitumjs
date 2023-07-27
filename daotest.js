@@ -1,4 +1,3 @@
-const { start } = require("repl");
 const { Mitum } = require("./cjs");
 
 const mitum = new Mitum("http://127.0.0.1:54320");
@@ -40,6 +39,7 @@ const test = async () => {
   const serviceId = "SIT";
   const serviceId2 = "SST";
   const serviceId3 = "SSP";
+  const serviceId4 = "PIK";
   mitum.dao.setContractAddress(contractAddress);
   mitum.dao.setServiceId(serviceId);
 
@@ -50,18 +50,18 @@ const test = async () => {
   const voteToken = "MCC";
   const threshold = 50001;
   const fee = 100;
-  const proposers = [a1, a2, a3];
+  const proposers = [];
   const waitingTime = 180000;
   const registrationPeriod = 180000;
   const preSnapPeriod = 180000;
   const votingPeriod = 180000;
   const postSnapPeriod = 180000;
   const executionDelay = 180000;
-  const turnout = 0;
-  const quorum = 0;
+  const turnout = 33;
+  const quorum = 50;
   //   const daoData = {
-  //     serviceId: serviceId2,
-  //     option: option02,
+  //     serviceId: "TEST03",
+  //     option: option01,
   //     voteToken: voteToken,
   //     threshold: threshold,
   //     fee: fee,
@@ -90,12 +90,11 @@ const test = async () => {
   const hash = "sf34DAtLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8Badsf";
   const voteOptions = 5;
 
-  // create proposal
   const policyData = {
     voteToken: voteToken,
     threshold: threshold,
     fee: fee,
-    proposers: [a1, a4],
+    proposers: [],
     waitingTime: waitingTime,
     registrationPeriod: registrationPeriod,
     preSnapPeriod: preSnapPeriod,
@@ -106,6 +105,7 @@ const test = async () => {
     quorum: 50,
   };
 
+  // create proposal
   const calldata01 = mitum.dao.formSetPolicyCalldata(policyData);
   const calldata02 = mitum.dao.formTransferCalldata(a3, a4, currencyID, 777);
 
@@ -119,16 +119,20 @@ const test = async () => {
     voteOptions
   );
 
-  const o = mitum.dao.propose(
-    a1,
-    proposalId01,
-    startTime,
-    proposal01,
-    currencyID
-  );
+  const o = mitum.dao.propose(a1, proposalId01, proposal03, currencyID);
   const s = mitum.operation.sign(pv1, o);
   const res = await mitum.operation.send(s);
   console.log(res.status);
+
+  //   const toBuffer = () => {
+  //     // const b = new Uint16Array(1);
+  //     // b[0] = 129;
+  //     // return Buffer.from(b.buffer);
+  //     const buffer = Buffer.alloc(1);
+  //     buffer.writeUint8(129);
+  //     return buffer;
+  //   };
+  //   console.log(toBuffer());
 };
 
 test();

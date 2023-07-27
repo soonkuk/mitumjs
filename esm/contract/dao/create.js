@@ -1,10 +1,9 @@
 import { Amount, ContractID, CurrencyID } from "../../types/property.js";
 import { Fact } from "../../types/fact.js";
 import { Address } from "../../account/address.js";
-import { Big } from "../../utils/math.js";
+import { Big, Percent } from "../../utils/math.js";
 import { Proposers } from "./proposer.js";
 import { DaoOption } from "./design.js";
-import { Percent } from "./design.js";
 const CreateDAOFactHint = "mitum-dao-create-dao-operation-fact";
 const CreateDAOHint = "mitum-dao-create-dao-operation";
 export class CreateDAOFact extends Fact {
@@ -17,7 +16,12 @@ export class CreateDAOFact extends Fact {
         this.voteToken = new CurrencyID(voteToken);
         this.threshold = new Amount(voteToken, threshold);
         this.fee = new Amount(voteToken, fee);
-        this.proposers = new Proposers(true, proposers);
+        if (proposers.length === 0) {
+            this.proposers = new Proposers(false, proposers);
+        }
+        else {
+            this.proposers = new Proposers(true, proposers);
+        }
         this.waitingTime = new Big(waitingTime);
         this.registrationPeriod = new Big(registrationPeriod);
         this.preSnapPeriod = new Big(preSnapPeriod);
