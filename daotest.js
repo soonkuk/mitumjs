@@ -36,7 +36,7 @@ const test = async () => {
   //   const res1 = await mitum.operation.send(s);
   //   console.log(res1.status);
 
-  const serviceId = "SIT";
+  const serviceId = "TEST03";
   const serviceId2 = "SST";
   const serviceId3 = "SSP";
   const serviceId4 = "PIK";
@@ -109,18 +109,18 @@ const test = async () => {
   const calldata01 = mitum.dao.formSetPolicyCalldata(policyData);
   const calldata02 = mitum.dao.formTransferCalldata(a3, a4, currencyID, 777);
 
-  const proposal01 = mitum.dao.writeCryptoProposal(a1, startTime, calldata01);
-  const proposal02 = mitum.dao.writeCryptoProposal(a1, startTime, calldata02);
+  const proposal01 = mitum.dao.writeCryptoProposal(a2, startTime, calldata01);
+  const proposal02 = mitum.dao.writeCryptoProposal(a2, startTime, calldata02);
   const proposal03 = mitum.dao.writeBizProposal(
-    a1,
+    a2,
     startTime,
     url,
     hash,
     voteOptions
   );
 
-  const o = mitum.dao.propose(a1, proposalId01, proposal03, currencyID);
-  const s = mitum.operation.sign(pv1, o);
+  const o = mitum.dao.propose(a2, proposalId01, proposal01, currencyID);
+  const s = mitum.operation.sign(pv2, o);
   const res = await mitum.operation.send(s);
   console.log(res.status);
 

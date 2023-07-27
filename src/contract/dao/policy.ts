@@ -40,7 +40,13 @@ export class Policy implements IBuffer, IHintedObject {
     this.votingToken = new CurrencyID(voteToken);
     this.threshold = new Amount(voteToken, threshold);
     this.fee = new Amount(voteToken, fee);
-    this.proposers = new Proposers(true, proposers);
+
+    if (proposers.length === 0) {
+      this.proposers = new Proposers(false, proposers);
+    } else {
+      this.proposers = new Proposers(true, proposers);
+    }
+
     this.waitingTime = new Big(waitingTime);
     this.registrationPeriod = new Big(registrationPeriod);
     this.preSnapPeriod = new Big(preSnapPeriod);

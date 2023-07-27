@@ -12,7 +12,12 @@ class Policy {
         this.votingToken = new property_js_1.CurrencyID(voteToken);
         this.threshold = new property_js_1.Amount(voteToken, threshold);
         this.fee = new property_js_1.Amount(voteToken, fee);
-        this.proposers = new proposer_js_1.Proposers(true, proposers);
+        if (proposers.length === 0) {
+            this.proposers = new proposer_js_1.Proposers(false, proposers);
+        }
+        else {
+            this.proposers = new proposer_js_1.Proposers(true, proposers);
+        }
         this.waitingTime = new math_js_1.Big(waitingTime);
         this.registrationPeriod = new math_js_1.Big(registrationPeriod);
         this.preSnapPeriod = new math_js_1.Big(preSnapPeriod);
