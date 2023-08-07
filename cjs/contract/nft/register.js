@@ -41,7 +41,7 @@ class CollectionRegisterFact extends fact_js_1.Fact {
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { sender: this.sender.toString(), contract: this.contract.toString(), collection: this.collection.toString(), name: this.name.toString(), royalty: this.royalty.v, uri: this.uri.toString(), whites: this.whites.sort(math_js_1.SortFunc).map((w) => w.toString()), currency: this.currency.toString() });
+        return Object.assign(Object.assign({}, super.toHintedObject()), { sender: this.sender.toString(), contract: this.contract.toString(), collection: this.collection.toString(), name: this.name.toString(), royalty: this.royalty.v, uri: this.uri.toString(), whitelist: this.whites.sort(math_js_1.SortFunc).map((w) => w.toString()), currency: this.currency.toString() });
     }
     get operationHint() {
         return hintNft_js_1.HINT_NFT.HINT_COLLECTION_REGISTER_OPERATION;

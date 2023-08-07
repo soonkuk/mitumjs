@@ -59,80 +59,83 @@ const test = async () => {
   const executionDelay = 180000;
   const turnout = 33;
   const quorum = 50;
-  //   const daoData = {
-  //     serviceId: "TEST03",
-  //     option: option01,
-  //     voteToken: voteToken,
-  //     threshold: threshold,
-  //     fee: fee,
-  //     proposers: proposers,
-  //     waitingTime: waitingTime,
-  //     registrationPeriod: registrationPeriod,
-  //     preSnapPeriod: preSnapPeriod,
-  //     votingPeriod: votingPeriod,
-  //     postSnapPeriod: postSnapPeriod,
-  //     executionDelay: executionDelay,
-  //     turnout: turnout,
-  //     quorum: quorum,
-  //   };
-  //   const o = mitum.dao.createDAOService(a1, daoData, currencyID);
-  //   const s = mitum.operation.sign(pv1, o);
-  //   const res = await mitum.operation.send(s);
-  //   console.log(res.status);
-
-  const proposalId01 = "2VKEH78tLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8B";
-  const proposalId02 = "2VKEH78tLMJ71KXzYQUFej";
-  const proposalId03 = "2VKEH78tLMJ";
-
-  // start 시간은 실행 시간 기준으로 5분 뒤로 임의 설정
-  const startTime = Date.now() + 300000;
-  const url = "www.socialinfratech.com/doc/example01.pdf";
-  const hash = "sf34DAtLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8Badsf";
-  const voteOptions = 5;
-
-  const policyData = {
+  const daoData = {
+    serviceId: "TEST04",
+    option: option01,
     voteToken: voteToken,
     threshold: threshold,
     fee: fee,
-    proposers: [],
+    proposers: proposers,
     waitingTime: waitingTime,
     registrationPeriod: registrationPeriod,
     preSnapPeriod: preSnapPeriod,
     votingPeriod: votingPeriod,
     postSnapPeriod: postSnapPeriod,
     executionDelay: executionDelay,
-    turnout: 10,
-    quorum: 50,
+    turnout: turnout,
+    quorum: quorum,
   };
-
-  // create proposal
-  const calldata01 = mitum.dao.formSetPolicyCalldata(policyData);
-  const calldata02 = mitum.dao.formTransferCalldata(a3, a4, currencyID, 777);
-
-  const proposal01 = mitum.dao.writeCryptoProposal(a2, startTime, calldata01);
-  const proposal02 = mitum.dao.writeCryptoProposal(a2, startTime, calldata02);
-  const proposal03 = mitum.dao.writeBizProposal(
-    a2,
-    startTime,
-    url,
-    hash,
-    voteOptions
-  );
-
-  const o = mitum.dao.propose(a2, proposalId01, proposal01, currencyID);
-  const s = mitum.operation.sign(pv2, o);
+  const o = mitum.dao.createDAOService(a1, daoData, currencyID);
+  const s = mitum.operation.sign(pv1, o);
   const res = await mitum.operation.send(s);
-  console.log(res.status);
+  console.log(res.data);
 
-  //   const toBuffer = () => {
-  //     // const b = new Uint16Array(1);
-  //     // b[0] = 129;
-  //     // return Buffer.from(b.buffer);
-  //     const buffer = Buffer.alloc(1);
-  //     buffer.writeUint8(129);
-  //     return buffer;
+  //   const proposalId01 = "2VKEH78tLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8B";
+  //   const proposalId02 = "2VKEH78tLMJ71KXzYQUFej";
+  //   const proposalId03 = "2VKEH78tLMJ";
+
+  //   // start 시간은 실행 시간 기준으로 2분 뒤로 임의 설정
+  //   const startTime = Date.now() + 1000 * 60 * 2;
+  //   const url = "www.socialinfratech.com/doc/example01.pdf";
+  //   const hash = "sf34DAtLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8Badsf";
+  //   const voteOptions = 5;
+
+  //   const policyData = {
+  //     voteToken: voteToken,
+  //     threshold: threshold,
+  //     fee: fee,
+  //     proposers: [],
+  //     waitingTime: waitingTime,
+  //     registrationPeriod: registrationPeriod,
+  //     preSnapPeriod: preSnapPeriod,
+  //     votingPeriod: votingPeriod,
+  //     postSnapPeriod: postSnapPeriod,
+  //     executionDelay: executionDelay,
+  //     turnout: 10,
+  //     quorum: 50,
   //   };
-  //   console.log(toBuffer());
+
+  //   // create proposal
+  //   const calldata01 = mitum.dao.formSetPolicyCalldata(policyData);
+  //   const calldata02 = mitum.dao.formTransferCalldata(a3, a4, currencyID, 33333);
+
+  //   const proposal01 = mitum.dao.writeCryptoProposal(a2, startTime, calldata01);
+  //   const proposal02 = mitum.dao.writeCryptoProposal(a2, startTime, calldata02);
+  //   const proposal03 = mitum.dao.writeBizProposal(
+  //     a2,
+  //     startTime,
+  //     url,
+  //     hash,
+  //     voteOptions
+  //   );
+
+  //   //   const o = mitum.dao.propose(a2, proposalId03, proposal02, currencyID);
+  //   //   const s = mitum.operation.sign(pv2, o);
+  //   //   const res = await mitum.operation.send(s);
+  //   //   console.log(res.status);
+
+  //   //   const toBuffer = () => {
+  //   //     // const b = new Uint16Array(1);
+  //   //     // b[0] = 129;
+  //   //     // return Buffer.from(b.buffer);
+  //   //     const buffer = Buffer.alloc(1);
+  //   //     buffer.writeUint8(129);
+  //   //     return buffer;
+  //   //   };
+  //   //   console.log(toBuffer());
+
+  //   const info = await mitum.dao.getProposalInfo(serviceId, proposalId03);
+  //   console.log(info);
 };
 
 test();

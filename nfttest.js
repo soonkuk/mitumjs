@@ -46,12 +46,11 @@ const test = async () => {
   // const c1 = mitum.nft.createCollection(sender, collectionData, currencyID);
   // const ss1 = mitum.operation.sign(privatekey, c1);
   // const res = await mitum.operation.send(ss1);
-  // exp("adkfjs", c1);
   // exp("mitum.nft.createCollection()", res.status);
 
   // collection 정보 조회
-  // const info1 = await mitum.nft.getCollectionPolicy();
-  // console.log(info1);
+  const info1 = await mitum.nft.getNFTInfo(150);
+  console.log(info1);
 
   // update policy 일단 넘어감 ************************************************************************
   // const oper1 = mitum.nft.setPolicy(sender, collectionData, currencyID);

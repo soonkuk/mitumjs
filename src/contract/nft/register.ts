@@ -99,7 +99,7 @@ export class CollectionRegisterFact extends Fact {
       name: this.name.toString(),
       royalty: this.royalty.v,
       uri: this.uri.toString(),
-      whites: this.whites.sort(SortFunc).map((w) => w.toString()),
+      whitelist: this.whites.sort(SortFunc).map((w) => w.toString()),
       currency: this.currency.toString(),
     };
   }

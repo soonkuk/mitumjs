@@ -25,6 +25,18 @@ const test = async () => {
   const pb4 = "2BMCPdRL6qgk54he4Zh1H6DYpNcmLDdstZDTiuJSQt6Aqmpu";
   const a4 = "5qA26ygWafSaiqJo7hwtrJBeFaz3ZBgJwnW6SKq2ZMVdmca";
 
+  const pv5 = "3JYWgX9crWgHYtJP2Ruihm9tnVdmw214E2hfgG3Ak8rrmpr";
+  const pb5 = "nDdo1BSUcMTTscutiCNkBVczirdTtcNLyVmVuDTUTuUYmpu";
+  const a5 = "8NyArMw2BcNGWorqZYkCEYNDAvAEZTEUaDojBA7hKog6mca";
+
+  const pv6 = "FNNVNzxM6UbogpP7nqEEjPEXyGrr5zz3LuKVMjK2VjoVmpr";
+  const pb6 = "2BJb4ksGffeEN1zNU7NPi3z38TaVbEBNqjthMEnSiAMXimpu";
+  const a6 = "24qC9thJohPEjvXQTXXkntG316spDUWHRs33k13XF987mca";
+
+  const pv7 = "ABvkDgqNwxeD8TyJHMBBEJyCpTFJ1iLH1MhueAKen1CKmpr";
+  const pb7 = "xS334fNtVW7awzTDo5mKzSkWBCY4f6v9bDfFfx8fxZkNmpu";
+  const a7 = "4EzNupMKVqK2SzprmAFCdhosJQi8AqocWRuGcBH7UCdjmca";
+
   const contractPubkey = "diLUcZugeDFW6ftQdcjdz8Ks1KBGiACo9GAcKQUgwFdfmpu";
   const contractAddress = "DBs9tyMUodWgPiMkxGNjjUwVX6YDm2Kh3rQaDZQcHrYnmca";
 
@@ -53,10 +65,10 @@ const test = async () => {
   //   exp("mitum.account.createWallet()", res);
   //   console.log(wallet1.wallet);
 
-  //   const w1 = mitum.account.create(a1, pb4, currencyID, 100);
-  //   const o1 = mitum.operation.sign(pv1, w1);
-  //   const res = await mitum.operation.send(o1);
-  //   exp("mitum.account.create()", res.status);
+  const w1 = mitum.account.create(a1, pb7, currencyID, 100);
+  const o1 = mitum.operation.sign(pv1, w1);
+  // const res = await mitum.operation.send(o1);
+  exp("mitum.account.create()", o1);
 
   // contract address 생성
   //   const c1 = mitum.contract.create(a1, contractPubkey, currencyID, 100);
@@ -199,12 +211,12 @@ const test = async () => {
   //     mitum.credential.getContractAddress()
   //   );
 
-  const sId = "dri";
-  const f20 = mitum.credential.createCredentialService(a4, sId, currencyID);
-  const s20 = mitum.operation.sign(pv4, f20);
-  // const res20 = await mitum.operation.send(s20);
-  exp("mitum.credential.createCredentialService()", s20);
-  mitum.credential.setServiceId(symbol);
+  // const sId = "dri";
+  // const f20 = mitum.credential.createCredentialService(a4, sId, currencyID);
+  // const s20 = mitum.operation.sign(pv4, f20);
+  // // const res20 = await mitum.operation.send(s20);
+  // exp("mitum.credential.createCredentialService()", s20);
+  // mitum.credential.setServiceId(symbol);
 
   const templateId = 12;
   const templateName = "social";
