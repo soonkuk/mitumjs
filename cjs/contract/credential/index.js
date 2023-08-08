@@ -68,7 +68,7 @@ class Credential {
     }
     /** Description of templateData **
       templateData = {
-          templateId: number,
+          templateId: string,
           templateName: string,
           serviceDate: date,
           expirationDate: date,
@@ -88,7 +88,7 @@ class Credential {
     /** Description of issueData **
       issueData = {
           holder: string,
-          templateId: number,
+          templateId: string,
           id: string,
           value: string,
           validFrom: number,

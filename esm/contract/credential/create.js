@@ -1,4 +1,5 @@
-import { ContractID, CurrencyID } from "../../types/property.js";
+import { CurrencyID } from "../../types/property.js";
+import { ServiceID } from "../../types/serviceId.js";
 import { Fact } from "../../types/fact.js";
 import { Address } from "../../account/address.js";
 const CreateCredentialServiceFactHint = "mitum-credential-create-credential-service-operation-fact";
@@ -8,7 +9,7 @@ export class CreateCredentialServiceFact extends Fact {
         super(CreateCredentialServiceFactHint, token);
         this.sender = new Address(sender);
         this.contract = new Address(contract);
-        this.credentialServiceID = new ContractID(credentialServiceID);
+        this.credentialServiceID = new ServiceID(credentialServiceID);
         this.currency = new CurrencyID(currency);
         this._hash = this.hashing();
     }

@@ -80,7 +80,7 @@ export class Credential {
 
   /** Description of templateData **
     templateData = {
-        templateId: number,
+        templateId: string,
         templateName: string,
         serviceDate: date,
         expirationDate: date,
@@ -123,7 +123,7 @@ export class Credential {
   /** Description of issueData **
     issueData = {
         holder: string,
-        templateId: number,
+        templateId: string,
         id: string,
         value: string,
         validFrom: number,
@@ -158,7 +158,7 @@ export class Credential {
   revoke(
     sender: string,
     holder: string,
-    templateId: number,
+    templateId: string,
     id: string,
     currency: string
   ): OperationType<Fact> {

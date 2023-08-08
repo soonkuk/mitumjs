@@ -1,6 +1,6 @@
 const { Mitum } = require("./cjs");
 
-const mitum = new Mitum("http://127.0.0.1:54320");
+const mitum = new Mitum("http://15.165.34.166:54320");
 
 const exp = (str, value) => {
   console.log("");
@@ -16,22 +16,24 @@ const exp = (str, value) => {
 };
 
 const test = async () => {
-  const sender = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
-  const currencyID = "MCC";
-  const pubkey = "oxaoi8FuZpLJkEU8kStm8dndhwbo4FtfcCiJo76MkpiQmpu";
-  const privatekey = "DNQF7ruLFUD8ZXXrZimjFZdHAJSwc754dz1JdGADwTEDmpr";
+  const pv0 = "Auf6amfGtuHRx5dbhvhGNpwt1EtLG4ZTnbriEiuihDfJmpr";
+  const pb0 = "27SnBRSvhX9eEswL4SXVRaewhoxuK6jVLUNyfWMThqHsZmpu";
+  const a0 = "5zPANS8TqGwvVh1bghiFQpX2v4GqPsW2Rx1xtonNPMsSmca";
 
-  //   const ca1 = mitum.contract.create(sender, pubkey, currencyID, 100000);
-  //   const s1 = mitum.operation.sign(privatekey, ca1);
-  //   const res = await mitum.operation.send(s1);
-  //   exp("axios result", res.data);
+  const currencyID = "PEN";
+  const contractPubkey = "jdxEaVHTBSu94HcqG7K4oKF6jTPPqnhbrA7fN8qm3tvzmpu";
+  const contractAddress = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
+
+  // const ca1 = mitum.contract.create(a0, contractPubkey, currencyID, 100);
+  // const s1 = mitum.operation.sign(pv0, ca1);
+  // const res = await mitum.operation.send(s1);
+  // exp("axios result", res.status);
 
   // const token = "2023-07-03 07:51:25.876 +0000 UTC";
-  const contract = "2gWeBMRnZ8kmwU7dvJgv3rHpui7ksHMRKLjJiPUsbBAAmca";
-  const credentialId = "SIT2";
+  const credentialId = "sit";
 
   // set
-  mitum.credential.setContractAddress(contract);
+  mitum.credential.setContractAddress(contractAddress);
   mitum.credential.setServiceId(credentialId);
 
   //   const g1 = mitum.credential.getContractAddress();
@@ -39,15 +41,14 @@ const test = async () => {
   //   const g2 = mitum.credential.getServiceId();
   //   exp("", g2);
 
-  // const newService = mitum.credential.createCredentialService(
-  //   sender,
-  //   credentialId,
-  //   currencyID
-  // );
-  // const s11 = mitum.operation.sign(privatekey, newService);
-  // const res = await mitum.operation.send(s11);
-  // exp("create credential test", res.status);
-  // exp("create credential test", newService);
+  const newService = mitum.credential.createCredentialService(
+    a0,
+    credentialId,
+    currencyID
+  );
+  const s11 = mitum.operation.sign(pv0, newService);
+  const res = await mitum.operation.send(s11);
+  exp("create credential test", res.status);
 
   //   const temData = {
   //     templateId: 77,

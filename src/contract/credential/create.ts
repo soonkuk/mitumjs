@@ -1,5 +1,6 @@
-import { ContractID, CurrencyID } from "../../types/property.js";
+import { CurrencyID } from "../../types/property.js";
 import { FactJson } from "../../types/iFact.js";
+import { ServiceID } from "../../types/serviceId.js";
 import { Fact } from "../../types/fact.js";
 
 import { Address } from "../../account/address.js";
@@ -12,7 +13,7 @@ const CreateCredentialServiceHint =
 export class CreateCredentialServiceFact extends Fact {
   readonly sender: Address;
   readonly contract: Address;
-  readonly credentialServiceID: ContractID;
+  readonly credentialServiceID: ServiceID;
   readonly currency: CurrencyID;
 
   constructor(
@@ -26,7 +27,7 @@ export class CreateCredentialServiceFact extends Fact {
 
     this.sender = new Address(sender);
     this.contract = new Address(contract);
-    this.credentialServiceID = new ContractID(credentialServiceID);
+    this.credentialServiceID = new ServiceID(credentialServiceID);
     this.currency = new CurrencyID(currency);
 
     this._hash = this.hashing();

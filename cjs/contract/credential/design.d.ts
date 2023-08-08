@@ -1,5 +1,5 @@
 export type templateData = {
-    templateId: number;
+    templateId: string;
     templateName: string;
     serviceDate: string;
     expirationDate: string;
@@ -12,7 +12,7 @@ export type templateData = {
 };
 export type issueData = {
     holder: string;
-    templateId: number;
+    templateId: string;
     id: string;
     value: string;
     validFrom: number;

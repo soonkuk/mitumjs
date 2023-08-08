@@ -22,7 +22,7 @@ export class AssignCredentialsItem extends CredentialsItem {
     contract: string,
     credentialServiceID: string,
     holder: string,
-    templateID: number,
+    templateID: string,
     id: string,
     value: string,
     validfrom: number,

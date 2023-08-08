@@ -36,9 +36,12 @@ const test = async () => {
 
   const contractPubkey =
     "04dc84f8831487d7eea629ead69ce7933d14483d1d371c546a06c02c4afe0c80bbd38935093c0d201fa5f57cc6220426b2660abdf727bcfb21fd0ea96ff224731fepu";
+  const contractPubkey2 =
+    "040ef96d7057ce56ee053f888600e38b323e6c37a6c7075b524a411b0c9fc9effef6e8303d0c6336797759a3e9bce5ce974e80d6b124470b4d37e76ccaed27b7f8epu";
   const contractAddress = "9515dce6f66792f0acacc01dc55402212214e140eca";
-  const contractAddress2 = "DBs9tyMUodWgPiMkxGNjjUwVX6YDm2Kh3rQaDZQcHrYnmca";
-  mitum.nft.setContractAddress(contractAddress2);
+  const contractAddress2 = "55f9f94b8faf99f2439300a5125a499f8fe93cb9eca";
+  const contractAddress3 = "DBs9tyMUodWgPiMkxGNjjUwVX6YDm2Kh3rQaDZQcHrYnmca";
+  mitum.nft.setContractAddress(contractAddress);
 
   //   const f1 = mitum.account.createEtherAccount(a0, pb3, currencyId, 30000);
   //   const s1 = mitum.operation.sign(pv0, f1);
@@ -54,34 +57,34 @@ const test = async () => {
   //   console.log(await mitum.account.balance(a1));
 
   // create contract account
-  //   const f3 = mitum.contract.createEtherAccount(
-  //     a0,
-  //     contractPubkey,
-  //     currencyId,
-  //     1000
-  //   );
-  //   const s3 = mitum.operation.sign(pv0, f3);
-  //   const r3 = await mitum.operation.send(s3);
-  //   console.log(r3.status);
+  const f3 = mitum.contract.createEtherAccount(
+    a1,
+    contractPubkey2,
+    currencyId,
+    1000
+  );
+  const s3 = mitum.operation.sign(pv1, f3);
+  const r3 = await mitum.operation.send(s3);
+  console.log(r3.status);
 
   const name = "socialinfratech";
-  const symbol = "SIT5";
+  const symbol = "SIT6";
   const uri = "www.socialinfratech.com";
   const royalty = 10;
-  const whiteLists = [a1, a2];
+  const whiteLists = [a0, a1, a2];
 
   // create collection
-  const collectionData = {
-    name: name,
-    symbol: symbol,
-    uri: uri,
-    royalty: royalty,
-    whiteLists: whiteLists,
-  };
-  const f4 = mitum.nft.createCollection(a0, collectionData, currencyId);
-  const s4 = mitum.operation.sign(pv0, f4);
+  //   const collectionData = {
+  //     name: name,
+  //     symbol: symbol,
+  //     uri: uri,
+  //     royalty: royalty,
+  //     whiteLists: whiteLists,
+  //   };
+  //   const f4 = mitum.nft.createCollection(a1, collectionData, currencyId);
+  //   const s4 = mitum.operation.sign(pv1, f4);
   //   const r4 = await mitum.operation.send(s4);
-  console.log(s4);
+  //   console.log(r4.status);
 };
 
 test();

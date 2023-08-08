@@ -3,7 +3,6 @@ import { Boolean } from "../../types/boolean.js";
 import { String } from "../../types/string.js";
 import { Fact } from "../../types/fact.js";
 import { Date } from "../../types/date.js";
-import { Big } from "../../utils/math.js";
 import { Address } from "../../account/address.js";
 const AddTemplateFactHint = "mitum-credential-add-template-operation-fact";
 const AddTemplateHint = "mitum-credential-add-template-operation";
@@ -13,7 +12,7 @@ export class AddTemplateFact extends Fact {
         this.sender = new Address(sender);
         this.contract = new Address(contract);
         this.credentialServiceID = new ContractID(credentialServiceID);
-        this.templateID = new Big(templateID);
+        this.templateID = new String(templateID);
         this.templateName = new String(templateName);
         this.serviceDate = new Date(serviceDate);
         this.expirationDate = new Date(expirationDate);
@@ -32,7 +31,7 @@ export class AddTemplateFact extends Fact {
             this.sender.toBuffer(),
             this.contract.toBuffer(),
             this.credentialServiceID.toBuffer(),
-            this.templateID.toBuffer("fill"),
+            this.templateID.toBuffer(),
             this.templateName.toBuffer(),
             this.serviceDate.toBuffer(),
             this.expirationDate.toBuffer(),
@@ -51,7 +50,7 @@ export class AddTemplateFact extends Fact {
             sender: this.sender.toString(),
             contract: this.contract.toString(),
             credential_service_id: this.credentialServiceID.toString(),
-            template_id: this.templateID.v,
+            template_id: this.templateID.toString(),
             template_name: this.templateName.toString(),
             service_date: this.serviceDate.v,
             expiration_date: this.expirationDate.v,

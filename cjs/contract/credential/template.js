@@ -6,7 +6,6 @@ const boolean_js_1 = require("../../types/boolean.js");
 const string_js_1 = require("../../types/string.js");
 const fact_js_1 = require("../../types/fact.js");
 const date_js_1 = require("../../types/date.js");
-const math_js_1 = require("../../utils/math.js");
 const address_js_1 = require("../../account/address.js");
 const AddTemplateFactHint = "mitum-credential-add-template-operation-fact";
 const AddTemplateHint = "mitum-credential-add-template-operation";
@@ -16,7 +15,7 @@ class AddTemplateFact extends fact_js_1.Fact {
         this.sender = new address_js_1.Address(sender);
         this.contract = new address_js_1.Address(contract);
         this.credentialServiceID = new property_js_1.ContractID(credentialServiceID);
-        this.templateID = new math_js_1.Big(templateID);
+        this.templateID = new string_js_1.String(templateID);
         this.templateName = new string_js_1.String(templateName);
         this.serviceDate = new date_js_1.Date(serviceDate);
         this.expirationDate = new date_js_1.Date(expirationDate);
@@ -35,7 +34,7 @@ class AddTemplateFact extends fact_js_1.Fact {
             this.sender.toBuffer(),
             this.contract.toBuffer(),
             this.credentialServiceID.toBuffer(),
-            this.templateID.toBuffer("fill"),
+            this.templateID.toBuffer(),
             this.templateName.toBuffer(),
             this.serviceDate.toBuffer(),
             this.expirationDate.toBuffer(),
@@ -49,7 +48,7 @@ class AddTemplateFact extends fact_js_1.Fact {
         ]);
     }
     toHintedObject() {
-        return Object.assign(Object.assign({}, super.toHintedObject()), { sender: this.sender.toString(), contract: this.contract.toString(), credential_service_id: this.credentialServiceID.toString(), template_id: this.templateID.v, template_name: this.templateName.toString(), service_date: this.serviceDate.v, expiration_date: this.expirationDate.v, template_share: this.templateShare.v, multi_audit: this.multiAudit.v, display_name: this.displayName.toString(), subject_key: this.subjectKey.toString(), description: this.description.toString(), creator: this.creator.toString(), currency: this.currency.toString() });
+        return Object.assign(Object.assign({}, super.toHintedObject()), { sender: this.sender.toString(), contract: this.contract.toString(), credential_service_id: this.credentialServiceID.toString(), template_id: this.templateID.toString(), template_name: this.templateName.toString(), service_date: this.serviceDate.v, expiration_date: this.expirationDate.v, template_share: this.templateShare.v, multi_audit: this.multiAudit.v, display_name: this.displayName.toString(), subject_key: this.subjectKey.toString(), description: this.description.toString(), creator: this.creator.toString(), currency: this.currency.toString() });
     }
     get operationHint() {
         return AddTemplateHint;

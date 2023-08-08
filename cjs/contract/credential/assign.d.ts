@@ -9,7 +9,7 @@ export declare class AssignCredentialsItem extends CredentialsItem {
     readonly validfrom: Big;
     readonly validuntil: Big;
     readonly did: String;
-    constructor(contract: string, credentialServiceID: string, holder: string, templateID: number, id: string, value: string, validfrom: number, validuntil: number, did: string, currency: string);
+    constructor(contract: string, credentialServiceID: string, holder: string, templateID: string, id: string, value: string, validfrom: number, validuntil: number, did: string, currency: string);
     toString(): string;
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;

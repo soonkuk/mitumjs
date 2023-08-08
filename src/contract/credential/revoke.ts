@@ -15,7 +15,7 @@ export class RevokeCredentialsItem extends CredentialsItem {
     contract: string,
     credentialServiceID: string,
     holder: string,
-    templateID: number,
+    templateID: string,
     id: string,
     currency: string
   ) {

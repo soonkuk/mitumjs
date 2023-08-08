@@ -17,7 +17,7 @@ export declare class Credential {
     createCredentialService(sender: string, serviceId: string, currency: string): OperationType<Fact>;
     /** Description of templateData **
       templateData = {
-          templateId: number,
+          templateId: string,
           templateName: string,
           serviceDate: date,
           expirationDate: date,
@@ -33,7 +33,7 @@ export declare class Credential {
     /** Description of issueData **
       issueData = {
           holder: string,
-          templateId: number,
+          templateId: string,
           id: string,
           value: string,
           validFrom: number,
@@ -42,7 +42,7 @@ export declare class Credential {
       }
     */
     issue(sender: string, data: issueData, currency: string): OperationType<Fact>;
-    revoke(sender: string, holder: string, templateId: number, id: string, currency: string): OperationType<Fact>;
+    revoke(sender: string, holder: string, templateId: string, id: string, currency: string): OperationType<Fact>;
     getServiceInfo(serviceId?: string): Promise<AxiosResponse>;
     getCredentialInfo(serviceId: string, templateId: string, credentialId: string): Promise<AxiosResponse>;
     getTemplate(serviceId: string, templateId: string): Promise<AxiosResponse>;
