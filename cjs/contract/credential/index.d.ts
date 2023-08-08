@@ -46,5 +46,6 @@ export declare class Credential {
     getServiceInfo(serviceId?: string): Promise<AxiosResponse>;
     getCredentialInfo(serviceId: string, templateId: string, credentialId: string): Promise<AxiosResponse>;
     getTemplate(serviceId: string, templateId: string): Promise<AxiosResponse>;
+    getAllCredentials(serviceID: string, templateId: string): Promise<AxiosResponse>;
     claimCredential(serviceID: string, holder: string): Promise<AxiosResponse>;
 }

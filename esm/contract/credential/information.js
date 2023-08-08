@@ -36,6 +36,18 @@ export default {
             throw new Error(error.response.data);
         }
     },
+    async getAllCredentials(provider, contract, serviceId, templateId) {
+        if (provider === "" || contract === "" || serviceId === "") {
+            throw new Error("RPC-URL is not provided or You need to set 'contract address and credential id'.");
+        }
+        try {
+            const res = await axios.get(`${provider}/did/${contract}/issuer/${serviceId}/template/${templateId}/credentials`);
+            return res;
+        }
+        catch (error) {
+            throw new Error(error.response.data);
+        }
+    },
     async getCredentialByHolder(provider, contract, serviceId, holder) {
         if (provider === "" || contract === "" || serviceId === "") {
             throw new Error("RPC-URL is not provided or You need to set 'contract address and credential id'.");

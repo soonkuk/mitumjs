@@ -223,6 +223,20 @@ export class Credential {
     return res.data;
   }
 
+  async getAllCredentials(
+    serviceID: string,
+    templateId: string
+  ): Promise<AxiosResponse> {
+    const res = await credentialInfo.getCredentialByHolder(
+      this._node,
+      this._address,
+      serviceID,
+      templateId
+    );
+
+    return res.data;
+  }
+
   async claimCredential(
     serviceID: string,
     holder: string

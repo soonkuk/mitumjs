@@ -130,6 +130,12 @@ class Credential {
             return res.data;
         });
     }
+    getAllCredentials(serviceID, templateId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield information_js_1.default.getCredentialByHolder(this._node, this._address, serviceID, templateId);
+            return res.data;
+        });
+    }
     claimCredential(serviceID, holder) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield information_js_1.default.getCredentialByHolder(this._node, this._address, serviceID, holder);

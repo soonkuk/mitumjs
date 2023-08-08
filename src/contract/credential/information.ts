@@ -67,6 +67,28 @@ export default {
     }
   },
 
+  async getAllCredentials(
+    provider: string,
+    contract: string,
+    serviceId: string,
+    templateId: string
+  ): Promise<AxiosResponse> {
+    if (provider === "" || contract === "" || serviceId === "") {
+      throw new Error(
+        "RPC-URL is not provided or You need to set 'contract address and credential id'."
+      );
+    }
+
+    try {
+      const res = await axios.get(
+        `${provider}/did/${contract}/issuer/${serviceId}/template/${templateId}/credentials`
+      );
+      return res;
+    } catch (error: any) {
+      throw new Error(error.response.data);
+    }
+  },
+
   async getCredentialByHolder(
     provider: string,
     contract: string,

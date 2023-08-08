@@ -109,6 +109,10 @@ export class Credential {
         const res = await credentialInfo.getTemplate(this._node, this._address, serviceId, templateId);
         return res.data;
     }
+    async getAllCredentials(serviceID, templateId) {
+        const res = await credentialInfo.getCredentialByHolder(this._node, this._address, serviceID, templateId);
+        return res.data;
+    }
     async claimCredential(serviceID, holder) {
         const res = await credentialInfo.getCredentialByHolder(this._node, this._address, serviceID, holder);
         return res.data;

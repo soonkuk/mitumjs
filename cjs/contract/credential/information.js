@@ -56,6 +56,20 @@ exports.default = {
             }
         });
     },
+    getAllCredentials(provider, contract, serviceId, templateId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (provider === "" || contract === "" || serviceId === "") {
+                throw new Error("RPC-URL is not provided or You need to set 'contract address and credential id'.");
+            }
+            try {
+                const res = yield axios_1.default.get(`${provider}/did/${contract}/issuer/${serviceId}/template/${templateId}/credentials`);
+                return res;
+            }
+            catch (error) {
+                throw new Error(error.response.data);
+            }
+        });
+    },
     getCredentialByHolder(provider, contract, serviceId, holder) {
         return __awaiter(this, void 0, void 0, function* () {
             if (provider === "" || contract === "" || serviceId === "") {
