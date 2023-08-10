@@ -25,7 +25,9 @@ export class KeyPair {
         return Buffer.from(secp256k1.signSync(sha256(sha256(msg)), this.signer));
     }
     ethSign(msg) {
-        const sig = secp256k1.signSync(nobleSha256(msg), this.signer.getPrivateKey());
+        const sig = secp256k1.signSync(nobleSha256(msg), 
+        // (this.signer as EthWallet).getPrivateKey()
+        "0x" + this.signer.toString());
         const rlen = sig[3];
         const r = sig.slice(4, 4 + rlen);
         const slen = sig[5 + rlen];

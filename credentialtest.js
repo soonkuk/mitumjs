@@ -93,7 +93,7 @@ const test = async () => {
   // const s4 = await mitum.operation.send(o4);
   // console.log(s4.status);
 
-  console.log(await mitum.credential.getTemplate(credentialId, templateId));
+  console.log(await mitum.credential.claimCredential(credentialId, a0));
 };
 
 test();

@@ -30,13 +30,15 @@ exports.M2KeyPair = void 0;
 const secp256k1 = __importStar(require("@noble/secp256k1"));
 const bs58_1 = __importDefault(require("bs58"));
 const secure_random_1 = __importDefault(require("secure-random"));
-const ethereumjs_wallet_1 = __importDefault(require("ethereumjs-wallet"));
+// import EthWallet from "ethereumjs-wallet";
+const ethers_1 = require("ethers");
 const eccrypto_js_1 = require("eccrypto-js");
 const iPair_js_1 = require("./iPair.js");
 const publicKey_js_1 = require("./publicKey.js");
 const hint_js_1 = require("../types/hint.js");
 const config_js_1 = require("../utils/config.js");
 const error_js_1 = require("../utils/error.js");
+const converter_js_1 = require("../utils/converter.js");
 class M2KeyPair extends iPair_js_1.KeyPair {
     constructor(privateKey) {
         super(publicKey_js_1.Key.from(privateKey));
@@ -45,15 +47,22 @@ class M2KeyPair extends iPair_js_1.KeyPair {
         if (this.privateKey.type === "btc") {
             return Buffer.from(bs58_1.default.decode(this.privateKey.noSuffix));
         }
-        return ethereumjs_wallet_1.default.fromPrivateKey(Buffer.from(this.privateKey.noSuffix, "hex"));
+        // return EthWallet.fromPrivateKey(
+        //   Buffer.from(this.privateKey.noSuffix, "hex")
+        // );
+        return Buffer.from(this.privateKey.noSuffix, "hex");
     }
     getPub() {
         if (this.privateKey.type === "btc") {
             return new publicKey_js_1.Key(bs58_1.default.encode((0, eccrypto_js_1.getPublicCompressed)(Buffer.from(this.signer))) + hint_js_1.SUFFIX.KEY_PUBLIC);
         }
-        return new publicKey_js_1.Key("04" +
-            this.signer.getPublicKeyString().substring(2) +
-            hint_js_1.SUFFIX.KEY_ETHER_PUBLIC);
+        const publickeyBuffer = (0, converter_js_1.privateKeyToPublicKey)("0x" + this.privateKey.noSuffix);
+        return new publicKey_js_1.Key((0, converter_js_1.compress)(publickeyBuffer) + hint_js_1.SUFFIX.KEY_ETHER_PUBLIC);
+        // return new Key(
+        //   "04" +
+        //     (this.signer as EthWallet).getPublicKeyString().substring(2) +
+        //     SUFFIX.KEY_ETHER_PUBLIC
+        // );
     }
     sign(msg) {
         if (this.privateKey.type === "btc") {
@@ -69,8 +78,12 @@ M2KeyPair.generator = {
             return new M2KeyPair(bs58_1.default.encode(Buffer.from((0, secure_random_1.default)(32, { type: "Uint8Array" }))) +
                 hint_js_1.SUFFIX.KEY_PRIVATE);
         }
-        return new M2KeyPair(ethereumjs_wallet_1.default.generate().getPrivateKeyString().substring(2) +
-            hint_js_1.SUFFIX.KEY_ETHER_PRIVATE);
+        const randomWallet = ethers_1.Wallet.createRandom();
+        // return new M2KeyPair(
+        //   EthWallet.generate().getPrivateKeyString().substring(2) +
+        //     SUFFIX.KEY_ETHER_PRIVATE
+        // );
+        return new M2KeyPair(randomWallet.privateKey.substring(2) + hint_js_1.SUFFIX.KEY_ETHER_PRIVATE);
     },
     fromPrivate(key) {
         return new M2KeyPair(key);

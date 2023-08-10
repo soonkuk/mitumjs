@@ -1,91 +1,54 @@
+const { Wallet } = require("ethers");
 const { Mitum } = require("./cjs");
+const { publicKeyCreate } = require("secp256k1");
 
-const mitum = new Mitum("http://127.0.0.1:54320");
+const mitum = new Mitum("http://15.165.34.166:54320");
 
-const test = async () => {
-  const sender = "8DtafRFAvcvXgYHwvsUToY9UT4hkfRxi4AsCNPzWs5Y4mca";
-  const currencyID = "MCC";
-  const pubkey = "oxaoi8FuZpLJkEU8kStm8dndhwbo4FtfcCiJo76MkpiQmpu";
-  const privatekey = "DNQF7ruLFUD8ZXXrZimjFZdHAJSwc754dz1JdGADwTEDmpr";
+function privateKeyToPublicKey(privateKey) {
+  if (!Buffer.isBuffer(privateKey)) {
+    if (typeof privateKey !== "string") {
+      throw new Error("Expected Buffer or string as argument");
+    }
 
-  // contract 계정 생성
-  const ca1 = mitum.contract.create(sender, pubkey, currencyID, 100000);
-  const s1 = mitum.operation.sign(privatekey, ca1);
-  const res = await mitum.operation.send(s1);
-  exp("axios result", res.status);
-
-  // test 에 사용할 계정 생성
-  //   const p1 = "28V9psXoGyjQ5cVtDLSFddHSaBnMYV95Y8kpJUk4rQKREmpu";
-  //   const p2 = "diLUcZugeDFW6ftQdcjdz8Ks1KBGiACo9GAcKQUgwFdfmpu";
-  //   const pa1 = mitum.account.create(sender, p1, currencyID, 111111);
-  //   const pa2 = mitum.account.create(sender, p2, currencyID, 222222);
-  //   const ss1 = mitum.operation.sign(privatekey, pa1);
-  //   const ss2 = mitum.operation.sign(privatekey, pa2);
-  //   const res1 = await mitum.operation.send(ss1);
-  //   const res2 = await mitum.operation.send(ss2);
-  //   console.log(res1.status);
-  //   console.log(res2.status);
-
-  const contract = "2gWeBMRnZ8kmwU7dvJgv3rHpui7ksHMRKLjJiPUsbBAAmca";
-  const serviceId = "SIT";
-  const a1 = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
-  const a2 = "2VKEH78tLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8Bmca";
-  const priv1 = "CHNoLNrykannTec3L1Aa1kXsDkC2QS2tDXrTxhHAcySwmpr";
-  const priv2 = "62LMhQdA2BabwWTyA5Y4gipeby8uUtz39MWJt8vSXxGvmpr";
-
-  mitum.st.setContractAddress(contract);
-  mitum.st.setServiceId(serviceId);
-};
-
-test();
-
-interface IERC1643 {
-
-    // Document Management
-    function getDocument(bytes32 _name) view returns (string memory, bytes32, uint256);
-    // function setDocument(bytes32 _name, string memory _uri, bytes32 _documentHash);
-    function removeDocument(bytes32 _name);
-    function getAllDocuments() view returns (bytes32[] memory);
-}
-interface IERC1400 is IERC20, IERC1643 {
-
-    // ******************* Token Information ********************
-    function balanceOfByPartition(bytes32 partition, address tokenHolder) view returns (uint256);
-    function partitionsOf(address tokenHolder) external view returns (bytes32[] memory);
-  
-    // *********************** Transfers ************************
-    function transferWithData(address to, uint256 value, bytes calldata data);
-    function transferFromWithData(address from, address to, uint256 value, bytes calldata data);
-  
-    // *************** Partition Token Transfers ****************
-    // function transferByPartition(bytes32 partition, address to, uint256 value, bytes calldata data) returns (bytes32);
-    function operatorTransferByPartition(bytes32 partition, address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData) returns (bytes32);
-    function allowanceByPartition(bytes32 partition, address owner, address spender) view returns (uint256);
-  
-    // ****************** Controller Operation ******************
-    function isControllable() view returns (bool);
-    function controllerTransfer(address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData); // removed because same action can be achieved with "operatorTransferByPartition"
-    function controllerRedeem(address tokenHolder, uint256 value, bytes calldata data, bytes calldata operatorData); // removed because same action can be achieved with "operatorRedeemByPartition"
-  
-    // ****************** Operator Management *******************
-    // function authorizeOperator(address operator);
-    function authorizeOperatorByPartition(bytes32 partition, address operator);
-
-    // function revokeOperator(address operator);
-    function revokeOperatorByPartition(bytes32 partition, address operator);
-  
-    // ****************** Operator Information ******************
-    function isOperator(address operator, address tokenHolder) view returns (bool);
-    function isOperatorForPartition(bytes32 partition, address operator, address tokenHolder) view returns (bool);
-  
-    // ********************* Token Issuance *********************
-    function isIssuable() view returns (bool);
-    // function issue(address tokenHolder, uint256 value, bytes calldata data);
-    function issueByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata data);
-  
-    // ******************** Token Redemption ********************
-    // function redeem(uint256 value, bytes calldata data);
-    function redeemFrom(address tokenHolder, uint256 value, bytes calldata data);
-    function redeemByPartition(bytes32 partition, uint256 value, bytes calldata data);
-    function operatorRedeemByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata operatorData);
+    privateKey =
+      privateKey.slice(0, 2) === "0x" ? privateKey.slice(2) : privateKey;
+    privateKey = Buffer.from(privateKey, "hex");
   }
+
+  return publicKeyCreate(privateKey, false);
+}
+
+// 무작위 개인 키 생성
+
+const randomWallet = Wallet.createRandom();
+console.log(randomWallet.privateKey.substring(2) + "epr");
+console.log(randomWallet.publicKey);
+
+const b = privateKeyToPublicKey(randomWallet.privateKey);
+
+// x 좌표 추출
+const xCoordinate = b.slice(1, 33);
+
+// y 좌표 추출
+const yCoordinate = b.slice(33);
+
+// y 좌표의 최하위 비트에 따라서 y 좌표 선택
+const compressedPublicKey = Buffer.concat([
+  Buffer.from([0x02 + (yCoordinate[yCoordinate.length - 1] % 2)]),
+  xCoordinate,
+]);
+
+console.log(compressedPublicKey.toString("hex"));
+
+// console.log(mitum.account.etherKey(seed));
+
+// const seed = "aksdfjakfjakfjekjfakjsdkjfdkajdkfjafadsfdasfkajdskfek";
+// // const entropy = ethers.utils.id(seed);
+// const wallet = Wallet.fromMnemonic(seed);
+// console.log(wallet);
+
+// const privatekey =
+//   "0xb15dc39334d2e4fcc189ce921d3d40067c678805946d3d734fe0401ccf5f0bb6";
+// // 기존 개인 키로 지갑 생성
+// const wallet = new Wallet(privatekey);
+// console.log(wallet.publicKey);

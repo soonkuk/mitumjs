@@ -2,7 +2,8 @@ import * as secp256k1 from "@noble/secp256k1";
 
 import base58 from "bs58";
 import secureRandom from "secure-random";
-import EthWallet from "ethereumjs-wallet";
+// import EthWallet from "ethereumjs-wallet";
+import { Wallet } from "ethers";
 import { getPublicCompressed } from "eccrypto-js";
 
 import { KeyPair } from "./iPair.js";
@@ -13,6 +14,7 @@ import { KeyPairType } from "../types/address.js";
 
 import { MitumConfig } from "../utils/config.js";
 import { ECODE, MitumError, StringAssert } from "../utils/error.js";
+import { privateKeyToPublicKey, compress } from "../utils/converter.js";
 
 export class M2KeyPair extends KeyPair {
   static generator = {
@@ -24,9 +26,14 @@ export class M2KeyPair extends KeyPair {
         );
       }
 
+      const randomWallet = Wallet.createRandom();
+
+      // return new M2KeyPair(
+      //   EthWallet.generate().getPrivateKeyString().substring(2) +
+      //     SUFFIX.KEY_ETHER_PRIVATE
+      // );
       return new M2KeyPair(
-        EthWallet.generate().getPrivateKeyString().substring(2) +
-          SUFFIX.KEY_ETHER_PRIVATE
+        randomWallet.privateKey.substring(2) + SUFFIX.KEY_ETHER_PRIVATE
       );
     },
 
@@ -60,14 +67,15 @@ export class M2KeyPair extends KeyPair {
     super(Key.from(privateKey));
   }
 
-  protected getSigner(): Uint8Array | EthWallet {
+  protected getSigner(): Uint8Array {
     if (this.privateKey.type === "btc") {
       return Buffer.from(base58.decode(this.privateKey.noSuffix));
     }
 
-    return EthWallet.fromPrivateKey(
-      Buffer.from(this.privateKey.noSuffix, "hex")
-    );
+    // return EthWallet.fromPrivateKey(
+    //   Buffer.from(this.privateKey.noSuffix, "hex")
+    // );
+    return Buffer.from(this.privateKey.noSuffix, "hex");
   }
 
   protected getPub(): Key {
@@ -79,11 +87,16 @@ export class M2KeyPair extends KeyPair {
       );
     }
 
-    return new Key(
-      "04" +
-        (this.signer as EthWallet).getPublicKeyString().substring(2) +
-        SUFFIX.KEY_ETHER_PUBLIC
+    const publickeyBuffer = privateKeyToPublicKey(
+      "0x" + this.privateKey.noSuffix
     );
+    return new Key(compress(publickeyBuffer) + SUFFIX.KEY_ETHER_PUBLIC);
+
+    // return new Key(
+    //   "04" +
+    //     (this.signer as EthWallet).getPublicKeyString().substring(2) +
+    //     SUFFIX.KEY_ETHER_PUBLIC
+    // );
   }
 
   sign(msg: string | Buffer): Buffer {
