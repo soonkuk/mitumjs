@@ -10,7 +10,7 @@ class Policy {
     constructor(voteToken, threshold, fee, proposers, waitingTime, registrationPeriod, preSnapPeriod, votingPeriod, postSnapPeriod, executionDelay, turnout, quorum) {
         this.hint = new property_js_1.Hint(PolicyHint);
         this.votingToken = new property_js_1.CurrencyID(voteToken);
-        this.threshold = new property_js_1.Amount(voteToken, threshold);
+        this.threshold = new math_js_1.Big(threshold);
         this.fee = new property_js_1.Amount(voteToken, fee);
         if (proposers.length === 0) {
             this.proposers = new proposer_js_1.Proposers(false, proposers);
@@ -31,7 +31,7 @@ class Policy {
         return Buffer.concat([
             this.votingToken.toBuffer(),
             this.fee.toBuffer(),
-            this.threshold.toBuffer(),
+            this.threshold.toBuffer("fill"),
             this.proposers.toBuffer(),
             this.waitingTime.toBuffer("fill"),
             this.registrationPeriod.toBuffer("fill"),
@@ -47,7 +47,7 @@ class Policy {
         return {
             _hint: this.hint.toString(),
             token: this.votingToken.toString(),
-            threshold: this.threshold.toHintedObject(),
+            threshold: this.threshold.v,
             fee: this.fee.toHintedObject(),
             whitelist: this.proposers.toHintedObject(),
             proposal_review_period: this.waitingTime.v,

@@ -9,7 +9,7 @@ const PolicyHint = "mitum-dao-policy";
 export class Policy implements IBuffer, IHintedObject {
   readonly hint: Hint;
   readonly votingToken: CurrencyID;
-  readonly threshold: Amount;
+  readonly threshold: Big;
   readonly fee: Amount;
   readonly proposers: Proposers;
   readonly waitingTime: Big;
@@ -38,7 +38,7 @@ export class Policy implements IBuffer, IHintedObject {
     this.hint = new Hint(PolicyHint);
 
     this.votingToken = new CurrencyID(voteToken);
-    this.threshold = new Amount(voteToken, threshold);
+    this.threshold = new Big(threshold);
     this.fee = new Amount(voteToken, fee);
 
     if (proposers.length === 0) {
@@ -61,7 +61,7 @@ export class Policy implements IBuffer, IHintedObject {
     return Buffer.concat([
       this.votingToken.toBuffer(),
       this.fee.toBuffer(),
-      this.threshold.toBuffer(),
+      this.threshold.toBuffer("fill"),
       this.proposers.toBuffer(),
       this.waitingTime.toBuffer("fill"),
       this.registrationPeriod.toBuffer("fill"),
@@ -78,7 +78,7 @@ export class Policy implements IBuffer, IHintedObject {
     return {
       _hint: this.hint.toString(),
       token: this.votingToken.toString(),
-      threshold: this.threshold.toHintedObject(),
+      threshold: this.threshold.v,
       fee: this.fee.toHintedObject(),
       whitelist: this.proposers.toHintedObject(),
       proposal_review_period: this.waitingTime.v,

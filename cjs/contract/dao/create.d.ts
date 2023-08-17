@@ -12,7 +12,7 @@ export declare class CreateDAOFact extends Fact {
     readonly serviceId: ContractID;
     readonly option: DaoOption;
     readonly voteToken: CurrencyID;
-    readonly threshold: Amount;
+    readonly threshold: Big;
     readonly fee: Amount;
     readonly proposers: Proposers;
     readonly waitingTime: Big;

@@ -7,7 +7,7 @@ import { Percent } from "../../utils/math.js";
 export declare class Policy implements IBuffer, IHintedObject {
     readonly hint: Hint;
     readonly votingToken: CurrencyID;
-    readonly threshold: Amount;
+    readonly threshold: Big;
     readonly fee: Amount;
     readonly proposers: Proposers;
     readonly waitingTime: Big;

@@ -16,7 +16,7 @@ export class CreateDAOFact extends Fact {
   readonly serviceId: ContractID;
   readonly option: DaoOption;
   readonly voteToken: CurrencyID;
-  readonly threshold: Amount;
+  readonly threshold: Big;
   readonly fee: Amount;
   readonly proposers: Proposers;
   readonly waitingTime: Big;
@@ -56,7 +56,7 @@ export class CreateDAOFact extends Fact {
     this.serviceId = new ContractID(serviceId);
     this.option = new DaoOption(option);
     this.voteToken = new CurrencyID(voteToken);
-    this.threshold = new Amount(voteToken, threshold);
+    this.threshold = new Big(threshold);
     this.fee = new Amount(voteToken, fee);
 
     if (proposers.length === 0) {
@@ -86,8 +86,8 @@ export class CreateDAOFact extends Fact {
       this.serviceId.toBuffer(),
       this.option.toBuffer(),
       this.voteToken.toBuffer(),
+      this.threshold.toBuffer("fill"),
       this.fee.toBuffer(),
-      this.threshold.toBuffer(),
       this.proposers.toBuffer(),
       this.waitingTime.toBuffer("fill"),
       this.registrationPeriod.toBuffer("fill"),
@@ -109,7 +109,7 @@ export class CreateDAOFact extends Fact {
       dao_id: this.serviceId.toString(),
       option: this.option.toString(),
       voting_power_token: this.voteToken.toString(),
-      threshold: this.threshold.toHintedObject(),
+      threshold: this.threshold.v,
       fee: this.fee.toHintedObject(),
       whitelist: this.proposers.toHintedObject(),
       proposal_review_period: this.waitingTime.v,
