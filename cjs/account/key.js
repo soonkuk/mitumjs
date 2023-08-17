@@ -44,7 +44,7 @@ class M2KeyPair extends iPair_js_1.KeyPair {
         super(publicKey_js_1.Key.from(privateKey));
     }
     getSigner() {
-        if (this.privateKey.type === "btc") {
+        if (this.privateKey.type === "mitum") {
             return Buffer.from(bs58_1.default.decode(this.privateKey.noSuffix));
         }
         // return EthWallet.fromPrivateKey(
@@ -53,7 +53,7 @@ class M2KeyPair extends iPair_js_1.KeyPair {
         return Buffer.from(this.privateKey.noSuffix, "hex");
     }
     getPub() {
-        if (this.privateKey.type === "btc") {
+        if (this.privateKey.type === "mitum") {
             return new publicKey_js_1.Key(bs58_1.default.encode((0, eccrypto_js_1.getPublicCompressed)(Buffer.from(this.signer))) + hint_js_1.SUFFIX.KEY_PUBLIC);
         }
         const publickeyBuffer = (0, converter_js_1.privateKeyToPublicKey)("0x" + this.privateKey.noSuffix);
@@ -65,7 +65,7 @@ class M2KeyPair extends iPair_js_1.KeyPair {
         // );
     }
     sign(msg) {
-        if (this.privateKey.type === "btc") {
+        if (this.privateKey.type === "mitum") {
             return this.btcSign(msg);
         }
         return this.ethSign(msg);
@@ -74,7 +74,7 @@ class M2KeyPair extends iPair_js_1.KeyPair {
 exports.M2KeyPair = M2KeyPair;
 M2KeyPair.generator = {
     random(option) {
-        if (option === "btc") {
+        if (option === "mitum") {
             return new M2KeyPair(bs58_1.default.encode(Buffer.from((0, secure_random_1.default)(32, { type: "Uint8Array" }))) +
                 hint_js_1.SUFFIX.KEY_PRIVATE);
         }
@@ -92,7 +92,7 @@ M2KeyPair.generator = {
         error_js_1.StringAssert.with(seed, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_SEED, "seed length out of range"))
             .satisfyConfig(config_js_1.MitumConfig.SEED)
             .excute();
-        if (option === "btc") {
+        if (option === "mitum") {
             return new M2KeyPair(bs58_1.default.encode(secp256k1.utils.hexToBytes(iPair_js_1.KeyPair.from(seed).toString(16))) + hint_js_1.SUFFIX.KEY_PRIVATE);
         }
         return new M2KeyPair(iPair_js_1.KeyPair.from(seed).toString(16) + hint_js_1.SUFFIX.KEY_ETHER_PRIVATE);

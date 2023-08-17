@@ -29,10 +29,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.verify = exports.isAddress = exports.isIPAddress = void 0;
 const secp256k1 = __importStar(require("@noble/secp256k1"));
 const bs58_1 = __importDefault(require("bs58"));
+// import ethWallet from "ethereumjs-wallet";
 const math_js_1 = require("../utils/math.js");
 const isIPAddress = (item) => {
     const ipPattern = /^(http|https):\/\/(\d{1,3}\.){3}\d{1,3}(?::\d+)?$/;
-    return ipPattern.test(item);
+    const domainPattern = /^(http|https):\/\/(?:[\w-]+\.)+[\w-]+(?:\/[\w-./?%&=]*)?$/;
+    return ipPattern.test(item) || domainPattern.test(item);
 };
 exports.isIPAddress = isIPAddress;
 // don't check hex of char
@@ -77,6 +79,6 @@ const ethVerify = (signer, sig, msg) => {
     Buffer.from([2]).copy(buf, 4 + rlen.v);
     slen.toBuffer().copy(buf, 5 + rlen.v);
     s.copy(buf, 6 + rlen.v);
-    return secp256k1.verify(buf, (0, math_js_1.sha256)(msg), secp256k1.getPublicKey(signer.getPrivateKey()));
+    return secp256k1.verify(buf, (0, math_js_1.sha256)(msg), secp256k1.getPublicKey(signer, true));
 };
 //# sourceMappingURL=validation.js.map

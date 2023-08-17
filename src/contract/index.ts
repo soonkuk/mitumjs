@@ -1,4 +1,4 @@
-import { KeyPairType } from "../types/address.js";
+import { AddressType, KeyPairType } from "../types/address.js";
 import { isIPAddress } from "../utils/validation.js";
 import { WalletType } from "../types/wallet.js";
 import { OperationType } from "../types/operation.js";
@@ -16,8 +16,11 @@ import {
   CreateContractAccountsFact,
 } from "./account.js";
 
-const BTC: KeyPairType = "btc";
+// const BTC: KeyPairType = "btc";
+const MITUM: KeyPairType = "mitum";
 const ETH: KeyPairType = "ether";
+const MCA: AddressType = "mca";
+const ECA: AddressType = "eca";
 
 export class Contract {
   private _networkID: string = "";
@@ -48,9 +51,9 @@ export class Contract {
     let keypair: M2KeyPair;
 
     if (seed === undefined || typeof seed === "number") {
-      keypair = M2KeyPair.random(BTC);
+      keypair = M2KeyPair.random(MITUM);
     } else {
-      keypair = M2KeyPair.fromSeed(seed, BTC);
+      keypair = M2KeyPair.fromSeed(seed, MITUM);
     }
 
     let wt = weight;
@@ -62,15 +65,16 @@ export class Contract {
     const publickey = keypair.publicKey.toString();
     const address = this.pubToKeys(
       [{ key: publickey, weight: wt }],
-      wt
+      wt,
+      MCA
     ).address.toString();
 
-    const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
+    const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA);
     const amountArr = new Amount(currencyID, amount);
 
     const token = new TimeStamp().UTC();
 
-    const item = new CreateContractAccountsItem(keys, [amountArr], BTC);
+    const item = new CreateContractAccountsItem(keys, [amountArr], MITUM);
     const fact = new CreateContractAccountsFact(token, sender, [item]);
 
     return {
@@ -95,12 +99,12 @@ export class Contract {
     currentID: string,
     amount: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
+    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, MCA);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
 
-    const item = new CreateContractAccountsItem(keys, [amountArr], BTC);
+    const item = new CreateContractAccountsItem(keys, [amountArr], MITUM);
     const fact = new CreateContractAccountsFact(token, senderAddr, [item]);
 
     return new OperationType(this._networkID, fact);
@@ -112,7 +116,7 @@ export class Contract {
     currentID: string,
     amount: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
+    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, ECA);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -130,12 +134,12 @@ export class Contract {
     amount: number,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(receiverPubArr, threshold);
+    const keys = this.pubToKeys(receiverPubArr, threshold, MCA);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
 
-    const item = new CreateContractAccountsItem(keys, [amountArr], BTC);
+    const item = new CreateContractAccountsItem(keys, [amountArr], MITUM);
     const fact = new CreateContractAccountsFact(token, senderAddr, [item]);
 
     return new OperationType(this._networkID, fact);
@@ -148,7 +152,7 @@ export class Contract {
     amount: number,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(receiverPubArr, threshold);
+    const keys = this.pubToKeys(receiverPubArr, threshold, ECA);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -161,10 +165,11 @@ export class Contract {
 
   private pubToKeys(
     pubKeys: Array<{ weight: number; key: string }>,
-    threshold: number
+    threshold: number,
+    addressType: AddressType
   ): Keys {
     const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
-    return new Keys(pubs, threshold);
+    return new Keys(pubs, threshold, addressType);
   }
 
   async getContractInfo(address: string): Promise<AxiosResponse | null> {

@@ -16,9 +16,9 @@ abstract class BaseAddress implements IBuffer, IString {
     if (type) {
       this.type = type;
     } else if (this.s.endsWith(SUFFIX.ACCOUNT_ADDRESS)) {
-      this.type = "btc";
+      this.type = "mca";
     } else if (this.s.endsWith(SUFFIX.ETHER_ACCOUNT_ADDRESS)) {
-      this.type = "ether";
+      this.type = "eca";
     } else if (this.s.endsWith(SUFFIX.NODE_ADDRESS)) {
       this.type = "node";
     } else if (this.s.endsWith(SUFFIX.ZERO_ADDRESS)) {
@@ -43,6 +43,7 @@ abstract class BaseAddress implements IBuffer, IString {
 export class Address extends BaseAddress {
   constructor(s: string) {
     super(s);
+
     StringAssert.with(
       s,
       MitumError.detail(ECODE.INVALID_ADDRESS, "invalid address")

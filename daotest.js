@@ -25,10 +25,10 @@ const test = async () => {
   const currencyID = "MCC";
 
   // create contract
-  //   const o1 = mitum.contract.create(a1, contractPubkey, currencyID, 100);
-  //   const s1 = mitum.operation.sign(pv1, o1);
-  //   const res = await mitum.operation.send(s1);
-  //   console.log("contract 생성: ", res.status);
+  const o1 = mitum.contract.create(a1, contractPubkey, currencyID, 100);
+  const s1 = mitum.operation.sign(pv1, o1);
+  const res = await mitum.operation.send(s1);
+  console.log("contract 생성: ", res.status);
 
   // 계정 생성
   //   const o = mitum.account.create(a1, pb4, currencyID, 100000);
@@ -75,10 +75,10 @@ const test = async () => {
     turnout: turnout,
     quorum: quorum,
   };
-  const o = mitum.dao.createDAOService(a1, daoData, currencyID);
-  const s = mitum.operation.sign(pv1, o);
-  const res = await mitum.operation.send(s);
-  console.log(res.data);
+  //   const o = mitum.dao.createDAOService(a1, daoData, currencyID);
+  //   const s = mitum.operation.sign(pv1, o);
+  //   const res = await mitum.operation.send(s);
+  //   console.log(res.data);
 
   //   const proposalId01 = "2VKEH78tLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8B";
   //   const proposalId02 = "2VKEH78tLMJ71KXzYQUFej";

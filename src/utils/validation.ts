@@ -1,13 +1,15 @@
 import * as secp256k1 from "@noble/secp256k1";
 
 import base58 from "bs58";
-import ethWallet from "ethereumjs-wallet";
+// import ethWallet from "ethereumjs-wallet";
 
 import { sha256, Big } from "../utils/math.js";
 
 export const isIPAddress = (item: unknown): boolean => {
   const ipPattern = /^(http|https):\/\/(\d{1,3}\.){3}\d{1,3}(?::\d+)?$/;
-  return ipPattern.test(item as string);
+  const domainPattern =
+    /^(http|https):\/\/(?:[\w-]+\.)+[\w-]+(?:\/[\w-./?%&=]*)?$/;
+  return ipPattern.test(item as string) || domainPattern.test(item as string);
 };
 
 // don't check hex of char
@@ -25,7 +27,7 @@ export const isAddress = (item: string): boolean => {
 // It hasn't been use, but maintains here.
 export const verify = (
   addressType: string,
-  signer: Uint8Array | ethWallet,
+  signer: Uint8Array,
   sig: string | Buffer,
   msg: string | Buffer
 ): boolean => {
@@ -36,7 +38,7 @@ export const verify = (
 };
 
 const btcVerify = (
-  signer: Uint8Array | ethWallet,
+  signer: Uint8Array,
   sig: string | Buffer,
   msg: string | Buffer
 ): boolean => {
@@ -52,7 +54,7 @@ const btcVerify = (
 };
 
 const ethVerify = (
-  signer: Uint8Array | ethWallet,
+  signer: Uint8Array,
   sig: string | Buffer,
   msg: string | Buffer
 ): boolean => {
@@ -85,6 +87,6 @@ const ethVerify = (
   return secp256k1.verify(
     buf,
     sha256(msg),
-    secp256k1.getPublicKey((signer as ethWallet).getPrivateKey())
+    secp256k1.getPublicKey(signer, true)
   );
 };

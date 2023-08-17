@@ -18,7 +18,7 @@ export class CreateContractAccountsItem extends CurrencyItem {
     constructor(keys, amounts, addressType) {
         super(HINT.CREATE_CONTRACT_ACCOUNTS_ITEM, amounts, addressType);
         this.keys = keys;
-        if (addressType === "btc") {
+        if (addressType === "mitum") {
             this.addressSuffix = SUFFIX.ACCOUNT_ADDRESS;
         }
         else if (addressType === "ether") {

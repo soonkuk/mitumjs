@@ -127,6 +127,7 @@ export class OperationType<T extends Fact> implements IBuffer, IHintedObject {
   sign(privateKey: string | Key, option?: string) {
     privateKey = Key.from(privateKey);
     const keypair = M2KeyPair.fromPrivate<M2KeyPair>(privateKey);
+
     const sigType = this.factSignType;
 
     if (sigType === "M2NodeFactSign") {

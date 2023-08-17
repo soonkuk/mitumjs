@@ -15,7 +15,7 @@ export class M2KeyPair extends KeyPair {
         super(Key.from(privateKey));
     }
     getSigner() {
-        if (this.privateKey.type === "btc") {
+        if (this.privateKey.type === "mitum") {
             return Buffer.from(base58.decode(this.privateKey.noSuffix));
         }
         // return EthWallet.fromPrivateKey(
@@ -24,7 +24,7 @@ export class M2KeyPair extends KeyPair {
         return Buffer.from(this.privateKey.noSuffix, "hex");
     }
     getPub() {
-        if (this.privateKey.type === "btc") {
+        if (this.privateKey.type === "mitum") {
             return new Key(base58.encode(getPublicCompressed(Buffer.from(this.signer))) + SUFFIX.KEY_PUBLIC);
         }
         const publickeyBuffer = privateKeyToPublicKey("0x" + this.privateKey.noSuffix);
@@ -36,7 +36,7 @@ export class M2KeyPair extends KeyPair {
         // );
     }
     sign(msg) {
-        if (this.privateKey.type === "btc") {
+        if (this.privateKey.type === "mitum") {
             return this.btcSign(msg);
         }
         return this.ethSign(msg);
@@ -44,7 +44,7 @@ export class M2KeyPair extends KeyPair {
 }
 M2KeyPair.generator = {
     random(option) {
-        if (option === "btc") {
+        if (option === "mitum") {
             return new M2KeyPair(base58.encode(Buffer.from(secureRandom(32, { type: "Uint8Array" }))) +
                 SUFFIX.KEY_PRIVATE);
         }
@@ -62,7 +62,7 @@ M2KeyPair.generator = {
         StringAssert.with(seed, MitumError.detail(ECODE.INVALID_SEED, "seed length out of range"))
             .satisfyConfig(MitumConfig.SEED)
             .excute();
-        if (option === "btc") {
+        if (option === "mitum") {
             return new M2KeyPair(base58.encode(secp256k1.utils.hexToBytes(KeyPair.from(seed).toString(16))) + SUFFIX.KEY_PRIVATE);
         }
         return new M2KeyPair(KeyPair.from(seed).toString(16) + SUFFIX.KEY_ETHER_PRIVATE);

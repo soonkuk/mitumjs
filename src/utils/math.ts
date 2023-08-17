@@ -1,5 +1,5 @@
 import sha3js from "js-sha3";
-const { sha3_256, keccak256: keccak_256 } = sha3js;
+const { sha3_256, keccak_256 } = sha3js;
 
 import { sha256 as nobleSha256 } from "@noble/hashes/sha256";
 

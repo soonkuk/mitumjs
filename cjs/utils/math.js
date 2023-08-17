@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Percent = exports.Uint8 = exports.Float = exports.Big = exports.SortFunc = exports.keccak256 = exports.sha3 = exports.sha256 = void 0;
 const js_sha3_1 = __importDefault(require("js-sha3"));
-const { sha3_256, keccak256: keccak_256 } = js_sha3_1.default;
+const { sha3_256, keccak_256 } = js_sha3_1.default;
 const sha256_1 = require("@noble/hashes/sha256");
 const big_integer_1 = __importDefault(require("big-integer"));
 const int64_buffer_1 = __importDefault(require("int64-buffer"));

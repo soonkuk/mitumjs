@@ -25,7 +25,7 @@ class CreateAccountsItem extends currencyItem_js_1.CurrencyItem {
     constructor(keys, amounts, addressType) {
         super(hint_js_1.HINT.CREATE_ACCOUNTS_ITEM, amounts, addressType);
         this.keys = keys;
-        if (addressType === "btc") {
+        if (addressType === "mitum") {
             this.addressSuffix = hint_js_1.SUFFIX.ACCOUNT_ADDRESS;
         }
         else if (addressType === "ether") {

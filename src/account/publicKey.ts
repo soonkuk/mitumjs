@@ -1,9 +1,11 @@
 import base58 from "bs58";
+import { keccak256 as keccak256js } from "js-sha3";
 
 import { Address } from "./address.js";
 
 import { Big, keccak256, sha3 } from "../utils/math.js";
 import { MitumConfig } from "../utils/config.js";
+import { AddressType } from "../types/address.js";
 
 import { KeyPairType } from "../types/address.js";
 import { Hint } from "../types/property.js";
@@ -50,7 +52,7 @@ export class Key implements IBuffer, IString {
       s.endsWith(SUFFIX.KEY_ETHER_PRIVATE) ||
       s.endsWith(SUFFIX.KEY_ETHER_PUBLIC)
         ? "ether"
-        : "btc";
+        : "mitum";
     this.isPriv =
       s.endsWith(SUFFIX.KEY_PRIVATE) || s.endsWith(SUFFIX.KEY_ETHER_PRIVATE);
   }
@@ -103,8 +105,9 @@ export class Keys implements IBuffer, IHintedObject {
   private static hint = new Hint(HINT.KEYS);
   private _keys: PubKey[];
   readonly threshold: Big;
+  readonly addressType: AddressType;
 
-  constructor(keys: Pub[], threshold: BigArg) {
+  constructor(keys: Pub[], threshold: BigArg, addressType: AddressType) {
     Assert.check(
       MitumConfig.KEYS_IN_ACCOUNT.satisfy(keys.length),
       MitumError.detail(ECODE.INVALID_KEYS, "keys length out of range")
@@ -128,6 +131,8 @@ export class Keys implements IBuffer, IHintedObject {
       new Set(this._keys.map((k) => k.toString())).size === this._keys.length,
       MitumError.detail(ECODE.INVALID_KEYS, "duplicate keys found in keys")
     );
+
+    this.addressType = addressType;
   }
 
   get keys(): PubKey[] {
@@ -157,19 +162,29 @@ export class Keys implements IBuffer, IHintedObject {
           .map((k) => k.toBuffer())
       ),
       this.threshold.toBuffer("fill"),
+      Buffer.from(this.addressType),
     ]);
   }
 
   toHintedObject(): HintedObject {
+    let gHash: string;
+    if (this.addressType === "mca") {
+      gHash = base58.encode(sha3(this.toBuffer()));
+    } else {
+      const h = keccak256js(this.toBuffer());
+      gHash = h.slice(24);
+    }
+
     return {
       _hint: Keys.hint.toString(),
-      hash: base58.encode(sha3(this.toBuffer())),
+      hash: gHash,
       keys: this._keys
         .sort((a, b) =>
           Buffer.compare(Buffer.from(a.toString()), Buffer.from(b.toBuffer()))
         )
         .map((k) => k.toHintedObject()),
       threshold: this.threshold.v,
+      address_type: this.addressType,
     };
   }
 }

@@ -24,8 +24,11 @@ const index_js_1 = require("../operation/index.js");
 const keyUpdate_js_1 = require("./keyUpdate.js");
 const information_js_1 = __importDefault(require("./information.js"));
 const key_js_1 = require("./key.js");
-const BTC = "btc";
+// const BTC: KeyPairType = "btc";
+const MITUM = "mitum";
 const ETH = "ether";
+const MCA = "mca";
+const ECA = "eca";
 class Account {
     constructor(networkID, provider) {
         this._networkID = "";
@@ -44,14 +47,14 @@ class Account {
     key(seed) {
         let keyInfo;
         if (seed === undefined) {
-            keyInfo = key_js_1.M2KeyPair.random(BTC);
+            keyInfo = key_js_1.M2KeyPair.random(MITUM);
             return {
                 privatekey: keyInfo.privateKey.toString(),
                 publickey: keyInfo.publicKey.toString(),
                 address: this.address(keyInfo.publicKey.toString()),
             };
         }
-        keyInfo = key_js_1.M2KeyPair.fromSeed(seed, BTC);
+        keyInfo = key_js_1.M2KeyPair.fromSeed(seed, MITUM);
         return {
             privatekey: keyInfo.privateKey.toString(),
             publickey: keyInfo.publicKey.toString(),
@@ -59,7 +62,7 @@ class Account {
         };
     }
     keys(n) {
-        const keypairs = (0, random_js_1.M2RandomN)(n, BTC).keypairs;
+        const keypairs = (0, random_js_1.M2RandomN)(n, MITUM).keypairs;
         const keysInfo = keypairs.map((keypair) => {
             return {
                 privatekey: keypair.privateKey.toString(),
@@ -71,10 +74,18 @@ class Account {
     }
     fromPrivateKey(key) {
         const keyInfo = key_js_1.M2KeyPair.fromPrivate(key);
+        const type = keyInfo.privateKey.type;
+        if (type == MITUM) {
+            return {
+                privatekey: keyInfo.privateKey.toString(),
+                publickey: keyInfo.publicKey.toString(),
+                address: this.address(keyInfo.publicKey.toString()),
+            };
+        }
         return {
             privatekey: keyInfo.privateKey.toString(),
             publickey: keyInfo.publicKey.toString(),
-            address: this.address(keyInfo.publicKey.toString()),
+            address: this.etherAddress(keyInfo.publicKey.toString()),
         };
     }
     etherKey(seed) {
@@ -106,28 +117,28 @@ class Account {
         return keysInfo;
     }
     address(pubKey) {
-        const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100).address;
+        const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100, MCA).address;
         return address.toString();
     }
     etherAddress(pubKey) {
-        const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100).etherAddress;
+        const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100, ECA).etherAddress;
         return address.toString();
     }
     addressForMultiSig(pubKeys, threshold) {
-        const address = this.pubToKeys(pubKeys, threshold).address;
+        const address = this.pubToKeys(pubKeys, threshold, MCA).address;
         return address.toString();
     }
     etherAddressForMultiSig(pubKeys, threshold) {
-        const address = this.pubToKeys(pubKeys, threshold).etherAddress;
+        const address = this.pubToKeys(pubKeys, threshold, ECA).etherAddress;
         return address.toString();
     }
     createWallet(sender, currencyID, amount, seed, weight = 100) {
         let keypair;
         if (seed === undefined || typeof seed === "number") {
-            keypair = key_js_1.M2KeyPair.random(BTC);
+            keypair = key_js_1.M2KeyPair.random(MITUM);
         }
         else {
-            keypair = key_js_1.M2KeyPair.fromSeed(seed, BTC);
+            keypair = key_js_1.M2KeyPair.fromSeed(seed, MITUM);
         }
         let wt = weight;
         if (typeof seed === "number") {
@@ -135,11 +146,11 @@ class Account {
         }
         const privatekey = keypair.privateKey.toString();
         const publickey = keypair.publicKey.toString();
-        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt).address.toString();
-        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
+        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA).address.toString();
+        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA);
         const amountArr = new property_js_1.Amount(currencyID, amount);
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], BTC);
+        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], MITUM);
         const fact = new create_js_1.CreateAccountsFact(token, sender, [item]);
         return {
             wallet: { privatekey, publickey, address },
@@ -155,15 +166,15 @@ class Account {
         });
     }
     create(senderAddr, receiverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
+        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, MCA);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], BTC);
+        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], MITUM);
         const fact = new create_js_1.CreateAccountsFact(token, senderAddr, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createEtherAccount(senderAddr, receiverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
+        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, ECA);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], ETH);
@@ -171,15 +182,15 @@ class Account {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(receiverPubArr, threshold);
+        const keys = this.pubToKeys(receiverPubArr, threshold, MCA);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], BTC);
+        const item = new create_js_1.CreateAccountsItem(keys, [amountArr], MITUM);
         const fact = new create_js_1.CreateAccountsFact(token, senderAddr, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createEtherMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(receiverPubArr, threshold);
+        const keys = this.pubToKeys(receiverPubArr, threshold, ECA);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], ETH);
@@ -187,20 +198,42 @@ class Account {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     update(targetAddr, newPubArr, currentID) {
-        const key = this.pubToKeys([{ key: newPubArr, weight: 100 }], 100);
+        const suffix = targetAddr.slice(-3);
+        let addressType;
+        if (suffix == MCA) {
+            addressType = MCA;
+        }
+        else if (suffix == ECA) {
+            addressType = ECA;
+        }
+        else {
+            throw new Error("The target address is invalid-type");
+        }
+        const key = this.pubToKeys([{ key: newPubArr, weight: 100 }], 100, addressType);
         const token = new time_js_1.TimeStamp().UTC();
         const fact = new keyUpdate_js_1.KeyUpdaterFact(token, targetAddr, key, currentID);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     updateMultiSig(targetAddr, newPubArr, currentID, threshold) {
-        const keys = this.pubToKeys(newPubArr, threshold);
+        const suffix = targetAddr.slice(-3);
+        let addressType;
+        if (suffix == MCA) {
+            addressType = MCA;
+        }
+        else if (suffix == ECA) {
+            addressType = ECA;
+        }
+        else {
+            throw new Error("The target address is invalid-type");
+        }
+        const keys = this.pubToKeys(newPubArr, threshold, addressType);
         const token = new time_js_1.TimeStamp().UTC();
         const fact = new keyUpdate_js_1.KeyUpdaterFact(token, targetAddr, keys, currentID);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
-    pubToKeys(pubKeys, threshold) {
+    pubToKeys(pubKeys, threshold, addressType) {
         const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
-        return new publicKey_js_1.Keys(pubs, threshold);
+        return new publicKey_js_1.Keys(pubs, threshold, addressType);
     }
     getAccountInfo(address) {
         return __awaiter(this, void 0, void 0, function* () {

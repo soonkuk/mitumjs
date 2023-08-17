@@ -18,8 +18,8 @@ export declare abstract class KeyPair {
     static random<T extends KeyPair>(option: KeyPairType): T;
     static fromPrivate<T extends KeyPair>(key: string | Key): T;
     static fromSeed<T extends KeyPair>(seed: string | Buffer | Uint8Array, option: KeyPairType): T;
-    protected btcSign(msg: string | Buffer): Buffer;
-    protected ethSign(msg: string | Buffer): Buffer;
+    protected btcSign(msg: Buffer): Buffer;
+    protected ethSign(msg: Buffer): Buffer;
     protected static from(seed: string | Buffer | Uint8Array): bigint;
 }
 export {};

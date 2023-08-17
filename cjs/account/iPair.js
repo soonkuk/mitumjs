@@ -31,6 +31,9 @@ const hmac_1 = require("@noble/hashes/hmac");
 const secp256k1 = __importStar(require("@noble/secp256k1"));
 const sha256_1 = require("@noble/hashes/sha256");
 const bs58_1 = __importDefault(require("bs58"));
+const crypto = __importStar(require("crypto"));
+const elliptic_1 = require("elliptic");
+const ec = new elliptic_1.ec("secp256k1");
 const math_js_1 = require("../utils/math.js");
 const error_js_1 = require("../utils/error.js");
 class KeyPair {
@@ -54,19 +57,38 @@ class KeyPair {
         return Buffer.from(secp256k1.signSync((0, math_js_1.sha256)((0, math_js_1.sha256)(msg)), this.signer));
     }
     ethSign(msg) {
-        const sig = secp256k1.signSync((0, sha256_1.sha256)(msg), 
-        // (this.signer as EthWallet).getPrivateKey()
-        "0x" + this.signer.toString());
-        const rlen = sig[3];
-        const r = sig.slice(4, 4 + rlen);
-        const slen = sig[5 + rlen];
-        const s = sig.slice(6 + rlen);
-        const brlen = new math_js_1.Big(rlen).toBuffer("fill");
-        const buf = Buffer.alloc(rlen + slen + 4);
-        brlen.copy(buf, 0, 0, 4);
-        Buffer.from(r).copy(buf, 4, 0, rlen);
-        Buffer.from(s).copy(buf, rlen + 4, 0, slen);
-        return buf;
+        const key = ec.keyFromPrivate(this.privateKey.noSuffix, "hex");
+        const msgHash = crypto.createHash("sha256").update(msg).digest();
+        const signature = key.sign(msgHash);
+        const r = Buffer.from(signature.r.toArray());
+        const s = Buffer.from(signature.s.toArray());
+        // const sig = secp256k1.signSync(
+        //   crypto.createHash("sha256").update(msg).digest(),
+        //   this.signer
+        // );
+        // const r = Buffer.from(signature.slice(0, 32));
+        // const s = Buffer.from(signature.slice(32, 64));
+        const sigLength = 4 + r.length + s.length;
+        const sigBuffer = Buffer.alloc(sigLength);
+        sigBuffer.writeUInt32LE(r.length, 0);
+        sigBuffer.set(r, 4);
+        sigBuffer.set(s, 4 + r.length);
+        return sigBuffer;
+        // const sig = secp256k1.signSync(
+        //   nobleSha256(msg),
+        //   // (this.signer as EthWallet).getPrivateKey()
+        //   this.signer
+        // );
+        // const rlen = sig[3];
+        // const r = sig.slice(4, 4 + rlen);
+        // const slen = sig[5 + rlen];
+        // const s = sig.slice(6 + rlen);
+        // const brlen = new Big(rlen).toBuffer();
+        // const buf = Buffer.alloc(rlen + slen + 4);
+        // brlen.copy(buf, 0, 0, 4);
+        // Buffer.from(r).copy(buf, 4, 0, rlen);
+        // Buffer.from(s).copy(buf, rlen + 4, 0, slen);
+        // return buf;
     }
     // from seed
     static from(seed) {

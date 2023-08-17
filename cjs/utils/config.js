@@ -34,7 +34,7 @@ exports.MitumConfig = {
         },
         M2ETHER: {
             PRIVATE: getRangeConfig(67),
-            PUBLIC: getRangeConfig(66),
+            PUBLIC: getRangeConfig(69),
         },
     },
     MAX_URI_LENGTH: getRangeConfig(1, 1000),

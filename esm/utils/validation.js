@@ -1,9 +1,11 @@
 import * as secp256k1 from "@noble/secp256k1";
 import base58 from "bs58";
+// import ethWallet from "ethereumjs-wallet";
 import { sha256, Big } from "../utils/math.js";
 export const isIPAddress = (item) => {
     const ipPattern = /^(http|https):\/\/(\d{1,3}\.){3}\d{1,3}(?::\d+)?$/;
-    return ipPattern.test(item);
+    const domainPattern = /^(http|https):\/\/(?:[\w-]+\.)+[\w-]+(?:\/[\w-./?%&=]*)?$/;
+    return ipPattern.test(item) || domainPattern.test(item);
 };
 // don't check hex of char
 export const isAddress = (item) => {
@@ -45,6 +47,6 @@ const ethVerify = (signer, sig, msg) => {
     Buffer.from([2]).copy(buf, 4 + rlen.v);
     slen.toBuffer().copy(buf, 5 + rlen.v);
     s.copy(buf, 6 + rlen.v);
-    return secp256k1.verify(buf, sha256(msg), secp256k1.getPublicKey(signer.getPrivateKey()));
+    return secp256k1.verify(buf, sha256(msg), secp256k1.getPublicKey(signer, true));
 };
 //# sourceMappingURL=validation.js.map

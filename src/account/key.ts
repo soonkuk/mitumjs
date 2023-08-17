@@ -19,7 +19,7 @@ import { privateKeyToPublicKey, compress } from "../utils/converter.js";
 export class M2KeyPair extends KeyPair {
   static generator = {
     random(option: KeyPairType): M2KeyPair {
-      if (option === "btc") {
+      if (option === "mitum") {
         return new M2KeyPair(
           base58.encode(Buffer.from(secureRandom(32, { type: "Uint8Array" }))) +
             SUFFIX.KEY_PRIVATE
@@ -49,7 +49,7 @@ export class M2KeyPair extends KeyPair {
         .satisfyConfig(MitumConfig.SEED)
         .excute();
 
-      if (option === "btc") {
+      if (option === "mitum") {
         return new M2KeyPair(
           base58.encode(
             secp256k1.utils.hexToBytes(KeyPair.from(seed).toString(16))
@@ -68,7 +68,7 @@ export class M2KeyPair extends KeyPair {
   }
 
   protected getSigner(): Uint8Array {
-    if (this.privateKey.type === "btc") {
+    if (this.privateKey.type === "mitum") {
       return Buffer.from(base58.decode(this.privateKey.noSuffix));
     }
 
@@ -79,7 +79,7 @@ export class M2KeyPair extends KeyPair {
   }
 
   protected getPub(): Key {
-    if (this.privateKey.type === "btc") {
+    if (this.privateKey.type === "mitum") {
       return new Key(
         base58.encode(
           getPublicCompressed(Buffer.from(this.signer as Uint8Array))
@@ -90,6 +90,7 @@ export class M2KeyPair extends KeyPair {
     const publickeyBuffer = privateKeyToPublicKey(
       "0x" + this.privateKey.noSuffix
     );
+
     return new Key(compress(publickeyBuffer) + SUFFIX.KEY_ETHER_PUBLIC);
 
     // return new Key(
@@ -99,10 +100,11 @@ export class M2KeyPair extends KeyPair {
     // );
   }
 
-  sign(msg: string | Buffer): Buffer {
-    if (this.privateKey.type === "btc") {
+  sign(msg: Buffer): Buffer {
+    if (this.privateKey.type === "mitum") {
       return this.btcSign(msg);
     }
+
     return this.ethSign(msg);
   }
 }

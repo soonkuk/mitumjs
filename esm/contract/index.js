@@ -7,8 +7,11 @@ import { Operation } from "../operation/index.js";
 import { Amount } from "../types/property.js";
 import accountInfo from "../account/information.js";
 import { CreateContractAccountsItem, CreateContractAccountsFact, } from "./account.js";
-const BTC = "btc";
+// const BTC: KeyPairType = "btc";
+const MITUM = "mitum";
 const ETH = "ether";
+const MCA = "mca";
+const ECA = "eca";
 export class Contract {
     constructor(networkID, provider) {
         this._networkID = "";
@@ -27,10 +30,10 @@ export class Contract {
     createWallet(sender, currencyID, amount, seed, weight = 100) {
         let keypair;
         if (seed === undefined || typeof seed === "number") {
-            keypair = M2KeyPair.random(BTC);
+            keypair = M2KeyPair.random(MITUM);
         }
         else {
-            keypair = M2KeyPair.fromSeed(seed, BTC);
+            keypair = M2KeyPair.fromSeed(seed, MITUM);
         }
         let wt = weight;
         if (typeof seed === "number") {
@@ -38,11 +41,11 @@ export class Contract {
         }
         const privatekey = keypair.privateKey.toString();
         const publickey = keypair.publicKey.toString();
-        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt).address.toString();
-        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
+        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA).address.toString();
+        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA);
         const amountArr = new Amount(currencyID, amount);
         const token = new TimeStamp().UTC();
-        const item = new CreateContractAccountsItem(keys, [amountArr], BTC);
+        const item = new CreateContractAccountsItem(keys, [amountArr], MITUM);
         const fact = new CreateContractAccountsFact(token, sender, [item]);
         return {
             wallet: { privatekey, publickey, address },
@@ -56,15 +59,15 @@ export class Contract {
         return res.data;
     }
     create(senderAddr, receiverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
+        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, MCA);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
-        const item = new CreateContractAccountsItem(keys, [amountArr], BTC);
+        const item = new CreateContractAccountsItem(keys, [amountArr], MITUM);
         const fact = new CreateContractAccountsFact(token, senderAddr, [item]);
         return new OperationType(this._networkID, fact);
     }
     createEtherAccount(senderAddr, receiverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
+        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, ECA);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateContractAccountsItem(keys, [amountArr], ETH);
@@ -72,24 +75,24 @@ export class Contract {
         return new OperationType(this._networkID, fact);
     }
     createMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(receiverPubArr, threshold);
+        const keys = this.pubToKeys(receiverPubArr, threshold, MCA);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
-        const item = new CreateContractAccountsItem(keys, [amountArr], BTC);
+        const item = new CreateContractAccountsItem(keys, [amountArr], MITUM);
         const fact = new CreateContractAccountsFact(token, senderAddr, [item]);
         return new OperationType(this._networkID, fact);
     }
     createEtherMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(receiverPubArr, threshold);
+        const keys = this.pubToKeys(receiverPubArr, threshold, ECA);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateContractAccountsItem(keys, [amountArr], ETH);
         const fact = new CreateContractAccountsFact(token, senderAddr, [item]);
         return new OperationType(this._networkID, fact);
     }
-    pubToKeys(pubKeys, threshold) {
+    pubToKeys(pubKeys, threshold, addressType) {
         const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
-        return new Keys(pubs, threshold);
+        return new Keys(pubs, threshold, addressType);
     }
     async getContractInfo(address) {
         return await accountInfo.getAddressInfo(this._node, address);

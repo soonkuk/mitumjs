@@ -12,10 +12,10 @@ class BaseAddress {
             this.type = type;
         }
         else if (this.s.endsWith(hint_js_1.SUFFIX.ACCOUNT_ADDRESS)) {
-            this.type = "btc";
+            this.type = "mca";
         }
         else if (this.s.endsWith(hint_js_1.SUFFIX.ETHER_ACCOUNT_ADDRESS)) {
-            this.type = "ether";
+            this.type = "eca";
         }
         else if (this.s.endsWith(hint_js_1.SUFFIX.NODE_ADDRESS)) {
             this.type = "node";

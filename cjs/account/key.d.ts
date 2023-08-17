@@ -11,5 +11,5 @@ export declare class M2KeyPair extends KeyPair {
     private constructor();
     protected getSigner(): Uint8Array;
     protected getPub(): Key;
-    sign(msg: string | Buffer): Buffer;
+    sign(msg: Buffer): Buffer;
 }

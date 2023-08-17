@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Keys = exports.PubKey = exports.Key = void 0;
 const bs58_1 = __importDefault(require("bs58"));
+const js_sha3_1 = require("js-sha3");
 const address_js_1 = require("./address.js");
 const math_js_1 = require("../utils/math.js");
 const config_js_1 = require("../utils/config.js");
@@ -29,7 +30,7 @@ class Key {
             s.endsWith(hint_js_1.SUFFIX.KEY_ETHER_PRIVATE) ||
                 s.endsWith(hint_js_1.SUFFIX.KEY_ETHER_PUBLIC)
                 ? "ether"
-                : "btc";
+                : "mitum";
         this.isPriv =
             s.endsWith(hint_js_1.SUFFIX.KEY_PRIVATE) || s.endsWith(hint_js_1.SUFFIX.KEY_ETHER_PRIVATE);
     }
@@ -67,7 +68,7 @@ class PubKey extends Key {
 exports.PubKey = PubKey;
 PubKey.hint = new property_js_1.Hint(hint_js_1.HINT.KEY);
 class Keys {
-    constructor(keys, threshold) {
+    constructor(keys, threshold, addressType) {
         error_js_1.Assert.check(config_js_1.MitumConfig.KEYS_IN_ACCOUNT.satisfy(keys.length), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_KEYS, "keys length out of range"));
         this._keys = keys.map((k) => {
             if (k instanceof PubKey) {
@@ -79,6 +80,7 @@ class Keys {
         this.threshold = threshold instanceof math_js_1.Big ? threshold : new math_js_1.Big(threshold);
         error_js_1.Assert.check(config_js_1.MitumConfig.THRESHOLD.satisfy(this.threshold.v), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_KEYS, "threshold out of range"));
         error_js_1.Assert.check(new Set(this._keys.map((k) => k.toString())).size === this._keys.length, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_KEYS, "duplicate keys found in keys"));
+        this.addressType = addressType;
     }
     get keys() {
         return this._keys;
@@ -96,16 +98,26 @@ class Keys {
                 .sort((a, b) => Buffer.compare(Buffer.from(a.toString()), Buffer.from(b.toBuffer())))
                 .map((k) => k.toBuffer())),
             this.threshold.toBuffer("fill"),
+            Buffer.from(this.addressType),
         ]);
     }
     toHintedObject() {
+        let gHash;
+        if (this.addressType === "mca") {
+            gHash = bs58_1.default.encode((0, math_js_1.sha3)(this.toBuffer()));
+        }
+        else {
+            const h = (0, js_sha3_1.keccak256)(this.toBuffer());
+            gHash = h.slice(24);
+        }
         return {
             _hint: Keys.hint.toString(),
-            hash: bs58_1.default.encode((0, math_js_1.sha3)(this.toBuffer())),
+            hash: gHash,
             keys: this._keys
                 .sort((a, b) => Buffer.compare(Buffer.from(a.toString()), Buffer.from(b.toBuffer())))
                 .map((k) => k.toHintedObject()),
             threshold: this.threshold.v,
+            address_type: this.addressType,
         };
     }
 }

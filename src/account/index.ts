@@ -1,5 +1,5 @@
 import { OperationType } from "../types/operation.js";
-import { KeyPairType } from "../types/address.js";
+import { AddressType, KeyPairType } from "../types/address.js";
 import { Amount } from "../types/property.js";
 import { isIPAddress } from "../utils/validation.js";
 import { TimeStamp } from "../utils/time.js";
@@ -16,8 +16,11 @@ import { M2KeyPair } from "./key.js";
 
 import { AxiosResponse } from "axios";
 
-const BTC: KeyPairType = "btc";
+// const BTC: KeyPairType = "btc";
+const MITUM: KeyPairType = "mitum";
 const ETH: KeyPairType = "ether";
+const MCA: AddressType = "mca";
+const ECA: AddressType = "eca";
 
 export class Account {
   private _networkID: string = "";
@@ -41,7 +44,7 @@ export class Account {
   key(seed?: string): WalletType {
     let keyInfo: M2KeyPair;
     if (seed === undefined) {
-      keyInfo = M2KeyPair.random(BTC);
+      keyInfo = M2KeyPair.random(MITUM);
       return <WalletType>{
         privatekey: keyInfo.privateKey.toString(),
         publickey: keyInfo.publicKey.toString(),
@@ -49,7 +52,7 @@ export class Account {
       };
     }
 
-    keyInfo = M2KeyPair.fromSeed(seed, BTC);
+    keyInfo = M2KeyPair.fromSeed(seed, MITUM);
     return <WalletType>{
       privatekey: keyInfo.privateKey.toString(),
       publickey: keyInfo.publicKey.toString(),
@@ -58,7 +61,7 @@ export class Account {
   }
 
   keys(n: number): Array<WalletType> {
-    const keypairs = M2RandomN(n, BTC).keypairs;
+    const keypairs = M2RandomN(n, MITUM).keypairs;
 
     const keysInfo = keypairs.map((keypair) => {
       return <WalletType>{
@@ -72,10 +75,21 @@ export class Account {
 
   fromPrivateKey(key: string | Key): WalletType {
     const keyInfo = M2KeyPair.fromPrivate(key);
+
+    const type = keyInfo.privateKey.type;
+
+    if (type == MITUM) {
+      return <WalletType>{
+        privatekey: keyInfo.privateKey.toString(),
+        publickey: keyInfo.publicKey.toString(),
+        address: this.address(keyInfo.publicKey.toString()),
+      };
+    }
+
     return <WalletType>{
       privatekey: keyInfo.privateKey.toString(),
       publickey: keyInfo.publicKey.toString(),
-      address: this.address(keyInfo.publicKey.toString()),
+      address: this.etherAddress(keyInfo.publicKey.toString()),
     };
   }
 
@@ -112,15 +126,22 @@ export class Account {
   }
 
   address(pubKey: string): string {
-    const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100).address;
+    const address = this.pubToKeys(
+      [{ key: pubKey, weight: 100 }],
+      100,
+      MCA
+    ).address;
+
     return address.toString();
   }
 
   etherAddress(pubKey: string): string {
     const address = this.pubToKeys(
       [{ key: pubKey, weight: 100 }],
-      100
+      100,
+      ECA
     ).etherAddress;
+
     return address.toString();
   }
 
@@ -128,7 +149,7 @@ export class Account {
     pubKeys: Array<{ key: string; weight: number }>,
     threshold: number
   ): string {
-    const address = this.pubToKeys(pubKeys, threshold).address;
+    const address = this.pubToKeys(pubKeys, threshold, MCA).address;
     return address.toString();
   }
 
@@ -136,7 +157,7 @@ export class Account {
     pubKeys: Array<{ weight: number; key: string }>,
     threshold: number
   ): string {
-    const address = this.pubToKeys(pubKeys, threshold).etherAddress;
+    const address = this.pubToKeys(pubKeys, threshold, ECA).etherAddress;
     return address.toString();
   }
 
@@ -150,9 +171,9 @@ export class Account {
     let keypair: M2KeyPair;
 
     if (seed === undefined || typeof seed === "number") {
-      keypair = M2KeyPair.random(BTC);
+      keypair = M2KeyPair.random(MITUM);
     } else {
-      keypair = M2KeyPair.fromSeed(seed, BTC);
+      keypair = M2KeyPair.fromSeed(seed, MITUM);
     }
 
     let wt = weight;
@@ -164,15 +185,16 @@ export class Account {
     const publickey = keypair.publicKey.toString();
     const address = this.pubToKeys(
       [{ key: publickey, weight: wt }],
-      wt
+      wt,
+      MCA
     ).address.toString();
 
-    const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
+    const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA);
     const amountArr = new Amount(currencyID, amount);
 
     const token = new TimeStamp().UTC();
 
-    const item = new CreateAccountsItem(keys, [amountArr], BTC);
+    const item = new CreateAccountsItem(keys, [amountArr], MITUM);
     const fact = new CreateAccountsFact(token, sender, [item]);
 
     return {
@@ -197,12 +219,12 @@ export class Account {
     currentID: string,
     amount: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
+    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, MCA);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
 
-    const item = new CreateAccountsItem(keys, [amountArr], BTC);
+    const item = new CreateAccountsItem(keys, [amountArr], MITUM);
     const fact = new CreateAccountsFact(token, senderAddr, [item]);
 
     return new OperationType(this._networkID, fact);
@@ -214,7 +236,8 @@ export class Account {
     currentID: string,
     amount: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
+    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, ECA);
+
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -232,12 +255,12 @@ export class Account {
     amount: number,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(receiverPubArr, threshold);
+    const keys = this.pubToKeys(receiverPubArr, threshold, MCA);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
 
-    const item = new CreateAccountsItem(keys, [amountArr], BTC);
+    const item = new CreateAccountsItem(keys, [amountArr], MITUM);
     const fact = new CreateAccountsFact(token, senderAddr, [item]);
 
     return new OperationType(this._networkID, fact);
@@ -250,7 +273,7 @@ export class Account {
     amount: number,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(receiverPubArr, threshold);
+    const keys = this.pubToKeys(receiverPubArr, threshold, ECA);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -266,7 +289,22 @@ export class Account {
     newPubArr: string,
     currentID: string
   ): OperationType<Fact> {
-    const key = this.pubToKeys([{ key: newPubArr, weight: 100 }], 100);
+    const suffix = targetAddr.slice(-3);
+
+    let addressType: AddressType;
+    if (suffix == MCA) {
+      addressType = MCA;
+    } else if (suffix == ECA) {
+      addressType = ECA;
+    } else {
+      throw new Error("The target address is invalid-type");
+    }
+
+    const key = this.pubToKeys(
+      [{ key: newPubArr, weight: 100 }],
+      100,
+      addressType
+    );
 
     const token = new TimeStamp().UTC();
 
@@ -281,7 +319,18 @@ export class Account {
     currentID: string,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(newPubArr, threshold);
+    const suffix = targetAddr.slice(-3);
+
+    let addressType: AddressType;
+    if (suffix == MCA) {
+      addressType = MCA;
+    } else if (suffix == ECA) {
+      addressType = ECA;
+    } else {
+      throw new Error("The target address is invalid-type");
+    }
+
+    const keys = this.pubToKeys(newPubArr, threshold, addressType);
 
     const token = new TimeStamp().UTC();
 
@@ -292,10 +341,11 @@ export class Account {
 
   private pubToKeys(
     pubKeys: Array<{ weight: number; key: string }>,
-    threshold: number
+    threshold: number,
+    addressType: AddressType
   ): Keys {
     const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
-    return new Keys(pubs, threshold);
+    return new Keys(pubs, threshold, addressType);
   }
 
   async getAccountInfo(address: string): Promise<AxiosResponse> {
