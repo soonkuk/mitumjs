@@ -28,7 +28,7 @@ export class Policy {
         return Buffer.concat([
             this.votingToken.toBuffer(),
             this.fee.toBuffer(),
-            this.threshold.toBuffer("fill"),
+            this.threshold.toBuffer(),
             this.proposers.toBuffer(),
             this.waitingTime.toBuffer("fill"),
             this.registrationPeriod.toBuffer("fill"),
@@ -44,7 +44,7 @@ export class Policy {
         return {
             _hint: this.hint.toString(),
             token: this.votingToken.toString(),
-            threshold: this.threshold.v,
+            threshold: this.threshold.toString(),
             fee: this.fee.toHintedObject(),
             whitelist: this.proposers.toHintedObject(),
             proposal_review_period: this.waitingTime.v,

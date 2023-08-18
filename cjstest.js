@@ -1,39 +1,172 @@
 const { Mitum } = require("./cjs");
 
-const mitum = new Mitum("https://test.protocon.network");
+const mitum = new Mitum("http://127.0.0.1:54320");
 
 const test = async () => {
   // const networkId = "bWl0dW0=";
   // mitum.setChain(networkId);
 
-  const pv0 =
-    "37249101a6536b4bc80ec213711fcf2da5826f97e1bff4b41bf40c516d5c4e7depr";
-  const pb0 =
-    "02cb6cb7c01affb71c2f52023880ffd24a4ca97052ddc9d6d64b1ed7a6200737c2epu";
-  const a0 = "7b2358c6786841d01111044f0407bc139d46c640eca";
+  const pr = "D4QPRNSTgYmgRymYVS1mLgyGtCbzeAPYhd5r4jNQahwampr";
+  const aa = "FQacpLf7kQQQQGhHv43pehSZn4mCjz1qViky5DG36ZPAmca";
+  const ca = "DJFvWFZQ1xAurryfCjg3G6DyHuVbh5hxwA1C9m7oQW2wmca";
 
-  const pv1 =
-    "0e2bd427fc0188581dea6e21657ce2ee7104dce5aa2a3197bed9bcf23cfde58bepr";
-  const pb1 =
-    "03220807c129b62c3a57bc44f6689a5948a8fe29562fe187e0711e842060799c2fepu";
-  const a1 = "1f3f9b262f235819e9cabc7b1ddf6376d3a2d7d2eca";
+  const pv0 = "Auf6amfGtuHRx5dbhvhGNpwt1EtLG4ZTnbriEiuihDfJmpr";
+  const pb0 = "27SnBRSvhX9eEswL4SXVRaewhoxuK6jVLUNyfWMThqHsZmpu";
+  const a0 = "5zPANS8TqGwvVh1bghiFQpX2v4GqPsW2Rx1xtonNPMsSmca";
 
-  const pv2 = "96UQnof9743WAykeq6a3f54vg9MENicWCrrqN9yam9aZmpr";
-  const pb2 = "oxaoi8FuZpLJkEU8kStm8dndhwbo4FtfcCiJo76MkpiQmpu";
-  const a2 = "EzusPPPU5ZSShwrdrwd5mEfu8nsyY9xWY1bcdddsqWvcmca";
+  const pv1 = "96UQnof9743WAykeq6a3f54vg9MENicWCrrqN9yam9aZmpr";
+  const pb1 = "oxaoi8FuZpLJkEU8kStm8dndhwbo4FtfcCiJo76MkpiQmpu";
+  const a1 = "2gWeBMRnZ8kmwU7dvJgv3rHpui7ksHMRKLjJiPUsbBAAmca";
 
-  const pv3 = "CHNoLNrykannTec3L1Aa1kXsDkC2QS2tDXrTxhHAcySwmpr";
-  const pb3 = "28V9psXoGyjQ5cVtDLSFddHSaBnMYV95Y8kpJUk4rQKREmpu";
-  const a3 = "3ebZbBhDA8So68yjG4pGM7pjYYc5qNbi3zubN4VbvqbGmca";
+  const pv2 = "CHNoLNrykannTec3L1Aa1kXsDkC2QS2tDXrTxhHAcySwmpr";
+  const pb2 = "28V9psXoGyjQ5cVtDLSFddHSaBnMYV95Y8kpJUk4rQKREmpu";
+  const a2 = "3a9ooHpDo2MTLcNS6MJKjFeYv59zFyfzm6f3cVVihBZTmca";
 
-  const contractPubkey =
-    "0390822552b36fa7a18ca3796d50c90e7258c743583cbbb4afb34ea6ad09281600epu";
-  const contractAddress = "a10526ec4727489419b6c7ef38a5b5722bb0ac1feca";
+  const pv3 = "6XXWmrBHyeX3q9n7DHx6g1et2md6KqNZR5Pdwe5cSDqZmpr";
+  const pb3 = "2BMCPdRL6qgk54he4Zh1H6DYpNcmLDdstZDTiuJSQt6Aqmpu";
+  const a3 = "5qA26ygWafSaiqJo7hwtrJBeFaz3ZBgJwnW6SKq2ZMVdmca";
 
-  const contractPubkey2 = "scHrM2TojMZZ4narvJjrdDtSD8BVvecAinZNvCHfqcKBmpu";
-  const contractAddress2 = "DUpDUefjC7waCA52wrd3qNYNhWxT3KWzmnWKvRuiFvWwmca";
+  const contractPubkey = "diLUcZugeDFW6ftQdcjdz8Ks1KBGiACo9GAcKQUgwFdfmpu";
+  const contractAddress = "2VKEH78tLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8Bmca";
 
-  const currencyId = "PEN";
+  const currencyId = "MCC";
+
+  const serviceId = "TEST04";
+  mitum.dao.setContractAddress(contractAddress);
+  mitum.dao.setServiceId(serviceId);
+
+  // create dao service
+  const option01 = "crypto"; // ~04
+  const option02 = "biz"; // 05
+  const option03 = "any"; // must throw error
+  const voteToken = "MCC";
+  const threshold = 55555;
+  const fee = 100;
+  const proposers = [a0, a1, a2];
+  const waitingTime = 180000;
+  const registrationPeriod = 180000;
+  const preSnapPeriod = 180000;
+  const votingPeriod = 180000;
+  const postSnapPeriod = 180000;
+  const executionDelay = 180000;
+  const turnout = 33;
+  const quorum = 50;
+
+  const daoData = {
+    serviceId: serviceId,
+    option: option03,
+    voteToken: voteToken,
+    threshold: threshold,
+    fee: fee,
+    proposers: proposers,
+    waitingTime: waitingTime,
+    registrationPeriod: registrationPeriod,
+    preSnapPeriod: preSnapPeriod,
+    votingPeriod: votingPeriod,
+    postSnapPeriod: postSnapPeriod,
+    executionDelay: executionDelay,
+    turnout: turnout,
+    quorum: quorum,
+  };
+  // const o = mitum.dao.createDAOService(a0, daoData, currencyId);
+  // const s = mitum.operation.sign(pv0, o);
+  // const res = await mitum.operation.send(s);
+  // console.log(res.status);
+
+  // console.log((await mitum.dao.getServiceInfo())._embedded.policy.whitelist);
+
+  const proposalId01 = "oCurmZciuXx6CBCjwPRve6nTqw2ZV7ZNzm7sMgzwDtf";
+  const proposalId02 = "oCurmZciuXx6CBCjwPRve6nTqw2ZV7ZNzm7s";
+  const proposalId03 = "oCurmZciuXx6CBCjwPRve6nTqw2Z";
+  const proposalId04 = "oCurmZciuXx6CBCjwPRve";
+  const proposalId05 = "oCurmZciuXx6CB";
+
+  const startTime = Date.now() + 1000 * 60 * 2;
+  const url = "www.socialinfratech.com/doc/example01.pdf";
+  const hash = "sf34DAtLMJ71KXzYQUFej5LmwprqiRSC44E2ax2tn8Badsf";
+  const voteOptions = 5;
+
+  // propose
+
+  // crypto : form transfer calldata
+  // 제 3자의 송금을 dao 가 결정 (must throw error)
+  const transCall01 = mitum.dao.formTransferCalldata(a1, a2, currencyId, 33333);
+  // dao 컨트랙트의 자금을 이동
+  const transCall02 = mitum.dao.formTransferCalldata(
+    contractAddress,
+    a3,
+    currencyId,
+    50
+  );
+
+  // crypto : form set policy calldata
+  const policyData = {
+    voteToken: currencyId,
+    threshold: 10000,
+    fee: 500,
+    proposers: [a0, a1],
+    waitingTime: waitingTime,
+    registrationPeriod: registrationPeriod,
+    preSnapPeriod: preSnapPeriod,
+    votingPeriod: votingPeriod,
+    postSnapPeriod: postSnapPeriod,
+    executionDelay: executionDelay,
+    turnout: turnout,
+    quorum: quorum,
+  };
+  const policyCall01 = mitum.dao.formSetPolicyCalldata(policyData);
+
+  // crypto : write crypto proposal
+  const cProposal01 = mitum.dao.writeCryptoProposal(a1, startTime, transCall01); // error
+  const cProposal02 = mitum.dao.writeCryptoProposal(a1, startTime, transCall02);
+  const cProposal03 = mitum.dao.writeCryptoProposal(a3, startTime, transCall02); // error
+
+  // biz : write biz proposal
+  const bProposal01 = mitum.dao.writeBizProposal(
+    a2,
+    startTime,
+    url,
+    hash,
+    voteOptions
+  );
+  const bProposal02 = mitum.dao.writeBizProposal(
+    a3,
+    startTime,
+    url,
+    hash,
+    voteOptions
+  ); // error
+
+  // const o = mitum.dao.propose(a1, proposalId03, cProposal03, currencyId);
+  // const s = mitum.operation.sign(pv1, o);
+  // const res = await mitum.operation.send(s);
+  // console.log(res.status);
+
+  // biz
+  // mitum.dao.setServiceId("TEST05");
+
+  // const o = mitum.dao.propose(a2, proposalId04, bProposal02, currencyId);
+  // const s = mitum.operation.sign(pv2, o);
+  // const res = await mitum.operation.send(s);
+  // console.log(res.status);
+
+  // status
+  // console.log(await mitum.dao.getProposalInfo(serviceId, proposalId02));
+  // console.log(startTime - 180000);
+
+  // register
+  const o = mitum.dao.register(a3, proposalId01, a3, currencyId);
+  const s = mitum.operation.sign(pv3, o);
+  const res = await mitum.operation.send(s);
+  console.log(res.status);
+
+  // snap before voting
+
+  // cast vote
+
+  // snap after voting
+
+  // execute
 
   // console.log(mitum.chain());
   // console.log((await mitum.node()).data);
@@ -132,10 +265,10 @@ const test = async () => {
   const pb11 =
     "02e8806c518b55e8fe4d7795f0aeda6aa46c74226feb8c7fbdd8ababf8b4485477epu";
   const a11 = "a2cb65794ef8a19edc9906238df8d6df56c0bc39eca";
-  const o = mitum.contract.createEtherAccount(a0, pb11, currencyId, 888);
-  const s = mitum.operation.sign(pv0, o);
-  const res = await mitum.operation.send(s);
-  console.log(res.status);
+  // const o = mitum.contract.createEtherAccount(a0, pb11, currencyId, 888);
+  // const s = mitum.operation.sign(pv0, o);
+  // const res = await mitum.operation.send(s);
+  // console.log(res.status);
 };
 
 test();
