@@ -12,7 +12,7 @@ import { HINT, SUFFIX } from "../types/hint.js";
 import { Amount } from "../types/property.js";
 
 import { Address } from "./address.js";
-import { Keys } from "./publicKey.js";
+import { EtherKeys, Keys } from "./publicKey.js";
 
 export class CreateAccountsFact extends OperationFact<CreateAccountsItem> {
   constructor(
@@ -45,10 +45,14 @@ export class CreateAccountsFact extends OperationFact<CreateAccountsItem> {
 }
 
 export class CreateAccountsItem extends CurrencyItem {
-  readonly keys: Keys;
+  readonly keys: Keys | EtherKeys;
   private addressSuffix: string;
 
-  constructor(keys: Keys, amounts: Amount[], addressType?: KeyPairType) {
+  constructor(
+    keys: Keys | EtherKeys,
+    amounts: Amount[],
+    addressType?: KeyPairType
+  ) {
     super(HINT.CREATE_ACCOUNTS_ITEM, amounts, addressType);
     this.keys = keys;
 

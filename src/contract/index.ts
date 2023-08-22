@@ -1,9 +1,9 @@
-import { AddressType, KeyPairType } from "../types/address.js";
+import { KeyPairType } from "../types/address.js";
 import { isIPAddress } from "../utils/validation.js";
 import { WalletType } from "../types/wallet.js";
 import { OperationType } from "../types/operation.js";
 import { Fact } from "../types/fact.js";
-import { Keys, PubKey } from "../account/publicKey.js";
+import { EtherKeys, Keys, PubKey } from "../account/publicKey.js";
 import { TimeStamp } from "../utils/time.js";
 import { M2KeyPair } from "../account/key.js";
 import { Operation } from "../operation/index.js";
@@ -19,8 +19,6 @@ import {
 // const BTC: KeyPairType = "btc";
 const MITUM: KeyPairType = "mitum";
 const ETH: KeyPairType = "ether";
-const MCA: AddressType = "mca";
-const ECA: AddressType = "eca";
 
 export class Contract {
   private _networkID: string = "";
@@ -65,11 +63,10 @@ export class Contract {
     const publickey = keypair.publicKey.toString();
     const address = this.pubToKeys(
       [{ key: publickey, weight: wt }],
-      wt,
-      MCA
+      wt
     ).address.toString();
 
-    const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA);
+    const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
     const amountArr = new Amount(currencyID, amount);
 
     const token = new TimeStamp().UTC();
@@ -99,7 +96,7 @@ export class Contract {
     currentID: string,
     amount: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, MCA);
+    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -116,7 +113,7 @@ export class Contract {
     currentID: string,
     amount: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, ECA);
+    const keys = this.ethPubToKeys([{ key: receiverPub, weight: 100 }], 100);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -134,7 +131,7 @@ export class Contract {
     amount: number,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(receiverPubArr, threshold, MCA);
+    const keys = this.pubToKeys(receiverPubArr, threshold);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -152,7 +149,7 @@ export class Contract {
     amount: number,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(receiverPubArr, threshold, ECA);
+    const keys = this.ethPubToKeys(receiverPubArr, threshold);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -165,11 +162,18 @@ export class Contract {
 
   private pubToKeys(
     pubKeys: Array<{ weight: number; key: string }>,
-    threshold: number,
-    addressType: AddressType
+    threshold: number
   ): Keys {
     const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
-    return new Keys(pubs, threshold, addressType);
+    return new Keys(pubs, threshold);
+  }
+
+  private ethPubToKeys(
+    pubKeys: Array<{ weight: number; key: string }>,
+    threshold: number
+  ): EtherKeys {
+    const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
+    return new EtherKeys(pubs, threshold);
   }
 
   async getContractInfo(address: string): Promise<AxiosResponse | null> {

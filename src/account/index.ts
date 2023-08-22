@@ -1,5 +1,5 @@
 import { OperationType } from "../types/operation.js";
-import { AddressType, KeyPairType } from "../types/address.js";
+import { KeyPairType } from "../types/address.js";
 import { Amount } from "../types/property.js";
 import { isIPAddress } from "../utils/validation.js";
 import { TimeStamp } from "../utils/time.js";
@@ -7,7 +7,7 @@ import { Fact } from "../types/fact.js";
 
 import { CreateAccountsItem, CreateAccountsFact } from "./create.js";
 import { M2RandomN, M2EtherRandomN } from "./random.js";
-import { Key, Keys, PubKey } from "./publicKey.js";
+import { EtherKeys, Key, Keys, PubKey } from "./publicKey.js";
 import { Operation } from "../operation/index.js";
 import { WalletType } from "../types/wallet.js";
 import { KeyUpdaterFact } from "./keyUpdate.js";
@@ -19,8 +19,6 @@ import { AxiosResponse } from "axios";
 // const BTC: KeyPairType = "btc";
 const MITUM: KeyPairType = "mitum";
 const ETH: KeyPairType = "ether";
-const MCA: AddressType = "mca";
-const ECA: AddressType = "eca";
 
 export class Account {
   private _networkID: string = "";
@@ -126,20 +124,15 @@ export class Account {
   }
 
   address(pubKey: string): string {
-    const address = this.pubToKeys(
-      [{ key: pubKey, weight: 100 }],
-      100,
-      MCA
-    ).address;
+    const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100).address;
 
     return address.toString();
   }
 
   etherAddress(pubKey: string): string {
-    const address = this.pubToKeys(
+    const address = this.ethPubToKeys(
       [{ key: pubKey, weight: 100 }],
-      100,
-      ECA
+      100
     ).etherAddress;
 
     return address.toString();
@@ -149,7 +142,7 @@ export class Account {
     pubKeys: Array<{ key: string; weight: number }>,
     threshold: number
   ): string {
-    const address = this.pubToKeys(pubKeys, threshold, MCA).address;
+    const address = this.pubToKeys(pubKeys, threshold).address;
     return address.toString();
   }
 
@@ -157,7 +150,7 @@ export class Account {
     pubKeys: Array<{ weight: number; key: string }>,
     threshold: number
   ): string {
-    const address = this.pubToKeys(pubKeys, threshold, ECA).etherAddress;
+    const address = this.ethPubToKeys(pubKeys, threshold).etherAddress;
     return address.toString();
   }
 
@@ -185,11 +178,10 @@ export class Account {
     const publickey = keypair.publicKey.toString();
     const address = this.pubToKeys(
       [{ key: publickey, weight: wt }],
-      wt,
-      MCA
+      wt
     ).address.toString();
 
-    const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA);
+    const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
     const amountArr = new Amount(currencyID, amount);
 
     const token = new TimeStamp().UTC();
@@ -219,7 +211,7 @@ export class Account {
     currentID: string,
     amount: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, MCA);
+    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -236,7 +228,7 @@ export class Account {
     currentID: string,
     amount: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, ECA);
+    const keys = this.ethPubToKeys([{ key: receiverPub, weight: 100 }], 100);
 
     const amountArr = new Amount(currentID, amount);
 
@@ -255,7 +247,7 @@ export class Account {
     amount: number,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(receiverPubArr, threshold, MCA);
+    const keys = this.pubToKeys(receiverPubArr, threshold);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -273,7 +265,7 @@ export class Account {
     amount: number,
     threshold: number
   ): OperationType<Fact> {
-    const keys = this.pubToKeys(receiverPubArr, threshold, ECA);
+    const keys = this.ethPubToKeys(receiverPubArr, threshold);
     const amountArr = new Amount(currentID, amount);
 
     const token = new TimeStamp().UTC();
@@ -291,20 +283,14 @@ export class Account {
   ): OperationType<Fact> {
     const suffix = targetAddr.slice(-3);
 
-    let addressType: AddressType;
-    if (suffix == MCA) {
-      addressType = MCA;
-    } else if (suffix == ECA) {
-      addressType = ECA;
+    let key: Keys | EtherKeys;
+    if (suffix === "mca") {
+      key = this.pubToKeys([{ key: newPubArr, weight: 100 }], 100);
+    } else if (suffix === "eca") {
+      key = this.ethPubToKeys([{ key: newPubArr, weight: 100 }], 100);
     } else {
       throw new Error("The target address is invalid-type");
     }
-
-    const key = this.pubToKeys(
-      [{ key: newPubArr, weight: 100 }],
-      100,
-      addressType
-    );
 
     const token = new TimeStamp().UTC();
 
@@ -321,16 +307,14 @@ export class Account {
   ): OperationType<Fact> {
     const suffix = targetAddr.slice(-3);
 
-    let addressType: AddressType;
-    if (suffix == MCA) {
-      addressType = MCA;
-    } else if (suffix == ECA) {
-      addressType = ECA;
+    let keys: Keys | EtherKeys;
+    if (suffix === "mca") {
+      keys = this.pubToKeys(newPubArr, threshold);
+    } else if (suffix === "eca") {
+      keys = this.ethPubToKeys(newPubArr, threshold);
     } else {
       throw new Error("The target address is invalid-type");
     }
-
-    const keys = this.pubToKeys(newPubArr, threshold, addressType);
 
     const token = new TimeStamp().UTC();
 
@@ -341,11 +325,18 @@ export class Account {
 
   private pubToKeys(
     pubKeys: Array<{ weight: number; key: string }>,
-    threshold: number,
-    addressType: AddressType
+    threshold: number
   ): Keys {
     const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
-    return new Keys(pubs, threshold, addressType);
+    return new Keys(pubs, threshold);
+  }
+
+  private ethPubToKeys(
+    pubKeys: Array<{ weight: number; key: string }>,
+    threshold: number
+  ): EtherKeys {
+    const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
+    return new EtherKeys(pubs, threshold);
   }
 
   async getAccountInfo(address: string): Promise<AxiosResponse> {

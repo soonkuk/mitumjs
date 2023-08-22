@@ -48,6 +48,7 @@ export declare class Account {
         key: string;
     }>, currentID: string, threshold: number): OperationType<Fact>;
     private pubToKeys;
+    private ethPubToKeys;
     getAccountInfo(address: string): Promise<AxiosResponse>;
     getOperation(address: string): Promise<AxiosResponse>;
     getByPublickey(publickey: string): Promise<AxiosResponse>;

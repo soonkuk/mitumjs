@@ -27,5 +27,6 @@ export declare class Contract {
         key: string;
     }>, currentID: string, amount: number, threshold: number): OperationType<Fact>;
     private pubToKeys;
+    private ethPubToKeys;
     getContractInfo(address: string): Promise<AxiosResponse | null>;
 }

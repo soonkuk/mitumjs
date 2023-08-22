@@ -1,7 +1,6 @@
 /// <reference types="node" />
 import { Address } from "./address.js";
 import { Big } from "../utils/math.js";
-import { AddressType } from "../types/address.js";
 import { KeyPairType } from "../types/address.js";
 import { HintedObject, IBuffer, IHintedObject, IString } from "../types/interface.js";
 type BigArg = string | number | Big;
@@ -29,10 +28,18 @@ export declare class Keys implements IBuffer, IHintedObject {
     private static hint;
     private _keys;
     readonly threshold: Big;
-    readonly addressType: AddressType;
-    constructor(keys: Pub[], threshold: BigArg, addressType: AddressType);
+    constructor(keys: Pub[], threshold: BigArg);
     get keys(): PubKey[];
     get address(): Address;
+    toBuffer(): Buffer;
+    toHintedObject(): HintedObject;
+}
+export declare class EtherKeys implements IBuffer, IHintedObject {
+    private static hint;
+    private _keys;
+    readonly threshold: Big;
+    constructor(keys: Pub[], threshold: BigArg);
+    get keys(): PubKey[];
     get etherAddress(): Address;
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;

@@ -2,6 +2,7 @@ export const HINT = {
     FACT_SIGN: "base-fact-sign",
     KEY: "mitum-currency-key",
     KEYS: "mitum-currency-keys",
+    ETH_KEYS: "mitum-currency-eth-keys",
     AMOUNT: "mitum-currency-amount",
     CREATE_ACCOUNTS_ITEM: "mitum-currency-create-accounts-multiple-amounts",
     CREATE_ACCOUNTS_OPERATION_FACT: "mitum-currency-create-accounts-operation-fact",

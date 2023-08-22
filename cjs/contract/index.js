@@ -25,8 +25,6 @@ const account_js_1 = require("./account.js");
 // const BTC: KeyPairType = "btc";
 const MITUM = "mitum";
 const ETH = "ether";
-const MCA = "mca";
-const ECA = "eca";
 class Contract {
     constructor(networkID, provider) {
         this._networkID = "";
@@ -56,8 +54,8 @@ class Contract {
         }
         const privatekey = keypair.privateKey.toString();
         const publickey = keypair.publicKey.toString();
-        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA).address.toString();
-        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA);
+        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt).address.toString();
+        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
         const amountArr = new property_js_1.Amount(currencyID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new account_js_1.CreateContractAccountsItem(keys, [amountArr], MITUM);
@@ -76,7 +74,7 @@ class Contract {
         });
     }
     create(senderAddr, receiverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, MCA);
+        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new account_js_1.CreateContractAccountsItem(keys, [amountArr], MITUM);
@@ -84,7 +82,7 @@ class Contract {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createEtherAccount(senderAddr, receiverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, ECA);
+        const keys = this.ethPubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new account_js_1.CreateContractAccountsItem(keys, [amountArr], ETH);
@@ -92,7 +90,7 @@ class Contract {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(receiverPubArr, threshold, MCA);
+        const keys = this.pubToKeys(receiverPubArr, threshold);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new account_js_1.CreateContractAccountsItem(keys, [amountArr], MITUM);
@@ -100,16 +98,20 @@ class Contract {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createEtherMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(receiverPubArr, threshold, ECA);
+        const keys = this.ethPubToKeys(receiverPubArr, threshold);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new account_js_1.CreateContractAccountsItem(keys, [amountArr], ETH);
         const fact = new account_js_1.CreateContractAccountsFact(token, senderAddr, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
-    pubToKeys(pubKeys, threshold, addressType) {
+    pubToKeys(pubKeys, threshold) {
         const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
-        return new publicKey_js_1.Keys(pubs, threshold, addressType);
+        return new publicKey_js_1.Keys(pubs, threshold);
+    }
+    ethPubToKeys(pubKeys, threshold) {
+        const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
+        return new publicKey_js_1.EtherKeys(pubs, threshold);
     }
     getContractInfo(address) {
         return __awaiter(this, void 0, void 0, function* () {

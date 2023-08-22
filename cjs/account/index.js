@@ -27,8 +27,6 @@ const key_js_1 = require("./key.js");
 // const BTC: KeyPairType = "btc";
 const MITUM = "mitum";
 const ETH = "ether";
-const MCA = "mca";
-const ECA = "eca";
 class Account {
     constructor(networkID, provider) {
         this._networkID = "";
@@ -117,19 +115,19 @@ class Account {
         return keysInfo;
     }
     address(pubKey) {
-        const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100, MCA).address;
+        const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100).address;
         return address.toString();
     }
     etherAddress(pubKey) {
-        const address = this.pubToKeys([{ key: pubKey, weight: 100 }], 100, ECA).etherAddress;
+        const address = this.ethPubToKeys([{ key: pubKey, weight: 100 }], 100).etherAddress;
         return address.toString();
     }
     addressForMultiSig(pubKeys, threshold) {
-        const address = this.pubToKeys(pubKeys, threshold, MCA).address;
+        const address = this.pubToKeys(pubKeys, threshold).address;
         return address.toString();
     }
     etherAddressForMultiSig(pubKeys, threshold) {
-        const address = this.pubToKeys(pubKeys, threshold, ECA).etherAddress;
+        const address = this.ethPubToKeys(pubKeys, threshold).etherAddress;
         return address.toString();
     }
     createWallet(sender, currencyID, amount, seed, weight = 100) {
@@ -146,8 +144,8 @@ class Account {
         }
         const privatekey = keypair.privateKey.toString();
         const publickey = keypair.publicKey.toString();
-        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA).address.toString();
-        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA);
+        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt).address.toString();
+        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
         const amountArr = new property_js_1.Amount(currencyID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], MITUM);
@@ -166,7 +164,7 @@ class Account {
         });
     }
     create(senderAddr, receiverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, MCA);
+        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], MITUM);
@@ -174,7 +172,7 @@ class Account {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createEtherAccount(senderAddr, receiverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, ECA);
+        const keys = this.ethPubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], ETH);
@@ -182,7 +180,7 @@ class Account {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(receiverPubArr, threshold, MCA);
+        const keys = this.pubToKeys(receiverPubArr, threshold);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], MITUM);
@@ -190,7 +188,7 @@ class Account {
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createEtherMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(receiverPubArr, threshold, ECA);
+        const keys = this.ethPubToKeys(receiverPubArr, threshold);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
         const item = new create_js_1.CreateAccountsItem(keys, [amountArr], ETH);
@@ -199,41 +197,43 @@ class Account {
     }
     update(targetAddr, newPubArr, currentID) {
         const suffix = targetAddr.slice(-3);
-        let addressType;
-        if (suffix == MCA) {
-            addressType = MCA;
+        let key;
+        if (suffix === "mca") {
+            key = this.pubToKeys([{ key: newPubArr, weight: 100 }], 100);
         }
-        else if (suffix == ECA) {
-            addressType = ECA;
+        else if (suffix === "eca") {
+            key = this.ethPubToKeys([{ key: newPubArr, weight: 100 }], 100);
         }
         else {
             throw new Error("The target address is invalid-type");
         }
-        const key = this.pubToKeys([{ key: newPubArr, weight: 100 }], 100, addressType);
         const token = new time_js_1.TimeStamp().UTC();
         const fact = new keyUpdate_js_1.KeyUpdaterFact(token, targetAddr, key, currentID);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     updateMultiSig(targetAddr, newPubArr, currentID, threshold) {
         const suffix = targetAddr.slice(-3);
-        let addressType;
-        if (suffix == MCA) {
-            addressType = MCA;
+        let keys;
+        if (suffix === "mca") {
+            keys = this.pubToKeys(newPubArr, threshold);
         }
-        else if (suffix == ECA) {
-            addressType = ECA;
+        else if (suffix === "eca") {
+            keys = this.ethPubToKeys(newPubArr, threshold);
         }
         else {
             throw new Error("The target address is invalid-type");
         }
-        const keys = this.pubToKeys(newPubArr, threshold, addressType);
         const token = new time_js_1.TimeStamp().UTC();
         const fact = new keyUpdate_js_1.KeyUpdaterFact(token, targetAddr, keys, currentID);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
-    pubToKeys(pubKeys, threshold, addressType) {
+    pubToKeys(pubKeys, threshold) {
         const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
-        return new publicKey_js_1.Keys(pubs, threshold, addressType);
+        return new publicKey_js_1.Keys(pubs, threshold);
+    }
+    ethPubToKeys(pubKeys, threshold) {
+        const pubs = pubKeys.map((pub) => new publicKey_js_1.PubKey(pub.key, pub.weight));
+        return new publicKey_js_1.EtherKeys(pubs, threshold);
     }
     getAccountInfo(address) {
         return __awaiter(this, void 0, void 0, function* () {

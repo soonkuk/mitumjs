@@ -5,15 +5,15 @@ import { OperationFact } from "../types/fact.js";
 import { Amount } from "../types/property.js";
 import { CurrencyItem } from "../currency/currencyItem.js";
 import { Address } from "../account/address.js";
-import { Keys } from "../account/publicKey.js";
+import { EtherKeys, Keys } from "../account/publicKey.js";
 export declare class CreateContractAccountsFact extends OperationFact<CreateContractAccountsItem> {
     constructor(token: string, sender: string | Address, items: CreateContractAccountsItem[]);
     get operationHint(): string;
 }
 export declare class CreateContractAccountsItem extends CurrencyItem {
-    readonly keys: Keys;
+    readonly keys: Keys | EtherKeys;
     private addressSuffix;
-    constructor(keys: Keys, amounts: Amount[], addressType?: KeyPairType);
+    constructor(keys: Keys | EtherKeys, amounts: Amount[], addressType?: KeyPairType);
     toBuffer(): Buffer;
     toHintedObject(): HintedObject;
     toString(): string;

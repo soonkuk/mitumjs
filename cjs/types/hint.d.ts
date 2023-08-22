@@ -2,6 +2,7 @@ export declare const HINT: {
     FACT_SIGN: string;
     KEY: string;
     KEYS: string;
+    ETH_KEYS: string;
     AMOUNT: string;
     CREATE_ACCOUNTS_ITEM: string;
     CREATE_ACCOUNTS_OPERATION_FACT: string;

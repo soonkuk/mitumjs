@@ -11,7 +11,7 @@ import { Amount } from "../types/property.js";
 
 import { CurrencyItem } from "../currency/currencyItem.js";
 import { Address } from "../account/address.js";
-import { Keys } from "../account/publicKey.js";
+import { EtherKeys, Keys } from "../account/publicKey.js";
 
 export class CreateContractAccountsFact extends OperationFact<CreateContractAccountsItem> {
   constructor(
@@ -44,10 +44,14 @@ export class CreateContractAccountsFact extends OperationFact<CreateContractAcco
 }
 
 export class CreateContractAccountsItem extends CurrencyItem {
-  readonly keys: Keys;
+  readonly keys: Keys | EtherKeys;
   private addressSuffix: string;
 
-  constructor(keys: Keys, amounts: Amount[], addressType?: KeyPairType) {
+  constructor(
+    keys: Keys | EtherKeys,
+    amounts: Amount[],
+    addressType?: KeyPairType
+  ) {
     super(HINT.CREATE_CONTRACT_ACCOUNTS_ITEM, amounts, addressType);
     this.keys = keys;
 

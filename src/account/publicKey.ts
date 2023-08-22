@@ -5,7 +5,6 @@ import { Address } from "./address.js";
 
 import { Big, keccak256, sha3 } from "../utils/math.js";
 import { MitumConfig } from "../utils/config.js";
-import { AddressType } from "../types/address.js";
 
 import { KeyPairType } from "../types/address.js";
 import { Hint } from "../types/property.js";
@@ -105,9 +104,8 @@ export class Keys implements IBuffer, IHintedObject {
   private static hint = new Hint(HINT.KEYS);
   private _keys: PubKey[];
   readonly threshold: Big;
-  readonly addressType: AddressType;
 
-  constructor(keys: Pub[], threshold: BigArg, addressType: AddressType) {
+  constructor(keys: Pub[], threshold: BigArg) {
     Assert.check(
       MitumConfig.KEYS_IN_ACCOUNT.satisfy(keys.length),
       MitumError.detail(ECODE.INVALID_KEYS, "keys length out of range")
@@ -131,8 +129,6 @@ export class Keys implements IBuffer, IHintedObject {
       new Set(this._keys.map((k) => k.toString())).size === this._keys.length,
       MitumError.detail(ECODE.INVALID_KEYS, "duplicate keys found in keys")
     );
-
-    this.addressType = addressType;
   }
 
   get keys(): PubKey[] {
@@ -143,6 +139,68 @@ export class Keys implements IBuffer, IHintedObject {
     return new Address(
       base58.encode(sha3(this.toBuffer())) + SUFFIX.ACCOUNT_ADDRESS
     );
+  }
+
+  toBuffer(): Buffer {
+    return Buffer.concat([
+      Buffer.concat(
+        this._keys
+          .sort((a, b) =>
+            Buffer.compare(Buffer.from(a.toString()), Buffer.from(b.toBuffer()))
+          )
+          .map((k) => k.toBuffer())
+      ),
+      this.threshold.toBuffer("fill"),
+    ]);
+  }
+
+  toHintedObject(): HintedObject {
+    return {
+      _hint: Keys.hint.toString(),
+      hash: base58.encode(sha3(this.toBuffer())),
+      keys: this._keys
+        .sort((a, b) =>
+          Buffer.compare(Buffer.from(a.toString()), Buffer.from(b.toBuffer()))
+        )
+        .map((k) => k.toHintedObject()),
+      threshold: this.threshold.v,
+    };
+  }
+}
+
+export class EtherKeys implements IBuffer, IHintedObject {
+  private static hint = new Hint(HINT.ETH_KEYS);
+  private _keys: PubKey[];
+  readonly threshold: Big;
+
+  constructor(keys: Pub[], threshold: BigArg) {
+    Assert.check(
+      MitumConfig.KEYS_IN_ACCOUNT.satisfy(keys.length),
+      MitumError.detail(ECODE.INVALID_KEYS, "keys length out of range")
+    );
+
+    this._keys = keys.map((k) => {
+      if (k instanceof PubKey) {
+        return k;
+      }
+
+      const [key, weight] = k;
+      return new PubKey(key instanceof Key ? key.toString() : key, weight);
+    });
+    this.threshold = threshold instanceof Big ? threshold : new Big(threshold);
+
+    Assert.check(
+      MitumConfig.THRESHOLD.satisfy(this.threshold.v),
+      MitumError.detail(ECODE.INVALID_KEYS, "threshold out of range")
+    );
+    Assert.check(
+      new Set(this._keys.map((k) => k.toString())).size === this._keys.length,
+      MitumError.detail(ECODE.INVALID_KEYS, "duplicate keys found in keys")
+    );
+  }
+
+  get keys(): PubKey[] {
+    return this._keys;
   }
 
   get etherAddress(): Address {
@@ -162,29 +220,21 @@ export class Keys implements IBuffer, IHintedObject {
           .map((k) => k.toBuffer())
       ),
       this.threshold.toBuffer("fill"),
-      Buffer.from(this.addressType),
     ]);
   }
 
   toHintedObject(): HintedObject {
-    let gHash: string;
-    if (this.addressType === "mca") {
-      gHash = base58.encode(sha3(this.toBuffer()));
-    } else {
-      const h = keccak256js(this.toBuffer());
-      gHash = h.slice(24);
-    }
+    const eHash = keccak256js(this.toBuffer());
 
     return {
-      _hint: Keys.hint.toString(),
-      hash: gHash,
+      _hint: EtherKeys.hint.toString(),
+      hash: eHash.slice(24),
       keys: this._keys
         .sort((a, b) =>
           Buffer.compare(Buffer.from(a.toString()), Buffer.from(b.toBuffer()))
         )
         .map((k) => k.toHintedObject()),
       threshold: this.threshold.v,
-      address_type: this.addressType,
     };
   }
 }

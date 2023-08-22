@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Keys = exports.PubKey = exports.Key = void 0;
+exports.EtherKeys = exports.Keys = exports.PubKey = exports.Key = void 0;
 const bs58_1 = __importDefault(require("bs58"));
 const js_sha3_1 = require("js-sha3");
 const address_js_1 = require("./address.js");
@@ -68,7 +68,7 @@ class PubKey extends Key {
 exports.PubKey = PubKey;
 PubKey.hint = new property_js_1.Hint(hint_js_1.HINT.KEY);
 class Keys {
-    constructor(keys, threshold, addressType) {
+    constructor(keys, threshold) {
         error_js_1.Assert.check(config_js_1.MitumConfig.KEYS_IN_ACCOUNT.satisfy(keys.length), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_KEYS, "keys length out of range"));
         this._keys = keys.map((k) => {
             if (k instanceof PubKey) {
@@ -80,13 +80,50 @@ class Keys {
         this.threshold = threshold instanceof math_js_1.Big ? threshold : new math_js_1.Big(threshold);
         error_js_1.Assert.check(config_js_1.MitumConfig.THRESHOLD.satisfy(this.threshold.v), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_KEYS, "threshold out of range"));
         error_js_1.Assert.check(new Set(this._keys.map((k) => k.toString())).size === this._keys.length, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_KEYS, "duplicate keys found in keys"));
-        this.addressType = addressType;
     }
     get keys() {
         return this._keys;
     }
     get address() {
         return new address_js_1.Address(bs58_1.default.encode((0, math_js_1.sha3)(this.toBuffer())) + hint_js_1.SUFFIX.ACCOUNT_ADDRESS);
+    }
+    toBuffer() {
+        return Buffer.concat([
+            Buffer.concat(this._keys
+                .sort((a, b) => Buffer.compare(Buffer.from(a.toString()), Buffer.from(b.toBuffer())))
+                .map((k) => k.toBuffer())),
+            this.threshold.toBuffer("fill"),
+        ]);
+    }
+    toHintedObject() {
+        return {
+            _hint: Keys.hint.toString(),
+            hash: bs58_1.default.encode((0, math_js_1.sha3)(this.toBuffer())),
+            keys: this._keys
+                .sort((a, b) => Buffer.compare(Buffer.from(a.toString()), Buffer.from(b.toBuffer())))
+                .map((k) => k.toHintedObject()),
+            threshold: this.threshold.v,
+        };
+    }
+}
+exports.Keys = Keys;
+Keys.hint = new property_js_1.Hint(hint_js_1.HINT.KEYS);
+class EtherKeys {
+    constructor(keys, threshold) {
+        error_js_1.Assert.check(config_js_1.MitumConfig.KEYS_IN_ACCOUNT.satisfy(keys.length), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_KEYS, "keys length out of range"));
+        this._keys = keys.map((k) => {
+            if (k instanceof PubKey) {
+                return k;
+            }
+            const [key, weight] = k;
+            return new PubKey(key instanceof Key ? key.toString() : key, weight);
+        });
+        this.threshold = threshold instanceof math_js_1.Big ? threshold : new math_js_1.Big(threshold);
+        error_js_1.Assert.check(config_js_1.MitumConfig.THRESHOLD.satisfy(this.threshold.v), error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_KEYS, "threshold out of range"));
+        error_js_1.Assert.check(new Set(this._keys.map((k) => k.toString())).size === this._keys.length, error_js_1.MitumError.detail(error_js_1.ECODE.INVALID_KEYS, "duplicate keys found in keys"));
+    }
+    get keys() {
+        return this._keys;
     }
     get etherAddress() {
         return new address_js_1.Address((0, math_js_1.keccak256)(this.toBuffer()).subarray(12).toString("hex") +
@@ -98,29 +135,20 @@ class Keys {
                 .sort((a, b) => Buffer.compare(Buffer.from(a.toString()), Buffer.from(b.toBuffer())))
                 .map((k) => k.toBuffer())),
             this.threshold.toBuffer("fill"),
-            Buffer.from(this.addressType),
         ]);
     }
     toHintedObject() {
-        let gHash;
-        if (this.addressType === "mca") {
-            gHash = bs58_1.default.encode((0, math_js_1.sha3)(this.toBuffer()));
-        }
-        else {
-            const h = (0, js_sha3_1.keccak256)(this.toBuffer());
-            gHash = h.slice(24);
-        }
+        const eHash = (0, js_sha3_1.keccak256)(this.toBuffer());
         return {
-            _hint: Keys.hint.toString(),
-            hash: gHash,
+            _hint: EtherKeys.hint.toString(),
+            hash: eHash.slice(24),
             keys: this._keys
                 .sort((a, b) => Buffer.compare(Buffer.from(a.toString()), Buffer.from(b.toBuffer())))
                 .map((k) => k.toHintedObject()),
             threshold: this.threshold.v,
-            address_type: this.addressType,
         };
     }
 }
-exports.Keys = Keys;
-Keys.hint = new property_js_1.Hint(hint_js_1.HINT.KEYS);
+exports.EtherKeys = EtherKeys;
+EtherKeys.hint = new property_js_1.Hint(hint_js_1.HINT.ETH_KEYS);
 //# sourceMappingURL=publicKey.js.map

@@ -7,8 +7,6 @@ const error_js_1 = require("../utils/error.js");
 const config_js_1 = require("../utils/config.js");
 const MITUM = "mitum";
 const ETH = "ether";
-const MCA = "mca";
-const ECA = "eca";
 function getRandomKeys(n, f, keyType) {
     error_js_1.Assert.get(config_js_1.MitumConfig.KEYS_IN_ACCOUNT.satisfy(n)).excute();
     n = Math.floor(n);
@@ -22,20 +20,21 @@ function getRandomKeys(n, f, keyType) {
         kps.push(f());
         ks.push(new publicKey_js_1.PubKey(kps[i].publicKey, weight));
     }
-    let type;
     if (keyType === MITUM) {
-        type = MCA;
+        return {
+            keys: new publicKey_js_1.Keys(ks, config_js_1.MitumConfig.THRESHOLD.max),
+            keypairs: kps,
+        };
     }
     else if (keyType === ETH) {
-        type = ECA;
+        return {
+            keys: new publicKey_js_1.EtherKeys(ks, config_js_1.MitumConfig.THRESHOLD.max),
+            keypairs: kps,
+        };
     }
     else {
         throw new Error("Invalid address type");
     }
-    return {
-        keys: new publicKey_js_1.Keys(ks, config_js_1.MitumConfig.THRESHOLD.max, type),
-        keypairs: kps,
-    };
 }
 const M2RandomN = (n, keyType) => {
     return getRandomKeys(n, () => key_js_1.M2KeyPair.random(keyType), keyType);

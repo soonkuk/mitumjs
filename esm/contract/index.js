@@ -1,6 +1,6 @@
 import { isIPAddress } from "../utils/validation.js";
 import { OperationType } from "../types/operation.js";
-import { Keys, PubKey } from "../account/publicKey.js";
+import { EtherKeys, Keys, PubKey } from "../account/publicKey.js";
 import { TimeStamp } from "../utils/time.js";
 import { M2KeyPair } from "../account/key.js";
 import { Operation } from "../operation/index.js";
@@ -10,8 +10,6 @@ import { CreateContractAccountsItem, CreateContractAccountsFact, } from "./accou
 // const BTC: KeyPairType = "btc";
 const MITUM = "mitum";
 const ETH = "ether";
-const MCA = "mca";
-const ECA = "eca";
 export class Contract {
     constructor(networkID, provider) {
         this._networkID = "";
@@ -41,8 +39,8 @@ export class Contract {
         }
         const privatekey = keypair.privateKey.toString();
         const publickey = keypair.publicKey.toString();
-        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA).address.toString();
-        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt, MCA);
+        const address = this.pubToKeys([{ key: publickey, weight: wt }], wt).address.toString();
+        const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
         const amountArr = new Amount(currencyID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateContractAccountsItem(keys, [amountArr], MITUM);
@@ -59,7 +57,7 @@ export class Contract {
         return res.data;
     }
     create(senderAddr, receiverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, MCA);
+        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateContractAccountsItem(keys, [amountArr], MITUM);
@@ -67,7 +65,7 @@ export class Contract {
         return new OperationType(this._networkID, fact);
     }
     createEtherAccount(senderAddr, receiverPub, currentID, amount) {
-        const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100, ECA);
+        const keys = this.ethPubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateContractAccountsItem(keys, [amountArr], ETH);
@@ -75,7 +73,7 @@ export class Contract {
         return new OperationType(this._networkID, fact);
     }
     createMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(receiverPubArr, threshold, MCA);
+        const keys = this.pubToKeys(receiverPubArr, threshold);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateContractAccountsItem(keys, [amountArr], MITUM);
@@ -83,16 +81,20 @@ export class Contract {
         return new OperationType(this._networkID, fact);
     }
     createEtherMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
-        const keys = this.pubToKeys(receiverPubArr, threshold, ECA);
+        const keys = this.ethPubToKeys(receiverPubArr, threshold);
         const amountArr = new Amount(currentID, amount);
         const token = new TimeStamp().UTC();
         const item = new CreateContractAccountsItem(keys, [amountArr], ETH);
         const fact = new CreateContractAccountsFact(token, senderAddr, [item]);
         return new OperationType(this._networkID, fact);
     }
-    pubToKeys(pubKeys, threshold, addressType) {
+    pubToKeys(pubKeys, threshold) {
         const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
-        return new Keys(pubs, threshold, addressType);
+        return new Keys(pubs, threshold);
+    }
+    ethPubToKeys(pubKeys, threshold) {
+        const pubs = pubKeys.map((pub) => new PubKey(pub.key, pub.weight));
+        return new EtherKeys(pubs, threshold);
     }
     async getContractInfo(address) {
         return await accountInfo.getAddressInfo(this._node, address);
