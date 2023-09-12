@@ -1,12 +1,8 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": ".",
-    "esModuleInterop": true,
     "module": "ES2020",
-    "allowJs": true,
-    "target": "ES2020"
-  },
-  "include": ["../src/**/*"],
-  "exclude": ["../src/test/*"]
+    "outDir": "./",
+    "moduleResolution": "nodenext"
+  }
 }
