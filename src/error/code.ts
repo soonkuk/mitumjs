@@ -1,4 +1,8 @@
-export type ErrorCode = typeof ECODE[keyof typeof ECODE] | typeof ECODE.CURRENCY[keyof typeof ECODE.CURRENCY]
+export type ErrorCode = (
+    typeof ECODE[keyof typeof ECODE]
+    | typeof ECODE.CURRENCY[keyof typeof ECODE.CURRENCY]
+    | typeof ECODE.NFT[keyof typeof ECODE.NFT]
+)
 
 export const ECODE = {
     UNKNOWN: "EC_UNKNOWN",
@@ -46,4 +50,8 @@ export const ECODE = {
         INVALID_CURRENCY_POLICY: "EC_INVALID_CURRENCY_POLICY",
         INVALID_CURRENCY_DESIGN: "EC_INVALID_CURRENCY_DESIGN",
     },
+    NFT: {
+        INVALID_NFT_SIGNER: "EC_INVALID_NFT_SIGNER",
+        INVALID_NFT_SIGNERS: "EC_INVALID_NFT_SIGNERS",
+    }
 } as const

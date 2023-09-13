@@ -8,11 +8,11 @@ import { SortFunc } from "../../utils"
 import { HintedObject } from "../../types"
 import { Assert, ECODE, MitumError } from "../../error"
 
-export class WithdrawsItem extends CurrencyItem {
+export class WithdrawItem extends CurrencyItem {
     readonly target: Address
 
     constructor(target: string | Address, amounts: Amount[]) {
-        super(HINT.CURRENCY.WITHDRAWS.ITEM, amounts)
+        super(HINT.CURRENCY.WITHDRAW.ITEM, amounts)
         this.target = typeof target === "string" ? new Address(target) : target
     }
 
@@ -35,9 +35,9 @@ export class WithdrawsItem extends CurrencyItem {
     }
 }
 
-export class WithdrawsFact extends OperationFact<WithdrawsItem> {
-    constructor(token: string, sender: string | Address, items: WithdrawsItem[]) {
-        super(HINT.CURRENCY.WITHDRAWS.FACT, token, sender, items)
+export class WithdrawFact extends OperationFact<WithdrawItem> {
+    constructor(token: string, sender: string | Address, items: WithdrawItem[]) {
+        super(HINT.CURRENCY.WITHDRAW.FACT, token, sender, items)
 
         Assert.check(
             new Set(items.map(it => it.toString())).size === items.length,
@@ -46,6 +46,6 @@ export class WithdrawsFact extends OperationFact<WithdrawsItem> {
     }
 
     get operationHint() {
-        return HINT.CURRENCY.WITHDRAWS.OPERATION
+        return HINT.CURRENCY.WITHDRAW.OPERATION
     }
 }

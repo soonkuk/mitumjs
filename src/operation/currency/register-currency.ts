@@ -3,11 +3,11 @@ import { CurrencyDesign } from "./currency-design"
 
 import { HINT } from "../../alias"
 
-export class CurrencyRegisterFact extends NodeFact {
+export class RegisterCurrencyFact extends NodeFact {
     readonly design: CurrencyDesign
 
     constructor(token: string, design: CurrencyDesign) {
-        super(HINT.CURRENCY.CURRENCY_REGISTER.FACT, token)
+        super(HINT.CURRENCY.REGISTER_CURRENCY.FACT, token)
         this.design = design
         this._hash = this.hashing()
     }
@@ -27,6 +27,6 @@ export class CurrencyRegisterFact extends NodeFact {
     }
 
     get operationHint() {
-        return HINT.CURRENCY.CURRENCY_REGISTER.OPERATION
+        return HINT.CURRENCY.REGISTER_CURRENCY.OPERATION
     }
 }

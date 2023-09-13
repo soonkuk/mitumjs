@@ -4,13 +4,13 @@ import { HINT } from "../../alias"
 import { CurrencyID } from "../../common"
 import { Address, Keys } from "../../key"
 
-export class KeyUpdaterFact extends Fact {
+export class UpdateKeyFact extends Fact {
     readonly target: Address
     readonly keys: Keys
     readonly currency: CurrencyID
 
     constructor(token: string, target: string | Address, keys: Keys, currency: string | CurrencyID) {
-        super(HINT.CURRENCY.KEY_UPDATER.FACT, token)
+        super(HINT.CURRENCY.UPDATE_KEY.FACT, token)
         this.target = Address.from(target)
         this.keys = keys
         this.currency = CurrencyID.from(currency)
@@ -36,6 +36,6 @@ export class KeyUpdaterFact extends Fact {
     }
 
     get operationHint() {
-        return HINT.CURRENCY.KEY_UPDATER.OPERATION
+        return HINT.CURRENCY.UPDATE_KEY.OPERATION
     }
 }

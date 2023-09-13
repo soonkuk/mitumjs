@@ -8,12 +8,12 @@ import { SortFunc } from "../../utils"
 import { HintedObject } from "../../types"
 import { Assert, ECODE, MitumError } from "../../error"
 
-export class SuffrageInflationItem extends Item {
+export class MintItem extends Item {
     readonly amount: Amount
     readonly receiver: Address
     
     constructor(receiver: string | Address, amount: Amount) {
-        super(HINT.CURRENCY.SUFFRAGE_INFLATION.ITEM)
+        super(HINT.CURRENCY.MINT.ITEM)
         this.amount = amount
         this.receiver = Address.from(receiver)
     }
@@ -38,11 +38,11 @@ export class SuffrageInflationItem extends Item {
     }
 }
 
-export class SuffrageInflationFact extends NodeFact {
-    readonly items: SuffrageInflationItem[]
+export class MintFact extends NodeFact {
+    readonly items: MintItem[]
 
-    constructor(token: string, items: SuffrageInflationItem[]) {
-        super(HINT.CURRENCY.SUFFRAGE_INFLATION.FACT, token)
+    constructor(token: string, items: MintItem[]) {
+        super(HINT.CURRENCY.MINT.FACT, token)
 
         Assert.check(
             Config.ITEMS_IN_FACT.satisfy(items.length),
@@ -73,6 +73,6 @@ export class SuffrageInflationFact extends NodeFact {
     }
 
     get operationHint() {
-        return HINT.CURRENCY.SUFFRAGE_INFLATION.OPERATION
+        return HINT.CURRENCY.MINT.OPERATION
     }
 }

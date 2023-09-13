@@ -10,12 +10,12 @@ import { HintedObject } from "../../types"
 import { Keys, KeyPairType, Address } from "../../key"
 import { Assert, ECODE, MitumError } from "../../error"
 
-export class CreateAccountsItem extends CurrencyItem {
+export class CreateContractAccountItem extends CurrencyItem {
     readonly keys: Keys
     private addressSuffix: string
-
+    
     constructor(keys: Keys, amounts: Amount[], addressType: KeyPairType) {
-        super(HINT.CURRENCY.CREATE_ACCOUNTS.ITEM, amounts, addressType)
+        super(HINT.CURRENCY.CREATE_CONTRACT_ACCOUNT.ITEM, amounts, addressType)
         this.keys = keys
 
         if (addressType === "btc") {
@@ -46,9 +46,9 @@ export class CreateAccountsItem extends CurrencyItem {
     }
 }
 
-export class CreateAccountsFact extends OperationFact<CreateAccountsItem> {
-    constructor(token: string, sender: string | Address, items: CreateAccountsItem[]) {
-        super(HINT.CURRENCY.CREATE_ACCOUNTS.FACT, token, sender, items)
+export class CreateContractAccountFact extends OperationFact<CreateContractAccountItem> {
+    constructor(token: string, sender: string | Address, items: CreateContractAccountItem[]) {
+        super(HINT.CURRENCY.CREATE_CONTRACT_ACCOUNT.FACT, token, sender, items)
 
         Assert.check(
             new Set(items.map(it => it.toString())).size === items.length,
@@ -57,6 +57,6 @@ export class CreateAccountsFact extends OperationFact<CreateAccountsItem> {
     }
 
     get operationHint() {
-        return HINT.CURRENCY.CREATE_ACCOUNTS.OPERATION
+        return HINT.CURRENCY.CREATE_CONTRACT_ACCOUNT.OPERATION
     }
 }

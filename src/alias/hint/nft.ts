@@ -4,14 +4,13 @@ export default {
     POLICY: "mitum-nft-collection-policy",
     SIGNER: "mitum-nft-signer",
     SIGNERS: "mitum-nft-signers",
-    COLLECTION_REGISTER: {
-        FORM: "mitum-nft-collection-register-form",
-        FACT: "mitum-nft-collection-register-operation-fact",
-        OPERATION: "mitum-nft-collection-register-operation",
+    CREATE_COLLECTION: {
+        FACT: "mitum-nft-create-collection-operation-fact",
+        OPERATION: "mitum-nft-create-collection-operation",
     },
-    COLLECTION_POLICY_UPDATER: {
-        FACT: "mitum-nft-collection-policy-updater-operation-fact",
-        OPERATION: "mitum-nft-collection-policy-updater-operation",
+    UPDATE_COLLECTION_POLICY: {
+        FACT: "mitum-nft-update-collection-policy-operation-fact",
+        OPERATION: "mitum-nft-update-collection-policy-operation",
     },
     MINT: {
         FORM: "mitum-nft-mint-form",

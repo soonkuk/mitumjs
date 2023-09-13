@@ -10,40 +10,40 @@ export default {
         FIXED: "mitum-currency-fixed-feeer",
         RATIO: "mitum-currency-ratio-feeer",
     },
-    CREATE_ACCOUNTS: {
-        ITEM: "mitum-currency-create-accounts-multiple-amounts",
-        FACT: "mitum-currency-create-accounts-operation-fact",
-        OPERATION: "mitum-currency-create-accounts-operation",
+    CREATE_ACCOUNT: {
+        ITEM: "mitum-currency-create-account-multiple-amounts",
+        FACT: "mitum-currency-create-account-operation-fact",
+        OPERATION: "mitum-currency-create-account-operation",
     },
-    KEY_UPDATER: {
-        FACT: "mitum-currency-keyupdater-operation-fact",
-        OPERATION: "mitum-currency-keyupdater-operation",
+    UPDATE_KEY: {
+        FACT: "mitum-currency-update-key-operation-fact",
+        OPERATION: "mitum-currency-update-key-operation",
     },
-    TRANSFERS: {
-        ITEM: "mitum-currency-transfers-item-multi-amounts",
-        FACT: "mitum-currency-transfers-operation-fact",
-        OPERATION: "mitum-currency-transfers-operation",
+    TRANSFER: {
+        ITEM: "mitum-currency-transfer-item-multi-amounts",
+        FACT: "mitum-currency-transfer-operation-fact",
+        OPERATION: "mitum-currency-transfer-operation",
     },
-    CURRENCY_REGISTER: {
-        FACT: "mitum-currency-currency-register-operation-fact",
-        OPERATION: "mitum-currency-currency-register-operation",
+    REGISTER_CURRENCY: {
+        FACT: "mitum-currency-register-currency-operation-fact",
+        OPERATION: "mitum-currency-register-currency-operation",
     },
-    CURRENCY_POLICY_UPDATER: {
-        FACT: "mitum-currency-currency-policy-updater-operation-fact",
-        OPERATION: "mitum-currency-currency-policy-updater-operation",
+    UPDATE_CURRENCY: {
+        FACT: "mitum-currency-update-currency-operation-fact",
+        OPERATION: "mitum-currency-update-currency-operation",
     },
-    SUFFRAGE_INFLATION: {
-        ITEM: "mitum-currency-suffrage-inflation-item",
-        FACT: "mitum-currency-suffrage-inflation-operation-fact",
-        OPERATION: "mitum-currency-suffrage-inflation-operation",
+    MINT: {
+        ITEM: "mitum-currency-mint-item",
+        FACT: "mitum-currency-mint-operation-fact",
+        OPERATION: "mitum-currency-mint-operation",
     },
-    CREATE_CONTRACT_ACCOUNTS: {
-        ITEM: "mitum-currency-create-contract-accounts-multiple-amounts",
-        FACT: "mitum-currency-create-contract-accounts-operation-fact",
-        OPERATION: "mitum-currency-create-contract-accounts-operation",
+    CREATE_CONTRACT_ACCOUNT: {
+        ITEM: "mitum-currency-create-contract-account-multiple-amounts",
+        FACT: "mitum-currency-create-contract-account-operation-fact",
+        OPERATION: "mitum-currency-create-contract-account-operation",
     },
-    WITHDRAWS: {
-        ITEM: "mitum-currency-withdraws-item-multi-amounts",
+    WITHDRAW: {
+        ITEM: "mitum-currency-contract-account-withdraw-multi-amounts",
         FACT: "mitum-currency-contract-account-withdraw-operation-fact",
         OPERATION: "mitum-currency-contract-account-withdraw-operation",
     }

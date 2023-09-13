@@ -4,12 +4,12 @@ import { CurrencyPolicy } from "./currency-design"
 import { HINT } from "../../alias"
 import { CurrencyID } from "../../common"
 
-export class CurrencyPolicyUpdaterFact extends NodeFact {
+export class UpdateCurrencyFact extends NodeFact {
     readonly currency: CurrencyID
     readonly policy: CurrencyPolicy
 
     constructor(token: string, currency: string | CurrencyID, policy: CurrencyPolicy) {
-        super(HINT.CURRENCY.CURRENCY_POLICY_UPDATER.FACT, token)
+        super(HINT.CURRENCY.UPDATE_CURRENCY.FACT, token)
         this.currency = CurrencyID.from(currency)
         this.policy = policy
         this._hash = this.hashing()
@@ -32,6 +32,6 @@ export class CurrencyPolicyUpdaterFact extends NodeFact {
     }
 
     get operationHint() {
-        return HINT.CURRENCY.CURRENCY_POLICY_UPDATER.OPERATION
+        return HINT.CURRENCY.UPDATE_CURRENCY.OPERATION
     }
 }

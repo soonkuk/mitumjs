@@ -8,11 +8,11 @@ import { HINT, SUFFIX } from "../../alias"
 import { Address, ZeroAddress } from "../../key"
 import { Assert, ECODE, MitumError } from "../../error"
 
-export class TransfersItem extends CurrencyItem {
+export class TransferItem extends CurrencyItem {
     readonly receiver: Address | ZeroAddress
 
     constructor(receiver: string | Address | ZeroAddress, amounts: Amount[]) {
-        super(HINT.CURRENCY.TRANSFERS.ITEM, amounts)
+        super(HINT.CURRENCY.TRANSFER.ITEM, amounts)
 
         if (typeof receiver === "string") {
             if (receiver.endsWith(SUFFIX.ADDRESS.ZERO)) {
@@ -53,9 +53,9 @@ export class TransfersItem extends CurrencyItem {
     }
 }
 
-export class TransfersFact extends OperationFact<TransfersItem> {
-    constructor(token: string, sender: string | Address, items: TransfersItem[]) {
-        super(HINT.CURRENCY.TRANSFERS.FACT, token, sender, items)
+export class TransferFact extends OperationFact<TransferItem> {
+    constructor(token: string, sender: string | Address, items: TransferItem[]) {
+        super(HINT.CURRENCY.TRANSFER.FACT, token, sender, items)
 
         Assert.check(
             new Set(items.map(it => it.toString())).size === items.length,
@@ -64,6 +64,6 @@ export class TransfersFact extends OperationFact<TransfersItem> {
     }
 
     get operationHint() {
-        return HINT.CURRENCY.TRANSFERS.OPERATION
+        return HINT.CURRENCY.TRANSFER.OPERATION
     }
 }
