@@ -57,6 +57,7 @@ export class UpdateCollectionPolicyFact extends Fact {
             this.token.toBuffer(),
             this.sender.toBuffer(),
             this.contract.toBuffer(),
+            this.collection.toBuffer(),
             this.name.toBuffer(),
             this.royalty.toBuffer("fill"),
             this.uri.toBuffer(),

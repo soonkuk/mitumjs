@@ -76,4 +76,8 @@ export const Config = {
 		ADDRESS_IN_WHITELIST: getRangeConfig(0, 10),
 		SIGNERS_IN_SIGNERS: getRangeConfig(0, 10),
 	},
+	TIMESTAMP: {
+		PROJECT_ID: getRangeConfig(1, 10),
+		DATA: getRangeConfig(1, 1024),
+	}
 }
