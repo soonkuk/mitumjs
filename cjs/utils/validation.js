@@ -40,8 +40,8 @@ exports.isIPAddress = isIPAddress;
 // don't check hex of char
 const isAddress = (item) => {
     const suffix = item.slice(-3);
-    if ((suffix === "mca" && item.length === 47) ||
-        (suffix === "eca" && item.length === 43)) {
+    if ((suffix === "mca") ||
+        (suffix === "eca")) {
         return true;
     }
     return false;

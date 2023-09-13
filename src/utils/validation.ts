@@ -16,8 +16,8 @@ export const isIPAddress = (item: unknown): boolean => {
 export const isAddress = (item: string): boolean => {
   const suffix = item.slice(-3);
   if (
-    (suffix === "mca" && item.length === 47) ||
-    (suffix === "eca" && item.length === 43)
+    (suffix === "mca") ||
+    (suffix === "eca")
   ) {
     return true;
   }

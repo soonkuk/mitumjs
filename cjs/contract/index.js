@@ -18,10 +18,11 @@ const operation_js_1 = require("../types/operation.js");
 const publicKey_js_1 = require("../account/publicKey.js");
 const time_js_1 = require("../utils/time.js");
 const key_js_1 = require("../account/key.js");
-const index_js_1 = require("../operation/index.js");
+const operation_1 = require("../operation");
 const property_js_1 = require("../types/property.js");
 const information_js_1 = __importDefault(require("../account/information.js"));
-const account_js_1 = require("./account.js");
+const account_1 = require("./account");
+const updateOperator_1 = require("./updateOperator");
 // const BTC: KeyPairType = "btc";
 const MITUM = "mitum";
 const ETH = "ether";
@@ -58,8 +59,8 @@ class Contract {
         const keys = this.pubToKeys([{ key: publickey, weight: wt }], wt);
         const amountArr = new property_js_1.Amount(currencyID, amount);
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new account_js_1.CreateContractAccountsItem(keys, [amountArr], MITUM);
-        const fact = new account_js_1.CreateContractAccountsFact(token, sender, [item]);
+        const item = new account_1.CreateContractAccountsItem(keys, [amountArr], MITUM);
+        const fact = new account_1.CreateContractAccountsFact(token, sender, [item]);
         return {
             wallet: { privatekey, publickey, address },
             operation: new operation_js_1.OperationType(this._networkID, fact),
@@ -67,7 +68,7 @@ class Contract {
     }
     touch(privatekey, wallet) {
         return __awaiter(this, void 0, void 0, function* () {
-            const oper = new index_js_1.Operation(this._node);
+            const oper = new operation_1.Operation(this._node);
             const signedOperation = oper.sign(privatekey, wallet.operation);
             const res = yield oper.send(signedOperation);
             return res.data;
@@ -77,32 +78,37 @@ class Contract {
         const keys = this.pubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new account_js_1.CreateContractAccountsItem(keys, [amountArr], MITUM);
-        const fact = new account_js_1.CreateContractAccountsFact(token, senderAddr, [item]);
+        const item = new account_1.CreateContractAccountsItem(keys, [amountArr], MITUM);
+        const fact = new account_1.CreateContractAccountsFact(token, senderAddr, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createEtherAccount(senderAddr, receiverPub, currentID, amount) {
         const keys = this.ethPubToKeys([{ key: receiverPub, weight: 100 }], 100);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new account_js_1.CreateContractAccountsItem(keys, [amountArr], ETH);
-        const fact = new account_js_1.CreateContractAccountsFact(token, senderAddr, [item]);
+        const item = new account_1.CreateContractAccountsItem(keys, [amountArr], ETH);
+        const fact = new account_1.CreateContractAccountsFact(token, senderAddr, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
         const keys = this.pubToKeys(receiverPubArr, threshold);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new account_js_1.CreateContractAccountsItem(keys, [amountArr], MITUM);
-        const fact = new account_js_1.CreateContractAccountsFact(token, senderAddr, [item]);
+        const item = new account_1.CreateContractAccountsItem(keys, [amountArr], MITUM);
+        const fact = new account_1.CreateContractAccountsFact(token, senderAddr, [item]);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     createEtherMultiSig(senderAddr, receiverPubArr, currentID, amount, threshold) {
         const keys = this.ethPubToKeys(receiverPubArr, threshold);
         const amountArr = new property_js_1.Amount(currentID, amount);
         const token = new time_js_1.TimeStamp().UTC();
-        const item = new account_js_1.CreateContractAccountsItem(keys, [amountArr], ETH);
-        const fact = new account_js_1.CreateContractAccountsFact(token, senderAddr, [item]);
+        const item = new account_1.CreateContractAccountsItem(keys, [amountArr], ETH);
+        const fact = new account_1.CreateContractAccountsFact(token, senderAddr, [item]);
+        return new operation_js_1.OperationType(this._networkID, fact);
+    }
+    updateOperator(sender, contract, operators, currency) {
+        const token = new time_js_1.TimeStamp().UTC();
+        const fact = new updateOperator_1.UpdateOperatorFact(token, sender, contract, operators, currency);
         return new operation_js_1.OperationType(this._networkID, fact);
     }
     pubToKeys(pubKeys, threshold) {

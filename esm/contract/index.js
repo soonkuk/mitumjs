@@ -3,10 +3,11 @@ import { OperationType } from "../types/operation.js";
 import { EtherKeys, Keys, PubKey } from "../account/publicKey.js";
 import { TimeStamp } from "../utils/time.js";
 import { M2KeyPair } from "../account/key.js";
-import { Operation } from "../operation/index.js";
+import { Operation } from "../operation";
 import { Amount } from "../types/property.js";
 import accountInfo from "../account/information.js";
-import { CreateContractAccountsItem, CreateContractAccountsFact, } from "./account.js";
+import { CreateContractAccountsItem, CreateContractAccountsFact, } from "./account";
+import { UpdateOperatorFact, } from "./updateOperator";
 // const BTC: KeyPairType = "btc";
 const MITUM = "mitum";
 const ETH = "ether";
@@ -86,6 +87,11 @@ export class Contract {
         const token = new TimeStamp().UTC();
         const item = new CreateContractAccountsItem(keys, [amountArr], ETH);
         const fact = new CreateContractAccountsFact(token, senderAddr, [item]);
+        return new OperationType(this._networkID, fact);
+    }
+    updateOperator(sender, contract, operators, currency) {
+        const token = new TimeStamp().UTC();
+        const fact = new UpdateOperatorFact(token, sender, contract, operators, currency);
         return new OperationType(this._networkID, fact);
     }
     pubToKeys(pubKeys, threshold) {

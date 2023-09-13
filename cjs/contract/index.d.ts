@@ -26,6 +26,7 @@ export declare class Contract {
         weight: number;
         key: string;
     }>, currentID: string, amount: number, threshold: number): OperationType<Fact>;
+    updateOperator(sender: string, contract: string, operators: string[], currency: string): OperationType<Fact>;
     private pubToKeys;
     private ethPubToKeys;
     getContractInfo(address: string): Promise<AxiosResponse | null>;
