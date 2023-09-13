@@ -6,6 +6,7 @@ import { HINT } from "../../alias"
 import { Address } from "../../key"
 import { ContractID, CurrencyID } from "../../common"
 import { HintedObject, LongString } from "../../types"
+import { Assert, ECODE, MitumError } from "../../error"
 
 export class MintItem extends NFTItem {
     readonly hash: LongString
@@ -51,6 +52,13 @@ export class MintItem extends NFTItem {
 export class MintFact extends OperationFact<MintItem> {
     constructor(token: string, sender: string | Address, items: MintItem[]) {
         super(HINT.NFT.MINT.FACT, token, sender, items)
+
+        this.items.forEach(
+            it => Assert.check(
+                this.sender.toString() != it.contract.toString(),
+                MitumError.detail(ECODE.INVALID_ITEMS, "sender is same with contract address"),
+            )
+        )
     }
 
     get operationHint() {

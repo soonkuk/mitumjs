@@ -55,6 +55,13 @@ export class ApproveFact extends OperationFact<ApproveItem> {
             new Set(items.map(it => it.toString())).size === items.length,
             MitumError.detail(ECODE.INVALID_ITEMS, "duplicate approve found in items")
         )
+
+        this.items.forEach(
+            it => Assert.check(
+                this.sender.toString() != it.contract.toString(),
+                MitumError.detail(ECODE.INVALID_ITEMS, "sender is same with contract address"),
+            )
+        )
     }
 
     get operationHint() {

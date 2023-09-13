@@ -1,20 +1,20 @@
 export default {
-    CREATE_CREDENTIAL_SERVICE: {
-        FACT: "mitum-credential-create-credential-service-operation-fact",
-        OPERATION: "mitum-credential-create-credential-service-operation",
+    CREATE_SERVICE: {
+        FACT: "mitum-credential-create-service-operation-fact",
+        OPERATION: "mitum-credential-create-service-operation",
     },
     ADD_TEMPLATE: {
         FACT: "mitum-credential-add-template-operation-fact",
         OPERATION: "mitum-credential-add-template-operation",
     },
-    ASSIGN_CREDNETIALS: {
-        ITEM: "mitum-credential-assign-credentials-item",
-        FACT: "mitum-credential-assign-credentials-operation-fact",
-        OPERATION: "mitum-credential-assign-credentials-operation",
+    ASSIGN: {
+        ITEM: "mitum-credential-assign-item",
+        FACT: "mitum-credential-assign-operation-fact",
+        OPERATION: "mitum-credential-assign-operation",
     },
-    REVOKE_CREDENTIALS: {
-        ITEM: "mitum-credential-revoke-credentials-item",
-        FACT:  "mitum-credential-revoke-credentials-operation-fact",
-        OPERATION: "mitum-credential-revoke-credentials-operation",
+    REVOKE: {
+        ITEM: "mitum-credential-revoke-item",
+        FACT:  "mitum-credential-revoke-operation-fact",
+        OPERATION: "mitum-credential-revoke-operation",
     },
 }

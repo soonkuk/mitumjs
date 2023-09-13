@@ -61,6 +61,13 @@ export class TransferFact extends OperationFact<TransferItem> {
             new Set(items.map(it => it.toString())).size === items.length,
             MitumError.detail(ECODE.INVALID_ITEMS, "duplicate receiver found in items")
         )
+
+        this.items.forEach(
+            it => Assert.check(
+                this.sender.toString() != it.receiver.toString(),
+                MitumError.detail(ECODE.INVALID_ITEMS, "sender is same with receiver address"),
+            )
+        )
     }
 
     get operationHint() {

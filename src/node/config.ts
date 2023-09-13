@@ -76,8 +76,17 @@ export const Config = {
 		ADDRESS_IN_WHITELIST: getRangeConfig(0, 10),
 		SIGNERS_IN_SIGNERS: getRangeConfig(0, 10),
 	},
+	CREDENTIAL: {
+		ID: getRangeConfig(1, 20),
+		VALUE: getRangeConfig(1, 1024),
+		TEMPLATE_ID: getRangeConfig(1, 20),
+		TEMPLATE_NAME: getRangeConfig(1, 20),
+		DISPLAY_NAME: getRangeConfig(1, 20),
+		SUBJECT_KEY: getRangeConfig(1, 20),
+		DESCRIPTION: getRangeConfig(1, 1024),
+	},
 	TIMESTAMP: {
 		PROJECT_ID: getRangeConfig(1, 10),
 		DATA: getRangeConfig(1, 1024),
-	}
+	},
 }

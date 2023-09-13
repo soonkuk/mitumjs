@@ -5,7 +5,7 @@ import { FactJson } from "./types"
 
 import { Config } from "../../node"
 import { Address } from "../../key"
-import { Hint, Token } from "../../common"
+import { CurrencyID, Hint, Token } from "../../common"
 import { SortFunc, sha3 } from "../../utils"
 import { IBuffer, IHintedObject } from "../../types"
 import { Assert, ECODE, MitumError } from "../../error"
@@ -76,6 +76,43 @@ export abstract class OperationFact<T extends Item> extends Fact {
             ...super.toHintedObject(),
             sender: this.sender.toString(),
             items: this.items.sort(SortFunc).map(i => i.toHintedObject()),
+        }
+    }
+}
+
+export abstract class ContractFact extends Fact {
+    readonly sender: Address
+    readonly contract: Address
+    readonly currency: CurrencyID
+
+    constructor(hint: string, token: string, sender: string | Address, contract: string | Address, currency: string | CurrencyID) {
+        super(hint, token)
+        this.sender = Address.from(sender)
+        this.contract = Address.from(contract)
+        this.currency = CurrencyID.from(currency)
+
+        Assert.check(
+            this.sender.toString() !== this.contract.toString(),
+            MitumError.detail(ECODE.INVALID_FACT, "sender is same with contract address")
+        )
+
+        this._hash = this.hashing()
+    }
+
+    toBuffer(): Buffer {
+        return Buffer.concat([
+            super.toBuffer(),
+            this.sender.toBuffer(),
+            this.contract.toBuffer(),
+        ])
+    }
+
+    toHintedObject(): FactJson {
+        return {
+            ...super.toHintedObject(),
+            sender: this.sender.toString(),
+            contract: this.contract.toString(),
+            currency: this.currency.toString(),
         }
     }
 }
