@@ -92,5 +92,9 @@ export const Config = {
 	STO: {
 		PARTITION: getRangeConfig(3, 10),
 		ADDRESS_IN_CONTROLLERS: getRangeConfig(0, 10),
+	},
+	DAO: {
+		ADDRESS_IN_WHITELIST: getRangeConfig(0, 10),
+		QUORUM: getRangeConfig(0, 100),
 	}
 }

@@ -4,7 +4,7 @@ import { FactJson } from "../base"
 import { HINT } from "../../alias"
 import { Config } from "../../node"
 import { Address } from "../../key"
-import { SortFunc, hasOverlappingAddressAddress } from "../../utils"
+import { SortFunc, hasOverlappingAddress } from "../../utils"
 import { Big, LongString } from "../../types"
 import { ContractID, CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
@@ -44,7 +44,7 @@ export class CreateCollectionFact extends NFTFact {
         )
 
         Assert.check(
-            hasOverlappingAddressAddress(this.whitelist),
+            hasOverlappingAddress(this.whitelist),
             MitumError.detail(ECODE.INVALID_FACT, "duplicate address found in whitelist"),
         )
 

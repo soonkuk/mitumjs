@@ -8,7 +8,7 @@ import { ContractID, CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 import { Big, HintedObject } from "../../types"
 import { Config } from "../../node"
-import { SortFunc, hasOverlappingAddressAddress } from "../../utils"
+import { SortFunc, hasOverlappingAddress } from "../../utils"
 
 
 export class CreateSecurityTokenItem extends STOItem {
@@ -41,7 +41,7 @@ export class CreateSecurityTokenItem extends STOItem {
         )
 
         Assert.check(
-            hasOverlappingAddressAddress(this.controllers),
+            hasOverlappingAddress(this.controllers),
             MitumError.detail(ECODE.INVALID_ITEM, "duplicate address found in controllers"),
         )
 

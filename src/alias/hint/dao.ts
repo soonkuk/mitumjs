@@ -1,6 +1,10 @@
 export default {
     DESIGN: "mitum-dao-design",
     POLICY: "mitum-dao-policy",
+    CALLDATA: {
+        TRANSFER: "mitum-dao-transfer-calldata",
+        GOVERNANCE: "mitum-dao-governance-calldata",
+    },
     PROPOSAL: {
         CRYPTO: "mitum-dao-crypto-proposal",
         BIZ: "mitum-dao-biz-proposal",
@@ -9,6 +13,10 @@ export default {
     CREATE_DAO: {
         FACT: "mitum-dao-create-dao-operation-fact",
         OPERATION: "mitum-dao-create-dao-operation",
+    },
+    UPDATE_POLICY: {
+        FACT: "mitum-dao-update-policy-operation-fact",
+        OPERATION: "mitum-dao-update-policy-operation",
     },
     PROPOSE: {
         FACT: "mitum-dao-propose-operation-fact",

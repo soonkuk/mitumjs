@@ -3,6 +3,7 @@ export type ErrorCode = (
     | typeof ECODE.CURRENCY[keyof typeof ECODE.CURRENCY]
     | typeof ECODE.NFT[keyof typeof ECODE.NFT]
     | typeof ECODE.STO[keyof typeof ECODE.STO]
+    | typeof ECODE.DAO[keyof typeof ECODE.DAO]
 )
 
 export const ECODE = {
@@ -57,5 +58,8 @@ export const ECODE = {
     },
     STO: {
         INVALID_PARTITION: "EC_INVALID_PARTITION",
+    },
+    DAO: {
+        INVALID_WHITELIST: "EC_INVALID_WHITELIST",
     }
 } as const
