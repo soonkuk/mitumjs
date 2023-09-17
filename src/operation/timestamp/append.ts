@@ -19,7 +19,7 @@ export class AppendFact extends TimeStampFact {
         target: string | Address,
         service: string | ContractID,
         projectID: string,
-        requestTimeStamp: number | Big,
+        requestTimeStamp: string | number | Big,
         data: string,
         currency: string | CurrencyID,
     ) {

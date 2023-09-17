@@ -21,7 +21,7 @@ export class UpdateCollectionPolicyFact extends NFTFact {
         contract: string | Address, 
         collection: string | ContractID,
         name: string | LongString,
-        royalty: number | Big,
+        royalty: string | number | Big,
         uri: string | LongString,
         whitelist: (string | Address)[] | null,
         currency: string | CurrencyID,

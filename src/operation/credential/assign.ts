@@ -21,8 +21,8 @@ export class AssignItem extends CredentialItem {
         templateID: string,
         id: string,
         value: string,
-        validFrom: number | Big,
-        validUntil: number | Big,
+        validFrom: string | number | Big,
+        validUntil: string | number | Big,
         did: string | LongString,
         currency: string | CurrencyID,
     ) {

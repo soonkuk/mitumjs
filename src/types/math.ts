@@ -85,6 +85,10 @@ export class Big implements IBuffer, IString {
 	toString(): string {
 		return this.big.toString()
 	}
+
+	isZero(): boolean {
+		return this.big < 1
+	}
 }
 
 export class Float implements IBuffer, IString {

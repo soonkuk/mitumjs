@@ -13,7 +13,7 @@ export class SignItem extends NFTItem {
     constructor(
         contract: string | Address, 
         collection: string | ContractID, 
-        nft: number | Big, 
+        nft: string | number | Big, 
         currency: string | CurrencyID,
     ) {
         super(HINT.NFT.SIGN.ITEM, contract, collection, currency)

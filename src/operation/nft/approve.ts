@@ -15,7 +15,7 @@ export class ApproveItem extends NFTItem {
         contract: string | Address, 
         collection: string | ContractID, 
         approved: string | Address, 
-        nftIDX: number | Big, 
+        nftIDX: string | number | Big, 
         currency: string | CurrencyID,
     ) {
         super(HINT.NFT.APPROVE.ITEM, contract, collection, currency)

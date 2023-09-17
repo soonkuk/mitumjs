@@ -89,4 +89,8 @@ export const Config = {
 		PROJECT_ID: getRangeConfig(1, 10),
 		DATA: getRangeConfig(1, 1024),
 	},
+	STO: {
+		PARTITION: getRangeConfig(3, 10),
+		ADDRESS_IN_CONTROLLERS: getRangeConfig(0, 10),
+	}
 }

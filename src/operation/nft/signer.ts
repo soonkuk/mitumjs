@@ -12,7 +12,7 @@ export class Signer implements IBuffer, IHintedObject {
     readonly share: Big
     readonly signed: Bool
 
-    constructor(account: string | Address, share: number | Big, signed: boolean | Bool) {
+    constructor(account: string | Address, share: string | number | Big, signed: boolean | Bool) {
         this.hint = new Hint(HINT.NFT.SIGNER)
         
         this.account = Address.from(account)
@@ -48,7 +48,7 @@ export class Signers implements IBuffer, IHintedObject {
     readonly total: Big
     readonly signers: Signer[]
 
-    constructor(total: number | Big, signers: Signer[]) {
+    constructor(total: string | number | Big, signers: Signer[]) {
         this.hint = new Hint(HINT.NFT.SIGNERS)
         
         this.total = Big.from(total)

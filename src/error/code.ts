@@ -2,6 +2,7 @@ export type ErrorCode = (
     typeof ECODE[keyof typeof ECODE]
     | typeof ECODE.CURRENCY[keyof typeof ECODE.CURRENCY]
     | typeof ECODE.NFT[keyof typeof ECODE.NFT]
+    | typeof ECODE.STO[keyof typeof ECODE.STO]
 )
 
 export const ECODE = {
@@ -53,5 +54,8 @@ export const ECODE = {
     NFT: {
         INVALID_NFT_SIGNER: "EC_INVALID_NFT_SIGNER",
         INVALID_NFT_SIGNERS: "EC_INVALID_NFT_SIGNERS",
+    },
+    STO: {
+        INVALID_PARTITION: "EC_INVALID_PARTITION",
     }
 } as const

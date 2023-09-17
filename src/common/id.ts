@@ -29,6 +29,10 @@ export class CurrencyID extends ID {
             Config.CURRENCY_ID.satisfy(s.length),
             MitumError.detail(ECODE.INVALID_CURRENCY_ID, "currency id length out of range")
         )
+        Assert.check(
+            /^[A-Z0-9][A-Z0-9_\.\!\$\*\@]*[A-Z0-9]$/.test(s),
+            MitumError.detail(ECODE.INVALID_CURRENCY_ID, "invalid currency id format"),
+        )
     }
 
     static from(s: string | CurrencyID): CurrencyID {
@@ -42,6 +46,10 @@ export class ContractID extends ID {
         Assert.check(
             Config.CONTRACT_ID.satisfy(s.length),
             MitumError.detail(ECODE.INVALID_CONTRACT_ID, "contract id length out of range")
+        )
+        Assert.check(
+            /^[A-Z0-9][A-Z0-9_\.\!\$\*\@]*[A-Z0-9]$/.test(s),
+            MitumError.detail(ECODE.INVALID_CONTRACT_ID, "invalid contract id format"),
         )
     }
 

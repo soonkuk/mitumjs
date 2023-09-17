@@ -15,7 +15,7 @@ export class TransferItem extends NFTItem {
         contract: string | Address, 
         collection: string | ContractID, 
         receiver: string | Address, 
-        nft: number | Big, 
+        nft: string | number | Big, 
         currency: string | CurrencyID,
     ) {
         super(HINT.NFT.TRANSFER.ITEM, contract, collection, currency)
