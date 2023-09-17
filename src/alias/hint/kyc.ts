@@ -1,26 +1,26 @@
 export default {
-    CREATE_KYC: {
-        FACT: "mitum-kyc-create-key-service-operation-FACT",
-        OPERATION: "mitum-kyc-create-key-service-operation",
+    CREATE_SERVICE: {
+        FACT: "mitum-kyc-create-service-operation-fact",
+        OPERATION: "mitum-kyc-create-service-operation",
     },
-    ADD_CONTROLLERS: {
-        ITEM: "mitum-kyc-add-controllers-item",
-        FACT: "mitum-kyc-add-controllers-operation-FACT",
-        OPERATION: "mitum-kyc-add-controllers-operation",
+    ADD_CONTROLLER: {
+        ITEM: "mitum-kyc-add-controller-item",
+        FACT: "mitum-kyc-add-controller-operation-fact",
+        OPERATION: "mitum-kyc-add-controller-operation",
     },
-    REMOVE_CONTROLLERS: {
-        ITEM: "mitum-kyc-remove-controllers-item",
-        FACT: "mitum-kyc-remove-controllers-operation-FACT",
-        OPERATION: "mitum-kyc-remove-controllers-operation",
+    REMOVE_CONTROLLER: {
+        ITEM: "mitum-kyc-remove-controller-item",
+        FACT: "mitum-kyc-remove-controller-operation-fact",
+        OPERATION: "mitum-kyc-remove-controller-operation",
     },
-    ADD_CUSTOMERS: {
-        ITEM: "mitum-kyc-add-customers-item",
-        FACT: "mitum-kyc-add-customers-operation-FACT",
-        OPERATION: "mitum-kyc-add-customers-operation",
+    ADD_CUSTOMER: {
+        ITEM: "mitum-kyc-add-customer-item",
+        FACT: "mitum-kyc-add-customer-operation-fact",
+        OPERATION: "mitum-kyc-add-customer-operation",
     },
-    UPDATE_CUSTOMERS: {
-        ITEM: "mitum-kyc-update-customers-item",
-        FACT: "mitum-kyc-update-customers-operation-FACT",
-        OPERATION: "mitum-kyc-update-customers-operation",
+    UPDATE_CUSTOMER: {
+        ITEM: "mitum-kyc-update-customer-item",
+        FACT: "mitum-kyc-update-customer-operation-fact",
+        OPERATION: "mitum-kyc-update-customer-operation",
     }
 }
