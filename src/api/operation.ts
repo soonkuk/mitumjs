@@ -26,7 +26,7 @@ async function send(api: string | IP, operation: HintedObject | string, config?:
     return await axios.post(`${IP.from(api).toString()}/builder/send`, JSON.stringify(operation), config)
 }
 
-export {
+export default {
     getOperations,
     getOperation,
     getBlockOperationsByHeight,

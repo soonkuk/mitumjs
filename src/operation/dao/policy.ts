@@ -1,7 +1,8 @@
+import { Whitelist } from "./whitelist"
+
 import { HINT } from "../../alias"
 import { Amount, CurrencyID, Hint } from "../../common"
 import { Big, HintedObject, IBuffer, IHintedObject } from "../../types"
-import { Whitelist } from "./whitelist"
 
 export class DAOPolicy implements IBuffer, IHintedObject {
     private hint: Hint

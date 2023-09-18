@@ -1,11 +1,10 @@
 import { ContractFact, FactJson } from "../base"
 
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 
 export abstract class DAOFact extends ContractFact {
-    readonly dao: ContractID
     readonly proposalID: string
 
     constructor(
@@ -13,13 +12,11 @@ export abstract class DAOFact extends ContractFact {
         token: string,
         sender: string | Address,
         contract: string | Address,
-        dao: string | ContractID,
         proposalID: string, 
         currency: string | CurrencyID,
     ) {
         super(hint, token, sender, contract, currency)
         
-        this.dao = ContractID.from(dao)
         this.proposalID = proposalID
 
         Assert.check(
@@ -33,7 +30,6 @@ export abstract class DAOFact extends ContractFact {
     toBuffer(): Buffer {
         return Buffer.concat([
             super.toBuffer(),
-            this.dao.toBuffer(),
             Buffer.from(this.proposalID),
         ])
     }
@@ -41,7 +37,6 @@ export abstract class DAOFact extends ContractFact {
     toHintedObject(): FactJson {
         return {
             ...super.toHintedObject(),
-            dao_id: this.dao.toString(),
             proposal_id: this.proposalID,
         }
     }

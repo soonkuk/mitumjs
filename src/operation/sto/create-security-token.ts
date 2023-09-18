@@ -3,11 +3,11 @@ import { Partition } from "./partition"
 import { OperationFact } from "../base"
 
 import { HINT } from "../../alias"
-import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
-import { Assert, ECODE, MitumError } from "../../error"
-import { Big, HintedObject } from "../../types"
 import { Config } from "../../node"
+import { Address } from "../../key"
+import { CurrencyID } from "../../common"
+import { Big, HintedObject } from "../../types"
+import { Assert, ECODE, MitumError } from "../../error"
 import { SortFunc, hasOverlappingAddress } from "../../utils"
 
 
@@ -18,13 +18,12 @@ export class CreateSecurityTokenItem extends STOItem {
 
     constructor(
         contract: string | Address, 
-        sto: string | ContractID,
         granularity: string | number | Big,
         defaultPartition: string | Partition,
         controllers: (string | Address)[],
         currency: string | CurrencyID,
     ) {
-        super(HINT.STO.CREATE_SECURITY_TOKEN.ITEM, contract, sto, currency)
+        super(HINT.STO.CREATE_SECURITY_TOKEN.ITEM, contract, currency)
 
         this.granularity = Big.from(granularity)
         this.defaultPartition = Partition.from(defaultPartition)
@@ -56,7 +55,6 @@ export class CreateSecurityTokenItem extends STOItem {
     toBuffer(): Buffer {
         return Buffer.concat([
             this.contract.toBuffer(),
-            this.sto.toBuffer(),
             this.granularity.toBuffer("fill"),
             this.defaultPartition.toBuffer(),
             Buffer.concat(this.controllers.sort(SortFunc).map(a => a.toBuffer())),
@@ -72,10 +70,6 @@ export class CreateSecurityTokenItem extends STOItem {
             controllers: this.controllers.sort(SortFunc).map(a => a.toString()),
         }
     }
-
-    toString(): string {
-        return `${super.toString()}`
-    }
 }
 
 export class CreateSecurityTokenFact extends OperationFact<CreateSecurityTokenItem> {
@@ -84,7 +78,7 @@ export class CreateSecurityTokenFact extends OperationFact<CreateSecurityTokenIt
 
         Assert.check(
             new Set(items.map(it => it.toString())).size === items.length,
-            MitumError.detail(ECODE.INVALID_ITEMS, "duplicate contract-sto found in items")
+            MitumError.detail(ECODE.INVALID_ITEMS, "duplicate contract found in items")
         )
     }
 

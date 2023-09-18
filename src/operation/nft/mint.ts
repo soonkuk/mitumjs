@@ -4,7 +4,7 @@ import { OperationFact } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 import { HintedObject, LongString } from "../../types"
 import { Assert, ECODE, MitumError } from "../../error"
 
@@ -15,13 +15,12 @@ export class MintItem extends NFTItem {
 
     constructor(
         contract: string | Address, 
-        collection: string | ContractID, 
         hash: string | LongString, 
         uri: string | LongString,
         creators: Signers,
         currency: string | CurrencyID,
     ) {
-        super(HINT.NFT.MINT.ITEM, contract, collection, currency)
+        super(HINT.NFT.MINT.ITEM, contract, currency)
 
         this.hash = LongString.from(hash)
         this.uri = LongString.from(uri)
@@ -30,8 +29,7 @@ export class MintItem extends NFTItem {
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.contract.toBuffer(),
-            this.collection.toBuffer(),
+            super.toBuffer(),
             this.hash.toBuffer(),
             this.uri.toBuffer(),
             this.creators.toBuffer(),

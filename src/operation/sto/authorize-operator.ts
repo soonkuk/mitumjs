@@ -4,9 +4,9 @@ import { OperationFact } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
-import { Assert, ECODE, MitumError } from "../../error"
+import { CurrencyID } from "../../common"
 import { HintedObject } from "../../types"
+import { Assert, ECODE, MitumError } from "../../error"
 
 
 export class AuthorizeOperatorItem extends STOItem {
@@ -15,12 +15,11 @@ export class AuthorizeOperatorItem extends STOItem {
 
     constructor(
         contract: string | Address, 
-        sto: string | ContractID,
         operator: string | Address,
         partition: string | Partition,
         currency: string | CurrencyID,
     ) {
-        super(HINT.STO.AUTHORIZE_OPERATOR.ITEM, contract, sto, currency)
+        super(HINT.STO.AUTHORIZE_OPERATOR.ITEM, contract, currency)
 
         this.operator = Address.from(operator)
         this.partition = Partition.from(partition)
@@ -33,8 +32,7 @@ export class AuthorizeOperatorItem extends STOItem {
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.contract.toBuffer(),
-            this.sto.toBuffer(),
+            super.toBuffer(),
             this.operator.toBuffer(),
             this.partition.toBuffer(),
             this.currency.toBuffer(),

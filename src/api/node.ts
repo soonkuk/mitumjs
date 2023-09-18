@@ -5,6 +5,6 @@ async function getNode(api: string | IP) {
     return await axios.get(`${IP.from(api).toString()}/`)
 }
 
-export {
+export default {
     getNode,
 }

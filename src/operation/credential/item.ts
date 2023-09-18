@@ -2,13 +2,12 @@ import { Item } from "../base"
 
 import { Config } from "../../node"
 import { Address } from "../../key"
+import { CurrencyID } from "../../common"
 import { HintedObject } from "../../types"
-import { ContractID, CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 
 export abstract class CredentialItem extends Item {
     readonly contract: Address
-    readonly service: ContractID
     readonly holder: Address
     readonly templateID: string
     readonly id: string
@@ -17,7 +16,6 @@ export abstract class CredentialItem extends Item {
     constructor(
         hint: string, 
         contract: string | Address, 
-        service: string | ContractID, 
         holder: string | Address,
         templateID: string, 
         id: string,
@@ -26,7 +24,6 @@ export abstract class CredentialItem extends Item {
         super(hint)
 
         this.contract = Address.from(contract)
-        this.service = ContractID.from(service)
         this.holder = Address.from(holder)
         this.templateID = templateID
         this.id = id
@@ -48,16 +45,27 @@ export abstract class CredentialItem extends Item {
         )
     }
 
+    toBuffer(): Buffer {
+        return Buffer.concat([
+            this.contract.toBuffer(),
+            this.holder.toBuffer(),
+            Buffer.from(this.templateID),
+            Buffer.from(this.id),
+        ])
+    }
+
     toHintedObject(): HintedObject {
         return {
             ...super.toHintedObject(),
             contract: this.contract.toString(),
-            service: this.service.toString(),
+            holder: this.holder.toString(),
+            template_id: this.templateID,
+            id: this.id,
             currency: this.currency.toString(),
         }
     }
 
     toString(): string {
-        return `${this.contract.toString()}-${this.service.toString()}`
+        return this.contract.toString()
     }
 }

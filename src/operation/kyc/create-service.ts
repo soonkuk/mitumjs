@@ -1,18 +1,17 @@
-import { KYCFact } from "./fact"
+import { ContractFact } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 
-export class CreateServiceFact extends KYCFact {
+export class CreateServiceFact extends ContractFact {
     constructor(
         token: string, 
         sender: string | Address, 
-        contract: string | Address, 
-        service: string | ContractID,
+        contract: string | Address,
         currency: string | CurrencyID,
     ) {
-        super(HINT.KYC.CREATE_SERVICE.FACT, token, sender, contract, service, currency)
+        super(HINT.KYC.CREATE_SERVICE.FACT, token, sender, contract, currency)
     }
 
     get operationHint() {

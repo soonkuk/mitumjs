@@ -13,7 +13,7 @@ async function getBlockByHash(api: string | IP, hash: string) {
     return await axios.get(`${IP.from(api)}/block/${hash}/manifest`)
 }
 
-export {
+export default {
     getBlocks,
     getBlockByHeight,
     getBlockByHash,

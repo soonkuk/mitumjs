@@ -5,7 +5,7 @@ import { Big } from "../../types"
 import { HINT } from "../../alias"
 import { Config } from "../../node"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 
 export class AppendFact extends TimeStampFact {
@@ -17,13 +17,12 @@ export class AppendFact extends TimeStampFact {
         token: string,
         sender: string | Address,
         target: string | Address,
-        service: string | ContractID,
         projectID: string,
         requestTimeStamp: string | number | Big,
         data: string,
         currency: string | CurrencyID,
     ) {
-        super(HINT.TIMESTAMP.APPEND.FACT, token, sender, target, service, currency)
+        super(HINT.TIMESTAMP.APPEND.FACT, token, sender, target, currency)
         this.projectID = projectID
         this.requestTimeStamp = Big.from(requestTimeStamp)
         this.data = data

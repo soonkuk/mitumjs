@@ -3,20 +3,19 @@ import { OperationFact } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
-import { Assert, ECODE, MitumError } from "../../error"
+import { CurrencyID } from "../../common"
 import { HintedObject } from "../../types"
+import { Assert, ECODE, MitumError } from "../../error"
 
 export class AddControllerItem extends KYCItem {
     readonly controller: Address
 
     constructor(
         contract: string | Address, 
-        kyc: string | ContractID,
         controller: string | Address,
         currency: string | CurrencyID,
     ) {
-        super(HINT.KYC.ADD_CONTROLLER.ITEM, contract, kyc, currency)
+        super(HINT.KYC.ADD_CONTROLLER.ITEM, contract, currency)
 
         this.controller = Address.from(controller)
 
@@ -28,8 +27,7 @@ export class AddControllerItem extends KYCItem {
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.contract.toBuffer(),
-            this.kyc.toBuffer(),
+            super.toBuffer(),
             this.controller.toBuffer(),
             this.currency.toBuffer(),
         ])

@@ -1,30 +1,25 @@
-import { CredentialItem } from "./item"
 import { OperationFact } from "../base"
+import { CredentialItem } from "./item"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 
 export class RevokeItem extends CredentialItem {
     constructor(
         contract: string | Address, 
-        service: string | ContractID,
         holder: string | Address, 
         templateID: string,
         id: string,
         currency: string | CurrencyID,
     ) {
-        super(HINT.CREDENTIAL.REVOKE.ITEM, contract, service, holder, templateID, id, currency)
+        super(HINT.CREDENTIAL.REVOKE.ITEM, contract, holder, templateID, id, currency)
     }
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.contract.toBuffer(),
-            this.service.toBuffer(),
-            this.holder.toBuffer(),
-            Buffer.from(this.templateID),
-            Buffer.from(this.id),
+            super.toBuffer(),
             this.currency.toBuffer(),
         ])
     }

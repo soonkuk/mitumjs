@@ -1,11 +1,10 @@
-import { STOFact } from "./fact"
-import { FactJson } from "../base"
+import { ContractFact, FactJson } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 
-export class SetDocumentFact extends STOFact {
+export class SetDocumentFact extends ContractFact {
     readonly title: string
     readonly uri: string
     readonly documentHash: string
@@ -14,13 +13,12 @@ export class SetDocumentFact extends STOFact {
         token: string, 
         sender: string | Address, 
         contract: string | Address, 
-        sto: string | ContractID,
         title: string,
         uri: string,
         documentHash: string,
         currency: string | CurrencyID,
     ) {
-        super(HINT.STO.SET_DOCUMENT.FACT, token, sender, contract, sto, currency)
+        super(HINT.STO.SET_DOCUMENT.FACT, token, sender, contract, currency)
 
         this.title = title
         this.uri = uri

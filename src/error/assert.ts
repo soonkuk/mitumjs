@@ -2,7 +2,7 @@ import { ErrorCode, ECODE } from "./code"
 import { RangeConfig } from "../node"
 
 export class MitumError extends Error {
-    private code: ErrorCode
+    readonly code: ErrorCode
     
     private constructor(code: ErrorCode, msg?: string) {
         super(msg)

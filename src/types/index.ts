@@ -1,9 +1,8 @@
 import { HintedObject } from "./hinted"
-import { IBuffer, IString, IHintedObject } from "./interface"
-
-import { ShortDate, LongString, IP } from './string';
 import { Big, Float, Uint8, Bool } from "./math"
-import { TimeStamp, FullTimeStamp } from "../types/time"
+import { TimeStamp, FullTimeStamp } from "./time"
+import { ShortDate, LongString, IP } from "./string"
+import { IBuffer, IString, IHintedObject } from "./interface"
 
 export {
     IBuffer,

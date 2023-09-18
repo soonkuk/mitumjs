@@ -1,10 +1,10 @@
 import { HINT } from "../../alias"
 import { Hint } from "../../common"
-import { Assert, ECODE, MitumError } from "../../error"
-import { Address } from "../../key"
 import { Config } from "../../node"
-import { Bool, HintedObject, IBuffer, IHintedObject } from "../../types"
+import { Address } from "../../key"
+import { Assert, ECODE, MitumError } from "../../error"
 import { SortFunc, hasOverlappingAddress } from "../../utils"
+import { Bool, HintedObject, IBuffer, IHintedObject } from "../../types"
 
 export class Whitelist implements IBuffer, IHintedObject {
     private hint: Hint

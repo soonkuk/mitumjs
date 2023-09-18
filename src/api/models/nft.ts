@@ -43,7 +43,7 @@ async function getAccountOperators(
     return await axios.get(`${url(api, contract, collection)}/account/${Address.from(account).toString()}/operators`)
 }
 
-export {
+export default {
     getNFT,
     getNFTs,
     getCollection,

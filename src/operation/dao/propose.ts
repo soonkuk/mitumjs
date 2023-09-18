@@ -1,10 +1,10 @@
 import { DAOFact } from "./fact"
+import { FactJson } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 import { BizProposal, CryptoProposal } from "./proposal"
-import { FactJson } from "../base"
 
 export class ProposeFact extends DAOFact {
     readonly proposal: CryptoProposal | BizProposal
@@ -13,12 +13,11 @@ export class ProposeFact extends DAOFact {
         token: string,
         sender: string | Address,
         contract: string | Address,
-        dao: string | ContractID,
         proposalID: string,
         proposal: CryptoProposal | BizProposal,
         currency: string | CurrencyID,
     ) {
-        super(HINT.DAO.PROPOSE.FACT, token, sender, contract, dao, proposalID, currency)
+        super(HINT.DAO.PROPOSE.FACT, token, sender, contract, proposalID, currency)
         this.proposal = proposal
     }
 

@@ -1,15 +1,14 @@
 import { ContractFact, FactJson } from "../base"
 
 import { HINT } from "../../alias"
-import { Address } from "../../key"
-import { Amount, ContractID, CurrencyID } from "../../common"
 import { Big } from "../../types"
-import { Whitelist } from './whitelist';
-import { Assert, ECODE, MitumError } from "../../error"
 import { Config } from "../../node"
+import { Address } from "../../key"
+import { Whitelist } from "./whitelist"
+import { Amount, CurrencyID } from "../../common"
+import { Assert, ECODE, MitumError } from "../../error"
 
 export class CreateDAOFact extends ContractFact {
-    readonly dao: ContractID
     readonly option: "crypto" | "biz"
     readonly votingPowerToken: CurrencyID
     readonly threshold: Big
@@ -28,7 +27,6 @@ export class CreateDAOFact extends ContractFact {
         token: string,
         sender: string | Address,
         contract: string | Address,
-        dao: string | ContractID,
         option: "crypto" | "biz",
         votingPowerToken: string | CurrencyID,
         threshold: string | number | Big,
@@ -46,7 +44,6 @@ export class CreateDAOFact extends ContractFact {
     ) {
         super(HINT.DAO.CREATE_DAO.FACT, token, sender, contract, currency)
 
-        this.dao = ContractID.from(dao)
         this.option = option
         this.votingPowerToken = CurrencyID.from(votingPowerToken)
         this.threshold = Big.from(threshold)
@@ -82,7 +79,6 @@ export class CreateDAOFact extends ContractFact {
     toBuffer(): Buffer {
         return Buffer.concat([
             super.toBuffer(),
-            this.dao.toBuffer(),
             Buffer.from(this.option),
             this.votingPowerToken.toBuffer(),
             this.threshold.toBuffer(),
@@ -103,7 +99,6 @@ export class CreateDAOFact extends ContractFact {
     toHintedObject(): FactJson {
         return {
             ...super.toHintedObject(),
-            dao_id: this.dao.toString(),
             option: this.option,
             voting_power_token: this.votingPowerToken.toString(),
             threshold: this.threshold.toString(),

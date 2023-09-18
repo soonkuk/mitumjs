@@ -3,8 +3,8 @@ import { OperationFact } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
+import { CurrencyID } from "../../common"
 import { Big, HintedObject } from "../../types"
-import { ContractID, CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 
 export class ApproveItem extends NFTItem {
@@ -13,12 +13,11 @@ export class ApproveItem extends NFTItem {
 
     constructor(
         contract: string | Address, 
-        collection: string | ContractID, 
         approved: string | Address, 
         nftIDX: string | number | Big, 
         currency: string | CurrencyID,
     ) {
-        super(HINT.NFT.APPROVE.ITEM, contract, collection, currency)
+        super(HINT.NFT.APPROVE.ITEM, contract, currency)
 
         this.approved = Address.from(approved)
         this.nftIDX = Big.from(nftIDX)
@@ -26,8 +25,7 @@ export class ApproveItem extends NFTItem {
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.contract.toBuffer(),
-            this.collection.toBuffer(),
+            super.toBuffer(),
             this.approved.toBuffer(),
             this.nftIDX.toBuffer("fill"),
             this.currency.toBuffer(),

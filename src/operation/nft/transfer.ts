@@ -3,8 +3,8 @@ import { OperationFact } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
+import { CurrencyID } from "../../common"
 import { Big, HintedObject } from "../../types"
-import { ContractID, CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 
 export class TransferItem extends NFTItem {
@@ -13,12 +13,11 @@ export class TransferItem extends NFTItem {
 
     constructor(
         contract: string | Address, 
-        collection: string | ContractID, 
         receiver: string | Address, 
         nft: string | number | Big, 
         currency: string | CurrencyID,
     ) {
-        super(HINT.NFT.TRANSFER.ITEM, contract, collection, currency)
+        super(HINT.NFT.TRANSFER.ITEM, contract, currency)
 
         this.receiver = Address.from(receiver)
         this.nft = Big.from(nft)
@@ -26,8 +25,7 @@ export class TransferItem extends NFTItem {
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.contract.toBuffer(),
-            this.collection.toBuffer(),
+            super.toBuffer(),
             this.receiver.toBuffer(),
             this.nft.toBuffer("fill"),
             this.currency.toBuffer(),

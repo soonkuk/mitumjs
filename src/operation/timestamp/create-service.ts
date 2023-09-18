@@ -2,7 +2,7 @@ import { TimeStampFact } from "./fact"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 
 
 export class CreateServiceFact extends TimeStampFact {
@@ -10,10 +10,9 @@ export class CreateServiceFact extends TimeStampFact {
         token: string, 
         sender: string | Address, 
         target: string | Address, 
-        service: string | ContractID,
         currency: string | CurrencyID,
     ) {
-        super(HINT.TIMESTAMP.CREATE_SERVICE.FACT, token, sender, target, service, currency)
+        super(HINT.TIMESTAMP.CREATE_SERVICE.FACT, token, sender, target, currency)
         this._hash = this.hashing()
     }
 

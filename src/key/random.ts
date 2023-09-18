@@ -1,5 +1,5 @@
-import { Keys, PubKey } from "./pub"
 import { KeyPairType } from "./types"
+import { Keys, PubKey } from "./pub"
 import { BaseKeyPair, KeyPair } from "./keypair"
 
 import { Config } from "../node"

@@ -1,8 +1,9 @@
-import { HINT } from "../../alias"
-import { Amount, Hint } from "../../common"
-import { Address } from "../../key"
-import { Big, HintedObject, IBuffer, IHintedObject, LongString } from "../../types"
 import { DAOPolicy } from "./policy"
+
+import { HINT } from "../../alias"
+import { Address } from "../../key"
+import { Amount, Hint } from "../../common"
+import { Big, HintedObject, IBuffer, IHintedObject, LongString } from "../../types"
 
 abstract class Calldata implements IBuffer, IHintedObject {
     private hint: Hint

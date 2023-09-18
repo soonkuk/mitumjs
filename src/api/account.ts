@@ -10,7 +10,7 @@ async function getAccountByPublicKey(api: string | IP, publicKey: string | Key) 
     return await axios.get(`${IP.from(api).toString()}/accounts?publickey=${Key.from(publicKey).toString()}`)
 }
 
-export {
+export default {
     getAccount,
     getAccountByPublicKey,
 }

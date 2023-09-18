@@ -5,9 +5,9 @@ import { FactJson } from "./types"
 
 import { Config } from "../../node"
 import { Address } from "../../key"
-import { CurrencyID, Hint, Token } from "../../common"
 import { SortFunc, sha3 } from "../../utils"
 import { IBuffer, IHintedObject } from "../../types"
+import { CurrencyID, Hint, Token } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 
 export abstract class Fact implements IBuffer, IHintedObject {

@@ -2,18 +2,17 @@ import base58 from "bs58"
 import { OperationJson, GeneralFactSign, NodeFactSign } from "./base"
 
 import { sha3 } from "../utils"
-import { NetworkID } from "../node"
 import { Key, KeyPair, NodeAddress } from "../key"
 import { HintedObject, FullTimeStamp, TimeStamp } from "../types"
 
 export class Signer {
     readonly keypair: KeyPair
-    readonly id: string
+    readonly networkID: string
 
-    constructor(privateKey: string | Key) {
+    constructor(privateKey: string | Key, networkID: string) {
         privateKey = Key.from(privateKey)
         this.keypair = KeyPair.fromPrivateKey(privateKey)
-        this.id = NetworkID.get()
+        this.networkID = networkID
     }
 
     sign(json: HintedObject, option?: { node: string }) {
@@ -27,7 +26,7 @@ export class Signer {
             this.keypair.publicKey.toString(),
             this.keypair.sign(
                 Buffer.concat([
-                    Buffer.from(this.id),
+                    Buffer.from(this.networkID),
                     base58.decode(json.fact.hash),
                     now.toBuffer(),
                 ])
@@ -69,7 +68,7 @@ export class Signer {
             this.keypair.publicKey.toString(),
             this.keypair.sign(
                 Buffer.concat([
-                    Buffer.from(this.id),
+                    Buffer.from(this.networkID),
                     nd.toBuffer(),
                     base58.decode(json.fact.hash),
                     now.toBuffer(),

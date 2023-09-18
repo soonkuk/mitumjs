@@ -52,7 +52,7 @@ async function getCredentialByHolder(
     return await axios.get(`${url(api, contract, service)}/holder/${Address.from(holder).toString()}`)
 }
 
-export {
+export default {
     getService,
     getCredential,
     getTemplate,

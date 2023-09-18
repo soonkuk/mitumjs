@@ -10,7 +10,7 @@ async function getCurrency(api: string | IP, currency: string | CurrencyID) {
     return await axios.get(`${IP.from(api).toString()}/currency/${CurrencyID.from(currency).toString()}`)
 }
 
-export {
+export default {
     getCurrencies,
     getCurrency,
 }

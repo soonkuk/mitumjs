@@ -1,6 +1,6 @@
 import base58 from "bs58"
 
-import { FS, GeneralFS, NodeFS } from './types'
+import { FS, GeneralFS, NodeFS } from "./types"
 
 import { IBuffer, FullTimeStamp  } from "../../types"
 import { Key, Address, NodeAddress } from "../../key"

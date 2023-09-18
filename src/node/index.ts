@@ -1,3 +1,3 @@
-import { Version, NetworkID, Config, RangeConfig } from "./config"
+import { Version, Config, RangeConfig } from "./config"
 
-export { Version, NetworkID, Config, RangeConfig }
+export { Version, Config, RangeConfig }

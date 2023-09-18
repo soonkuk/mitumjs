@@ -2,18 +2,17 @@ import { DAOFact } from "./fact"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 
 export class PreSnapFact extends DAOFact {
     constructor(
         token: string,
         sender: string | Address,
         contract: string | Address,
-        dao: string | ContractID,
         proposalID: string,
         currency: string | CurrencyID,
     ) {
-        super(HINT.DAO.PRE_SNAP.FACT, token, sender, contract, dao, proposalID, currency)
+        super(HINT.DAO.PRE_SNAP.FACT, token, sender, contract, proposalID, currency)
     }
 
     toBuffer(): Buffer {

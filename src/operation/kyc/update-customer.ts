@@ -3,22 +3,21 @@ import { OperationFact } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
-import { Assert, ECODE, MitumError } from "../../error"
+import { CurrencyID } from "../../common"
 import { Bool, HintedObject } from "../../types"
+import { Assert, ECODE, MitumError } from "../../error"
 
 export class UpdateCustomerItem extends KYCItem {
     readonly customer: Address
     readonly status: Bool
 
     constructor(
-        contract: string | Address, 
-        kyc: string | ContractID,
+        contract: string | Address,
         customer: string | Address,
         status: boolean | Bool,
         currency: string | CurrencyID,
     ) {
-        super(HINT.KYC.UPDATE_CUSTOMER.ITEM, contract, kyc, currency)
+        super(HINT.KYC.UPDATE_CUSTOMER.ITEM, contract, currency)
 
         this.customer = Address.from(customer)
         this.status = Bool.from(status)
@@ -31,8 +30,7 @@ export class UpdateCustomerItem extends KYCItem {
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.contract.toBuffer(),
-            this.kyc.toBuffer(),
+            super.toBuffer(),
             this.customer.toBuffer(),
             this.status.toBuffer(),
             this.currency.toBuffer(),

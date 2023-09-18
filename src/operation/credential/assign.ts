@@ -1,10 +1,10 @@
-import { CredentialItem } from "./item"
 import { OperationFact } from "../base"
+import { CredentialItem } from "./item"
 
 import { HINT } from "../../alias"
 import { Config } from "../../node"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 import { Big, HintedObject, LongString } from "../../types"
 
@@ -16,7 +16,6 @@ export class AssignItem extends CredentialItem {
 
     constructor(
         contract: string | Address, 
-        service: string | ContractID,
         holder: string | Address, 
         templateID: string,
         id: string,
@@ -26,7 +25,7 @@ export class AssignItem extends CredentialItem {
         did: string | LongString,
         currency: string | CurrencyID,
     ) {
-        super(HINT.CREDENTIAL.ASSIGN.ITEM, contract, service, holder, templateID, id, currency)
+        super(HINT.CREDENTIAL.ASSIGN.ITEM, contract, holder, templateID, id, currency)
 
         this.value = value
         this.validFrom = Big.from(validFrom)
@@ -46,11 +45,7 @@ export class AssignItem extends CredentialItem {
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.contract.toBuffer(),
-            this.service.toBuffer(),
-            this.holder.toBuffer(),
-            Buffer.from(this.templateID),
-            Buffer.from(this.id),
+            super.toBuffer(),
             Buffer.from(this.value),
             this.validFrom.toBuffer("fill"),
             this.validUntil.toBuffer("fill"),

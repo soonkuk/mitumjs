@@ -55,7 +55,7 @@ async function getVotingResult(
     return await axios.get(`${url(api, contract, service)}/proposal/${proposalID}/votingpower`)
 }
 
-export {
+export default {
     getService,
     getProposal,
     getDelegator,

@@ -14,17 +14,6 @@ export const Version: Setting<string> = (() => {
 	}
 })()
 
-export const NetworkID: Setting<string> = (() => {
-	let id = "mitum"
-	return {
-		get: () => id,
-		set: (val: string) => {
-			id = val
-			return id
-		}
-	}
-})()
-
 export type RangeConfig = {
 	value?: number
 	min: number

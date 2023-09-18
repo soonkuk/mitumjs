@@ -1,5 +1,5 @@
-import { FactJson, NodeFact } from "../base"
 import { CurrencyPolicy } from "./currency-design"
+import { FactJson, NodeFact } from "../base"
 
 import { HINT } from "../../alias"
 import { CurrencyID } from "../../common"

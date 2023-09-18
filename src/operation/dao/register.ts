@@ -1,10 +1,10 @@
 import { DAOFact } from "./fact"
+import { FactJson } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
-import { FactJson } from "../base"
 
 export class RegisterFact extends DAOFact {
     readonly delegated: Address
@@ -13,12 +13,11 @@ export class RegisterFact extends DAOFact {
         token: string,
         sender: string | Address,
         contract: string | Address,
-        dao: string | ContractID,
         proposalID: string,
         delegated: string | Address,
         currency: string | CurrencyID,
     ) {
-        super(HINT.DAO.REGISTER.FACT, token, sender, contract, dao, proposalID, currency)
+        super(HINT.DAO.REGISTER.FACT, token, sender, contract, proposalID, currency)
         
         this.delegated = Address.from(delegated)
 

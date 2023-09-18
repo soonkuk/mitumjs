@@ -3,8 +3,8 @@ import { OperationFact } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
+import { CurrencyID } from "../../common"
 import { HintedObject } from "../../types"
-import { ContractID, CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 
 export class DelegateItem extends NFTItem {
@@ -13,12 +13,11 @@ export class DelegateItem extends NFTItem {
 
     constructor(
         contract: string | Address, 
-        collection: string | ContractID, 
         operator: string | Address, 
         mode: "allow" | "cancel",
         currency: string | CurrencyID,
     ) {
-        super(HINT.NFT.DELEGATE.ITEM, contract, collection, currency)
+        super(HINT.NFT.DELEGATE.ITEM, contract, currency)
 
         this.operator = Address.from(operator)
         this.mode = mode
@@ -26,8 +25,7 @@ export class DelegateItem extends NFTItem {
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.contract.toBuffer(),
-            this.collection.toBuffer(),
+            super.toBuffer(),
             this.operator.toBuffer(),
             Buffer.from(this.mode),
             this.currency.toBuffer(),

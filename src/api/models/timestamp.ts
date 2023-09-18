@@ -27,7 +27,7 @@ async function getTimeStamp(
     return await axios.get(`${url(api, contract, service)}/project/${projectID}/id/${Big.from(requestTimeStamp).toString()}`)
 }
 
-export {
+export default {
     getService,
     getTimeStamp,
 }

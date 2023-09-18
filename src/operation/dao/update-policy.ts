@@ -1,12 +1,12 @@
+import { Whitelist } from "./whitelist"
 import { ContractFact, FactJson } from "../base"
 
-import { HINT } from "../../alias"
-import { Address } from "../../key"
-import { Amount, ContractID, CurrencyID } from "../../common"
 import { Big } from "../../types"
-import { Whitelist } from './whitelist';
-import { Assert, ECODE, MitumError } from "../../error"
+import { HINT } from "../../alias"
 import { Config } from "../../node"
+import { Address } from "../../key"
+import { Assert, ECODE, MitumError } from "../../error"
+import { Amount, ContractID, CurrencyID } from "../../common"
 
 export class UpdatePolicyFact extends ContractFact {
     readonly dao: ContractID

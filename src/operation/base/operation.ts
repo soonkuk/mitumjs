@@ -1,14 +1,14 @@
 import base58 from "bs58"
 import { writeFile } from "fs"
 
-import { Hint } from "../../common"
-import { NetworkID } from "../../node"
-import { Assert, ECODE, MitumError } from "../../error"
-import { SortFunc, sha3 } from "../..//utils"
-import { Address, Key, KeyPair, NodeAddress } from "../../key"
 import { Fact } from "./fact"
-import { HintedObject, IBuffer, IHintedObject, TimeStamp } from "../../types"
 import { GeneralFactSign, NodeFactSign } from "./factsign"
+
+import { Hint } from "../../common"
+import { SortFunc, sha3 } from "../../utils"
+import { Assert, ECODE, MitumError } from "../../error"
+import { Address, Key, KeyPair, NodeAddress } from "../../key"
+import { HintedObject, IBuffer, IHintedObject, TimeStamp } from "../../types"
 
 type FactSign = GeneralFactSign | NodeFactSign
 type SigType = "FactSign" | "NodeFactSign" | null
@@ -24,8 +24,8 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
     private _factSigns: FactSign[]
     private _hash: Buffer
 
-    constructor(fact: T, memo?: string) {
-        this.id = NetworkID.get()
+    constructor(networkID: string, fact: T, memo?: string) {
+        this.id = networkID
         this.memo = memo ?? ""
         this.fact = fact
 

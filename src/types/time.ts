@@ -1,4 +1,4 @@
-import { IBuffer, IString } from "."
+import { IBuffer, IString } from "./interface"
 import { Assert, MitumError } from "../error"
 
 export class TimeStamp implements IBuffer, IString {

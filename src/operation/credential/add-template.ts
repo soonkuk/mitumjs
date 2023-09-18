@@ -1,15 +1,14 @@
 
-import { FactJson } from "../base"
-import { CredentialFact } from "./fact"
+import { ContractFact, FactJson } from "../base"
 
 import { HINT } from "../../alias"
 import { Config } from "../../node"
 import { Address } from "../../key"
+import { CurrencyID } from "../../common"
 import { Bool, ShortDate } from "../../types"
-import { ContractID, CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 
-export class AddTemplateFact extends CredentialFact {
+export class AddTemplateFact extends ContractFact {
     readonly templateID: string
     readonly templateName: string
     readonly serviceDate: ShortDate
@@ -25,7 +24,6 @@ export class AddTemplateFact extends CredentialFact {
         token: string, 
         sender: string | Address, 
         contract: string | Address, 
-        service: string | ContractID,
         templateID: string,
         templateName: string,
         serviceDate: string | ShortDate,
@@ -38,7 +36,7 @@ export class AddTemplateFact extends CredentialFact {
         creator: string | Address,
         currency: string | CurrencyID,
     ) {
-        super(HINT.CREDENTIAL.ADD_TEMPLATE.FACT, token, sender, contract, service, currency)
+        super(HINT.CREDENTIAL.ADD_TEMPLATE.FACT, token, sender, contract, currency)
         this.templateID = templateID
         this.templateName = templateName
         this.serviceDate = ShortDate.from(serviceDate)

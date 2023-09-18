@@ -1,10 +1,10 @@
 import { DAOFact } from "./fact"
+import { FactJson } from "../base"
 
+import { Big } from "../../types"
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
-import { Big } from "../../types"
-import { FactJson } from "../base"
+import { CurrencyID } from "../../common"
 
 export class VoteFact extends DAOFact {
     readonly vote: Big
@@ -13,12 +13,11 @@ export class VoteFact extends DAOFact {
         token: string,
         sender: string | Address,
         contract: string | Address,
-        dao: string | ContractID,
         proposalID: string,
         vote: string | number | Big,
         currency: string | CurrencyID,
     ) {
-        super(HINT.DAO.VOTE.FACT, token, sender, contract, dao, proposalID, currency)
+        super(HINT.DAO.VOTE.FACT, token, sender, contract, proposalID, currency)
         this.vote = Big.from(vote)
     }
 

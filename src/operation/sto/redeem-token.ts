@@ -4,9 +4,9 @@ import { OperationFact } from "../base"
 
 import { HINT } from "../../alias"
 import { Address } from "../../key"
-import { ContractID, CurrencyID } from "../../common"
-import { Assert, ECODE, MitumError } from "../../error"
+import { CurrencyID } from "../../common"
 import { Big, HintedObject } from "../../types"
+import { Assert, ECODE, MitumError } from "../../error"
 
 export class RedeemTokenItem extends STOItem {
     readonly tokenHolder: Address
@@ -15,13 +15,12 @@ export class RedeemTokenItem extends STOItem {
 
     constructor(
         contract: string | Address, 
-        sto: string | ContractID,
         tokenHolder: string | Address,
         amount: string | number | Big,
         partition: string | Partition,
         currency: string | CurrencyID,
     ) {
-        super(HINT.STO.REDEEM.ITEM, contract, sto, currency)
+        super(HINT.STO.REDEEM.ITEM, contract, currency)
 
         this.tokenHolder = Address.from(tokenHolder)
         this.amount  = Big.from(amount)
@@ -40,8 +39,7 @@ export class RedeemTokenItem extends STOItem {
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.contract.toBuffer(),
-            this.sto.toBuffer(),
+            super.toBuffer(),
             this.tokenHolder.toBuffer(),
             this.amount.toBuffer(),
             this.partition.toBuffer(),

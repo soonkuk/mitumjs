@@ -1,15 +1,14 @@
-import { NFTFact } from "./fact"
-import { FactJson } from "../base"
+import { ContractFact, FactJson } from "../base"
 
 import { HINT } from "../../alias"
 import { Config } from "../../node"
 import { Address } from "../../key"
 import { SortFunc } from "../../utils"
+import { CurrencyID } from "../../common"
 import { Big, LongString } from "../../types"
-import { ContractID, CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 
-export class UpdateCollectionPolicyFact extends NFTFact {
+export class UpdateCollectionPolicyFact extends ContractFact {
     readonly name: LongString
     readonly royalty: Big
     readonly uri: LongString
@@ -19,14 +18,13 @@ export class UpdateCollectionPolicyFact extends NFTFact {
         token: string, 
         sender: string | Address, 
         contract: string | Address, 
-        collection: string | ContractID,
         name: string | LongString,
         royalty: string | number | Big,
         uri: string | LongString,
         whitelist: (string | Address)[] | null,
         currency: string | CurrencyID,
     ) {
-        super(HINT.NFT.UPDATE_COLLECTION_POLICY.FACT, token, sender, contract, collection, currency)
+        super(HINT.NFT.UPDATE_COLLECTION_POLICY.FACT, token, sender, contract, currency)
         this.name = LongString.from(name)
         this.royalty = Big.from(royalty)
         this.uri = LongString.from(uri)
