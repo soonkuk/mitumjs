@@ -19,7 +19,7 @@ export class UpdateKeyFact extends Fact {
 
     toBuffer(): Buffer {
         return Buffer.concat([
-            this.token.toBuffer(),
+            super.toBuffer(),
             this.target.toBuffer(),
             this.keys.toBuffer(),
             this.currency.toBuffer(),

@@ -4,6 +4,7 @@ import { OperationJson, GeneralFactSign, NodeFactSign } from "./base"
 import { sha3 } from "../utils"
 import { Key, KeyPair, NodeAddress } from "../key"
 import { HintedObject, FullTimeStamp, TimeStamp } from "../types"
+import { SignOption } from "./base/types"
 
 export class Signer {
     readonly keypair: KeyPair
@@ -15,12 +16,12 @@ export class Signer {
         this.networkID = networkID
     }
 
-    sign(json: HintedObject, option?: { node: string }) {
-        return option ? this.nodeSign(json as OperationJson, option.node) : this.accSign(json as OperationJson)
+    sign(json: HintedObject, option?: SignOption) {
+        return option ? this.nodeSign(json as OperationJson, option.node ?? "") : this.accSign(json as OperationJson)
     }
 
     private accSign(json: OperationJson) {
-        const now = new TimeStamp()
+        const now = TimeStamp.new()
 
         const fs = new GeneralFactSign(
             this.keypair.publicKey.toString(),
@@ -62,7 +63,7 @@ export class Signer {
 
     private nodeSign(json: OperationJson, node: string) {
         const nd = new NodeAddress(node)
-        const now = new TimeStamp()
+        const now = TimeStamp.new()
         const fs = new NodeFactSign(
             node,
             this.keypair.publicKey.toString(),

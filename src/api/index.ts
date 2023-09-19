@@ -16,3 +16,12 @@ export {
     currency,
     contract,
 }
+
+export default {
+    account,
+    block,
+    node,
+    operation,
+    currency,
+    contract,
+}

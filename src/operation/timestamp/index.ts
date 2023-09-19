@@ -1,6 +1,64 @@
 import { CreateServiceFact } from "./create-service"
 import { AppendFact } from "./append"
 
-export class TimeStamp {
-    
+import { ContractGenerator, Operation } from "../base"
+
+import { Address } from "../../key"
+import { CurrencyID } from "../../common"
+import { Big, IP, TimeStamp as TS } from "../../types"
+
+export class TimeStamp extends ContractGenerator {
+    constructor(
+        networkID: string,
+        contract?: string | Address,
+        api?: string | IP,
+    ) {
+        super(networkID, contract, api)
+    }
+
+    createService(
+        sender: string | Address,
+        currency: string | CurrencyID,
+    ) {
+        return new Operation(
+            this.networkID,
+            new CreateServiceFact(
+                TS.new().UTC(),
+                sender,
+                this.contract,
+                currency,
+            )
+        )
+    }
+
+    append(
+        sender: string | Address,
+        projectID: string,
+        requestTimeStamp: string | number | Big,
+        data: string,
+        currency: string | CurrencyID,
+    ) {
+        const fact = new AppendFact(
+            TS.new().UTC(),
+            sender,
+            this.contract,
+            projectID,
+            requestTimeStamp,
+            data,
+            currency,
+        )
+
+        return new Operation(this.networkID, fact)
+    }
+
+    async getServiceInfo() {
+        throw new Error("unimplemented method")
+    }
+
+    async getTimestampInfo(
+        projectID: string,
+        requestTimeStamp: number
+    ) {
+        throw new Error("unimplemented method")
+    }
 }

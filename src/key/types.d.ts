@@ -5,3 +5,9 @@ export type TYPE_NODE = "node"
 
 export type AddressType = TYPE_BTC | TYPE_ETHER | TYPE_ZERO | TYPE_NODE
 export type KeyPairType = TYPE_BTC | TYPE_ETHER
+
+export type Account = {
+    privatekey: string
+    publickey: string
+    address: string
+}

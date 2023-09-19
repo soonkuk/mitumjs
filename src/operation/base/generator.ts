@@ -1,31 +1,5 @@
-import { IP } from "../../types"
 import { Address } from "../../key"
-
-export abstract class Generator {
-    protected _networkID: string
-    protected _node: IP | undefined
-
-    constructor(networkID: string, node?: string | IP) {
-        this._networkID = networkID
-        this._node = node ? IP.from(node) : undefined
-    }
-
-    setNetworkID(networkID: string) {
-        this._networkID = networkID
-    }
-
-    setNode(node?: string | IP) {
-        this._node = node ? IP.from(node) : undefined
-    }
-
-    get networkID() {
-        return this._networkID
-    }
-
-    get node() {
-        return this._node ? this._node.toString() : ""
-    }
-}
+import { Generator, IP } from "../../types"
 
 export abstract class ContractGenerator extends Generator {
     protected _contract: Address | undefined
@@ -33,13 +7,20 @@ export abstract class ContractGenerator extends Generator {
     constructor(
         networkID: string,
         contract?: string | Address,
-        node?: string | IP,
+        api?: string | IP,
     ) {
-        super(networkID, node)
+        super(networkID, api)
         this._contract = contract ? Address.from(contract) : undefined
     }
 
+    /**
+     * @deprecated use setContract(contract: string | Address)
+     */
     setContractAddress(contract: string | Address) {
+        this.setContract(contract)
+    }
+
+    setContract(contract: string | Address) {
         this._contract = Address.from(contract)
     }
 

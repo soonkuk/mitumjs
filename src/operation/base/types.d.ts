@@ -32,3 +32,7 @@ export type OperationJson = {
     memo?: string,
     signs: FS[]
 }
+
+export type SignOption = {
+    node?: string
+}

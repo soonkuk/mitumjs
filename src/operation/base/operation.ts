@@ -2,6 +2,7 @@ import base58 from "bs58"
 import { writeFile } from "fs"
 
 import { Fact } from "./fact"
+import { SignOption } from "./types"
 import { GeneralFactSign, NodeFactSign } from "./factsign"
 
 import { Hint } from "../../common"
@@ -12,9 +13,6 @@ import { HintedObject, IBuffer, IHintedObject, TimeStamp } from "../../types"
 
 type FactSign = GeneralFactSign | NodeFactSign
 type SigType = "FactSign" | "NodeFactSign" | null
-type SignOption = {
-    node: string,
-}
 
 export class Operation<T extends Fact> implements IBuffer, IHintedObject {
     readonly id: string
@@ -94,7 +92,7 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
             Assert.check(option !== undefined, MitumError.detail(ECODE.FAIL_SIGN, "no node address in sign option"))
         }
 
-        const factSign = this.signWithSigType(sigType, keypair, option ? new NodeAddress(option.node) : undefined)
+        const factSign = this.signWithSigType(sigType, keypair, option ? new NodeAddress(option.node ?? "") : undefined)
 
         const idx = this._factSigns
             .map((fs) => fs.signer.toString())
@@ -111,7 +109,7 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
 
     private signWithSigType(sigType: SigType, keypair: KeyPair, node: Address | undefined) {
         const getFactSign = (keypair: KeyPair, hash: Buffer) => {
-            const now = new TimeStamp()
+            const now = TimeStamp.new()
 
             return new GeneralFactSign(
                 keypair.publicKey,
@@ -120,7 +118,7 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
             )
         }
         const getNodeFactSign = (node: Address, keypair: KeyPair, hash: Buffer) => {
-            const now = new TimeStamp()
+            const now = TimeStamp.new()
 
             return new NodeFactSign(
                 node.toString(),

@@ -7,6 +7,7 @@ export type ErrorCode = (
 )
 
 export const ECODE = {
+    NO_API: "EC_NO_API",    
     UNKNOWN: "EC_UNKNOWN",
     EMPTY_STRING: "EC_EMPTY_STRING",
     INVALID_DATE: "EC_INVALID_DATE",

@@ -46,5 +46,9 @@ export default {
         ITEM: "mitum-currency-contract-account-withdraw-multi-amounts",
         FACT: "mitum-currency-contract-account-withdraw-operation-fact",
         OPERATION: "mitum-currency-contract-account-withdraw-operation",
+    },
+    UPDATE_OPERATOR: {
+        FACT: "mitum-currency-contract-account-update-operator-operation-fact",
+        OPERATION: "mitum-currency-contract-account-update-operator-operation",
     }
 }

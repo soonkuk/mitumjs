@@ -12,7 +12,15 @@ export class TimeStamp implements IBuffer, IString {
 		}
 	}
 
-	static from(t: string | number | Date | TimeStamp) {
+	static new() {
+		return new TimeStamp()
+	}
+
+	static from(t?: string | number | Date | TimeStamp) {
+		if (!t) {
+			return this.new()
+		}
+
 		return t instanceof TimeStamp ? t : new TimeStamp(t)
 	}
 

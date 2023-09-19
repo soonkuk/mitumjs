@@ -1,14 +1,14 @@
 import { Whitelist } from "./whitelist"
 
 import { HINT } from "../../alias"
-import { Amount, CurrencyID, Hint } from "../../common"
+import { CurrencyID, Hint } from "../../common"
 import { Big, HintedObject, IBuffer, IHintedObject } from "../../types"
 
 export class DAOPolicy implements IBuffer, IHintedObject {
     private hint: Hint
     readonly token: CurrencyID
     readonly threshold: Big
-    readonly fee: Amount
+    readonly fee: Big
     readonly whitelist: Whitelist
     readonly proposalReviewPeriod: Big
     readonly registrationPeriod: Big
@@ -22,7 +22,7 @@ export class DAOPolicy implements IBuffer, IHintedObject {
     constructor(
         token: string | CurrencyID,
         threshold: string | number | Big,
-        fee: Amount,
+        fee: string | number | Big,
         whitelist: Whitelist,
         proposalReviewPeriod: string | number | Big,
         registrationPeriod: string | number | Big,
@@ -36,7 +36,7 @@ export class DAOPolicy implements IBuffer, IHintedObject {
         this.hint = new Hint(HINT.DAO.POLICY)
         this.token = CurrencyID.from(token)
         this.threshold = Big.from(threshold)
-        this.fee = fee
+        this.fee = Big.from(fee)
         this.whitelist = whitelist
         this.proposalReviewPeriod = Big.from(proposalReviewPeriod)
         this.registrationPeriod = Big.from(registrationPeriod)
@@ -70,7 +70,7 @@ export class DAOPolicy implements IBuffer, IHintedObject {
             _hint: this.hint.toString(),
             token: this.token.toString(),
             threshold: this.threshold.toString(),
-            fee: this.fee.toHintedObject(),
+            fee: this.fee.toString(),
             whitelist: this.whitelist.toHintedObject(),
             proposal_review_period: this.proposalReviewPeriod.v,
             registration_period: this.registrationPeriod.v,

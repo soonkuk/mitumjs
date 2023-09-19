@@ -6,17 +6,16 @@ import { RevokeItem, RevokeFact } from "./revoke"
 import { ContractGenerator, Operation } from "../base"
 
 import { Address } from "../../key"
-import { contract } from "../../api"
-import { ContractID, CurrencyID } from "../../common"
+import { CurrencyID } from "../../common"
 import { Big, Bool, IP, ShortDate, TimeStamp } from "../../types"
 
 export class Credential extends ContractGenerator {
     constructor(
         networkID: string,
         contract?: string | Address,
-        node?: string | IP,
+        api?: string | IP,
     ) {
-        super(networkID, contract, node)
+        super(networkID, contract, api)
     }
 
     createService(
@@ -26,10 +25,9 @@ export class Credential extends ContractGenerator {
         return new Operation(
             this.networkID,
             new CreateServiceFact(
-                new TimeStamp().UTC(),
+                TimeStamp.new().UTC(),
                 sender,
                 this.contract,
-                this.serviceID,
                 currency,
             ),
         )
@@ -54,10 +52,9 @@ export class Credential extends ContractGenerator {
         return new Operation(
             this.networkID,
             new AddTemplateFact(
-                new TimeStamp().UTC(),
+                TimeStamp.new().UTC(),
                 sender,
                 this.contract,
-                this.serviceID,
                 data.templateID,
                 data.templateName,
                 data.serviceDate,
@@ -89,12 +86,11 @@ export class Credential extends ContractGenerator {
         return new Operation(
             this.networkID,
             new AssignFact(
-                new TimeStamp().UTC(),
+                TimeStamp.new().UTC(),
                 sender,
                 [
                     new AssignItem(
                         this.contract,
-                        this.serviceID,
                         data.holder,
                         data.templateID,
                         data.id,
@@ -119,12 +115,11 @@ export class Credential extends ContractGenerator {
         return new Operation(
             this.networkID,
             new RevokeFact(
-                new TimeStamp().UTC(),
+                TimeStamp.new().UTC(),
                 sender,
                 [
                     new RevokeItem(
                         this.contract,
-                        this.serviceID,
                         holder,
                         templateID,
                         id,
@@ -135,17 +130,32 @@ export class Credential extends ContractGenerator {
         )
     }
 
-    async getServiceInfo(serviceID?: string | ContractID) {
-        const res = await contract.credential.getService(
-            this.node,
-            this.contract,
-            serviceID ?? this.serviceID,
-        )
-        return res.data
+    async getServiceInfo() {
+        throw new Error("unimplemented method")
     }
 
     async getCredentialInfo(
-        serviceID?: string | ContractID,
-        
-    )
+        templateID: string,
+        credentialID: string,
+    ) {
+        throw new Error("unimplemented method")
+    }
+
+    async getTemplate(
+        templateID: string,
+    ) {
+        throw new Error("unimplemented method")
+    }
+
+    async getAllCredentials(
+        templateID: string,
+    ) {
+        throw new Error("unimplemented method")
+    }
+
+    async claimCredential(
+        holder: string | Address,
+    ) {
+        throw new Error("unimplemented method")
+    }
 }
