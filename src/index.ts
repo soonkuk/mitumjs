@@ -132,7 +132,11 @@ export default class Mitum extends Generator {
      * @deprecated use .api (get)
      */
     getNode(): string {
-        return this.api
+        return this.api.toString()
+    }
+
+    getAPI(): string {
+        return this.api.toString()
     }
 
     getChain(): string {
