@@ -5,6 +5,7 @@ import DAO from "./dao"
 import KYC from "./kyc"
 import STO from "./sto"
 import TIMESTAMP from "./timestamp"
+import TOKEN from "./token"
 
 export default {
     FACT_SIGN: "base-fact-sign",
@@ -15,4 +16,5 @@ export default {
     KYC,
     STO,
     TIMESTAMP,
+    TOKEN,
 }

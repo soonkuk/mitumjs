@@ -5,6 +5,7 @@ import dao from "./dao"
 import kyc from "./kyc"
 import sto from "./sto"
 import timestamp from "./timestamp"
+import token from "./token"
 
 export default {
     currency,
@@ -15,5 +16,6 @@ export default {
         kyc,
         sto,
         timestamp,
+        token,
     },
 }

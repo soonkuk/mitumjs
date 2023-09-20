@@ -7,6 +7,7 @@ import { DAO } from "./dao"
 import { STO } from "./sto"
 import { KYC } from "./kyc"
 import { TimeStamp } from "./timestamp"
+import { Token } from "./token"
 
 import { operation as api } from "../api"
 import { Key, KeyPair } from "../key"
@@ -56,5 +57,6 @@ export {
 	STO,
 	KYC,
 	TimeStamp,
+	Token,
 	Base,
 }

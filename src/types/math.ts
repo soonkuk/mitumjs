@@ -89,6 +89,16 @@ export class Big implements IBuffer, IString {
 	isZero(): boolean {
 		return this.big < 1
 	}
+
+	compare(n: string | number | Big) {
+		n = Big.from(n)
+		if (this.big < n.big) {
+			return -1
+		} else if (this.big > n.big) {
+			return 1
+		}
+		return 0
+	}
 }
 
 export class Float implements IBuffer, IString {
