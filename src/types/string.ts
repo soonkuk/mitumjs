@@ -26,7 +26,7 @@ export class ShortDate extends LongString {
     constructor(s: string) {
         super(s)
         Assert.check(
-            /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/.test(s), 
+            /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/.test(s),
             MitumError.detail(ECODE.INVALID_DATE, "invalid simple string date"),
         )
     }
@@ -40,12 +40,9 @@ export class IP extends LongString {
     constructor(s: string) {
         super(s)
         Assert.check(
-            /^(http|https):\/\/(\d{1,3}\.){3}\d{1,3}(?::\d+)?$/.test(s),
+            /^(http|https):\/\/(\d{1,3}\.){3}\d{1,3}(?::\d+)?$/.test(s)
+            || /^(http|https):\/\/(?:[\w-]+\.)+[\w-]+(?::\d+)?(?:\/[\w-./?%&=]*)?$/.test(s),
             MitumError.detail(ECODE.INVALID_IP, "invalid ip address, ip"),
-        )
-        Assert.check(
-            /^(http|https):\/\/(?:[\w-]+\.)+[\w-]+(?:\/[\w-./?%&=]*)?$/.test(s),
-            MitumError.detail(ECODE.INVALID_IP, "invalid ip address, domain")
         )
     }
 
