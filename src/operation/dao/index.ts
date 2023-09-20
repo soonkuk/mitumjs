@@ -17,6 +17,7 @@ import { ContractGenerator, Operation } from "../base"
 import { Address } from "../../key"
 import { Amount, CurrencyID } from "../../common"
 import { Big, HintedObject, IP, LongString, TimeStamp } from "../../types"
+import { contract } from "../../api"
 
 type policyData = {
     token: string | CurrencyID,
@@ -243,22 +244,22 @@ export class DAO extends ContractGenerator {
     }
 
     async getServiceInfo() {
-        throw new Error("unimplemented method")
+        return contract.dao.getService(this.api, this.contract)
     }
 
     async getProposalInfo(proposalID: string) {
-        throw new Error("unimplemented method")
+        return contract.dao.getProposal(this.api, this.contract, proposalID)
     }
 
     async getDelegatorInfo(proposalID: string, delegator: string | Address) {
-        throw new Error("unimplemented method")
+        return contract.dao.getDelegator(this.api, this.contract, proposalID, delegator)
     }
 
     async getVoterInfo(proposalID: string, voter: string | Address) {
-        throw new Error("unimplemented method")
+        return contract.dao.getVoter(this.api, this.contract, proposalID, voter)
     }
 
     async getVotingResult(proposalID: string) {
-        throw new Error("unimplemented method")
+        return contract.dao.getVotingResult(this.api, this.contract, proposalID)
     }
 }
