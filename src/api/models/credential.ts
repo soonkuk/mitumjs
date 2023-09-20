@@ -6,54 +6,49 @@ import { IP } from "../../types"
 const url = (
     api: string | IP, 
     contract: string | Address, 
-    service: string | ContractID,
-) => `${IP.from(api).toString()}/did/${Address.from(contract).toString()}/issuer/${ContractID.from(service).toString()}`
+) => `${IP.from(api).toString()}/did/${Address.from(contract).toString()}`
 
-async function getService(api: string | IP, contract: string | Address, service: string | ContractID) {
-    return await axios.get(url(api, contract, service))
+async function getIssuer(api: string | IP, contract: string | Address) {
+    return await axios.get(url(api, contract))
 }
 
 async function getCredential(
     api: string | IP, 
-    contract: string | Address, 
-    service: string | ContractID,
+    contract: string | Address,
     templateID: string,
     credentialID: string,
 ) {
     return await axios.get(
-        `${url(api, contract, service)}/template/${templateID}/credential/${credentialID}`
+        `${url(api, contract)}/template/${templateID}/credential/${credentialID}`
     )
 }
 
 async function getTemplate(
     api: string | IP,
     contract: string | Address,
-    service: string | ContractID,
     templateID: string,
 ) {
-    return await axios.get(`${url(api, contract, service)}/template/${templateID}`)
+    return await axios.get(`${url(api, contract)}/template/${templateID}`)
 }
 
 async function getCredentials(
     api: string | IP,
     contract: string | Address,
-    service: string | ContractID,
     templateID: string,
 ) {
-    return await axios.get(`${url(api, contract, service)}/template/${templateID}/credentials`)
+    return await axios.get(`${url(api, contract)}/template/${templateID}/credentials`)
 }
 
 async function getCredentialByHolder(
     api: string | IP,
     contract: string | Address,
-    service: string | ContractID,
     holder: string | Address,
 ) {
-    return await axios.get(`${url(api, contract, service)}/holder/${Address.from(holder).toString()}`)
+    return await axios.get(`${url(api, contract)}/holder/${Address.from(holder).toString()}`)
 }
 
 export default {
-    getService,
+    getIssuer,
     getCredential,
     getTemplate,
     getCredentials,

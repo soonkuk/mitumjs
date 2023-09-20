@@ -5,6 +5,7 @@ import { RevokeItem, RevokeFact } from "./revoke"
 
 import { ContractGenerator, Operation } from "../base"
 
+import { contract } from "../../api"
 import { Address } from "../../key"
 import { CurrencyID } from "../../common"
 import { Big, Bool, IP, ShortDate, TimeStamp } from "../../types"
@@ -130,32 +131,32 @@ export class Credential extends ContractGenerator {
         )
     }
 
-    async getServiceInfo() {
-        throw new Error("unimplemented method")
+    async getIssuer() {
+        return await contract.credential.getIssuer(this.api, this.contract)
     }
 
     async getCredentialInfo(
         templateID: string,
         credentialID: string,
     ) {
-        throw new Error("unimplemented method")
+        return await contract.credential.getCredential(this.api, this.contract, templateID, credentialID)
     }
 
     async getTemplate(
         templateID: string,
     ) {
-        throw new Error("unimplemented method")
+        return await contract.credential.getTemplate(this.api, this.contract, templateID)
     }
 
     async getAllCredentials(
         templateID: string,
     ) {
-        throw new Error("unimplemented method")
+        return await contract.credential.getCredentials(this.api, this.contract, templateID)
     }
 
     async claimCredential(
         holder: string | Address,
     ) {
-        throw new Error("unimplemented method")
+        return await contract.credential.getCredentialByHolder(this.api, this.contract, holder)
     }
 }
