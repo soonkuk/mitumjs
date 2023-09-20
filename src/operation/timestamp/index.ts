@@ -6,6 +6,7 @@ import { ContractGenerator, Operation } from "../base"
 import { Address } from "../../key"
 import { CurrencyID } from "../../common"
 import { Big, IP, TimeStamp as TS } from "../../types"
+import { contract } from "../../api"
 
 export class TimeStamp extends ContractGenerator {
     constructor(
@@ -52,13 +53,13 @@ export class TimeStamp extends ContractGenerator {
     }
 
     async getServiceInfo() {
-        throw new Error("unimplemented method")
+        return contract.timestamp.getService(this.api, this.contract)
     }
 
     async getTimestampInfo(
         projectID: string,
-        requestTimeStamp: number
+        tid: string | number | Big,
     ) {
-        throw new Error("unimplemented method")
+        return contract.timestamp.getTimeStamp(this.api, this.contract, projectID, tid)
     }
 }
