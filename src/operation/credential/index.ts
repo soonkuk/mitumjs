@@ -5,9 +5,9 @@ import { RevokeItem, RevokeFact } from "./revoke"
 
 import { ContractGenerator, Operation } from "../base"
 
-import { contract } from "../../api"
 import { Address } from "../../key"
 import { CurrencyID } from "../../common"
+import { contract, getAPIData } from "../../api"
 import { Big, Bool, IP, ShortDate, TimeStamp } from "../../types"
 
 export class Credential extends ContractGenerator {
@@ -132,31 +132,38 @@ export class Credential extends ContractGenerator {
     }
 
     async getIssuer() {
-        return await contract.credential.getIssuer(this.api, this.contract)
+        return await getAPIData(() => contract.credential.getIssuer(this.api, this.contract))
+    }
+
+    /**
+     * @deprecated use getIssuer()
+     */
+    async getServiceInfo() {
+        return await this.getIssuer()
     }
 
     async getCredentialInfo(
         templateID: string,
         credentialID: string,
     ) {
-        return await contract.credential.getCredential(this.api, this.contract, templateID, credentialID)
+        return await getAPIData(() => contract.credential.getCredential(this.api, this.contract, templateID, credentialID))
     }
 
     async getTemplate(
         templateID: string,
     ) {
-        return await contract.credential.getTemplate(this.api, this.contract, templateID)
+        return await getAPIData(() => contract.credential.getTemplate(this.api, this.contract, templateID))
     }
 
     async getAllCredentials(
         templateID: string,
     ) {
-        return await contract.credential.getCredentials(this.api, this.contract, templateID)
+        return await getAPIData(() => contract.credential.getCredentials(this.api, this.contract, templateID))
     }
 
     async claimCredential(
         holder: string | Address,
     ) {
-        return await contract.credential.getCredentialByHolder(this.api, this.contract, holder)
+        return await getAPIData(() => contract.credential.getCredentialByHolder(this.api, this.contract, holder))
     }
 }

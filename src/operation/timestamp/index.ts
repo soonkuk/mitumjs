@@ -5,8 +5,8 @@ import { ContractGenerator, Operation } from "../base"
 
 import { Address } from "../../key"
 import { CurrencyID } from "../../common"
+import { contract, getAPIData } from "../../api"
 import { Big, IP, TimeStamp as TS } from "../../types"
-import { contract } from "../../api"
 
 export class TimeStamp extends ContractGenerator {
     constructor(
@@ -53,13 +53,13 @@ export class TimeStamp extends ContractGenerator {
     }
 
     async getServiceInfo() {
-        return contract.timestamp.getService(this.api, this.contract)
+        return await getAPIData(() => contract.timestamp.getService(this.api, this.contract))
     }
 
     async getTimestampInfo(
         projectID: string,
         tid: string | number | Big,
     ) {
-        return contract.timestamp.getTimeStamp(this.api, this.contract, projectID, tid)
+        return await getAPIData(() => contract.timestamp.getTimeStamp(this.api, this.contract, projectID, tid))
     }
 }

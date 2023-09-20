@@ -12,7 +12,7 @@ import { CurrencyDesign, CurrencyPolicy, NilFeeer, FixedFeeer, RatioFeeer } from
 
 import { Operation } from "../base"
 
-import api from "../../api"
+import api, { getAPIData } from "../../api"
 import { Amount, CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
 import { Big, Generator, IP, TimeStamp } from "../../types"
@@ -176,12 +176,18 @@ export class Currency extends Generator {
         )
     }
 
-    async getAllCurrencies() {
-        return await api.currency.getCurrencies(this.api)
+    async getAllCurrencies(): Promise<string[] | null> {
+        const datas = await getAPIData(() => api.currency.getCurrencies(this.api))
+
+        return datas
+            ? Object.keys(datas.links).filter(
+                c => !(c === "self" || c === "currency:{currencyid}")).map(c => c)
+            : null
     }
 
     async getCurrency(cid: string | CurrencyID) {
-        return await api.currency.getCurrency(this.api, cid)
+        const data = await getAPIData(() => api.currency.getCurrency(this.api, cid))
+        return data ? data._embedded : null
     }
 }
 
@@ -371,26 +377,27 @@ export class Account extends KeyG {
         const op = wallet.operation
         op.sign(privatekey)
 
-        const res = await api.operation.send(this.api, op)
-
-        return res.data
+        return await getAPIData(() => api.operation.send(this.api, op))
     }
 
     async getAccountInfo(address: string | Address) {
-        return await api.account.getAccount(this.api, address)
+        const data = await getAPIData(() => api.account.getAccount(this.api, address))
+        return data ? data._embedded : null
     }
 
-    async getOperation(address: string | Address) {
-        return await api.operation.getAccountOperations(this.api, address)
+    async getOperations(address: string | Address) {
+        const data = await getAPIData(() => api.operation.getAccountOperations(this.api, address))
+        return data ? data._embedded : null
     }
 
     async getByPublickey(publickey: string | Key | PubKey) {
-        return await api.account.getAccountByPublicKey(this.api, publickey)
+        const data = await getAPIData(() => api.account.getAccountByPublicKey(this.api, publickey))
+        return data ? data._embedded : null
     }
 
     async balance(address: string | Address) {
-        const info = await api.account.getAccount(this.api, address)
-        return info.data._embedded.balance
+        const data = await getAPIData(() => api.account.getAccount(this.api, address))
+        return data ? data._embedded.balance : null
     }
 }
 
@@ -560,12 +567,11 @@ export class Contract extends Generator {
         const op = wallet.operation
         op.sign(privatekey)
 
-        const res = await api.operation.send(this.api, op)
-
-        return res.data
+        return await getAPIData(() => api.operation.send(this.api, op))
     }
 
     async getContractInfo(address: string | Address) {
-        return await api.account.getAccount(this.api, address);
+        const data = await getAPIData(() => api.account.getAccount(this.api, address))
+        return data ? data._embedded : null
     }
 }

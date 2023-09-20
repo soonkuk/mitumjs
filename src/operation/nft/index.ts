@@ -12,8 +12,8 @@ import { ContractGenerator, Operation } from "../base"
 
 import { Address } from "../../key"
 import { CurrencyID } from "../../common"
+import { contract, getAPIData } from "../../api"
 import { Big, IP, LongString, TimeStamp } from "../../types"
-import { contract } from "../../api"
 
 type data = {
     name: string | LongString
@@ -209,13 +209,8 @@ export class NFT extends ContractGenerator {
     }
 
     async getCollectionInfo() {
-        const res = await contract.nft.getCollection(this.api, this.contract)
-
-        if (res.status !== 200) {
-            return null
-        }
-
-        return res.data._embedded
+        const data = await getAPIData(() => contract.nft.getCollection(this.api, this.contract))
+        return data ? data._embedded : null
     }
 
     /**
@@ -227,85 +222,57 @@ export class NFT extends ContractGenerator {
     }
 
     async ownerOf(nftID: string | number | Big) {
-        const res = await contract.nft.getNFT(
+        const data = await getAPIData(() => contract.nft.getNFT(
             this.api,
             this.contract,
             nftID,
-        )
+        ))
 
-        if (res.status !== 200) {
-            return null
-        }
-
-        return res.data._embedded.owner
+        return data ? data._embedded.owner : null
     }
 
     async getApproved(nftID: number) {
-        const res = await contract.nft.getNFT(
+        const data = await getAPIData(() => contract.nft.getNFT(
             this.api,
             this.contract,
             nftID,
-        )
+        ))
 
-        if (res.status !== 200) {
-            return null
-        }
-
-        return res.data._embedded.approved
+        return data ? data._embedded.approved : null
     }
 
     async totalSupply() {
-        const res = await contract.nft.getNFTs(
+        const data = await getAPIData(() => contract.nft.getNFTs(
             this.api,
             this.contract,
-        );
+        ))
 
-        if (res.status !== 200) {
-            return null
-        }
-
-        return res.data._embedded.length
+        return data ? data._embedded.length : null
     }
 
     async tokenURI(nftID: number) {
-        const res = await contract.nft.getNFT(
+        const data = await getAPIData(() => contract.nft.getNFT(
             this.api,
             this.contract,
             nftID,
-        )
+        ))
 
-        if (res.status !== 200) {
-            return null
-        }
-
-        return res.data._embedded.uri
+        return data ? data._embedded.uri : null
     }
 
     async isApprovedForAll(owner: string) {
-        const res = await contract.nft.getAccountOperators(
+        return await getAPIData(() => contract.nft.getAccountOperators(
             this.api,
             this.contract,
             owner,
-        )
-
-        if (res.status !== 200) {
-            return null
-        }
-
-        return res.data
+        ))
     }
 
     async getNFTInfo(nftID: number) {
-        const res = await contract.nft.getNFT(
+        return await getAPIData(() => contract.nft.getNFT(
             this.api,
             this.contract,
             nftID,
-        )
-
-        if (res.status !== 200) {
-            return null
-        }
-
-        return res.data
+        ))
     }
 }

@@ -1,3 +1,5 @@
+import { AxiosResponse } from "axios"
+
 import account from "./account"
 import block from "./block"
 import node from "./node"
@@ -24,4 +26,14 @@ export default {
     operation,
     currency,
     contract,
+}
+
+export async function getAPIData(f: () => Promise<AxiosResponse>) {
+    const res = await f()
+
+    if (res.status !== 200) {
+        return null
+    }
+
+    return res.data
 }

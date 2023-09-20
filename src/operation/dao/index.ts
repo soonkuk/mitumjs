@@ -16,8 +16,8 @@ import { ContractGenerator, Operation } from "../base"
 
 import { Address } from "../../key"
 import { Amount, CurrencyID } from "../../common"
+import { contract, getAPIData } from "../../api"
 import { Big, HintedObject, IP, LongString, TimeStamp } from "../../types"
-import { contract } from "../../api"
 
 type policyData = {
     token: string | CurrencyID,
@@ -244,22 +244,22 @@ export class DAO extends ContractGenerator {
     }
 
     async getServiceInfo() {
-        return contract.dao.getService(this.api, this.contract)
+        return await getAPIData(() => contract.dao.getService(this.api, this.contract))
     }
 
     async getProposalInfo(proposalID: string) {
-        return contract.dao.getProposal(this.api, this.contract, proposalID)
+        return await getAPIData(() => contract.dao.getProposal(this.api, this.contract, proposalID))
     }
 
     async getDelegatorInfo(proposalID: string, delegator: string | Address) {
-        return contract.dao.getDelegator(this.api, this.contract, proposalID, delegator)
+        return await getAPIData(() => contract.dao.getDelegator(this.api, this.contract, proposalID, delegator))
     }
 
     async getVoterInfo(proposalID: string, voter: string | Address) {
-        return contract.dao.getVoter(this.api, this.contract, proposalID, voter)
+        return await getAPIData(() => contract.dao.getVoter(this.api, this.contract, proposalID, voter))
     }
 
     async getVotingResult(proposalID: string) {
-        return contract.dao.getVotingResult(this.api, this.contract, proposalID)
+        return await getAPIData(() => contract.dao.getVotingResult(this.api, this.contract, proposalID))
     }
 }
