@@ -36,12 +36,12 @@ export default class Mitum extends Generator {
         this.operation = new Operation(this.api)
 
         this.contract = new Contract(this.networkID, this.api)
-        this.nft = new NFT(this.networkID, this.api)
-        this.credential = new Credential(this.networkID, this.api)
-        this.timestamp = new TimeStamp(this.networkID, this.api)
-        this.sto = new STO(this.networkID, this.api)
-        this.kyc = new KYC(this.networkID, this.api)
-        this.dao = new DAO(this.networkID, this.api)
+        this.nft = new NFT(this.networkID, undefined, this.api)
+        this.credential = new Credential(this.networkID, undefined, this.api)
+        this.timestamp = new TimeStamp(this.networkID, undefined, this.api)
+        this.sto = new STO(this.networkID, undefined, this.api)
+        this.kyc = new KYC(this.networkID, undefined, this.api)
+        this.dao = new DAO(this.networkID, undefined, this.api)
     }
 
     async node() {
