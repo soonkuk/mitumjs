@@ -13,6 +13,7 @@ import { ContractGenerator, Operation } from "../base"
 import { Address } from "../../key"
 import { CurrencyID } from "../../common"
 import { Big, IP, LongString, TimeStamp } from "../../types"
+import { contract } from "../../api"
 
 type data = {
     name: string | LongString
@@ -208,38 +209,103 @@ export class NFT extends ContractGenerator {
     }
 
     async getCollectionInfo() {
-        throw new Error("unimplemented method")
+        const res = await contract.nft.getCollection(this.api, this.contract)
+
+        if (res.status !== 200) {
+            return null
+        }
+
+        return res.data._embedded
     }
 
+    /**
+     * @deprecated use getCollectionInfo()
+     */
     async getCollectionPolicy() {
-        throw new Error("unimplemented method")
+        const design = await this.getCollectionInfo()
+        return design ? design.policy : null
     }
 
     async ownerOf(nftID: string | number | Big) {
-        throw new Error("unimplemented method")
-    }
+        const res = await contract.nft.getNFT(
+            this.api,
+            this.contract,
+            nftID,
+        )
 
-    async name() {
-        throw new Error("unimplemented method")
+        if (res.status !== 200) {
+            return null
+        }
+
+        return res.data._embedded.owner
     }
 
     async getApproved(nftID: number) {
-        throw new Error("unimplemented method")
+        const res = await contract.nft.getNFT(
+            this.api,
+            this.contract,
+            nftID,
+        )
+
+        if (res.status !== 200) {
+            return null
+        }
+
+        return res.data._embedded.approved
     }
 
     async totalSupply() {
-        throw new Error("unimplemented method")
+        const res = await contract.nft.getNFTs(
+            this.api,
+            this.contract,
+        );
+
+        if (res.status !== 200) {
+            return null
+        }
+
+        return res.data._embedded.length
     }
 
     async tokenURI(nftID: number) {
-        throw new Error("unimplemented method")
+        const res = await contract.nft.getNFT(
+            this.api,
+            this.contract,
+            nftID,
+        )
+
+        if (res.status !== 200) {
+            return null
+        }
+
+        return res.data._embedded.uri
     }
 
     async isApprovedForAll(owner: string) {
-        throw new Error("unimplemented method")
+        const res = await contract.nft.getAccountOperators(
+            this.api,
+            this.contract,
+            owner,
+        )
+
+        if (res.status !== 200) {
+            return null
+        }
+
+        return res.data
     }
 
     async getNFTInfo(nftID: number) {
-        throw new Error("unimplemented method")
+        const res = await contract.nft.getNFT(
+            this.api,
+            this.contract,
+            nftID,
+        )
+
+        if (res.status !== 200) {
+            return null
+        }
+
+        return res.data
     }
 }

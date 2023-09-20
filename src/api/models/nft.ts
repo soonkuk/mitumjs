@@ -6,41 +6,36 @@ import { Big, IP } from "../../types"
 const url = (
     api: string | IP, 
     contract: string | Address, 
-    collection: string | ContractID,
-) => `${IP.from(api).toString()}/nft/${Address.from(contract).toString()}/collection/${ContractID.from(collection).toString()}`
+) => `${IP.from(api).toString()}/nft/${Address.from(contract).toString()}`
 
 async function getNFT(
     api: string | IP,
     contract: string | Address,
-    collection: string | ContractID,
     nftID: string | number | Big,
 ) {
-    return await axios.get(`${url(api, contract, collection)}/${nftID}`)
+    return await axios.get(`${url(api, contract)}/${nftID}`)
 }
 
 async function getNFTs(
     api: string | IP,
     contract: string | Address,
-    collection: string | ContractID,
 ) {
-    return await axios.get(`${url(api, contract, collection)}/nfts`)
+    return await axios.get(`${url(api, contract)}/nfts`)
 }
 
 async function getCollection(
     api: string | IP,
     contract: string | Address,
-    collection: string | ContractID,
 ) {
-    return await axios.get(`${url(api, contract, collection)}`)
+    return await axios.get(`${url(api, contract)}/collection`)
 }
 
 async function getAccountOperators(
     api: string | IP,
     contract: string | Address,
-    collection: string | ContractID,
     account: string | Address,
 ) {
-    return await axios.get(`${url(api, contract, collection)}/account/${Address.from(account).toString()}/operators`)
+    return await axios.get(`${url(api, contract)}/account/${Address.from(account).toString()}/operators`)
 }
 
 export default {
