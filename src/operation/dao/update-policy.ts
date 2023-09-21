@@ -5,15 +5,14 @@ import { Big } from "../../types"
 import { HINT } from "../../alias"
 import { Config } from "../../node"
 import { Address } from "../../key"
+import { CurrencyID } from "../../common"
 import { Assert, ECODE, MitumError } from "../../error"
-import { Amount, ContractID, CurrencyID } from "../../common"
 
 export class UpdatePolicyFact extends ContractFact {
-    readonly dao: ContractID
     readonly option: "crypto" | "biz"
     readonly votingPowerToken: CurrencyID
     readonly threshold: Big
-    readonly fee: Amount
+    readonly fee: Big
     readonly whitelist: Whitelist
     readonly proposalReviewPeriod: Big
     readonly registrationPeriod: Big
@@ -28,11 +27,10 @@ export class UpdatePolicyFact extends ContractFact {
         token: string,
         sender: string | Address,
         contract: string | Address,
-        dao: string | ContractID,
         option: "crypto" | "biz",
         votingPowerToken: string | CurrencyID,
         threshold: string | number | Big,
-        fee: Amount,
+        fee: string | number | Big,
         whitelist: Whitelist,
         proposalReviewPeriod: string | number | Big,
         registrationPeriod: string | number | Big,
@@ -46,11 +44,10 @@ export class UpdatePolicyFact extends ContractFact {
     ) {
         super(HINT.DAO.UPDATE_POLICY.FACT, token, sender, contract, currency)
 
-        this.dao = ContractID.from(dao)
         this.option = option
         this.votingPowerToken = CurrencyID.from(votingPowerToken)
         this.threshold = Big.from(threshold)
-        this.fee = fee
+        this.fee = Big.from(fee)
         this.whitelist = whitelist
         this.proposalReviewPeriod = Big.from(proposalReviewPeriod)
         this.registrationPeriod = Big.from(registrationPeriod)
@@ -65,10 +62,10 @@ export class UpdatePolicyFact extends ContractFact {
             Config.DAO.QUORUM.satisfy(this.turnout.v),
             MitumError.detail(ECODE.INVALID_FACT, "turnout out of range"),
         )
-        
+
         Assert.check(
             Config.DAO.QUORUM.satisfy(this.quorum.v),
-            MitumError.detail(ECODE.INVALID_FACT, "quorum out of range"),    
+            MitumError.detail(ECODE.INVALID_FACT, "quorum out of range"),
         )
 
         this.whitelist.accounts.forEach(
@@ -82,7 +79,6 @@ export class UpdatePolicyFact extends ContractFact {
     toBuffer(): Buffer {
         return Buffer.concat([
             super.toBuffer(),
-            this.dao.toBuffer(),
             Buffer.from(this.option),
             this.votingPowerToken.toBuffer(),
             this.threshold.toBuffer(),
@@ -103,11 +99,10 @@ export class UpdatePolicyFact extends ContractFact {
     toHintedObject(): FactJson {
         return {
             ...super.toHintedObject(),
-            dao_id: this.dao.toString(),
             option: this.option,
             voting_power_token: this.votingPowerToken.toString(),
             threshold: this.threshold.toString(),
-            fee: this.fee.toHintedObject(),
+            fee: this.fee.toString(),
             whitelist: this.whitelist.toHintedObject(),
             proposal_review_period: this.proposalReviewPeriod.v,
             registration_period: this.registrationPeriod.v,

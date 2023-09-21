@@ -18,6 +18,7 @@ import { Address } from "../../key"
 import { Amount, CurrencyID } from "../../common"
 import { contract, getAPIData } from "../../api"
 import { Big, HintedObject, IP, LongString, TimeStamp } from "../../types"
+import { UpdatePolicyFact } from "./update-policy"
 
 type policyData = {
     token: string | CurrencyID,
@@ -71,7 +72,36 @@ export class DAO extends ContractGenerator {
                 data.executionDelayPeriod,
                 data.turnout,
                 data.quorum,
-                currency
+                currency,
+            )
+        )
+    }
+
+    update(
+        sender: string | Address,
+        data: daoData,
+        currency: string | CurrencyID,
+    ) {
+        return new Operation(
+            this.networkID,
+            new UpdatePolicyFact(
+                TimeStamp.new().UTC(),
+                sender,
+                this.contract,
+                data.option,
+                data.token,
+                data.threshold,
+                data.fee,
+                new Whitelist(true, data.proposers.map(a => Address.from(a))),
+                data.proposalReviewPeriod,
+                data.registrationPeriod,
+                data.preSnapshotPeriod,
+                data.votingPeriod,
+                data.postSnapshotPeriod,
+                data.executionDelayPeriod,
+                data.turnout,
+                data.quorum,
+                currency,
             )
         )
     }
