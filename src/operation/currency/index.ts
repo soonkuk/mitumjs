@@ -377,7 +377,7 @@ export class Account extends KeyG {
         const op = wallet.operation
         op.sign(privatekey)
 
-        return await getAPIData(() => api.operation.send(this.api, op))
+        return await getAPIData(() => api.operation.send(this.api, op.toHintedObject()))
     }
 
     async getAccountInfo(address: string | Address) {
@@ -567,7 +567,7 @@ export class Contract extends Generator {
         const op = wallet.operation
         op.sign(privatekey)
 
-        return await getAPIData(() => api.operation.send(this.api, op))
+        return await getAPIData(() => api.operation.send(this.api, op.toHintedObject()))
     }
 
     async getContractInfo(address: string | Address) {
