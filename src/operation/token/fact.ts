@@ -2,7 +2,6 @@ import { ContractFact, FactJson } from "../base"
 
 import { Address } from "../../key"
 import { CurrencyID } from "../../common"
-import { Assert, ECODE, MitumError } from "../../error"
 
 export abstract class TokenFact extends ContractFact {
     readonly tokenID: CurrencyID
