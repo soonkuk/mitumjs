@@ -4,11 +4,12 @@
   "description": "framework for mitum network",
   "main": "cjs/index.js",
   "module": "esm/index.js",
+  "types": "dist/cjs/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "npm run build:cjs & npm run build:esm",
-    "build:cjs": "tsc --p ./cjs/tsconfig.json",
-    "build:esm": "tsc --p ./esm/tsconfig.json",
+    "build:cjs": "tsc --p ./tsconfig.cjs.json",
+    "build:esm": "tsc --p ./tsconfig.esm.json",
     "check:orphans": "npx madge --orphans ./src/**/*",
     "check:circular": "npx madge --circular --image ./circular.svg ./src/**/*",
     "check:dependency": "npx madge --dot ./src/**/* > ./dot.gv "

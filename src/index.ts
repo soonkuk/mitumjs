@@ -10,7 +10,7 @@ import {
     Operation,
 } from "./operation"
 
-export default class Mitum extends Generator {
+export class Mitum extends Generator {
     private _node: Node
 
     private _account: Account
@@ -148,3 +148,5 @@ export default class Mitum extends Generator {
         this.refresh()
     }
 }
+
+export default Mitum

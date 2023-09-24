@@ -21,6 +21,14 @@
 $ git clone https://github.com/ProtoconNet/mitumjs.git
 # or
 $ git clone git@github.com:ProtoconNet/mitumjs.git
+$ cd mitumjs
+$ npm i
+$ npm run build
+# link locally
+$ npm link
+# Use in another project
+$ cd another_project_folder
+$ npm link mitum
 ```
 
 ## Usage
