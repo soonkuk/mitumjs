@@ -50,7 +50,7 @@ export class Big implements IBuffer, IString {
 				MitumError.detail(ECODE.INVALID_BIG_INTEGER, "big out of range")
 			)
 
-			return Buffer.from(new Int64.Uint64LE(this.toString()).toBuffer())
+			return Buffer.from(new Int64.Uint64BE(this.toString()).toBuffer())
 		}
 
 		const buf = new Uint8Array(size)
