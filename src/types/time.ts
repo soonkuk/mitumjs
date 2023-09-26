@@ -94,7 +94,7 @@ export class FullTimeStamp extends TimeStamp {
 		if (dot < 0) {
 			this.r = ""
 		} else {
-			this.r = s.substring(dot, s.length - 1)
+			this.r = s.substring(dot, s.length)
 		}
 	}
 
