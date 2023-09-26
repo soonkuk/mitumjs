@@ -133,7 +133,7 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
             )
         }
 
-        const hash = this._hash ? this._hash : Buffer.from([])
+        const hash = this.fact.hash;
 
         if (sigType) {
             if (sigType == "NodeFactSign") {
