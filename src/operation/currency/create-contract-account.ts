@@ -18,7 +18,7 @@ export class CreateContractAccountItem extends CurrencyItem {
         super(HINT.CURRENCY.CREATE_CONTRACT_ACCOUNT.ITEM, amounts, addressType)
         this.keys = keys
 
-        if (addressType === "btc") {
+        if (addressType === "mitum") {
             this.addressSuffix = SUFFIX.ADDRESS.MITUM
         } else {
             this.addressSuffix = SUFFIX.ADDRESS.ETHER
