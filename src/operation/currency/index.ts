@@ -224,7 +224,7 @@ export class Account extends KeyG {
                         new CreateAccountItem(
                             ks,
                             [new Amount(currency, amount)],
-                            "btc",
+                            "mitum",
                         )
                     ],
                 ),
@@ -247,7 +247,7 @@ export class Account extends KeyG {
                     new CreateAccountItem(
                         new Keys([new PubKey(key, 100)], 100),
                         [new Amount(currency, amount)],
-                        "btc",
+                        "mitum",
                     )
                 ],
             )
@@ -297,7 +297,7 @@ export class Account extends KeyG {
                             threshold,
                         ),
                         [new Amount(currency, amount)],
-                        "btc",
+                        "mitum",
                     )
                 ]
             ),
@@ -434,7 +434,7 @@ export class Contract extends Generator {
                         new CreateContractAccountItem(
                             ks,
                             [new Amount(currency, amount)],
-                            "btc",
+                            "mitum",
                         )
                     ],
                 ),
@@ -457,7 +457,7 @@ export class Contract extends Generator {
                     new CreateContractAccountItem(
                         new Keys([new PubKey(key, 100)], 100),
                         [new Amount(currency, amount)],
-                        "btc",
+                        "mitum",
                     )
                 ],
             )
@@ -507,7 +507,7 @@ export class Contract extends Generator {
                             threshold,
                         ),
                         [new Amount(currency, amount)],
-                        "btc",
+                        "mitum",
                     )
                 ]
             ),
