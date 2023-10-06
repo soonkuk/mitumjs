@@ -4,7 +4,7 @@ export abstract class Generator {
     protected _networkID: string
     protected _api: IP | undefined
 
-    constructor(networkID: string, api?: string | IP) {
+    protected constructor(networkID: string, api?: string | IP) {
         this._networkID = networkID
         this._api = api ? IP.from(api) : undefined
     }

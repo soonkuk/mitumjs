@@ -29,7 +29,7 @@ export abstract class BaseKeyPair {
     protected signer: Uint8Array | ethWallet
     protected static generator: IKeyGenerator
 
-    constructor(privateKey: Key) {
+    protected constructor(privateKey: Key) {
         this.privateKey = privateKey
         this.signer = this.getSigner()
         this.publicKey = this.getPub()

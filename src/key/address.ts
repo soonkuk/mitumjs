@@ -1,5 +1,4 @@
 import { AddressType } from "./types"
-
 import { SUFFIX } from "../alias"
 import { Config } from "../node"
 import { CurrencyID } from "../common"
@@ -16,7 +15,7 @@ abstract class BaseAddress implements IBuffer, IString {
         if (type) {
             this.type = type
         } else if (this.s.endsWith(SUFFIX.ADDRESS.MITUM)) {
-            this.type = "btc"
+            this.type = "mitum"
         } else if (this.s.endsWith(SUFFIX.ADDRESS.ETHER)) {
             this.type = "ether"
         } else if (this.s.endsWith(SUFFIX.ADDRESS.NODE)) {

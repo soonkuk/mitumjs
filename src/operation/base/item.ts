@@ -4,7 +4,7 @@ import { HintedObject, IBuffer, IHintedObject, IString } from "../../types"
 export abstract class Item implements IBuffer, IString, IHintedObject {
     private hint: Hint
     
-    constructor(hint: string) {
+    protected constructor(hint: string) {
         this.hint = new Hint(hint)
     }
 

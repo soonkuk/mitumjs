@@ -8,7 +8,7 @@ export abstract class NFTItem extends Item {
     readonly contract: Address
     readonly currency: CurrencyID
 
-    constructor(hint: string, contract: string | Address, currency: string | CurrencyID) {
+    protected constructor(hint: string, contract: string | Address, currency: string | CurrencyID) {
         super(hint)
 
         this.contract = Address.from(contract)

@@ -14,8 +14,8 @@ type BigArg = string | number | Big
 type Pub = [string | Key, BigArg] | PubKey
 
 export class Key implements IBuffer, IString {
-    private key: string
-    private suffix: string
+    private readonly key: string
+    private readonly suffix: string
     readonly type: KeyPairType
     readonly isPriv: boolean
 
@@ -86,7 +86,7 @@ export class PubKey extends Key implements IHintedObject {
 
 export class Keys implements IBuffer, IHintedObject {
     private static hint = new Hint(HINT.CURRENCY.KEYS)
-    private _keys: PubKey[]
+    private readonly _keys: PubKey[]
     readonly threshold: Big
 
     constructor(keys: Pub[], threshold: BigArg) {

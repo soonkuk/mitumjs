@@ -13,7 +13,7 @@ export abstract class CredentialItem extends Item {
     readonly id: string
     readonly currency: CurrencyID
 
-    constructor(
+    protected constructor(
         hint: string, 
         contract: string | Address, 
         holder: string | Address,

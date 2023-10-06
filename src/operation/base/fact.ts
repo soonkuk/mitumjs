@@ -16,7 +16,7 @@ export abstract class Fact implements IBuffer, IHintedObject {
     protected _hash: Buffer
     readonly items?: Item[]
 
-    constructor(hint: string, token: string) {
+    protected constructor(hint: string, token: string) {
         this.hint = new Hint(hint)
         this.token = new Token(token)
         this._hash = Buffer.from([])
@@ -49,7 +49,7 @@ export abstract class OperationFact<T extends Item> extends Fact {
     readonly sender: Address
     readonly items: T[]
 
-    constructor(hint: string, token: string, sender: string | Address, items: T[]) {
+    protected constructor(hint: string, token: string, sender: string | Address, items: T[]) {
         super(hint, token)
         this.sender = Address.from(sender)
 
@@ -85,7 +85,7 @@ export abstract class ContractFact extends Fact {
     readonly contract: Address
     readonly currency: CurrencyID
 
-    constructor(hint: string, token: string, sender: string | Address, contract: string | Address, currency: string | CurrencyID) {
+    protected constructor(hint: string, token: string, sender: string | Address, contract: string | Address, currency: string | CurrencyID) {
         super(hint, token)
         this.sender = Address.from(sender)
         this.contract = Address.from(contract)
@@ -95,7 +95,6 @@ export abstract class ContractFact extends Fact {
             this.sender.toString() !== this.contract.toString(),
             MitumError.detail(ECODE.INVALID_FACT, "sender is same with contract address")
         )
-
         this._hash = this.hashing()
     }
 
@@ -104,6 +103,7 @@ export abstract class ContractFact extends Fact {
             super.toBuffer(),
             this.sender.toBuffer(),
             this.contract.toBuffer(),
+            this.currency.toBuffer(),
         ])
     }
 
@@ -118,7 +118,7 @@ export abstract class ContractFact extends Fact {
 }
 
 export abstract class NodeFact extends Fact {
-    constructor(hint: string, token: string) {
+    protected constructor(hint: string, token: string) {
         super(hint, token)
     }
 }

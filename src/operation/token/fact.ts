@@ -6,7 +6,7 @@ import { CurrencyID } from "../../common"
 export abstract class TokenFact extends ContractFact {
     readonly tokenID: CurrencyID
 
-    constructor(
+    protected constructor(
         hint: string,
         token: string,
         sender: string | Address,

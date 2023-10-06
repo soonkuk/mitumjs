@@ -7,7 +7,7 @@ import { Assert, ECODE, MitumError } from "../../error"
 export abstract class DAOFact extends ContractFact {
     readonly proposalID: string
 
-    constructor(
+    protected constructor(
         hint: string,
         token: string,
         sender: string | Address,

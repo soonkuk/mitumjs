@@ -4,7 +4,7 @@ import { Address } from "../../key"
 import { CurrencyID } from "../../common"
 
 export abstract class TimeStampFact extends ContractFact {
-    constructor(
+    protected constructor(
         hint: string,
         token: string,
         sender: string | Address,

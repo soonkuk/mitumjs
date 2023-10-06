@@ -11,7 +11,7 @@ export abstract class FactSign implements IBuffer {
     readonly signature: Buffer
     readonly signedAt: FullTimeStamp
 
-    constructor(signer: string | Key, signature: Buffer, signedAt: string) {
+    protected constructor(signer: string | Key, signature: Buffer, signedAt: string) {
         this.signature = signature
         this.signedAt = new FullTimeStamp(signedAt)
 

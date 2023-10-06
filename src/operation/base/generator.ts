@@ -4,7 +4,7 @@ import { Generator, IP } from "../../types"
 export abstract class ContractGenerator extends Generator {
     protected _contract: Address | undefined
 
-    constructor(
+    protected constructor(
         networkID: string,
         contract?: string | Address,
         api?: string | IP,

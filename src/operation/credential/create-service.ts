@@ -13,6 +13,13 @@ export class CreateServiceFact extends ContractFact {
         super(HINT.CREDENTIAL.CREATE_SERVICE.FACT, token, sender, contract, currency)
     }
 
+    toBuffer(): Buffer {
+        return Buffer.concat([
+            super.toBuffer(),
+            this.currency.toBuffer(),
+        ])
+    }
+
     get operationHint() {
         return HINT.CREDENTIAL.CREATE_SERVICE.OPERATION
     }

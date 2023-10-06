@@ -14,6 +14,14 @@ export class CreateServiceFact extends ContractFact {
         super(HINT.KYC.CREATE_SERVICE.FACT, token, sender, contract, currency)
     }
 
+    toBuffer(): Buffer {
+        return Buffer.concat([
+            super.toBuffer(),
+            this.currency.toBuffer(),
+        ])
+    }
+
+
     get operationHint() {
         return HINT.KYC.CREATE_SERVICE.OPERATION
     }

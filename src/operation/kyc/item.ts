@@ -8,7 +8,7 @@ export abstract class KYCItem extends Item {
     readonly contract: Address
     readonly currency: CurrencyID
 
-    constructor(
+    protected constructor(
         hint: string, 
         contract: string | Address,
         currency: string | CurrencyID,
