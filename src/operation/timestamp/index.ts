@@ -11,13 +11,13 @@ import { Big, IP, TimeStamp as TS } from "../../types"
 export class TimeStamp extends ContractGenerator {
     constructor(
         networkID: string,
-        contract?: string | Address,
         api?: string | IP,
     ) {
-        super(networkID, contract, api)
+        super(networkID, api)
     }
 
     createService(
+        contractAddr: string | Address,
         sender: string | Address,
         currency: string | CurrencyID,
     ) {
@@ -26,13 +26,14 @@ export class TimeStamp extends ContractGenerator {
             new CreateServiceFact(
                 TS.new().UTC(),
                 sender,
-                this.contract,
+                contractAddr,
                 currency,
             )
         )
     }
 
     append(
+        contractAddr: string | Address,
         sender: string | Address,
         projectID: string,
         requestTimeStamp: string | number | Big,
@@ -42,7 +43,7 @@ export class TimeStamp extends ContractGenerator {
         const fact = new AppendFact(
             TS.new().UTC(),
             sender,
-            this.contract,
+            contractAddr,
             projectID,
             requestTimeStamp,
             data,
@@ -52,14 +53,15 @@ export class TimeStamp extends ContractGenerator {
         return new Operation(this.networkID, fact)
     }
 
-    async getServiceInfo() {
-        return await getAPIData(() => contract.timestamp.getService(this.api, this.contract))
+    async getServiceInfo(contractAddr: string | Address) {
+        return await getAPIData(() => contract.timestamp.getService(this.api, contractAddr))
     }
 
     async getTimestampInfo(
+        contractAddr: string | Address,
         projectID: string,
         tid: string | number | Big,
     ) {
-        return await getAPIData(() => contract.timestamp.getTimeStamp(this.api, this.contract, projectID, tid))
+        return await getAPIData(() => contract.timestamp.getTimeStamp(this.api, contractAddr, projectID, tid))
     }
 }

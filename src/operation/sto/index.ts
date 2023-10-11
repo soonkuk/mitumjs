@@ -23,13 +23,13 @@ type data = {
 export class STO extends ContractGenerator {
     constructor(
         networkID: string,
-        contract?: string | Address,
         api?: string | IP,
     ) {
-        super(networkID, contract, api)
+        super(networkID, api)
     }
 
     authorizeOperator(
+        contractAddr: string | Address,
         sender: string | Address,
         operator: string | Address,
         partition: string | Partition,
@@ -42,7 +42,7 @@ export class STO extends ContractGenerator {
                 sender,
                 [
                     new AuthorizeOperatorItem(
-                        this.contract,
+                        contractAddr,
                         operator,
                         partition,
                         currency,
@@ -53,6 +53,7 @@ export class STO extends ContractGenerator {
     }
 
     createService(
+        contractAddr: string | Address,
         sender: string | Address,
         data: data,
         currency: string | CurrencyID,
@@ -64,7 +65,7 @@ export class STO extends ContractGenerator {
                 sender,
                 [
                     new CreateSecurityTokenItem(
-                        this.contract,
+                        contractAddr,
                         data.granularity,
                         data.defaultPartition,
                         data.controllers,
@@ -76,6 +77,7 @@ export class STO extends ContractGenerator {
     }
 
     issue(
+        contractAddr: string | Address,
         sender: string | Address,
         receiver: string | Address,
         partition: string | Partition,
@@ -89,7 +91,7 @@ export class STO extends ContractGenerator {
                 sender,
                 [
                     new IssueSecurityTokenItem(
-                        this.contract,
+                        contractAddr,
                         receiver,
                         amount,
                         partition,
@@ -101,6 +103,7 @@ export class STO extends ContractGenerator {
     }
 
     redeem(
+        contractAddr: string | Address,
         sender: string | Address,
         tokenHolder: string | Address,
         partition: string | Partition,
@@ -114,7 +117,7 @@ export class STO extends ContractGenerator {
                 sender,
                 [
                     new RedeemTokenItem(
-                        this.contract,
+                        contractAddr,
                         tokenHolder,
                         amount,
                         partition,
@@ -126,6 +129,7 @@ export class STO extends ContractGenerator {
     }
 
     revokeOperator(
+        contractAddr: string | Address,
         sender: string | Address,
         operator: string | Address,
         partition: string | Partition,
@@ -138,7 +142,7 @@ export class STO extends ContractGenerator {
                 sender,
                 [
                     new RevokeOperatorItem(
-                        this.contract,
+                        contractAddr,
                         operator,
                         partition,
                         currency,
@@ -149,6 +153,7 @@ export class STO extends ContractGenerator {
     }
 
     setDocument(
+        contractAddr: string | Address,
         sender: string | Address,
         title: string,
         uri: string,
@@ -160,7 +165,7 @@ export class STO extends ContractGenerator {
             new SetDocumentFact(
                 TimeStamp.new().UTC(),
                 sender,
-                this.contract,
+                contractAddr,
                 title,
                 uri,
                 documentHash,
@@ -170,6 +175,7 @@ export class STO extends ContractGenerator {
     }
 
     transferByPartition(
+        contractAddr: string | Address,
         sender: string | Address,
         holder: string | Address,
         receiver: string | Address,
@@ -184,7 +190,7 @@ export class STO extends ContractGenerator {
                 sender,
                 [
                     new TransferSecurityTokenPartitionItem(
-                        this.contract,
+                        contractAddr,
                         holder,
                         receiver,
                         partition,
