@@ -15,12 +15,11 @@ export class TransferFact extends TokenFact {
         token: string,
         sender: string | Address,
         contract: string | Address,
-        tokenID: string | CurrencyID,
         currency: string | CurrencyID,
         receiver: string | Address,
         amount: string | number | Big,
     ) {
-        super(HINT.TOKEN.TRANSFER.FACT, token, sender, contract, tokenID, currency)
+        super(HINT.TOKEN.TRANSFER.FACT, token, sender, contract, currency)
 
         this.receiver = Address.from(receiver)
         this.amount = Big.from(amount)
@@ -34,6 +33,8 @@ export class TransferFact extends TokenFact {
             this.amount.compare(0) > 0,
             MitumError.detail(ECODE.INVALID_FACT, "zero amount"),
         )
+        
+        this._hash = this.hashing()
     }
 
     toBuffer(): Buffer {
