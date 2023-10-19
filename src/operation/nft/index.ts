@@ -79,6 +79,7 @@ export class NFT extends ContractGenerator {
     mint(
         contractAddr: string | Address,
         sender: string | Address,
+        receiver: string | Address,
         uri: string | LongString,
         hash: string | LongString,
         currency: string | CurrencyID,
@@ -86,6 +87,7 @@ export class NFT extends ContractGenerator {
     ) {
         return new Operation(this.networkID, new MintFact(TimeStamp.new().UTC(), sender, [new MintItem(
             contractAddr,
+            receiver,
             hash,
             uri,
             new Signers(100, [new Signer(creator, 100, false)]),
@@ -96,6 +98,7 @@ export class NFT extends ContractGenerator {
     mintForMultiCreators(
         contractAddr: string | Address,
         sender: string | Address,
+        receiver: string | Address,
         uri: string | LongString,
         hash: string | LongString,
         currency: string | CurrencyID,
@@ -109,6 +112,7 @@ export class NFT extends ContractGenerator {
                 [
                     new MintItem(
                         contractAddr,
+                        receiver,
                         hash,
                         uri,
                         new Signers(

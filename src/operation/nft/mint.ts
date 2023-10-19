@@ -9,12 +9,14 @@ import { HintedObject, LongString } from "../../types"
 import { Assert, ECODE, MitumError } from "../../error"
 
 export class MintItem extends NFTItem {
+    readonly receiver: Address
     readonly hash: LongString
     readonly uri: LongString
     readonly creators: Signers
 
     constructor(
-        contract: string | Address, 
+        contract: string | Address,
+        receiver: string | Address,
         hash: string | LongString, 
         uri: string | LongString,
         creators: Signers,
@@ -22,6 +24,7 @@ export class MintItem extends NFTItem {
     ) {
         super(HINT.NFT.MINT.ITEM, contract, currency)
 
+        this.receiver = Address.from(receiver)
         this.hash = LongString.from(hash)
         this.uri = LongString.from(uri)
         this.creators = creators
@@ -30,6 +33,7 @@ export class MintItem extends NFTItem {
     toBuffer(): Buffer {
         return Buffer.concat([
             super.toBuffer(),
+            this.receiver.toBuffer(),
             this.hash.toBuffer(),
             this.uri.toBuffer(),
             this.creators.toBuffer(),
@@ -40,6 +44,7 @@ export class MintItem extends NFTItem {
     toHintedObject(): HintedObject {
         return {
             ...super.toHintedObject(),
+            receiver: this.receiver.toString(),
             hash: this.hash.toString(),
             uri: this.uri.toString(),
             creators: this.creators.toHintedObject(),
