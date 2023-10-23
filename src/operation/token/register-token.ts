@@ -9,7 +9,7 @@ import { Assert, ECODE, MitumError } from "../../error"
 export class RegisterTokenFact extends TokenFact {
     readonly symbol: CurrencyID
     readonly name: LongString
-    readonly totalSupply: Big
+    readonly initialSupply: Big
 
     constructor(
         token: string,
@@ -18,16 +18,16 @@ export class RegisterTokenFact extends TokenFact {
         currency: string | CurrencyID,
         symbol: string | CurrencyID,
         name: string | LongString,
-        totalSupply: string | number | Big,
+        initialSupply: string | number | Big,
     ) {
         super(HINT.TOKEN.REGISTER_TOKEN.FACT, token, sender, contract, currency)
         this.symbol = CurrencyID.from(symbol)
         this.name = LongString.from(name)
-        this.totalSupply = Big.from(totalSupply)
+        this.initialSupply = Big.from(initialSupply)
 
         Assert.check(
-            this.totalSupply.compare(0) > 0,
-            MitumError.detail(ECODE.INVALID_FACT, "totalSupply under zero"),
+            this.initialSupply.compare(0) > 0,
+            MitumError.detail(ECODE.INVALID_FACT, "initialSupply under zero"),
         )
         this._hash = this.hashing()
     }
@@ -37,7 +37,7 @@ export class RegisterTokenFact extends TokenFact {
             super.toBuffer(),
             this.symbol.toBuffer(),
             this.name.toBuffer(),
-            this.totalSupply.toBuffer(),
+            this.initialSupply.toBuffer(),
         ])
     }
 
@@ -46,7 +46,7 @@ export class RegisterTokenFact extends TokenFact {
             ...super.toHintedObject(),
             symbol:  this.symbol.toString(),
             name: this.name.toString(),
-            total_supply: this.totalSupply.toString(),
+            initial_supply: this.initialSupply.toString(),
         }
     }
 
